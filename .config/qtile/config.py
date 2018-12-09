@@ -39,6 +39,8 @@ except ImportError:
 mod = "mod4"
 terminal = "konsole"
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
+hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
+                                 shell=True).communicate()[0] != ''
 
 # Startup apps
 @hook.subscribe.startup_once
@@ -105,7 +107,7 @@ keys = [
     # Apps shortcuts
     Key([mod], "Return", lazy.spawn(terminal)),
     Key([mod], "e", lazy.spawn("rofi -show run -dpi %s -theme Monokai -modi run,drun,window,windowcd,ssh" % str(100*scale_factor))),
-    Key([mod, "control"], "w", lazy.spawn("optirun qutebrowser")),
+    Key([mod, "control"], "w", lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
     Key([mod, "control"], "n", lazy.spawn("konsole --profile NewsBoat --notransparency -e newsboat -r")),
     Key([mod, "shift"], "f", lazy.spawn("krusader")),
     Key([mod, "control"], "f", lazy.spawn("%s -e ranger" % terminal)),
