@@ -239,7 +239,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Dejavu Sans Mono"
-                               :size 28
+                               :size 14.0
                                :weight normal
                                :width normal)
 
