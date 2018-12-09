@@ -1816,7 +1816,7 @@ config.bind(',y', 'spawn konsole -e youtube-dl --all-subs --embed-subs {url};; t
 
 # dark style sheets
 import os
-path = os.path.expanduser('~/Documents/Dark-stylesheets/')
+path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
 stylesheets = ' '.join([os.path.join(path, fn) for fn in os.listdir(path)])
 config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webpage.bg ""' % stylesheets)
 config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
