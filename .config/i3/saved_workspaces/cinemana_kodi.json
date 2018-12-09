@@ -1,0 +1,105 @@
+{
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.3,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "floating": "auto_off",
+            "layout": "splith",
+            "percent": 0.4,
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 3,
+                    "floating": "auto_off",
+                    "geometry": {
+                       "height": 2064,
+                       "width": 3834,
+                       "x": 0,
+                       "y": 0
+                    },
+                    "name": "yusuf-arch@yusuf-lenovo:~ — Konsole",
+                    "percent": 1,
+                    "swallows": [
+                       {
+                       "class": "^konsole$"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
+        },
+        {
+            "border": "none",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1222,
+               "width": 1168,
+               "x": 0,
+               "y": 0
+            },
+            "name": "PyQt5 Kodi Remote",
+            "percent": 0.6,
+            "swallows": [
+               {
+               "class": "^new_interface\\.py$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": 0.7,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1760,
+               "width": 2562,
+               "x": 960,
+               "y": 200
+            },
+            "name": "main_interface.py",
+            "percent": 0.583333333333333,
+            "swallows": [
+               {
+               "class": "^main_interface\\.py$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 839,
+               "width": 570,
+               "x": 0,
+               "y": 0
+            },
+            "name": "uGet - 1 tasks",
+            "percent": 0.416666666666667,
+            "swallows": [
+               {
+               "class": "^Uget\\-gtk$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

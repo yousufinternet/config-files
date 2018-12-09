@@ -1,0 +1,4 @@
+# set font "monospace normal 14"
+set recolor-keephue
+set recolor-reverse-video
+set recolor

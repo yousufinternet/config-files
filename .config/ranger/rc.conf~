@@ -1,0 +1,4 @@
+set preview_images true
+default_linemode devicons
+map bg shell cp %f ~/.config/i3/wall.jpg && feh --bg-scale %f
+set draw_borders true

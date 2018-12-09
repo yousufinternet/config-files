@@ -1,0 +1,41 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><div id="readabilityBody" style="max-width: 55%; min-width: 20%; margin: auto; text-align: justify; font-size: 30px"><div itemprop="articleBody" class="article-content post-page">
+        
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2018/12/GettyImages-898172236-800x533.jpg" alt="Why driving is hard—even for AIs"/>
+      <figcaption class="caption"><p class="caption-credit">Dong Wenjie via Getty Images</p></figcaption>  </figure>
+
+  
+
+
+
+      <p class="article-intro">Welcome to Ars UNITE, our week-long virtual conference on the ways that innovation brings unusual pairings together. Each day this week from Wednesday through Friday, we're bringing you a pair of stories about facing the future. Today's focus is on AI in the city—get ready for a lot of smart buildings and self-driving stuff!</p>
+    
+<aside class="related-stories right">
+  
+	
+  <span class="read-more"><a class="recommendation-series" href="https://arstechnica.com/feature-series/ars-unite/">View more stories</a></span>
+</aside>
+
+<p>I have a couple of kids of learner’s permit age, and it’s my fatherly duty to give them some driving tips so they won’t be a menace to themselves and to everyone else. So I’ve been analyzing the way I drive: How did I know that the other driver was going to turn left ahead of me? Why am I paying attention to the unleashed dog on the sidewalk but not the branches of the trees overhead? What subconscious cues tell me that a light is about to change to red or that the door of a parked car is about to open?</p>
+<p>This exercise has given me a renewed appreciation for the terrible complexity of driving—and that’s just the stuff I know to think about. The car itself already takes care of a million details that make the car go, stop, and steer, and that process was complex enough when I was young and cars were essentially mechanical and electric. Now, cars have become rolling computers, with humans controlling (at most) speed, direction, and comfort.</p>
+<p>For a vehicle to even approach autonomy, it has to understand the instant-to-instant changes in its immediate environment and what they mean. It has to know how to react. And it has to know the important nearby things that <i>don’t</i> change—like where houses and trees are.</p>
+<p>This is hard. <a href="https://arstechnica.com/cars/2018/11/report-uber-self-driving-team-was-preparing-for-ceo-demo-before-fatal-crash/">Uber suspended its autonomous car program early in 2018 </a>when one of its cars struck and killed a bicyclist. The company waited until late in the year to ask for permission (which it technically did not need) to put them back on the road in Pittsburgh, where they were a not-uncommon sight before the accident.</p>
+<p>The Society for Automotive Engineering and the US Department of Transportation specify<a href="https://www.sae.org/standards/content/j3016_201401/"> six degrees of autonomy</a>, running from Level 0 (human drivers in complete control) to Level 5 (a fully self-driving vehicle). The commercially available car currently considered the most autonomous—the Cadillac CT6 with Super Cruise—makes it to Level 2... but only on the 130,000 miles (many of them highways) that its maps know. Tesla's Autopilot mode, the name notwithstanding, is also considered Level 2. Neither of them are anything like set-and-forget systems.</p>
+<p>Daimler is having some success testing autonomous trucks on select German highways. But limited-access roads, with well-marked lanes and only a few places to enter and exit, are a comparatively easy problem, particularly in Germany, where drivers are skilled and predictable.</p>
+<p>Waymo officially launched a commercial self-driving taxi service this week—though <a href="https://arstechnica.com/cars/2018/12/waymos-lame-public-driverless-launch-not-driverless-and-barely-public/">only a small group has access</a> to it so far. And GM says it will have a fully autonomous taxi service on the road in San Francisco next year (although there are <a href="https://arstechnica.com/cars/2017/12/driverless-car-from-gms-cruise-and-motorcycle-collide-in-san-francisco/">plenty of doubters</a> about that timeline). Volkswagen says it will have Moia-brand electric autonomous cars available in 2021, the same year that Ford says it will mass-produce autonomous cars. Toyota, by contrast, says it will be using AI to make human-piloted cars safer and more fun to drive (however one measures “fun”).</p>
+<h2>Smart cars need smart streets</h2>
+<p>As smart as a car may be, it needs an equally smart (if not smarter) infrastructure around it. As fast as a car’s onboard computer may be, it must also be able to learn and understand its surroundings, then make immediate decisions on its own—and it must know when to consult with remote resources when necessary.</p>
+<p>An example: you’re “driving” to your grandmother’s house one rainy evening when a cat runs across the road. The car needs to see a sudden obstacle, recognize it as such, and decide how to deal with it; that requires a fast, local, AI-assisted response. But the car also needs to know the local speed limit and whether it should adjust for the weather, which it also needs to understand. Some of that information may come from remote resources, like highly localized weather information and a machine-understandable municipal map (which, by the way, will probably look like an XML file and not what you’d understand a map to look like). Because high bandwidth and low latency are going to be key, that’s a job for a 5G network.</p>
+<p>If there are other cars around when your car takes action to avoid the cat, your car should be able to communicate with them, too, so they can understand instantly whether they need to brake, swerve, or accelerate; otherwise, your car might hit them instead of the cat. To make that work, you need vehicle-to-vehicle communication (called V2V), which will require an interoperable industry standard that doesn’t yet exist.</p>
+<p>As you proceed to grandma’s—which you don’t visit nearly as often as you should and so don’t really know the way—your car will make decisions regarding the best route. That means it will want to know about traffic signals, congestion, detours, or road construction in real time. For your car to understand all those hazards, it needs a bit of infrastructure called <a href="https://arstechnica.com/cars/2017/11/trump-administration-reportedly-kills-vehicle-to-vehicle-safety-mandate/">V2X—“vehicle to everything” or V2I (vehicle-to-infrastructure)</a>. And, since it will be a good long time before every vehicle on the road is self-driving and safe, your car will have to take into account bad driving by the considerable number of meat-piloted vehicles still on the road.</p>
+<p>That’s a lot of resources just to keep you and grandma happy (not to mention the cat and all the other vehicles on the road). The AI in your car is just the start.</p>
+<p>Some of this stuff is starting to come into place. <a href="https://news.usa.siemens.biz/press-release/siemens-provides-city-las-vegas-technology-one-citys-first-connected-vehicle-pilots">Las Vegas has a live V2I system</a> that can tell certain models of Audis what state a traffic light is in and how long it will be before the light changes. Nevada as a whole is also building out a V2V network.</p>
+<p>None of this takes into account what happens if grandma lives somewhere out in the boondocks, where there is no 5G or decent mapping or smart V2I infrastructure. Maybe someday, in order to drive in rural areas, you’ll still need to operate a car on your own—just as it’s still handy today to know how to use a stick shift.</p>
+<p>AI and machine learning sit at the center of all of this. Driving is a ridiculously complicated skill, requiring experience, attention, and reflexes. Yet for all its complexity, it’s a finite skill with understandable requirements, inputs, and results. Driving hasn’t yet yielded to AI, but remember: we don’t let kids behind the wheel until they’re 16. The average computer isn’t as keen as a 16-year-old. But it will be, and maybe soon.</p>
+<p>Which is good. Because, you know, grandma’s not satisfied with FaceTime.</p>
+
+      </div>
+
+      
+      
+    </div>

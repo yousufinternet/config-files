@@ -1,0 +1,23 @@
+[Philosophize this]
+url=http://philosophizethis.libsyn.com/rss
+spool=/home/yusuf/Podcasts/Philosophize_this
+
+[60-Second Science]
+url=http://rss.sciam.com/sciam/60secsciencepodcast?format=xml
+spool=/home/yusuf/Podcasts/60-Seconds_Science
+
+[The Infinite Monkey Cage]
+url=http://podcasts.files.bbci.co.uk/b00snr0w.rss
+spool=/home/yusuf/Podcasts/Infinite_monkey
+
+[Linux Voice]
+url=http://www.linuxvoice.com/podcast_mp3.rss
+spool=/home/yusuf/Podcasts/Linux_voice
+
+[Going Linux]
+url=http://goinglinux.com/mp3podcast.xml
+spool=/home/yusuf/Podcasts/Going_linux
+
+[Talk Python]
+url=https://talkpython.fm/episodes/rss
+spool=/home/yusuf/Podcasts/Talk_python
