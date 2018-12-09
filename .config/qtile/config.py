@@ -161,8 +161,8 @@ layouts = [
 
 widget_defaults = dict(
     font='Noto color emoji',
-    fontsize=13 * scale_factor,
-    padding=3,
+    fontsize=13*scale_factor,
+    padding=3 if scale_factor == 2 else 1,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -174,7 +174,7 @@ screens = [
                 widget.GroupBox(disable_drag=True, highlight_color='2473ff',
                                 highlight_method="line", background='ffffff',
                                 foreground='000000', active='000000',
-                                inactive='b9b9b9'),
+                                inactive='b9b9b9', fontsize=13*scale_factor),
                 widget.Image(filename='~/.config/qtile/power7.png'),
                 widget.Prompt(),
                 widget.CurrentLayoutIcon(),
@@ -182,16 +182,16 @@ screens = [
                                 font=alt_font, fontsize=13*scale_factor,
                                 iconsize=18*scale_factor, border='0056ea'),
                 widget.Image(filename='~/.config/qtile/power3.png'),
-                widget.Mpd2(fontsize=24, background="0056ea"),
+                widget.Mpd2(fontsize=12*scale_factor, background="0056ea"),
                 widget.Image(filename='~/.config/qtile/power6.png', background='009700'),
                 # widget.Spacer(length=500),
                 widget.TextBox('📦', background='009700'),
                 widget.CheckUpdates(execute='konsole -e "pacaur -Syu --noconfirm"', display_format=':{updates}', font=alt_font, background='009700'),
                 widget.Image(filename='~/.config/qtile/power5.png'),
-                widget.NetGraph(graph_color="fff500"),
-                widget.CPUGraph(),
+                widget.NetGraph(graph_color="fff500", width=50*scale_factor),
+                widget.CPUGraph(width=50*scale_factor),
                 widget.ThermalSensor(font=alt_font),
-                widget.MemoryGraph(graph_color="00ff00"),
+                widget.MemoryGraph(graph_color="00ff00", width=50*scale_factor),
                 widget.Backlight(backlight_name="intel_backlight", update_interval=1, font=alt_font),
                 widget.KeyboardLayout(update_interval=0.2),
                 widget.BatteryIcon(),
@@ -202,7 +202,7 @@ screens = [
                 widget.Image(filename='~/.config/qtile/power1.png'),
                 widget.Systray(icon_size=16*scale_factor, padding=7*scale_factor),
             ],
-            36,
+            18 * scale_factor,
             opacity=0.8
         ),
     ),
