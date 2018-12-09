@@ -39,6 +39,7 @@ except ImportError:
 mod = "mod4"
 terminal = "konsole"
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
+cmd = "pacman -Ql | grep 'optirun'"
 hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
 
