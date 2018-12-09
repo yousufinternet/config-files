@@ -139,8 +139,8 @@ groups = [
     ScratchPad("scratchpad",
                [DropDown("term", 'konsole', opacity=0.8),
                 DropDown("calc", "kcalc", on_focus_lost_hide=False, opacity=0.8, y=0.5, x=0.5, width=0.28)])] + [
-                    Group(str(x+1)+':'+i) for x, i in enumerate("")] + [
-                        Group('0:', spawn=["%s -e ncmpcpp" % terminal, "%s -e htop" % terminal])]
+                    Group(str(x+1)) for x in range(9)] + [
+                        Group('10', spawn=["%s -e ncmpcpp" % terminal, "%s -e htop" % terminal])]
 
 for x, i in enumerate(groups):
     x = 0 if x == 10 else x
@@ -177,7 +177,8 @@ screens = [
                 widget.GroupBox(disable_drag=True, highlight_color='2473ff',
                                 highlight_method="line", background='ffffff',
                                 foreground='000000', active='000000',
-                                inactive='b9b9b9', fontsize=13*scale_factor),
+                                inactive='b9b9b9', font=alt_font,
+                                fontsize=13*scale_factor),
                 widget.Image(filename='~/.config/qtile/power7.png'),
                 widget.Prompt(),
                 widget.CurrentLayoutIcon(),
@@ -206,7 +207,6 @@ screens = [
                 widget.Systray(icon_size=16*scale_factor, padding=7*scale_factor),
             ],
             18 * scale_factor,
-            opacity=0.8
         ),
     ),
 ]
