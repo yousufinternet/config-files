@@ -1,5 +1,5 @@
 https://spreadprivacy.com/rss tech
-http://feeds.reuters.com/news/artsculture
+http://feeds.reuters.com/news/artsculture art philosophy
 http://feeds.reuters.com/reuters/healthNews health
 http://feeds.reuters.com/reuters/scienceNews science
 http://feeds.reuters.com/reuters/technologyNews tech
@@ -35,3 +35,8 @@ http://rss.sciam.com/ScientificAmerican-Global science
 http://feeds.feedburner.com/AllDiscovermagazinecomContent science
 https://www.wired.com/category/science/feed science
 http://www.popsci.com/rss.xml science
+https://www.linux.com/feeds/original-content/rss tech linux
+https://www.linux.com/feeds/news/rss tech linux
+https://www.linux.com/feeds/news/embedded-and-mobile/rss tech linux
+https://www.linux.com/feeds/news/desktop/rss tech linux
+https://aeon.co/feed.rss philosophy cool
