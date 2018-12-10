@@ -38,7 +38,12 @@ except ImportError:
 
 mod = "mod4"
 terminal = "konsole"
+
+# Detect if the screen is HiDPI or not
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
+
+# If optirun is installed then hybrid graphics exist on system, if not don't
+# prepend optirun to some commands
 cmd = "pacman -Ql | grep 'optirun'"
 hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
@@ -65,6 +70,8 @@ keys = [
 
     # DropDown Terminal
     Key([mod], "d", lazy.group["scratchpad"].dropdown_toggle("term")),
+
+    # easy to reach calculator
     Key([mod], "c", lazy.group["scratchpad"].dropdown_toggle("calc")),
 
     # toggle floating
@@ -178,7 +185,7 @@ screens = [
                                 highlight_method="line", background='ffffff',
                                 foreground='000000', active='000000',
                                 inactive='b9b9b9', font=alt_font,
-                                fontsize=13*scale_factor),
+                                fontsize=15*scale_factor),
                 widget.Image(filename='~/.config/qtile/power7.png'),
                 widget.Prompt(),
                 widget.CurrentLayoutIcon(),
