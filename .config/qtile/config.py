@@ -25,7 +25,7 @@
 # SOFTWARE.
 
 import libqtile
-from libqtile.config import Key, ScratchPad, DropDown, Screen, Group, Drag, Click
+from libqtile.config import Key, ScratchPad, DropDown, Screen, Group, Drag, Click, Match
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 import os, subprocess
@@ -142,12 +142,24 @@ keys = [
     Key([mod], "r", lazy.spawncmd()),
 ]
 
+layouts = [
+    layout.Max(),
+    # layout.Columns(fair=True, margin=20),
+    layout.Wmii(margin=20),
+    layout.Stack(num_stacks=2),
+    layout.Matrix(),
+    layout.xmonad.MonadTall()
+]
+
 groups = [
     ScratchPad("scratchpad",
                [DropDown("term", 'konsole', opacity=0.8),
                 DropDown("calc", "kcalc", on_focus_lost_hide=False, opacity=0.8, y=0.5, x=0.5, width=0.28)])] + [
-                    Group(str(x+1)) for x in range(9)] + [
-                        Group('10', spawn=["%s -e ncmpcpp" % terminal, "%s -e htop" % terminal])]
+                    Group(str(x+1)) for x in range(8)] + [
+                       Group('9', matches=[Match(wm_class=['Steam', 'steam'])]),
+                       Group('10', layout='matrix', spawn=[
+                           "%s -e ncmpcpp" % terminal, "%s -e htop" % terminal,
+                           "%s -e tmux -2" % terminal, terminal])]
 
 for x, i in enumerate(groups):
     x = 0 if x == 10 else x
@@ -159,15 +171,6 @@ for x, i in enumerate(groups):
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key([mod, "shift"], str(x), lazy.window.togroup(i.name)),
         ])
-
-layouts = [
-    layout.Max(),
-    # layout.Columns(fair=True, margin=20),
-    layout.Wmii(margin=20),
-    layout.Stack(num_stacks=2),
-    layout.Matrix(),
-    layout.xmonad.MonadTall()
-]
 
 widget_defaults = dict(
     font='Noto color emoji',
