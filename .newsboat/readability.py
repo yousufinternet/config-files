@@ -11,7 +11,7 @@ import pyperclip
 tmp_file = os.path.expanduser('~/.newsboat/newsboat.html')
 url = sys.argv[1]
 content = get(url).text
-browser = "surf -t ~/Documents/Dark-stylesheets/gruvbox-all-sites.css -z 1.5" if not len(sys.argv) > 3 else sys.argv[2]
+browser = "surf -t ~/.config/qutebrowser/Dark-stylesheets/gruvbox-all-sites.css -z 1.5" if not len(sys.argv) > 3 else sys.argv[2]
 
 # subprocess.Popen(browser.split() + [url])
 
