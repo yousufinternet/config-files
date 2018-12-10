@@ -3,6 +3,7 @@ browser ~/.newsboat/readability.py %u
 download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
+save-path "~/.newsboat/saved_articles/"
 color listfocus white color18
 color listfocus_unread white color18 bold underline
 color info white color18 bold
