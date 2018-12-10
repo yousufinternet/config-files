@@ -24,7 +24,7 @@ except ImportError:
     from readability import Document
     doc = Document(content)
     article = doc.summary().replace('<html>', '<html><head><title>%s</title></head>' % doc.title())
-article = article.replace('<div id="readabilityBody">', '<div id="readabilityBody" style="max-width: 55%; min-width: 20%; margin: auto; text-align: justify; font-size: 30px">')
+article = article.replace('<div id="readabilityBody">', '<div id="readabilityBody" style="max-width: 55%; min-width: 20%; margin: auto; text-align: justify; font-size: 30px; font-family: bookerly, Serif">')
 
 with codecs.open(tmp_file, 'w', 'utf-8') as target:
     target.write('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />')
