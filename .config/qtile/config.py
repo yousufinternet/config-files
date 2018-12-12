@@ -130,7 +130,7 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 2")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5")),
-    Key([mod], "b", lazy.spawn("/home/yusuf/.config/i3/toggle_brightness.py")),
+    Key([mod], "b", lazy.spawn(os.path.expanduser("~/.config/i3/toggle_brightness.py"))),
     # Key([mod, "control"], "z", lazy.spawn("killall vmg; sudo optirun vmg")),
 
     # Toggle between different layouts as defined below
