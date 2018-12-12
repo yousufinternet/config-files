@@ -149,7 +149,7 @@ keys = [
 layouts = [
     layout.Max(),
     # layout.Columns(fair=True, margin=20),
-    layout.Wmii(margin=20),
+    layout.Wmii(margin=10*scale_factor),
     layout.Stack(num_stacks=2),
     layout.Matrix(),
     layout.xmonad.MonadTall()
