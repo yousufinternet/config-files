@@ -4,6 +4,6 @@ download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
 save-path "~/.newsboat/saved_articles/"
-color listfocus white color18
-color listfocus_unread white color124 bold underline
+color listfocus white color21
+color listfocus_unread white color196 bold underline
 color info white color18 bold
