@@ -103,6 +103,9 @@ keys = [
     # Switch window focus to other pane(s) of stack
     Key([mod], "space", lazy.layout.next()),
 
+    # useful when floating windows get buried
+    Key([mod], "grave", lazy.window.bring_to_front()),
+
     # Swap panes of split stack
     Key([mod, "control"], "Return", lazy.layout.rotate()),
 
@@ -135,6 +138,7 @@ keys = [
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
+    Key([mod, "shift"], "Tab", lazy.prev_layout()),
     Key([mod], "q", lazy.window.kill()),
 
     Key([mod, "control"], "r", lazy.restart()),
