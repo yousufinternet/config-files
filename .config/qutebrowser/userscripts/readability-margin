@@ -32,7 +32,7 @@ with codecs.open(os.environ['QUTE_HTML'], 'r', 'utf-8') as source:
         from readability import Document
         doc = Document(data)
         content = doc.summary().replace('<html>', '<html><head><title>%s</title></head>' % doc.title())
-    content = content.replace('<div id="readabilityBody">', '<div id="readabilityBody" style="max-width: 55%; min-width: 20%; margin: auto">')
+    content = content.replace('<div id="readabilityBody">', '<div id="readabilityBody" style="max-width: 55%; min-width: 20%; margin: auto; text-align: justify; font-size: 30px; font-family: bookerly, Serif">')
 
     with codecs.open(tmpfile, 'w', 'utf-8') as target:
         target.write('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />')
