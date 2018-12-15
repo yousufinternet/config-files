@@ -14,3 +14,4 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 HISTSIZE=
 HISTFILESIZE=
 export TERM=xterm-256color
+shopt -s checkwinsize
