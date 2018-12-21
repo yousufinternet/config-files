@@ -130,6 +130,9 @@ keys = [
     Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
     Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
     Key([mod, "control"], "x", lazy.spawn("xkill")),
+    # probably the -B option will need i3lock-color package
+    Key([mod, "shift", "control"], "x",
+        lazy.spawn("i3lock -B=%s" % 4*scale_factor)),
 
     # Brightness and Volume controls
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
@@ -163,9 +166,9 @@ groups = [
                [DropDown("term", 'konsole', opacity=0.8),
                 DropDown("calc", "kcalc", on_focus_lost_hide=False, opacity=0.8, y=0.5, x=0.5, width=0.28),
                 DropDown("htop", "konsole -e htop", on_focus_lost_hide=False,
-                         opacity=0.0, y=0, x=0, width=0.4, height=1),
+                         opacity=0.9, y=0, x=0, width=0.4, height=1),
                 DropDown("ncmpcpp", "konsole -e ncmpcpp", on_focus_lost_hide=False,
-                         opacity=0.9, y=0, x=1-0.4, width=0.4, height=1)])] + [
+                         opacity=0.9, y=1-0.4, x=0.25, width=0.5, height=0.4)])] + [
                     Group(str(x+1)) for x in range(8)] + [
                        Group('9', matches=[Match(wm_class=['Steam', 'steam'])]),
                        Group('10', layout='matrix', spawn=[
