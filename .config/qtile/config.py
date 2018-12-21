@@ -150,7 +150,7 @@ keys = [
 layouts = [
     layout.Max(),
     # layout.Columns(fair=True, margin=20),
-    layout.Wmii(margin=10*scale_factor),
+    layout.Wmii(margin=8*scale_factor, border_normal='d79921', border_focus='d65d0e', border_normal_stack='fb4934', border_focus_stack='cc241d'),
     layout.Stack(num_stacks=2),
     layout.Matrix(),
     layout.xmonad.MonadTall()
@@ -242,7 +242,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 main = None
 follow_mouse_focus = True
-bring_front_click = False
+bring_front_click = True # Default is False
 cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'confirm'},
@@ -262,7 +262,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
-])
+], border_focus="d65d0e", border_normal="fabd2f")
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
