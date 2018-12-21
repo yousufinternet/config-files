@@ -178,50 +178,53 @@ for x, i in enumerate(groups):
         ])
 
 widget_defaults = dict(
-    font='Noto color emoji',
+    # font='Noto color emoji',
+    font='RobotoMono Nerd Font',
     fontsize=13*scale_factor,
     padding=3 if scale_factor == 2 else 1,
 )
 extension_defaults = widget_defaults.copy()
 
-alt_font = 'Noto Sans Display'
+alt_font = 'RobotoMono Nerd Font'
 screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.GroupBox(disable_drag=True, highlight_color='2473ff',
-                                highlight_method="line", background='ffffff',
-                                foreground='000000', active='000000',
-                                inactive='b9b9b9', font=alt_font,
+                widget.GroupBox(disable_drag=True, highlight_color='d65d0e',
+                                highlight_method="line", background='504945',
+                                foreground='928374', active='fbf1c7',
+                                inactive='665c54', font=alt_font,
                                 fontsize=15*scale_factor),
                 widget.Image(filename='~/.config/qtile/power7.png'),
                 widget.Prompt(),
                 widget.CurrentLayoutIcon(),
                 widget.TaskList(highlight_method="block", rounded=False,
                                 font=alt_font, fontsize=13*scale_factor,
-                                iconsize=18*scale_factor, border='0056ea'),
+                                iconsize=18*scale_factor, border='d65d0e'),
                 widget.Image(filename='~/.config/qtile/power3.png'),
-                widget.Mpd2(fontsize=12*scale_factor, background="0056ea"),
+                widget.Mpd2(fontsize=12*scale_factor, background="98971a"),
                 widget.Image(filename='~/.config/qtile/power6.png', background='009700'),
                 # widget.Spacer(length=500),
-                widget.TextBox('📦', background='009700'),
-                widget.CheckUpdates(execute='konsole -e "pacaur -Syu --noconfirm"', display_format=':{updates}', font=alt_font, background='009700'),
+                widget.TextBox('📦', background='689d6a'),
+                widget.CheckUpdates(execute='konsole -e "pacaur -Syu --noconfirm"', display_format=':{updates}', font=alt_font, background='689d6a'),
                 widget.Image(filename='~/.config/qtile/power5.png'),
-                widget.NetGraph(graph_color="fff500", width=50*scale_factor),
-                widget.CPUGraph(width=50*scale_factor),
-                widget.ThermalSensor(font=alt_font),
-                widget.MemoryGraph(graph_color="00ff00", width=50*scale_factor),
-                widget.Backlight(backlight_name="intel_backlight", update_interval=1, font=alt_font),
+                widget.NetGraph(graph_color="fabd2f", width=50*scale_factor),
+                widget.CPUGraph(width=50*scale_factor, graph_color='fb4934'),
+                widget.MemoryGraph(graph_color="b8bb26", width=50*scale_factor),
+                widget.Image(filename='~/.config/qtile/power8.png'),
+                widget.ThermalSensor(font=alt_font, background='d79921'),
+                widget.Image(filename='~/.config/qtile/power9.png'),
                 widget.KeyboardLayout(update_interval=0.2),
                 widget.BatteryIcon(),
                 widget.Image(filename='~/.config/qtile/power2.png'),
-                widget.TextBox('📅', background="ff5e00"),
-                widget.Clock(format='%Y-%m-%d %a %I:%M %p', background="ff5e00", font=alt_font),
-                widget.TextBox('🕐', background="ff5e00"),
+                widget.TextBox('📅', background="928374"),
+                widget.Clock(format='%Y-%m-%d %a %I:%M %p', background="928374", font=alt_font),
+                widget.TextBox('🕐', background="928374"),
                 widget.Image(filename='~/.config/qtile/power1.png'),
+                widget.Backlight(backlight_name="intel_backlight", update_interval=1, font=alt_font),
                 widget.Systray(icon_size=16*scale_factor, padding=7*scale_factor),
             ],
-            18 * scale_factor,
+            20 * scale_factor, background='#3c3836'
         ),
     ),
 ]
