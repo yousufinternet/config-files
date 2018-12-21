@@ -1828,3 +1828,4 @@ config.set('zoom.default', '125%')
 # Downloads position, and remove finished after 30 seconds
 config.set('downloads.position', 'bottom')
 config.set('downloads.remove_finished', 30)
+config.source('nord.py')
