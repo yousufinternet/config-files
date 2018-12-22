@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<channel version="1.0" rsslastfetched="Fri, 07-Dec-2018 11:56:39 GMT">
+<channel version="1.0" rsslastfetched="Fri, 21-Dec-2018 19:34:04 GMT">
   <enclosure url="https://talkpython.fm/episodes/download/177/flask-goes-1.0.mp3" downloadtime="Thu, 20-Sep-2018 09:43:18 GMT"/>
-  <enclosure url="https://talkpython.fm/episodes/download/187/secure-all-the-things-with-hubblestack.mp3" downloadtime="Sat, 24-Nov-2018 11:31:32 GMT"/>
-  <enclosure url="https://talkpython.fm/episodes/download/176/the-python-community-by-the-numbers.mp3" downloadtime="Wed, 12-Sep-2018 21:59:49 GMT"/>
   <enclosure url="https://talkpython.fm/episodes/download/178/coverage.py.mp3" downloadtime="Fri, 28-Sep-2018 16:15:25 GMT"/>
-  <enclosure url="https://talkpython.fm/episodes/download/180/what-s-new-in-python-3.7-and-beyond.mp3" downloadtime="Wed, 10-Oct-2018 18:50:56 GMT"/>
-  <enclosure url="https://talkpython.fm/episodes/download/175/teaching-python-to-network-engineers.mp3" downloadtime="Thu, 13-Sep-2018 09:49:58 GMT"/>
   <enclosure url="https://talkpython.fm/episodes/download/188/async-for-the-pythonic-web-with-sanic.mp3" downloadtime="Fri, 07-Dec-2018 12:06:56 GMT"/>
+  <enclosure url="https://talkpython.fm/episodes/download/180/what-s-new-in-python-3.7-and-beyond.mp3" downloadtime="Wed, 10-Oct-2018 18:50:56 GMT"/>
+  <enclosure url="https://talkpython.fm/episodes/download/191/python-s-journey-at-microsoft.mp3" downloadtime="Fri, 21-Dec-2018 19:44:01 GMT"/>
+  <enclosure url="https://talkpython.fm/episodes/download/175/teaching-python-to-network-engineers.mp3" downloadtime="Thu, 13-Sep-2018 09:49:58 GMT"/>
+  <enclosure url="https://talkpython.fm/episodes/download/176/the-python-community-by-the-numbers.mp3" downloadtime="Wed, 12-Sep-2018 21:59:49 GMT"/>
+  <enclosure url="https://talkpython.fm/episodes/download/187/secure-all-the-things-with-hubblestack.mp3" downloadtime="Sat, 24-Nov-2018 11:31:32 GMT"/>
 </channel>
