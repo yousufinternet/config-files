@@ -154,8 +154,9 @@ keys = [
 
 layouts = [
     layout.Max(),
-    # layout.Columns(fair=True, margin=20),
-    layout.Wmii(margin=8*scale_factor, border_normal='d79921', border_focus='d65d0e', border_normal_stack='fb4934', border_focus_stack='cc241d'),
+    layout.Columns(fair=True, margin=8*scale_factor,
+                   border_normal='d79921', border_focus='d65d0e'),
+    # layout.Wmii(margin=8*scale_factor, border_normal='d79921', border_focus='d65d0e', border_normal_stack='fb4934', border_focus_stack='cc241d'),
     layout.Stack(num_stacks=2),
     layout.Matrix(),
     layout.xmonad.MonadTall()
@@ -235,7 +236,7 @@ screens = [
                 widget.TextBox('', background='3c3836', foreground='d79921',
                                fontsize=20*scale_factor, padding=0),
                 # widget.Image(filename='~/.config/qtile/power9.png'),
-                widget.KeyboardLayout(update_interval=0.2),
+                widget.KeyboardLayout(update_interval=0.2, padding=2*scale_factor, fontshadow='000000'),
                 widget.BatteryIcon(),
                 # widget.Image(filename='~/.config/qtile/power2.png'),
                 widget.TextBox('', foreground='3c3836', background='928374',
