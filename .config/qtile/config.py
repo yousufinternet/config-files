@@ -55,6 +55,16 @@ def autostart():
     subprocess.call([home])
 
 
+def to_urgent(qtile):
+    cg = qtile.currentGroup
+    for group in qtile.groupMap.values():
+        if group == cg:
+            continue
+        if len([w for w in group.windows if w.urgent]) > 0:
+            qtile.currentScreen.setGroup(group)
+            return
+
+
 keys = [
     # Switch between windows in current stack pane
     Key([mod], "k", lazy.layout.down()),
@@ -150,6 +160,7 @@ keys = [
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "F12", lazy.function(to_urgent)),
 ]
 
 layouts = [
@@ -204,7 +215,7 @@ screens = [
                                 highlight_method="line", background='504945',
                                 foreground='928374', active='fbf1c7',
                                 inactive='665c54', font=alt_font,
-                                fontsize=15*scale_factor),
+                                fontsize=15*scale_factor, urgent_alert_method='line'),
                 widget.TextBox('', foreground='504945', background='3c3836',
                                fontsize=20*scale_factor, padding=0),
                 # widget.Image(filename='~/.config/qtile/power7.png'),
