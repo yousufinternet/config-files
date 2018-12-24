@@ -29,7 +29,7 @@ from libqtile.config import Key, ScratchPad, DropDown, Screen, Group, Drag, Clic
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 import os, subprocess
-from powerline.bindings.qtile.widget import PowerlineTextBox
+# from powerline.bindings.qtile.widget import PowerlineTextBox
 
 try:
     from typing import List  # noqa: F401
@@ -54,6 +54,9 @@ def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
 
+
+def toggle_bar(qtile):
+    libqtile.manager.Qtile.cmd_hide_show_bar(qtile)
 
 def to_urgent(qtile):
     cg = qtile.currentGroup
@@ -161,6 +164,7 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
     Key([mod], "F12", lazy.function(to_urgent)),
+    Key([mod, 'shift'], 'b', lazy.function(toggle_bar)),
 ]
 
 layouts = [
@@ -302,6 +306,11 @@ floating_layout = layout.Floating(float_rules=[
 ], border_focus="d65d0e", border_normal="fabd2f")
 auto_fullscreen = True
 focus_on_window_activation = "smart"
+
+@libqtile.hook.subscribe.changegroup
+def move_floating_mpv(qtile, ev):
+    return
+    qtile.cmd_bring_to_front(qtile, qtile.window.Window)
 
 @libqtile.hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):
