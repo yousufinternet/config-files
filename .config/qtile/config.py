@@ -58,6 +58,7 @@ def autostart():
 def toggle_bar(qtile):
     libqtile.manager.Qtile.cmd_hide_show_bar(qtile)
 
+
 def to_urgent(qtile):
     cg = qtile.currentGroup
     for group in qtile.groupMap.values():
@@ -219,6 +220,8 @@ screens = [
                                 highlight_method="line", background='504945',
                                 foreground='928374', active='fbf1c7',
                                 inactive='665c54', font=alt_font,
+                                this_current_screen_border='fb4934',
+                                other_current_screen_border='fb4934',
                                 fontsize=15*scale_factor, urgent_alert_method='line'),
                 widget.TextBox('', foreground='504945', background='3c3836',
                                fontsize=20*scale_factor, padding=0),
