@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ar5='aria2c -c -V -s 5'
+alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
@@ -37,5 +37,5 @@ POWERLINE_BASH_SELECT=1
 
 if xset q &>/dev/null; then
   screenfetch | lolcat
-  cowsay -f tux $(fortune) | lolcat -t -a -d 2
+  cowsay -f tux $(fortune) | lolcat -t -a -d 1
 fi
