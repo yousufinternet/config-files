@@ -26,7 +26,7 @@
 
 import libqtile
 from libqtile.config import Key, ScratchPad, DropDown, Screen, Group, Drag, Click, Match
-from libqtile.command import lazy
+from libqtile.command import lazy, Client
 from libqtile import layout, bar, widget, hook
 import os, subprocess
 # from powerline.bindings.qtile.widget import PowerlineTextBox
@@ -53,6 +53,28 @@ hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
+
+
+def floating_mpv(qtile):
+    current_group = qtile.currentGroup
+    win_names = [w.name for w in current_group.windows]
+    win_dict = {w.name: w for w in current_group.windows}
+    path = os.path.expanduser('~/windows')
+    with open(path, 'w+') as f:
+        f.write(' '.join(win_names))
+    for w in current_group.windows:
+        wn = w.name
+        with open(path + wn[:5], 'w+') as f:
+            f.write(wn)
+        if 'mpv' in wn.lower():
+            try:
+                w.cmd_bring_to_front()
+                # libqtile.manager.window.Window.cmd_bring_to_front(w, qtile)
+            except Exception as e:
+                with open(path + '(mpv)', 'w+') as f:
+                    f.write(str(dir(w)) + str(e))
+
+
 
 
 def toggle_bar(qtile):
@@ -133,7 +155,7 @@ keys = [
 
     # Apps shortcuts
     Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod], "e", lazy.spawn("rofi -show-icons -show run -dpi %s -theme Monokai -modi run,drun,window,windowcd,ssh" % str(100*scale_factor))),
+    Key([mod], "e", lazy.spawn("rofi -show-icons -show run -dpi %s -theme gruvbox-dark-hard -modi run,drun,window,windowcd,ssh" % str(100*scale_factor))),
     Key([mod], "w", lazy.spawn("rofi -show windowcd -dpi %s -theme Monokai -modi windowcd,window" % str(100*scale_factor))),
     Key([mod, "control"], "w", lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
     Key([mod, "control"], "n", lazy.spawn("konsole --profile NewsBoat --notransparency -e newsboat -r")),
@@ -142,8 +164,9 @@ keys = [
     Key([mod, "control"], "e", lazy.spawn("emacs")),
     Key([mod, "shift"], "e", lazy.spawn("oblogout")),
     Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
-    Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
+    # Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
     Key([mod, "control"], "x", lazy.spawn("xkill")),
+    Key([mod, "control"], "m", lazy.function(floating_mpv)),
     # probably the -B option will need i3lock-color package
     Key([mod, "shift", "control"], "x",
         lazy.spawn("i3lock -B=%s" % 4*scale_factor)),
@@ -309,11 +332,6 @@ floating_layout = layout.Floating(float_rules=[
 ], border_focus="d65d0e", border_normal="fabd2f")
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-
-@libqtile.hook.subscribe.changegroup
-def move_floating_mpv(qtile, ev):
-    return
-    qtile.cmd_bring_to_front(qtile, qtile.window.Window)
 
 @libqtile.hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):
