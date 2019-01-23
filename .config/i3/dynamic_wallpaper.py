@@ -9,6 +9,7 @@ import pipes
 
 script_path = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
+bfr_chg_hr = datetime.datetime.now().hour
 while True:
     current_hr = datetime.datetime.now().hour
     wall_no = round((current_hr/24) * 15) + 1
@@ -16,8 +17,11 @@ while True:
         script_path, 'mojave_dynamic', 'mojave_dynamic_%s.jpeg' % wall_no)
     print(wall_path)
     shell_esc_path = pipes.quote(wall_path)
-    subprocess.Popen(['feh', '--bg-scale', wall_path])
-    # subprocess.Popen('wal -b colorz -i %s' % shell_esc_path, shell=True)
+    # subprocess.Popen(['feh', '--bg-scale', wall_path])
+    p = subprocess.Popen('wal -s -i %s' % shell_esc_path, shell=True)
+    p.wait()
     wal_oomox_colors = pipes.quote(os.path.expanduser('~/.cache/wal/colors-oomox'))
-    # subprocess.Popen('oomox-materia-cli -o wal -d true %s' % wal_oomox_colors, shell=True)
+    if current_hr != bfr_chg_hr:
+        subprocess.Popen('oomox-materia-cli -o wal -d true %s' % wal_oomox_colors, shell=True)
+    bfr_chg_hr = datetime.datetime.now().hour
     time.sleep(400)
