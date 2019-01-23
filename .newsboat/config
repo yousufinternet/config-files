@@ -1,5 +1,5 @@
 browser ~/.newsboat/readability.py %u
-urls-source "oldreader"
+# urls-source "oldreader"
 oldreader-login "yousufinternet@gmail.com"
 oldreader-passwordeval "pass show theoldreader.com/yousufinternet@gmail.com"
 download-full-page yes
