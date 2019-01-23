@@ -155,7 +155,7 @@ keys = [
 
     # Apps shortcuts
     Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod], "e", lazy.spawn("rofi -show-icons -show run -dpi %s -theme gruvbox-dark-hard -modi run,drun,window,windowcd,ssh" % str(100*scale_factor))),
+    Key([mod], "e", lazy.spawn("rofi -show-icons -show run -dpi %s -theme ~/.cache/wal/colors-rofi-dark.rasi -modi run,drun,window,windowcd,ssh" % str(100*scale_factor))),
     Key([mod], "w", lazy.spawn("rofi -show windowcd -dpi %s -theme Monokai -modi windowcd,window" % str(100*scale_factor))),
     Key([mod, "control"], "w", lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
     Key([mod, "control"], "n", lazy.spawn("konsole --profile NewsBoat --notransparency -e newsboat -r")),
