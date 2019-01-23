@@ -47,7 +47,9 @@ bindcode $mod+24 kill
 
 # start dmenu (a program launcher)
 # bindcode $mod+26 exec rofi -font 'fantasque sans mono 15' -show run
-bindcode $mod+26 exec xfce4-appfinder
+# 26 = e
+# bindcode $mod+26 exec xfce4-appfinder
+bindcode $mod+26 exec "rofi -show-icons -show run -dpi %s -theme gruvbox-dark-hard -modi run,drun,window,windowcd,ssh"
 for_window [class="Xfce4-appfinder"] floating enable
 for_window [class="gnome-calculator"] floating enable
 for_window [class="Gnome-calculator"] floating enable
@@ -230,7 +232,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym XF86MonBrightnessUp exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)+200)) | sudo /usr/bin/tee /sys/class/backlight/intel_backlight/brightness # increase screen brightness
 bindsym XF86MonBrightnessDown exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)-150)) | sudo /usr/bin/tee /sys/class/backlight/intel_backlight/brightness # decrease screen brightness
 
-bindcode $mod+shift+53 exec ~/.config/i3/lock.sh
+bindcode $mod+shift+53 exec i3lock -B=8
 bindsym --release Print exec gnome-screenshot
 bindsym --release shift+Print exec gnome-screenshot -a
 
@@ -252,24 +254,36 @@ exec --no-startup-id pasystray
 exec --no-startup-id ~/Documents/sshfs-watchdog/sshfs-wd.sh
 # exec_always --no-startup-id ~/.config/i3/autoname_workspace.py
 exec --no-startup-id udiskie -t
-# exec --no-startup-id emacs --daemon
+exec --no-startup-id emacs --daemon
 exec --no-startup-id mpd
 
 # no title bar
 new_window pixel 3
 
 # custom apps bindings
+# 25 = w
 bindcode $mod+ctrl+25 exec optirun qutebrowser
+# 26 = e
 bindcode $mod+ctrl+26 exec emacs 
+# 28 = t
 bindcode $mod+ctrl+28 exec $term -e tmux -2
+# 31 = i
 bindcode --release $mod+ctrl+31 exec --no-startup-id ~/.config/i3/invert_qb.py
+# 41 = f
 bindcode $mod+ctrl+41 exec $term -e ranger
+# 42 = g
 bindcode $mod+ctrl+42 exec gimp
+# 43 = h
 bindcode $mod+ctrl+43 exec $term -e htop
+# 52 = z
 bindcode $mod+ctrl+52 exec "killall vmg; sudo optirun vmg"
+# 53 = x
 bindcode --release $mod+ctrl+53 exec xkill 
+# 54 = c
 bindcode $mod+ctrl+54 exec calibre
+# 56 = b
 bindcode $mod+56 exec ~/.config/i3/toggle_brightness.py
+# 58 = m
 bindcode $mod+ctrl+58 exec $term -e ncmpcpp
 for_window [class="vmg"] fullscreen enable
 for_window [class="Vmg"] fullscreen enable
