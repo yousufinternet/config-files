@@ -9,7 +9,7 @@ import pipes
 
 script_path = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
-bfr_chg_hr = datetime.datetime.now().hour
+bfr_chg_hr = 'first time'
 while True:
     current_hr = datetime.datetime.now().hour
     wall_no = round((current_hr/24) * 15) + 1
