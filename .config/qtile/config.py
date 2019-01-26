@@ -37,7 +37,7 @@ except ImportError:
     pass
 
 mod = "mod4"
-terminal = "qterminal"
+terminal = "konsole"
 
 # Detect if the screen is HiDPI or not
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
