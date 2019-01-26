@@ -37,7 +37,7 @@ except ImportError:
     pass
 
 mod = "mod4"
-terminal = "konsole"
+terminal = "qterminal"
 
 # Detect if the screen is HiDPI or not
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
@@ -203,7 +203,7 @@ layouts = [
 
 groups = [
     ScratchPad("scratchpad",
-               [DropDown("term", 'konsole', opacity=0.8),
+               [DropDown("term", terminal, opacity=0.8),
                 DropDown("calc", "kcalc", on_focus_lost_hide=False, opacity=0.8, y=0.5, x=0.5, width=0.28),
                 DropDown("htop", "konsole -e htop", on_focus_lost_hide=False,
                          opacity=0.9, y=0, x=0, width=0.4, height=1),
