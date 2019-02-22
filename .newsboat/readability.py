@@ -12,6 +12,7 @@ tmp_file = os.path.expanduser('~/.newsboat/newsboat.html')
 url = sys.argv[1]
 content = get(url).text
 browser = "surf -t ~/.config/qutebrowser/Dark-stylesheets/gruvbox-all-sites.css -z 1.5" if not len(sys.argv) > 3 else sys.argv[2]
+browser = "qutebrowser --target window"
 
 # subprocess.Popen(browser.split() + [url])
 
