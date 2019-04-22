@@ -1823,9 +1823,10 @@ config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "whi
 config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
 
 # Default zoom level
-config.set('zoom.default', '125%')
+scale_factor = int(os.environ.get('GDK_SCALE', 1))
+config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 
 # Downloads position, and remove finished after 30 seconds
 config.set('downloads.position', 'bottom')
-config.set('downloads.remove_finished', 30)
+config.set('downloads.remove_finished', 90)
 config.source('nord.py')
