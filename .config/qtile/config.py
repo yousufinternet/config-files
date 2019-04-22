@@ -71,40 +71,11 @@ def no_win_alwaysontop():
     return __inner
 
 
-def floating_mpv(qtile):
-    current_group = qtile.currentGroup
-    win_names = [w.name for w in current_group.windows]
-    win_dict = {w.name: w for w in current_group.windows}
-    path = os.path.expanduser('~/windows')
-    with open(path, 'w+') as f:
-        f.write(' '.join(win_names))
-    for w in current_group.windows:
-        wn = w.name
-        with open(path + wn[:5], 'w+') as f:
-            f.write(wn)
-        if 'mpv' in wn.lower():
-            try:
-                w.cmd_bring_to_front()
-                # libqtile.manager.window.Window.cmd_bring_to_front(w, qtile)
-            except Exception as e:
-                with open(path + '(mpv)', 'w+') as f:
-                    f.write(str(dir(w)) + str(e))
-
-
 def to_next_empty_group():
-    # so now we understand that it's logical that we can't communicate with
-    # the running Qtile instance using the client commands because the Client
-    # sources the config file!
+    @lazy.function
     def __inner(qtile):
-        path = os.path.expanduser('~/empty_groups')
-        with open(path, 'w+') as f_obj:
-            f_obj.write('test')
-        QTILE_CLIENT = Client()
-        empty_groups = [grp for grp in QTILE_CLIENT.groups().keys()
-                        if len(QTILE_CLIENT.groups()[grp]['windows']) == 0]
-        if len(empty_groups) == 0:
-            return
-        QTILE_CLIENT.toggle_group(empty_groups[0])
+        subprocess.Popen(
+            os.path.expanduser('~/.config/qtile/next_emptygroup.py'))
     return __inner
 
 
@@ -134,6 +105,7 @@ keys = [
     Key([mod], "Right", lazy.layout.right()),
     Key([mod, "control"], "Left", lazy.screen.prev_group()),
     Key([mod, "control"], "Right", lazy.screen.next_group()),
+    Key([mod], "v", to_next_empty_group()),
     Key([mod], "a", current_win_alwaysontop()),
     Key([mod, 'shift'], "a", no_win_alwaysontop()),
 
@@ -199,7 +171,6 @@ keys = [
     Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
     # Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
     Key([mod, "control"], "x", lazy.spawn("xkill")),
-    Key([mod, "control"], "m", lazy.function(floating_mpv)),
     # probably the -B option will need i3lock-color package
     Key([mod, "shift", "control"], "x",
         lazy.spawn("i3lock -B=%s" % 4*scale_factor)),

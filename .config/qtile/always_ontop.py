@@ -13,6 +13,7 @@ def ontop(title):
             f_obj.write(title)
     wid = [(w['id'], w['group']) for w in c.windows() if title == w['name']]
     if len(wid) == 0:
+        os.remove(PATH)
         return
     c.window[wid[0][0]].bring_to_front()
     c.window[wid[0][0]].togroup()
@@ -30,7 +31,6 @@ def ontop(title):
 
 if __name__ == '__main__':
     PATH = os.path.expanduser('~/.config/qtile/alwaysontop_win')
-    print(sys.argv)
     if len(sys.argv) == 2:
         ontop(None)
     if os.path.exists(PATH):
