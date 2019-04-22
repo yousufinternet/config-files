@@ -36,6 +36,7 @@ try:
 except ImportError:
     pass
 
+
 mod = "mod4"
 terminal = "konsole"
 rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
@@ -54,6 +55,20 @@ hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
+
+
+def current_win_alwaysontop():
+    @lazy.function
+    def __inner(qtile):
+        subprocess.Popen([os.path.expanduser('~/.config/qtile/always_ontop.py'), '--store'])
+    return __inner
+
+
+def no_win_alwaysontop():
+    @lazy.function
+    def __inner(qtile):
+        os.remove(os.path.expanduser('~/.config/qtile/alwaysontop_win'))
+    return __inner
 
 
 def floating_mpv(qtile):
@@ -76,6 +91,21 @@ def floating_mpv(qtile):
                     f.write(str(dir(w)) + str(e))
 
 
+def to_next_empty_group():
+    # so now we understand that it's logical that we can't communicate with
+    # the running Qtile instance using the client commands because the Client
+    # sources the config file!
+    def __inner(qtile):
+        path = os.path.expanduser('~/empty_groups')
+        with open(path, 'w+') as f_obj:
+            f_obj.write('test')
+        QTILE_CLIENT = Client()
+        empty_groups = [grp for grp in QTILE_CLIENT.groups().keys()
+                        if len(QTILE_CLIENT.groups()[grp]['windows']) == 0]
+        if len(empty_groups) == 0:
+            return
+        QTILE_CLIENT.toggle_group(empty_groups[0])
+    return __inner
 
 
 def toggle_bar(qtile):
@@ -104,6 +134,8 @@ keys = [
     Key([mod], "Right", lazy.layout.right()),
     Key([mod, "control"], "Left", lazy.screen.prev_group()),
     Key([mod, "control"], "Right", lazy.screen.next_group()),
+    Key([mod], "a", current_win_alwaysontop()),
+    Key([mod, 'shift'], "a", no_win_alwaysontop()),
 
     # DropDown Terminal
     Key([mod], "d", lazy.group["scratchpad"].dropdown_toggle("term")),
@@ -310,7 +342,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 main = None
 follow_mouse_focus = True
-bring_front_click = True # Default is False
+bring_front_click = False # Default is False
 cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'confirm'},
@@ -334,9 +366,40 @@ floating_layout = layout.Floating(float_rules=[
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
+# @libqtile.hook.subscribe.client_focus
+# def raise_mpv_ontop(c):
+#     try:
+#         error='None'
+#         client_obj = Client()
+#         # cur_win = client_obj.window.name
+#         win_lst = client_obj.group.info()['windows']
+#         mpv_win = list(win for win in win_lst if 'mpv' in win) 
+#         if len(mpv_win) == 0:
+#             return
+#         mpv_win = mpv_win[0]
+#         while True:
+#             match = client_obj.window.match(wname=mpv_win)
+#             if match:
+#                 break
+#             else:
+#                 client_obj.group.next_window()
+#         client_obj.group.window.enable_floating()
+#         client_obj.group.window.bring_to_front()
+#         c.focus()
+#     except Exception as e:
+#         error = e
+#     with open('/home/yusuf/debug_floating.txt', 'w+') as f_obj:
+#         f_obj.write(error)
+#         f_obj.write('test')
+
 @libqtile.hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):
     qtile.cmd_restart()
+
+
+@libqtile.hook.subscribe.focus_change
+def float_mpv():
+    subprocess.Popen(os.path.expanduser('~/.config/qtile/always_ontop.py'))
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
