@@ -60,7 +60,8 @@ def autostart():
 def current_win_alwaysontop():
     @lazy.function
     def __inner(qtile):
-        subprocess.Popen([os.path.expanduser('~/.config/qtile/always_ontop.py'), '--store'])
+        subprocess.Popen(
+            [os.path.expanduser('~/.config/qtile/always_ontop.py'), '--store'])
     return __inner
 
 
@@ -197,7 +198,7 @@ keys = [
 
 layouts = [
     layout.Max(),
-    layout.Columns(fair=True, margin=8*scale_factor,
+    layout.Columns(fair=True, margin=4*scale_factor,
                    border_normal='d79921', border_focus='d65d0e'),
     # layout.Wmii(margin=8*scale_factor, border_normal='d79921', border_focus='d65d0e', border_normal_stack='fb4934', border_focus_stack='cc241d'),
     layout.Stack(num_stacks=2),
