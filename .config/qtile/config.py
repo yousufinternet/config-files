@@ -39,7 +39,6 @@ except ImportError:
 
 mod = "mod4"
 terminal = "konsole"
-rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
 
 # Detect if the screen is HiDPI or not
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
@@ -50,11 +49,33 @@ cmd = "pacman -Ql | grep 'optirun'"
 hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
 
+rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
+rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
+            "-modi window,windowcd")
+rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
+             " -theme {rofi_theme} -modi run,drun,ssh")
 # Startup apps
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
+
+
+def kill_all_windows():
+    @lazy.function
+    def __inner(qtile):
+        for window in qtile.currentGroup.windows:
+            window.kill()
+    return __inner
+
+
+def kill_all_windows_except_current():
+    @lazy.function
+    def __inner(qtile):
+        for window in qtile.currentGroup.windows:
+            if window != qtile.currentWindow:
+                window.kill()
+    return __inner
 
 
 def current_win_alwaysontop():
@@ -69,6 +90,14 @@ def no_win_alwaysontop():
     @lazy.function
     def __inner(qtile):
         os.remove(os.path.expanduser('~/.config/qtile/alwaysontop_win'))
+    return __inner
+
+
+def moveto_next_empty_group():
+    @lazy.function
+    def __inner(qtile):
+        subprocess.Popen(
+            os.path.expanduser('~/.config/qtile/tonext_emptygroup.py'))
     return __inner
 
 
@@ -107,6 +136,7 @@ keys = [
     Key([mod, "control"], "Left", lazy.screen.prev_group()),
     Key([mod, "control"], "Right", lazy.screen.next_group()),
     Key([mod], "v", to_next_empty_group()),
+    Key([mod, 'shift'], "v", moveto_next_empty_group()),
     Key([mod], "a", current_win_alwaysontop()),
     Key([mod, 'shift'], "a", no_win_alwaysontop()),
 
@@ -115,6 +145,7 @@ keys = [
 
     # easy to reach calculator
     Key([mod], "c", lazy.group["scratchpad"].dropdown_toggle("calc")),
+    Key([mod, 'shift'], "i", lazy.group["scratchpad"].dropdown_toggle("ipython")),
     Key([mod, 'shift'], "h", lazy.group["scratchpad"].dropdown_toggle("htop")),
     Key([mod, 'shift'], "m", lazy.group["scratchpad"].dropdown_toggle("ncmpcpp")),
 
@@ -161,9 +192,10 @@ keys = [
 
     # Apps shortcuts
     Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod], "e", lazy.spawn("rofi -show-icons -show run -dpi %s -theme %s -modi run,drun,window,windowcd,ssh" % (str(100*scale_factor), rofi_theme))),
-    Key([mod], "w", lazy.spawn("rofi -show windowcd -dpi %s -theme %s -modi windowcd,window" % (str(100*scale_factor), rofi_theme))),
-    Key([mod, "control"], "w", lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
+    Key([mod], "e", lazy.spawn()),
+    Key([mod], "w", lazy.spawn(rofi_win)),
+    Key([mod, "control"], "w",
+        lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
     Key([mod, "control"], "n", lazy.spawn("konsole --profile NewsBoat --notransparency -e newsboat -r")),
     Key([mod, "shift"], "f", lazy.spawn("krusader")),
     Key([mod, "control"], "f", lazy.spawn("%s -e ranger" % terminal)),
@@ -188,6 +220,7 @@ keys = [
     Key([mod], "Tab", lazy.next_layout()),
     Key([mod, "shift"], "Tab", lazy.prev_layout()),
     Key([mod], "q", lazy.window.kill()),
+    Key([mod, 'shift'], "q", kill_all_windows()),
 
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
@@ -200,25 +233,26 @@ layouts = [
     layout.Max(),
     layout.Columns(fair=True, margin=4*scale_factor,
                    border_normal='d79921', border_focus='d65d0e'),
-    # layout.Wmii(margin=8*scale_factor, border_normal='d79921', border_focus='d65d0e', border_normal_stack='fb4934', border_focus_stack='cc241d'),
     layout.Stack(num_stacks=2),
     layout.Matrix(),
     layout.xmonad.MonadTall()
 ]
 
 groups = [
-    ScratchPad("scratchpad",
-               [DropDown("term", terminal, opacity=0.8),
-                DropDown("calc", "kcalc", on_focus_lost_hide=False, opacity=0.8, y=0.5, x=0.5, width=0.28),
-                DropDown("htop", "konsole -e htop", on_focus_lost_hide=False,
-                         opacity=0.9, y=0, x=0, width=0.4, height=1),
-                DropDown("ncmpcpp", "konsole -e ncmpcpp", on_focus_lost_hide=False,
-                         opacity=0.9, y=1-0.4, x=0.25, width=0.5, height=0.4)])] + [
-                    Group(str(x+1)) for x in range(8)] + [
-                       Group('9', matches=[Match(wm_class=['Steam', 'steam'])]),
-                       Group('10', layout='matrix', spawn=[
-                           "%s -e ncmpcpp" % terminal, "%s -e htop" % terminal,
-                           "%s -e tmux -2" % terminal, terminal])]
+    ScratchPad(
+        "scratchpad",
+        [DropDown("term", terminal, opacity=0.8),
+         DropDown("calc", "kcalc", on_focus_lost_hide=False,
+                  opacity=0.8, y=0.5, x=0.5, width=0.28),
+         DropDown("ipython", "konsole -e ipython", on_focus_lost_hide=False,
+                  opacity=0.9, y=0, x=0.6, width=0.4, height=1),
+         DropDown("htop", "konsole -e htop", on_focus_lost_hide=False,
+                  opacity=0.9, y=0, x=0, width=0.4, height=1),
+         DropDown("ncmpcpp", "konsole -e ncmpcpp", on_focus_lost_hide=False,
+                  opacity=0.9, y=1-0.4, x=0.25, width=0.5, height=0.4)])] + [
+        Group(str(x+1)) for x in range(8)] + [
+        Group('9', matches=[Match(wm_class=['Steam', 'steam'])]),
+        Group('10', layout='matrix')]
 
 for x, i in enumerate(groups):
     x = 0 if x == 10 else x
@@ -262,7 +296,6 @@ screens = [
                 widget.TextBox('', foreground='#3c3836', background='98971a',
                                fontsize=20*scale_factor, padding=0),
                 # widget.Image(filename='~/.config/qtile/power3.png'),
-                widget.Mpd2(fontsize=12*scale_factor, background="98971a"),
                 widget.TextBox('', foreground='98971a', background='689d6a',
                                fontsize=20*scale_factor, padding=0),
                 # widget.Image(filename='~/.config/qtile/power6.png', background='009700'),
@@ -282,13 +315,16 @@ screens = [
                 widget.TextBox('', background='3c3836', foreground='d79921',
                                fontsize=20*scale_factor, padding=0),
                 # widget.Image(filename='~/.config/qtile/power9.png'),
-                widget.KeyboardLayout(update_interval=0.2, padding=2*scale_factor, fontshadow='000000'),
+                widget.KeyboardLayout(update_interval=0.2,
+                                      configured_keyboards=['us', 'ara'],
+                                      padding=2*scale_factor,
+                                      fontshadow='000000'),
                 widget.BatteryIcon(),
                 # widget.Image(filename='~/.config/qtile/power2.png'),
                 widget.TextBox('', foreground='3c3836', background='928374',
                                fontsize=20*scale_factor, padding=0),
                 widget.TextBox('📅', background="928374"),
-                widget.Clock(format='%Y-%m-%d %a %I:%M %p', background="928374", font=alt_font),
+                widget.Clock(format='%a %d-%B %I:%M %p', background="928374", font=alt_font),
                 widget.TextBox('🕐', background="928374"),
                 widget.TextBox('', foreground='928374', background='3c3836',
                                fontsize=20*scale_factor, padding=0),
