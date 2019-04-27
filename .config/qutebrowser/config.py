@@ -1810,7 +1810,8 @@ config.set('content.headers.user_agent', "Mozilla/5.0 (X11; Linux x86_64) AppleW
 
 # view youtube vidoes with mpv
 # tsp is a task spooler that adds tasks to a queue 
-config.bind(';m', 'hint links spawn tsp youtube-viewer {hint-url}')
+config.bind(';m4', 'hint links spawn tsp youtube-viewer -4 {hint-url}')
+config.bind(';m7', 'hint links spawn tsp youtube-viewer -7 {hint-url}')
 config.bind(';M', 'hint links spawn tsp youtube-viewer -n -3 {hint-url}')
 config.bind(',y', 'spawn konsole -e youtube-dl --all-subs --embed-subs {url};; tab-close')
 

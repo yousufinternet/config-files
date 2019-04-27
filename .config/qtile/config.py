@@ -53,7 +53,7 @@ rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
 rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
             " -modi window,windowcd")
 rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
-             " -theme {rofi_theme} -modi run,drun,ssh")
+             f" -theme {rofi_theme} -modi run,drun,ssh")
 # Startup apps
 @hook.subscribe.startup_once
 def autostart():
