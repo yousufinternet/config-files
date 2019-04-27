@@ -51,7 +51,7 @@ hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
 
 rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
 rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
-            "-modi window,windowcd")
+            " -modi window,windowcd")
 rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
              " -theme {rofi_theme} -modi run,drun,ssh")
 # Startup apps
@@ -192,7 +192,7 @@ keys = [
 
     # Apps shortcuts
     Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod], "e", lazy.spawn()),
+    Key([mod], "e", lazy.spawn(rofi_exec)),
     Key([mod], "w", lazy.spawn(rofi_win)),
     Key([mod, "control"], "w",
         lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
