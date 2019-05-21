@@ -1788,6 +1788,11 @@
 
 # Enable JavaScript.
 # Type: Bool
+
+# pylint: disable=C0111
+c = c  # noqa: F821 pylint: disable=E0602,C0103
+config = config  # noqa: F821 pylint: disable=E0602,C0103
+
 config.set('content.javascript.enabled', True)
 
 # config.set('content.javascript.enabled', True, 'file://*')
@@ -1823,6 +1828,9 @@ config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webp
 config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
 config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
 
+# prevent gmail from sending protocol handler confirmation dialogs
+config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
+config.set('content.register_protocol_handler', True, '*://gmail.com/*')
 # Default zoom level
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
