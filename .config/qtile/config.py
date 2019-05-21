@@ -36,6 +36,13 @@ try:
 except ImportError:
     pass
 
+try:
+    import gi
+    gi.require_version('Notify', '0.7')
+    from gi.repository import Notify
+    from gi.repository.GLib import Variant as gi_variant
+except Exception:
+    FAILED_NOTIFY = True
 
 mod = "mod4"
 terminal = "konsole"
@@ -45,7 +52,7 @@ scale_factor = int(os.environ.get('GDK_SCALE', 1))
 
 # If optirun is installed then hybrid graphics exist on system, if not don't
 # prepend optirun to some commands
-cmd = "pacman -Ql | grep 'optirun'"
+cmd = "pacman -Qe | grep 'bumblebee'"
 hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
 
@@ -54,6 +61,9 @@ rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
             " -modi window,windowcd")
 rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
              f" -theme {rofi_theme} -modi run,drun,ssh")
+
+Notify.init("Volume")
+vol_notification = Notify.Notification.new("Volume Changed", "")
 # Startup apps
 @hook.subscribe.startup_once
 def autostart():
@@ -90,6 +100,50 @@ def no_win_alwaysontop():
     @lazy.function
     def __inner(qtile):
         os.remove(os.path.expanduser('~/.config/qtile/alwaysontop_win'))
+    return __inner
+
+
+def volume_ctl_old(vol):
+    @lazy.function
+    def __inner(qtile):
+        sign = '+' if vol > 0 else '-'
+        subprocess.Popen(
+            f"pactl set-sink-volume @DEFAULT_SINK@ {sign}{abs(vol)}%",
+            shell=True, text=True)
+        cur_vol = int(subprocess.Popen(
+            'pamixer --get-volume', shell=True, text=True,
+            stdout=subprocess.PIPE).communicate()[0][:-1])
+        icon = 'audio-volume-muted'
+        if cur_vol >= 70:
+            icon = 'audio-volume-high'
+        elif cur_vol >= 40:
+            icon = 'audio-volume-medium'
+        elif cur_vol > 0:
+            icon = 'audio-volume-low'
+        subprocess.Popen(f'notify-send -i {icon} -t 1500 -h int:value:{cur_vol} -h string:synchronous:volume "Volume changed"', shell=True, text=True)
+    return __inner
+
+
+def volume_ctl(vol):
+    @lazy.function
+    def __inner(qtile):
+        sign = '+' if vol > 0 else '-'
+        subprocess.Popen(
+            f"pactl set-sink-volume @DEFAULT_SINK@ {sign}{abs(vol)}%",
+            shell=True, text=True)
+        cur_vol = int(subprocess.Popen(
+            'pamixer --get-volume', shell=True, text=True,
+            stdout=subprocess.PIPE).communicate()[0][:-1])
+        icon = 'audio-volume-muted'
+        if cur_vol >= 70:
+            icon = 'audio-volume-high'
+        elif cur_vol >= 40:
+            icon = 'audio-volume-medium'
+        elif cur_vol > 0:
+            icon = 'audio-volume-low'
+        vol_notification.update('Volume Changed', '', icon)
+        vol_notification.set_hint('value', gi_variant.new_int32(cur_vol))
+        vol_notification.show()
     return __inner
 
 
@@ -196,12 +250,16 @@ keys = [
     Key([mod], "w", lazy.spawn(rofi_win)),
     Key([mod, "control"], "w",
         lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
-    Key([mod, "control"], "n", lazy.spawn("konsole --profile NewsBoat --notransparency -e newsboat -r")),
+    Key([mod, "control"], "n", lazy.spawn(
+        "konsole --profile NewsBoat --notransparency -e newsboat -r")),
     Key([mod, "shift"], "f", lazy.spawn("krusader")),
     Key([mod, "control"], "f", lazy.spawn("%s -e ranger" % terminal)),
     Key([mod, "control"], "e", lazy.spawn("emacs")),
     Key([mod, "shift"], "e", lazy.spawn("oblogout")),
     Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
+    Key([mod, "shift"], "r", lazy.spawn(
+        f"{'optirun ' if hybrid_grphcs else ''}"
+        "alacritty -e rtv --theme molokai --enable-media")),
     # Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
     Key([mod, "control"], "x", lazy.spawn("xkill")),
     # probably the -B option will need i3lock-color package
@@ -209,11 +267,12 @@ keys = [
         lazy.spawn("i3lock -B=%s" % 4*scale_factor)),
 
     # Brightness and Volume controls
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
+    Key([], "XF86AudioRaiseVolume", volume_ctl(5)),
+    Key([], "XF86AudioLowerVolume", volume_ctl(-10)),
     Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 2")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5")),
-    Key([mod], "b", lazy.spawn(os.path.expanduser("~/.config/i3/toggle_brightness.py"))),
+    Key([mod], "b", lazy.spawn(
+        os.path.expanduser("~/.config/i3/toggle_brightness.py"))),
     # Key([mod, "control"], "z", lazy.spawn("killall vmg; sudo optirun vmg")),
 
     # Toggle between different layouts as defined below
