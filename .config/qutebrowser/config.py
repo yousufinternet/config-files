@@ -1788,6 +1788,7 @@
 
 # Enable JavaScript.
 # Type: Bool
+import os, sys
 
 # pylint: disable=C0111
 c = c  # noqa: F821 pylint: disable=E0602,C0103
@@ -1821,19 +1822,23 @@ config.bind(';M', 'hint links spawn tsp youtube-viewer -n -3 {hint-url}')
 config.bind(',y', 'spawn konsole -e youtube-dl --all-subs --embed-subs {url};; tab-close')
 
 # dark style sheets
-import os
 path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
 stylesheets = ' '.join([os.path.join(path, fn) for fn in os.listdir(path)])
 config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webpage.bg ""' % stylesheets)
 config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
 config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
 
+# it turns out per-domain settings for content.user-stylesheets is not supported
+# config.set('content.user_stylesheets', os.path.join(path, 'gruvbox-all-sites.css'), '*://github.com/*|*://*.stackexchange.com/*|*://stackoverflow.com/*')
 # prevent gmail from sending protocol handler confirmation dialogs
-config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
 config.set('content.register_protocol_handler', True, '*://gmail.com/*')
+config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
 # Default zoom level
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
+
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
+                       'y': 'https://youtube.com/results?search_query={}'}
 
 # Downloads position, and remove finished after 30 seconds
 config.set('downloads.position', 'bottom')
