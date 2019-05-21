@@ -41,6 +41,7 @@ try:
     gi.require_version('Notify', '0.7')
     from gi.repository import Notify
     from gi.repository.GLib import Variant as gi_variant
+    FAILED_NOTIFY = False
 except Exception:
     FAILED_NOTIFY = True
 
@@ -62,8 +63,8 @@ rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
 rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
              f" -theme {rofi_theme} -modi run,drun,ssh")
 
-Notify.init("Volume")
-vol_notification = Notify.Notification.new("Volume Changed", "")
+Notify.init("notifications")
+notification = Notify.Notification.new("", "")
 # Startup apps
 @hook.subscribe.startup_once
 def autostart():
@@ -104,6 +105,9 @@ def no_win_alwaysontop():
 
 
 def volume_ctl_old(vol):
+    '''
+    Will be kept as an example on how to use notify-send
+    '''
     @lazy.function
     def __inner(qtile):
         sign = '+' if vol > 0 else '-'
@@ -124,6 +128,30 @@ def volume_ctl_old(vol):
     return __inner
 
 
+def brightness_ctl(vlu):
+    @lazy.function
+    def __inner(qtile):
+        symbol = 'A' if vlu > 0 else 'U'
+        subprocess.Popen(
+            f"light -{symbol} {abs(vlu)}",
+            shell=True, text=True)
+        if not FAILED_NOTIFY:
+            cur_bright = float(subprocess.Popen(
+                'light', shell=True, text=True,
+                stdout=subprocess.PIPE).communicate()[0][:-1])
+            icon = 'display-brightness-off'
+            if cur_bright >= 70:
+                icon = 'display-brightness-high'
+            elif cur_bright >= 40:
+                icon = 'display-brightness-medium'
+            elif cur_bright > 0:
+                icon = 'display-brightness-low'
+            notification.update('Brightness Changed', '', icon)
+            notification.set_hint('value', gi_variant.new_int32(cur_bright))
+            notification.show()
+    return __inner
+
+
 def volume_ctl(vol):
     @lazy.function
     def __inner(qtile):
@@ -131,19 +159,20 @@ def volume_ctl(vol):
         subprocess.Popen(
             f"pactl set-sink-volume @DEFAULT_SINK@ {sign}{abs(vol)}%",
             shell=True, text=True)
-        cur_vol = int(subprocess.Popen(
-            'pamixer --get-volume', shell=True, text=True,
-            stdout=subprocess.PIPE).communicate()[0][:-1])
-        icon = 'audio-volume-muted'
-        if cur_vol >= 70:
-            icon = 'audio-volume-high'
-        elif cur_vol >= 40:
-            icon = 'audio-volume-medium'
-        elif cur_vol > 0:
-            icon = 'audio-volume-low'
-        vol_notification.update('Volume Changed', '', icon)
-        vol_notification.set_hint('value', gi_variant.new_int32(cur_vol))
-        vol_notification.show()
+        if not FAILED_NOTIFY:
+            cur_vol = int(subprocess.Popen(
+                'pamixer --get-volume', shell=True, text=True,
+                stdout=subprocess.PIPE).communicate()[0][:-1])
+            icon = 'audio-volume-muted'
+            if cur_vol >= 70:
+                icon = 'audio-volume-high'
+            elif cur_vol >= 40:
+                icon = 'audio-volume-medium'
+            elif cur_vol > 0:
+                icon = 'audio-volume-low'
+            notification.update('Volume Changed', '', icon)
+            notification.set_hint('value', gi_variant.new_int32(cur_vol))
+            notification.show()
     return __inner
 
 
@@ -269,8 +298,8 @@ keys = [
     # Brightness and Volume controls
     Key([], "XF86AudioRaiseVolume", volume_ctl(5)),
     Key([], "XF86AudioLowerVolume", volume_ctl(-10)),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 2")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5")),
+    Key([], "XF86MonBrightnessUp", brightness_ctl(2)),
+    Key([], "XF86MonBrightnessDown", brightness_ctl(-5)),
     Key([mod], "b", lazy.spawn(
         os.path.expanduser("~/.config/i3/toggle_brightness.py"))),
     # Key([mod, "control"], "z", lazy.spawn("killall vmg; sudo optirun vmg")),
@@ -300,7 +329,7 @@ layouts = [
 groups = [
     ScratchPad(
         "scratchpad",
-        [DropDown("term", terminal, opacity=0.8),
+        [DropDown("term", terminal, opacity=0.9, height=0.5),
          DropDown("calc", "kcalc", on_focus_lost_hide=False,
                   opacity=0.8, y=0.5, x=0.5, width=0.28),
          DropDown("ipython", "konsole -e ipython", on_focus_lost_hide=False,
