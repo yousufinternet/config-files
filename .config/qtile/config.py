@@ -244,7 +244,7 @@ keys = [
     Key([mod, "shift"], "x", lazy.layout.grow()),
     Key([mod, "shift"], "z", lazy.layout.shrink()),
     Key([mod], "n", lazy.layout.normalize()),
-    Key([mod], "m", lazy.layout.maximize()),
+    Key([mod], "m", lazy.group["scratchpad"].dropdown_toggle("pulsemixer")),
 
     # Screenshots
     Key([], "Print", lazy.spawn("gnome-screenshot")),
@@ -296,6 +296,8 @@ keys = [
         lazy.spawn("i3lock -B=%s" % 4*scale_factor)),
 
     # Brightness and Volume controls
+    Key([mod], "period", volume_ctl(5)),
+    Key([mod], "comma", volume_ctl(-10)),
     Key([], "XF86AudioRaiseVolume", volume_ctl(5)),
     Key([], "XF86AudioLowerVolume", volume_ctl(-10)),
     Key([], "XF86MonBrightnessUp", brightness_ctl(2)),
@@ -330,6 +332,8 @@ groups = [
     ScratchPad(
         "scratchpad",
         [DropDown("term", terminal, opacity=0.9, height=0.5),
+         DropDown("pulsemixer", "alacritty -e pulsemixer",
+                  opacity=0.8, y=0.25, x=0.25, width=0.5, height=0.5),
          DropDown("calc", "kcalc", on_focus_lost_hide=False,
                   opacity=0.8, y=0.5, x=0.5, width=0.28),
          DropDown("ipython", "konsole -e ipython", on_focus_lost_hide=False,
