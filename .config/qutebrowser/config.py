@@ -1820,6 +1820,7 @@ config.bind(';m4', 'hint links spawn tsp youtube-viewer -4 {hint-url}')
 config.bind(';m7', 'hint links spawn tsp youtube-viewer -7 {hint-url}')
 config.bind(';M', 'hint links spawn tsp youtube-viewer -n -3 {hint-url}')
 config.bind(',y', 'spawn konsole -e youtube-dl --all-subs --embed-subs {url};; tab-close')
+config.bind(',m', 'spawn tsp youtube-viewer -4 {url};; back')
 
 # dark style sheets
 path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
