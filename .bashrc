@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export EDITOR=vim
+export RTV_EDITOR=vim
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
 alias resrvserv='ssh yusuf@10.127.188.192'
@@ -24,7 +26,7 @@ HISTFILESIZE=
 HISTCONTROL=erasedups
 
 # Had to use that with mlterm
-export TERM=xterm-color
+export TERM=xterm-256color
 
 # Supposedly text should wrap as the terminal size changes
 shopt -s checkwinsize
