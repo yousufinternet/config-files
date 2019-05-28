@@ -5,6 +5,7 @@ spool=/home/yusuf/Podcasts/Philosophize_this
 [60-Second Science]
 url=http://rss.sciam.com/sciam/60secsciencepodcast?format=xml
 spool=/home/yusuf/Podcasts/60-Seconds_Science
+filename=%(date)-%(title).mp3
 
 [The Infinite Monkey Cage]
 url=http://podcasts.files.bbci.co.uk/b00snr0w.rss
@@ -25,4 +26,24 @@ spool=/home/yusuf/Podcasts/Talk_python
 [Romooz-AlJazeera]
 url=https://www.omnycontent.com/d/playlist/9c074afa-3313-47e8-b802-a9f900789975/3eff11f3-e4ef-4a6f-9716-aa0f008bb0e8/0fd96dfb-9a95-4297-9405-aa0f008cba64/podcast.rss
 spool=/home/yusuf/Podcasts/Romooz
+filename=%(date)-%(title).mp3
+
+[ThisWeekInTech]
+url=http://feeds.twit.tv/twit.xml
+spool=/home/yusuf/Podcasts/ThisWeekInTech
+filename=%(date)-%(title).mp3
+
+[OnlyTest]
+url=http://www.tested.com/podcast-xml/
+spool=/home/yusuf/Podcasts/OnlyTest
+filename=%(date)-%(title).mp3
+
+[ChipsWithEverything]
+url=https://www.theguardian.com/technology/series/chips-with-everything/podcast.xml
+spool=/home/yusuf/Podcasts/ChipsWithEverything
+filename=%(date)-%(title).mp3
+
+[Moments]
+url=https://www.omnycontent.com/d/playlist/9c074afa-3313-47e8-b802-a9f900789975/eb3f597e-9cab-4c0b-9572-aa1300e2665c/6ea6737e-2530-4497-a4c2-aa1300e2933c/podcast.rss
+spool=/home/yusuf/Podcasts/Moments
 filename=%(date)-%(title).mp3
