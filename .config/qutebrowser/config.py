@@ -1839,7 +1839,7 @@ scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
-                       'y': 'https://youtube.com/results?search_query={}'}
+                       'y': 'https://youtube.com/results?search_query={}', 'w': 'https://wiki.archlinux.org/index.php?search={}'}
 
 # Downloads position, and remove finished after 30 seconds
 config.set('downloads.position', 'bottom')
