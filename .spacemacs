@@ -531,10 +531,11 @@ before packages are loaded."
 
   ;; make deft support more note types
   (setq deft-extensions '("md" "txt" "org"))
-  (setq deft-default-extension "md")
+  (setq deft-default-extension "org")
 
   ;; open agenda as soon as spacemacs starts
   (org-agenda nil "a")
+  (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
 
   ;; by default deft searches for notes only in the root directory, this changes this
   (setq deft-recursive t)
