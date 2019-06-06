@@ -1,7 +1,7 @@
 # set font "monospace normal 14"
 set recolor-keephue
 set selection-clipboard clipboard
-set recolor-darkcolor gray
+set recolor-darkcolor "#bfbfbf"
 set recolor-reverse-video
 set recolor
 set statusbar-home-tilde true
