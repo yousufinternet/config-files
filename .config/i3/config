@@ -188,7 +188,7 @@ bindsym $mod+Shift+0 move container to workspace number 10; workspace number 0
 # bindsym $mod+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+ctrl+Shift+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -307,25 +307,35 @@ bindcode $mod+ctrl+54 exec calibre
 bindcode $mod+56 exec ~/.config/i3/toggle_brightness.py
 # 58 = m
 bindcode $mod+ctrl+58 exec $term -e ncmpcpp
-for_window [class="vmg"] fullscreen enable
-for_window [class="Vmg"] fullscreen enable
-for_window [class="oblogout"] fullscreen enable
-for_window [class="Oblogout"] fullscreen enable
 bindsym $mod+F7		exec transset-df -a --dec .15
 bindsym $mod+F8		exec transset-df -a --inc .15
 
-# for_window [class="new_interface.py"] floating enable
-# load kodi and cinemana workspace
-# bindsym $mod+shift+k exec --no-startup-id "i3-msg 'workspace 4; append_layout ~/.config/i3/saved_workspaces/cinemana_kodi.json'"
+bindcode $mod+ctrl+shift+53 exec i3lock -B=8
+bindsym --release Print exec spectacle -b
+bindsym --release shift+Print exec spectacle -br
 
+# Keyboard Layout
+exec localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle,caps:swapescape' 
+exec setxkbmap -option caps:escape
 
-# exec_always "setxkbmap -layout us,ara"
-# ## exec_always "setxkbmap -option 'grp:ctrl_alt_toggle'"
-# exec_always "setxkbmap -option 'grp:alt_shift_toggle' -option 'lv3:menu_switch'"
-exec localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle,lv3:menu_switch'
+#                     _       _                     _ 
+#  ___  ___ _ __ __ _| |_ ___| |__  _ __   __ _  __| |
+# / __|/ __| '__/ _` | __/ __| '_ \| '_ \ / _` |/ _` |
+# \__ \ (__| | | (_| | || (__| | | | |_) | (_| | (_| |
+# |___/\___|_|  \__,_|\__\___|_| |_| .__/ \__,_|\__,_|
+#                                  |_|                
 
-# class                 border  backgr. text    indicator
-# client.focused #586e75 #586e75 #fdf6e3 #268bd2
-# client.focused_inactive #073642 #073642 #93a1a1 #002b36
-# client.unfocused #002b36 #002b36 #586e75 #002b36
-# client.urgent #dc322f #dc322f #fdf6e3 #dc322f
+# move current window to scratchpad workspace
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+exec konsole -p tabtitle="dropdown"
+for_window  [title="dropdown"] move scratchpad
+bindcode $mod+shift+40 [title="dropdown"] scratchpad show
+
+exec kcalc
+for_window  [class="kcalc"] move scratchpad
+bindcode $mod+shift+54 [class="kcalc"] scratchpad show
+
