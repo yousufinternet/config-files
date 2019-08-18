@@ -383,9 +383,10 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
-exec konsole -p tabtitle="dropdown"
-for_window  [title="dropdown"] move scratchpad
-bindcode $mod+shift+40 [title="dropdown"] scratchpad show
+exec konsole -p tabtitle="dropdown_terminal"
+for_window  [title="^dropdown_terminal$"] move scratchpad
+for_window [title="^dropdown_terminal$"] sticky enable
+bindcode $mod+shift+40 [title="dropdown_terminal"] scratchpad show
 
 exec kcalc
 for_window  [class="kcalc"] move scratchpad
