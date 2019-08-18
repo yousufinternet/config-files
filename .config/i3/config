@@ -283,12 +283,24 @@ bindsym shift+XF86MonBrightnessDown exec ~/.config/i3/brightness_ctl.sh -1
 
 
 
-# Startup apps
+#      _             _                                       
+#  ___| |_ __ _ _ __| |_ _   _ _ __     __ _ _ __  _ __  ___ 
+# / __| __/ _` | '__| __| | | | '_ \   / _` | '_ \| '_ \/ __|
+# \__ \ || (_| | |  | |_| |_| | |_) | | (_| | |_) | |_) \__ \
+# |___/\__\__,_|_|   \__|\__,_| .__/   \__,_| .__/| .__/|___/
+#                             |_|           |_|   |_|        
+
 # exec xfce4-session
-# exec xfce4-panel
-exec --no-startup-id compton -f
 # exec --no-startup-id dunst
+exec --no-startup-id compton -f
 exec --no-startup-id systemctl --user start xfce4-notifyd
+
+# notification server for audio notifications
+exec --no-startup-id notify-send.py "volume notification" --replaces-process volume_ctl -t 1
+
+# notification server for brightness notifications
+exec --no-startup-id notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1
+
 # exec_always --no-startup-id feh --bg-scale /home/yusuf-arch/.config/i3/wall.jpg
 exec --no-startup-id ~/.config/i3/dynamic_wallpaper.py
 exec --no-startup-id safeeyes
@@ -297,9 +309,10 @@ exec --no-startup-id goldendict
 exec --no-startup-id nm-applet
 exec --nos-startup-id blueman-applet
 exec --no-startup-id pasystray
+exec --no-startup-id syncthing-gtk -m
+exec --no-startup-id parcellite
 # exec --no-startup-id xfce4-panel -d
-exec --no-startup-id ~/Documents/sshfs-watchdog/sshfs-wd.sh
-# exec_always --no-startup-id ~/.config/i3/autoname_workspace.py
+# exec --no-startup-id ~/Documents/sshfs-watchdog/sshfs-wd.sh
 exec --no-startup-id udiskie -t
 exec --no-startup-id emacs --daemon
 exec --no-startup-id mpd
