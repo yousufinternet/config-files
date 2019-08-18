@@ -501,6 +501,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  (setq default-frame-alist '((font . "Dejavu Sans Mono-14.0")))
   ;; attempt to set a fallback font
   ;; (set-fontset-font "fontset-default" 'unicode "Dejavu Sans mono")
 
