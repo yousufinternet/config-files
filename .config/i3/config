@@ -225,23 +225,30 @@ bindcode $mod+27 mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  i3bar_command i3bar --transparency
 	font pango: DejaVuSansMono Nerd Font 9
+  status_command i3blocks -c ~/.config/i3/i3blocks.conf
         # status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        status_command ~/.config/i3/bumblebee-status/bumblebee-status -m  mpd disk:home brightness battery cpu layout-sub date time -p interval=2.5 home.path=/home home.showUsed=no home.showSize=no time.format="%H:%M" date.format="%a, %b %d %y" -t solarized-powerline
+        # status_command ~/.config/i3/bumblebee-status/bumblebee-status -m  mpd disk:home brightness battery cpu layout-sub date time -p interval=2.5 home.path=/home home.showUsed=no home.showSize=no time.format="%H:%M" date.format="%a, %b %d %y" -t solarized-powerline
 	position Top
-colors {
-    separator #586e75
-    background #002b36
-    statusline #aea79f
-    focused_workspace #586e75 #586e75 #ffffff
-    active_workspace #073642 #073642 #ffffff
-    inactive_workspace #002b36 #002b36 #aea79f
-    urgent_workspace #77216f #77216f #ffffff
+  colors {
+         # A6 = 65% opacity
+         background #000000A6
 }
-#    mode hide
-#    hidden_state hide
-#    modifier $mod
+# colors {
+#     separator #586e75
+#     background #002b36
+#     statusline #aea79f
+#     focused_workspace #586e75 #586e75 #ffffff
+#     active_workspace #073642 #073642 #ffffff
+#     inactive_workspace #002b36 #002b36 #aea79f
+#     urgent_workspace #77216f #77216f #ffffff
+# }
+   mode hide
+   # hidden_state show
+   modifier $mod
 	# tray_output none
+  workspace_buttons yes
 }
 
  
