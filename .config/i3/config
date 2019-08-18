@@ -45,25 +45,40 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindcode $mod+24 kill
 
-# start dmenu (a program launcher)
-# bindcode $mod+26 exec rofi -font 'fantasque sans mono 15' -show run
+#             __ _ 
+#  _ __ ___  / _(_)
+# | '__/ _ \| |_| |
+# | | | (_) |  _| |
+# |_|  \___/|_| |_|
+                 
+# 25 = w
+bindcode $mod+25 exec "rofi -show window -dpi $((100*$GDK_SCALE)) -theme $rofi_theme -modi window,windowcd"
 # 26 = e
-# bindcode $mod+26 exec xfce4-appfinder
-bindcode $mod+26 exec "rofi -show-icons -show run -dpi %s -theme gruvbox-dark-hard -modi run,drun,window,windowcd,ssh"
+bindcode $mod+26 exec "rofi -show-icons -show run -dpi $((100*$GDK_SCALE)) -theme $rofi_theme -modi run,drun,ssh"
+
+
+#           _           _                            _           
+# __      _(_)_ __   __| | _____      __  _ __ _   _| | ___  ___ 
+# \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / / | '__| | | | |/ _ \/ __|
+#  \ V  V /| | | | | (_| | (_) \ V  V /  | |  | |_| | |  __/\__ \
+#   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/   |_|   \__,_|_|\___||___/
+
 for_window [class="Xfce4-appfinder"] floating enable
 for_window [class="gnome-calculator"] floating enable
 for_window [class="Gnome-calculator"] floating enable
 for_window [class="xfce4-appfinder"] floating enable
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+for_window [class="vmg"] fullscreen enable
+for_window [class="Vmg"] fullscreen enable
+for_window [class="oblogout"] fullscreen enable
+for_window [class="Oblogout"] fullscreen enable
+
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# h, j, k, l = 43 - 46
+bindcode $mod+43 focus left
+bindcode $mod+44 focus down
+bindcode $mod+45 focus up
+bindcode $mod+46 focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
