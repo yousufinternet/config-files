@@ -99,7 +99,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindcode $mod+43 split h
+bindcode $mod+49 split h
 
 # split in vertical orientation
 bindcode $mod+55 split v
@@ -108,8 +108,11 @@ bindcode $mod+55 split v
 bindcode $mod+41 fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
+# 39 = s
 bindcode $mod+39 layout stacking
-bindcode $mod+25 layout tabbed
+# 28 = t
+bindcode $mod+28 layout tabbed
+# 40 = d
 bindcode $mod+40 layout toggle split
 
 # toggle tiling / floating
@@ -119,12 +122,14 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
+# 38 = a
 bindcode $mod+38 focus parent
 
 # focus the child container
+# 54 = c
 bindcode $mod+54 focus child
 
-# define workspaces ,autoname_workspace.py is used now instead
+# define workspaces
 
 set $ws1 "1: "
 set $ws2 "2: "
@@ -134,29 +139,30 @@ set $ws5 "5: "
 set $ws6 "6: "
 set $ws9 "9: "
 set $ws10 "10: &#xf001;"
+
 # switch to workspace
-# bindsym $mod+1 workspace $ws1
-# bindsym $mod+2 workspace $ws2
-# bindsym $mod+3 workspace $ws3
-# bindsym $mod+4 workspace $ws4
-# bindsym $mod+5 workspace $ws5
-# bindsym $mod+6 workspace $ws6
-# bindsym $mod+7 workspace 7
-# bindsym $mod+8 workspace 8
-# bindsym $mod+9 workspace $ws9
-# bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
+# bindsym $mod+1 workspace number 1
+# bindsym $mod+2 workspace number 2
+# bindsym $mod+3 workspace number 3
+# bindsym $mod+4 workspace number 4
+# bindsym $mod+5 workspace number 5
+# bindsym $mod+6 workspace number 6
+# bindsym $mod+7 workspace number 7
+# bindsym $mod+8 workspace number 8
+# bindsym $mod+9 workspace number 9
+# bindsym $mod+0 workspace number 10
 
 bindsym $mod+Shift+1 move container to workspace number 1; workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2; workspace number 2
