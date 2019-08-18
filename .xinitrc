@@ -50,8 +50,8 @@ fi
 
 # xrandr --dpi 244
 xrandr --dpi 200
-# i3
-qtile
+i3
+# qtile
 # twm &
 # xclock -geometry 50x50-1+1 &
 # xterm -geometry 80x50+494+51 &
