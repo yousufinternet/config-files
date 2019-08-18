@@ -43,8 +43,9 @@ This function should only modify configuration layer settings."
      javascript
      csv
      shell-scripts
-     (python :variables
-             python-shell-interpreter 'python3)
+     python
+     ;; (python :variables
+     ;;         python-shell-interpreter 'python3)
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      ipython-notebook
      (latex :variables
