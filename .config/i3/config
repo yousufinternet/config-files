@@ -113,7 +113,14 @@ bindcode $mod+38 focus parent
 # 54 = c
 bindcode $mod+54 focus child
 
-# define workspaces
+
+#                     _                                  
+# __      _____  _ __| | _____ _ __   __ _  ___ ___  ___ 
+# \ \ /\ / / _ \| '__| |/ / __| '_ \ / _` |/ __/ _ \/ __|
+#  \ V  V / (_) | |  |   <\__ \ |_) | (_| | (_|  __/\__ \
+#   \_/\_/ \___/|_|  |_|\_\___/ .__/ \__,_|\___\___||___/
+#                             |_|                        
+
 
 set $ws1 "1: "
 set $ws2 "2: "
@@ -366,14 +373,17 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
-exec konsole -p tabtitle="dropdown_terminal"
-for_window  [title="^dropdown_terminal$"] move scratchpad
-for_window [title="^dropdown_terminal$"] sticky enable
-bindcode $mod+shift+40 [title="dropdown_terminal"] scratchpad show
+for_window  [title="dropdown_terminal"] move scratchpad
+for_window [title="dropdown_terminal"] sticky enable
+bindcode $mod+shift+40 exec ~/.config/i3/scratchpad_launcher.sh konsole dropdown_terminal "konsole -p tabtitle=dropdown_terminal"
 
-exec kcalc
-for_window  [class="kcalc"] move scratchpad
-bindcode $mod+shift+54 [class="kcalc"] scratchpad show
+# for_window  [class="kcalc"] move scratchpad
+for_window [title="dropdown_calculator"] move scratchpad
+for_window [title="dropdown_calculator"] sticky enable
+bindcode $mod+shift+54 exec ~/.config/i3/scratchpad_launcher.sh konsole dropdown_calculator "konsole -p tabtitle=dropdown_calculator -e bc"
+
+
+
 #           _           _                            _           
 # __      _(_)_ __   __| | _____      __  _ __ _   _| | ___  ___ 
 # \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / / | '__| | | | |/ _ \/ __|
