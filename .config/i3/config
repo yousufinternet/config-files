@@ -58,23 +58,6 @@ bindcode $mod+25 exec "rofi -show window -dpi $((100*$GDK_SCALE)) -theme $rofi_t
 bindcode $mod+26 exec "rofi -show-icons -show run -dpi $((100*$GDK_SCALE)) -theme $rofi_theme -modi run,drun,ssh"
 
 
-#           _           _                            _           
-# __      _(_)_ __   __| | _____      __  _ __ _   _| | ___  ___ 
-# \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / / | '__| | | | |/ _ \/ __|
-#  \ V  V /| | | | | (_| | (_) \ V  V /  | |  | |_| | |  __/\__ \
-#   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/   |_|   \__,_|_|\___||___/
-
-assign [class="qutebrowser"] number 2
-for_window [class="Xfce4-appfinder"] floating enable
-for_window [class="gnome-calculator"] floating enable
-for_window [class="Gnome-calculator"] floating enable
-for_window [class="xfce4-appfinder"] floating enable
-for_window [class="vmg"] fullscreen enable
-for_window [class="Vmg"] fullscreen enable
-for_window [class="oblogout"] fullscreen enable
-for_window [class="Oblogout"] fullscreen enable
-
-
 # change focus
 # h, j, k, l = 43 - 46
 bindcode $mod+43 focus left
@@ -391,4 +374,18 @@ bindcode $mod+shift+40 [title="dropdown_terminal"] scratchpad show
 exec kcalc
 for_window  [class="kcalc"] move scratchpad
 bindcode $mod+shift+54 [class="kcalc"] scratchpad show
+#           _           _                            _           
+# __      _(_)_ __   __| | _____      __  _ __ _   _| | ___  ___ 
+# \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / / | '__| | | | |/ _ \/ __|
+#  \ V  V /| | | | | (_| | (_) \ V  V /  | |  | |_| | |  __/\__ \
+#   \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/   |_|   \__,_|_|\___||___/
 
+assign [class="qutebrowser"] number 2
+for_window [class="Xfce4-appfinder"] floating enable
+for_window [class="gnome-calculator"] floating enable
+for_window [class="Gnome-calculator"] floating enable
+for_window [class="xfce4-appfinder"] floating enable
+for_window [class="vmg"] fullscreen enable
+for_window [class="Vmg"] fullscreen enable
+for_window [class="oblogout"] fullscreen enable
+for_window [class="Oblogout"] fullscreen enable
