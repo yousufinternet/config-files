@@ -49,7 +49,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 # xrandr --dpi 244
-xrandr --dpi 200
+if [ "$GDK_SCALE" -eq 2 ]; then
+  xrandr --dpi 200
+fi
 i3
 # qtile
 # twm &
