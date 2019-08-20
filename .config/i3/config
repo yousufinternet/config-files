@@ -216,7 +216,7 @@ bindcode $mod+27 mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  i3bar_command i3bar --transparency
+  # i3bar_command i3bar # --transparency
 	font pango: DejaVuSansMono Nerd Font 9
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
         # status_command i3blocks -c ~/.config/i3/i3blocks.conf
