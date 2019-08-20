@@ -53,9 +53,9 @@ bindcode $mod+24 kill
 # |_|  \___/|_| |_|
                  
 # 25 = w
-bindcode $mod+25 exec "rofi -show window -dpi $((100*$GDK_SCALE)) -theme $rofi_theme -modi window,windowcd"
+bindcode $mod+25 exec "rofi -show window -dpi $ROFI_DPI -theme $rofi_theme -modi window,windowcd"
 # 26 = e
-bindcode $mod+26 exec "rofi -show-icons -show run -dpi $((100*$GDK_SCALE)) -theme $rofi_theme -modi run,drun,ssh"
+bindcode $mod+26 exec "rofi -show-icons -show run -dpi $ROFI_DPI -theme $rofi_theme -modi run,drun,ssh"
 
 
 # change focus
@@ -329,6 +329,8 @@ hide_edge_borders smart
 bindcode $mod+ctrl+25 exec ~/.config/i3/start_with_optirun.sh qutebrowser
 # 26 = e
 bindcode $mod+ctrl+26 exec emacsclient -c
+# 27 = e
+bindcode $mod+ctrl+27 exec $term -e rtv
 # 28 = t
 bindcode $mod+ctrl+28 exec $term -e tmux -2
 # 31 = i
