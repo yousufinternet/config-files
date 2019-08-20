@@ -17,6 +17,10 @@ PS1='[\u@\h \W]\$ '
 # vi mode in bash
 set -o vi
 
+if [ -n "$GDK_SCALE" ]; then
+	export GDK_SCALE=1
+fi	
+export ROFI_DPI=$((GDK_SCALE*100))
 alias android='xrandr --output eDP-1 --mode 1920x1080; genymotion-player --vm-name "Custom Phone - 8.0 - API 26 - 768x1280"; xrandr --output eDP-1 --mode 3840x2160'
 
 # infinite history and erase duplicates
