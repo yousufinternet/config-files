@@ -9,7 +9,7 @@
 # bumblebee_installed=$(pacman -Qe bumblebee| wc -l)
 # if [ $bumblebee_installed = 1 ]; then
 # '-n' means the string is not of zero length
-if [ -n "$(pacman -Qe bumblebee 2> /dev/null | wc -l)" ]; then
+if [ "$(pacman -Qe bumblebee 2> /dev/null | wc -l)" -gt 0 ]; then
     hybrid="optirun"
 fi
 
