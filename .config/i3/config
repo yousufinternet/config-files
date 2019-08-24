@@ -384,6 +384,9 @@ for_window [title="dropdown_calculator"] move scratchpad
 for_window [title="dropdown_calculator"] sticky enable
 bindcode $mod+shift+54 exec ~/.config/i3/scratchpad_launcher.sh konsole dropdown_calculator "konsole -p tabtitle=dropdown_calculator -e bc"
 
+for_window  [title="dropdown_pulsemixer"] move scratchpad
+for_window [title="dropdown_pulsemixer"] sticky enable
+bindcode $mod+shift+58 exec ~/.config/i3/scratchpad_launcher.sh konsole dropdown_pulsemixer "konsole -p tabtitle=dropdown_pulsemixer -e pulsemixer"
 
 
 #           _           _                            _           
