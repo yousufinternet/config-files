@@ -52,7 +52,8 @@ fi
 if [ "$GDK_SCALE" -eq 2 ]; then
   xrandr --dpi 200
 fi
-i3
+exec bspwm
+# i3
 # qtile
 # twm &
 # xclock -geometry 50x50-1+1 &

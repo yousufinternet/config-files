@@ -84,8 +84,13 @@ super + x
 super + shift + x
   replace_with_hidden.py swap
 
+# restore hidden windows
 super + ctrl + x
   replace_with_hidden.py
+
+# hide everything in direction
+super + alt + {Left,Up,Down,Right}
+   hide_all.py {west,north,south,east}
 
 # contract a window by moving one of its side inward
 super + ctrl + shift + {h,j,k,l}
@@ -145,7 +150,7 @@ super + ctrl + shift + r
   xfce4-panel -r -d;\
   bspc wm --restart
 
-super + ctrl + shift + x
+super + ctrl + shift + k
   xkill
 
 #                     _        _                    _     

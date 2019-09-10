@@ -18,6 +18,7 @@ notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
 
 # polybar mybar &
+# fake configs folder to use a different gtk-3.0.ini file with a different font
 XDG_CONFIG_HOME=~/.config_alt xfce4-panel -d &
 
 bspc monitor -d I II III IV V VI VII VIII IX X
@@ -28,6 +29,8 @@ bspc config window_gap          $((GDK_SCALE*6))
 bspc config split_ratio          0.7
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
+
+bspc desktop 'I' --layout monocle
 
 bspc config focus_follows_pointer true
 # bspc config pointer_follows_focus true
