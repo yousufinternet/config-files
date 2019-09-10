@@ -5,6 +5,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export XDG_CONFIG_HOME="$HOME/.config"
+export PATH=$PATH:$HOME/.local/bin
+export TERMINAL=konsole
+export ROFI_THEME=gruvbox-dark-hard
 export EDITOR=vim
 export RTV_EDITOR=vim
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
@@ -49,5 +53,5 @@ eval "$(fasd --init auto)"
 
 if xset q &>/dev/null; then
   screenfetch | lolcat
-  cowsay -f tux $(fortune) | lolcat -t
+  cowsay -f tux $(fortune)
 fi
