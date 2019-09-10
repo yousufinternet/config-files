@@ -1,0 +1,6 @@
+Command=/home/yusuf/.local/bin/xfce4-genmon-scripts/pacman-panel.sh
+UseLabel=1
+Text=\ \ 📦\ 
+UpdatePeriod=1000000
+Font=TerminessTTF Nerd Font Mono Medium 11
+

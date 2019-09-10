@@ -1,0 +1,6 @@
+Command=/home/yusuf/.local/bin/xfce4-genmon-scripts/disk-panel.sh
+UseLabel=0
+Text=🖴
+UpdatePeriod=30000
+Font=TerminessTTF Nerd Font Mono Medium 11
+

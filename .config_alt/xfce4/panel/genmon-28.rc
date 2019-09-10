@@ -1,0 +1,6 @@
+Command=date +"%F 🕐 %H:%M:%S"
+UseLabel=1
+Text=\ \ 
+UpdatePeriod=1000
+Font=TerminessTTF Nerd Font Mono Medium 11
+

@@ -1,0 +1,6 @@
+Command=/home/yusuf/.local/bin/xfce4-genmon-scripts/cpu-panel.sh
+UseLabel=1
+Text=\ \ 🤖\ 
+UpdatePeriod=100000
+Font=TerminessTTF Nerd Font Mono Medium 11
+
