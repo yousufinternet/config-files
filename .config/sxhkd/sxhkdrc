@@ -163,7 +163,7 @@ super + ctrl + shift + k
 #                                   |_|                   
 
 super + d
-  tdrop -n 1 --name dropdown_terminal -h 55% -a -f '-p tabtitle=dropdown_terminal' konsole
+  tdrop -n 1 -y $((GDK_SCALE*20)) --name dropdown_terminal -h 55% -a -f '-p tabtitle=dropdown_terminal' konsole
    
 super + ctrl + c
   tdrop -n 2 -w 30% -h 30% -x 35% -y 70% --name dropdown_calc -a -f '-p tabtitle=dropdown_calc -e bc' konsole
