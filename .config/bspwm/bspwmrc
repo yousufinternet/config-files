@@ -13,6 +13,8 @@ pasystray &
 syncthing-gtk -m &
 parcellite &
 safeeyes &
+mpd &
+kdeconnect-indicator &
 ~/.config/i3/dynamic_wallpaper.py &
 notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 &
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
