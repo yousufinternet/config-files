@@ -88,6 +88,9 @@ super + shift + x
 super + ctrl + x
   replace_with_hidden.py
 
+super + ctrl + shift + x
+   i3lock -e -B --force-clock --keylayout 0 --insidecolor 1e58a46a --indicator
+
 # hide everything in direction
 super + alt + {Left,Up,Down,Right}
    hide_all.py {west,north,south,east}
