@@ -1,7 +1,7 @@
 browser ~/.newsboat/readability.py %u
-urls-source "oldreader"
-oldreader-login "yousufinternet@gmail.com"
-oldreader-passwordeval "pass show theoldreader.com/yousufinternet@gmail.com"
+# urls-source "oldreader"
+# oldreader-login "yousufinternet@gmail.com"
+# oldreader-passwordeval "pass show theoldreader.com/yousufinternet@gmail.com"
 download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
