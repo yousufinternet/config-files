@@ -39,11 +39,17 @@ super + Tab
 super + s
 	bspc node -s biggest.local
 
-super + z
-  bspc node @east --ratio 0.1;\
-  bspc node @south --ratio 0.1;\
-  bspc node @north --ratio 0.1;\
-  bspc node @west --ratio 0.1
+super + F1
+  man -Tpdf bspc | zathura - 
+
+super + v
+  move_floating.py
+  
+super +{_, shift +} z
+  bspc node @/ --ratio {0.3,0.7}
+
+{F7,F8}
+	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
 
 super + q
   bspc node --close
@@ -55,7 +61,13 @@ super + shift + b
   toggle_brightness.py
 
 super + b
-   bspc node @parent --balance
+   bspc node @/ --balance
+
+super + r
+   bspc node @/ --rotate 90
+
+super + shift + r
+   bspc node @parent --rotate 270
 
 super + {t,shift + t,shift + f,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
@@ -66,15 +78,15 @@ super + shift + s
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop --focus,node --to-desktop} '^{1-9,10}'
+	bspc {desktop --focus,node --to-desktop} '^{1-9,10}';xfce4-panel --plugin-event=genmon-14:refresh:bool:true    
 
 # preselect the direction
 super + ctrl + {Left,Down,Up,Right}
-	bspc node --presel-dir {west,south,north,east}
+	bspc node --presel-dir ~{west,south,north,east}
 
 # cancel the preselection for the focused node
-super + ctrl + space
-	bspc node --presel-dir cancel
+# super + ctrl + space
+# 	bspc node --presel-dir cancel
 
 # toggle hidden windows
 super + x
@@ -94,9 +106,9 @@ super + ctrl + shift + x
 super + shift + e
    oblogout
 
-# hide everything in direction
-super + alt + {Left,Up,Down,Right}
-   hide_all.py {west,north,south,east}
+# # hide everything in direction
+# super + alt + {Left,Up,Down,Right}
+#    hide_all.py {west,north,south,east}
 
 # contract a window by moving one of its side inward
 super + ctrl + shift + {h,j,k,l}
@@ -108,11 +120,11 @@ super + ctrl + shift + {Left,Down,Up,Right}
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
-  bspc node --{focus,swap} {west,south,north,east}
+  bspc node --{focus,to-node} {west,south,north,east}
 
 # focus the node in the given direction
-super + {_,shift + }{Left,Down,Up,Right}
-	bspc node --{focus,swap} {west,south,north,east}
+super + {_,shift + ,alt +}{Left,Down,Up,Right}
+	bspc node --{focus,swap,to-node} {west,south,north,east}
 
 # switch between windows when in monocle mode
 super + {_,shift + } c
@@ -166,7 +178,7 @@ super + ctrl + shift + k
 #                                   |_|                   
 
 super + d
-  tdrop -n 1 -y $((GDK_SCALE*20)) --name dropdown_terminal -h 55% -a -f '-p tabtitle=dropdown_terminal' konsole
+  tdrop --wm bspwm -n 1 -y $((GDK_SCALE*20)) --name dropdown_terminal -h 55% -a -f '-p tabtitle=dropdown_terminal' konsole
    
 super + ctrl + c
-  tdrop -n 2 -w 30% -h 30% -x 35% -y 70% --name dropdown_calc -a -f '-p tabtitle=dropdown_calc -e bc' konsole
+  tdrop --wm bspwm -n 2 -w 30% -h 30% -x 35% -y 70% --name dropdown_calc -a -f '-p tabtitle=dropdown_calc -e bc' konsole
