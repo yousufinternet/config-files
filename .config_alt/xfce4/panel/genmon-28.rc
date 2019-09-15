@@ -1,4 +1,4 @@
-Command=date +"%F 🕐 %H:%M:%S"
+Command=date +"📅%a-%F 🕐%H:%M:%S"
 UseLabel=1
 Text=\ \ 
 UpdatePeriod=1000
