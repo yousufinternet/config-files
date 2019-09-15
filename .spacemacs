@@ -43,10 +43,14 @@ This function should only modify configuration layer settings."
      javascript
      csv
      shell-scripts
+     (dart :variables
+           dart-sdk-path "/home/yusuf/.local/bin/flutter/bin/cache/dart-sdk/"
+           dart-enable-analysis-server t)
      python
      ;; (python :variables
      ;;         python-shell-interpreter 'python3)
-     (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
+     (evil-snipe :variables
+                 evil-snipe-enable-alternate-f-and-t-behaviors t)
      ipython-notebook
      (latex :variables
             ;; commented auto fill, may be it is slowing things a little bit
@@ -73,6 +77,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      deft
+     lsp
      pandoc
      pdf-tools
      (ranger : variables
@@ -99,7 +104,8 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(autothemer
-                                      dash)
+                                      dash
+                                      flutter)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -222,7 +228,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night
+   dotspacemacs-themes '(doom-dracula
                          gruvbox-dark-hard
                          solarized-dark
                          spacemacs-dark
@@ -243,8 +249,8 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Dejavu Sans Mono"
-                               :size 14.0
+   dotspacemacs-default-font '("TerminessTTF Nerd Font"
+                               :size 16.0
                                :weight normal
                                :width normal)
 
@@ -501,7 +507,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  (setq default-frame-alist '((font . "Dejavu Sans Mono-14.0")))
+  (setq default-frame-alist '((font . "TerminessTTF Nerd Font-16.0")))
   ;; attempt to set a fallback font
   ;; (set-fontset-font "fontset-default" 'unicode "Dejavu Sans mono")
 
@@ -539,6 +545,21 @@ before packages are loaded."
   (org-agenda nil "a")
   (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
 
+  ;; Assuming usage with dart-mode
+  (use-package dart-mode
+    :ensure-system-package (dart_language_server . "pub global activate dart_language_server"))
+
+  ;; flutter
+  (use-package flutter
+    :after dart-mode
+    :bind (:map dart-mode-map
+                ("C-M-x" . #'flutter-run-or-hot-reload)))
+
+  ;; Optional
+  (use-package flutter-l10n-flycheck
+    :after flutter
+    :config
+    (flutter-l10n-flycheck-setup))
   ;; by default deft searches for notes only in the root directory, this changes this
   (setq deft-recursive t)
 
@@ -565,8 +586,7 @@ before packages are loaded."
 
   (with-eval-after-load "pandoc-mode"
     (define-key pandoc-mode-map (kbd "C-c C-a p") 'pandoc-convert-to-pdf))
-  
-  
+
   ;; bidi aware movement keys for evil
   (define-key evil-normal-state-map "h" 'left-char)
   (define-key evil-normal-state-map "l" 'right-char)
