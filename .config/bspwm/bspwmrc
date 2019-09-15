@@ -33,8 +33,12 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 bspc desktop 'I' --layout monocle
+#open Funny Java Things
+# bspc config focus_follows_pointer false
+wmname LG3D
 
 bspc config focus_follows_pointer true
+bspc config external_rules_command "$(which external_rules)"
 # bspc config pointer_follows_focus true
 
 bspc config top_padding $((GDK_SCALE * 20))

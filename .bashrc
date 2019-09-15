@@ -27,6 +27,8 @@ alias resrvserv='ssh yusuf@10.127.188.192'
 alias mediacenter='ssh yusuf@192.168.1.109'
 alias worklaptop='ssh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
+
+# powerline
 PS1='[\u@\h \W]\$ '
 
 # vi mode in bash
