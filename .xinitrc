@@ -54,7 +54,7 @@ if [ "$GDK_SCALE" -eq 2 ]; then
 fi
 exec bspwm
 # i3
-# qtile
+# exec qtile
 # twm &
 # xclock -geometry 50x50-1+1 &
 # xterm -geometry 80x50+494+51 &
