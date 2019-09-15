@@ -5,17 +5,28 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# for java applications
+export AWT_TOOLKIT=MToolkit
+
+# for bspwm
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# my scripts and flutter executables
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$HOME/.local/bin/flutter/bin:$PATH
+export PATH=$HOME/.pub-cache/bin/:$PATH
+
 export TERMINAL=konsole
 export ROFI_THEME=gruvbox-dark-hard
 export EDITOR=vim
 export RTV_EDITOR=vim
+
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
 alias resrvserv='ssh yusuf@10.127.188.192'
 alias mediacenter='ssh yusuf@192.168.1.109'
 alias worklaptop='ssh archie-work@192.168.1.107'
+alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
 PS1='[\u@\h \W]\$ '
 
 # vi mode in bash
