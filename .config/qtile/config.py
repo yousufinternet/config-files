@@ -58,9 +58,9 @@ hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
 
 rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
-rofi_win = (f"rofi -show windowcd -dpi {100*scale_factor} -theme {rofi_theme}"
+rofi_win = (f"rofi -show windowcd -dpi 0 -theme {rofi_theme}"
             " -modi window,windowcd")
-rofi_exec = (f"rofi -show-icons -show run -dpi {100*scale_factor}"
+rofi_exec = ("rofi -terminal {terminal} -show-icons -show run -dpi 0"
              f" -theme {rofi_theme} -modi run,drun,ssh")
 
 Notify.init("notifications")
@@ -247,8 +247,8 @@ keys = [
     Key([mod], "m", lazy.group["scratchpad"].dropdown_toggle("pulsemixer")),
 
     # Screenshots
-    Key([], "Print", lazy.spawn("gnome-screenshot")),
-    Key(["shift"], "Print", lazy.spawn("gnome-screenshot -a")),
+    Key([], "Print", lazy.spawn("spectacle --background")),
+    Key(["shift"], "Print", lazy.spawn("spectacle --background --region")),
 
     # Move windows up or down in current stack
     Key([mod, "control"], "k", lazy.layout.shuffle_down()),
@@ -283,7 +283,7 @@ keys = [
         "konsole --profile NewsBoat --notransparency -e newsboat -r")),
     Key([mod, "shift"], "f", lazy.spawn("krusader")),
     Key([mod, "control"], "f", lazy.spawn("%s -e ranger" % terminal)),
-    Key([mod, "control"], "e", lazy.spawn("emacs")),
+    Key([mod, "control"], "e", lazy.spawn("emacsclient -c")),
     Key([mod, "shift"], "e", lazy.spawn("oblogout")),
     Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
     Key([mod, "shift"], "r", lazy.spawn(
@@ -293,7 +293,8 @@ keys = [
     Key([mod, "control"], "x", lazy.spawn("xkill")),
     # probably the -B option will need i3lock-color package
     Key([mod, "shift", "control"], "x",
-        lazy.spawn("i3lock -B=%s" % 4*scale_factor)),
+        lazy.spawn("i3lock -e -B --force-clock --keylayout 0"
+                   " --insidecolor 1e58a46a --indicator")),
 
     # Brightness and Volume controls
     Key([mod], "period", volume_ctl(5)),
@@ -366,68 +367,71 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 alt_font = 'RobotoMono Nerd Font'
-screens = [
-    Screen(
-        bottom=bar.Bar(
-            [
-                widget.GroupBox(disable_drag=True, highlight_color='d65d0e',
-                                highlight_method="line", background='504945',
-                                foreground='928374', active='fbf1c7',
-                                inactive='665c54', font=alt_font,
-                                this_current_screen_border='fb4934',
-                                other_current_screen_border='fb4934',
-                                fontsize=15*scale_factor, urgent_alert_method='line'),
-                widget.TextBox('', foreground='504945', background='3c3836',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power7.png'),
-                widget.Prompt(),
-                widget.CurrentLayoutIcon(),
-                widget.TaskList(highlight_method="block", rounded=False,
-                                font=alt_font, fontsize=13*scale_factor,
-                                iconsize=18*scale_factor, border='d65d0e'),
-                widget.TextBox('', foreground='#3c3836', background='98971a',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power3.png'),
-                widget.TextBox('', foreground='98971a', background='689d6a',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power6.png', background='009700'),
-                # widget.Spacer(length=500),
-                widget.TextBox('📦', background='689d6a'),
-                widget.CheckUpdates(execute='konsole -e "pacaur -Syu --noconfirm"', display_format=':{updates}', font=alt_font, background='689d6a'),
-                widget.TextBox('', foreground='689d6a', background='3c3836',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power5.png'),
-                widget.NetGraph(graph_color="fabd2f", width=50*scale_factor),
-                widget.CPUGraph(width=50*scale_factor, graph_color='fb4934'),
-                widget.MemoryGraph(graph_color="b8bb26", width=50*scale_factor),
-                widget.TextBox('', foreground='3c3836', background='d79921',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power8.png'),
-                widget.ThermalSensor(font=alt_font, background='d79921'),
-                widget.TextBox('', background='3c3836', foreground='d79921',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power9.png'),
-                widget.KeyboardLayout(update_interval=0.2,
-                                      configured_keyboards=['us', 'ara'],
-                                      padding=2*scale_factor,
-                                      fontshadow='000000'),
-                widget.BatteryIcon(),
-                # widget.Image(filename='~/.config/qtile/power2.png'),
-                widget.TextBox('', foreground='3c3836', background='928374',
-                               fontsize=20*scale_factor, padding=0),
-                widget.TextBox('📅', background="928374"),
-                widget.Clock(format='%a %d-%B %I:%M %p', background="928374", font=alt_font),
-                widget.TextBox('🕐', background="928374"),
-                widget.TextBox('', foreground='928374', background='3c3836',
-                               fontsize=20*scale_factor, padding=0),
-                # widget.Image(filename='~/.config/qtile/power1.png'),
-                widget.Backlight(backlight_name="intel_backlight", update_interval=1, font=alt_font),
-                widget.Systray(icon_size=16*scale_factor, padding=7*scale_factor),
-            ],
-            20 * scale_factor, background='#3c3836'
-        ),
-    ),
-]
+
+screens = [Screen(top=bar.Gap(40))]
+
+# screens = [
+#     Screen(
+#         bottom=bar.Bar(
+#             [
+#                 widget.GroupBox(disable_drag=True, highlight_color='d65d0e',
+#                                 highlight_method="line", background='504945',
+#                                 foreground='928374', active='fbf1c7',
+#                                 inactive='665c54', font=alt_font,
+#                                 this_current_screen_border='fb4934',
+#                                 other_current_screen_border='fb4934',
+#                                 fontsize=15*scale_factor, urgent_alert_method='line'),
+#                 widget.TextBox('', foreground='504945', background='3c3836',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power7.png'),
+#                 widget.Prompt(),
+#                 widget.CurrentLayoutIcon(),
+#                 widget.TaskList(highlight_method="block", rounded=False,
+#                                 font=alt_font, fontsize=13*scale_factor,
+#                                 iconsize=18*scale_factor, border='d65d0e'),
+#                 widget.TextBox('', foreground='#3c3836', background='98971a',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power3.png'),
+#                 widget.TextBox('', foreground='98971a', background='689d6a',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power6.png', background='009700'),
+#                 # widget.Spacer(length=500),
+#                 widget.TextBox('📦', background='689d6a'),
+#                 widget.CheckUpdates(execute='konsole -e "pacaur -Syu --noconfirm"', display_format=':{updates}', font=alt_font, background='689d6a'),
+#                 widget.TextBox('', foreground='689d6a', background='3c3836',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power5.png'),
+#                 widget.NetGraph(graph_color="fabd2f", width=50*scale_factor),
+#                 widget.CPUGraph(width=50*scale_factor, graph_color='fb4934'),
+#                 widget.MemoryGraph(graph_color="b8bb26", width=50*scale_factor),
+#                 widget.TextBox('', foreground='3c3836', background='d79921',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power8.png'),
+#                 widget.ThermalSensor(font=alt_font, background='d79921'),
+#                 widget.TextBox('', background='3c3836', foreground='d79921',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power9.png'),
+#                 widget.KeyboardLayout(update_interval=0.2,
+#                                       configured_keyboards=['us', 'ara'],
+#                                       padding=2*scale_factor,
+#                                       fontshadow='000000'),
+#                 widget.BatteryIcon(),
+#                 # widget.Image(filename='~/.config/qtile/power2.png'),
+#                 widget.TextBox('', foreground='3c3836', background='928374',
+#                                fontsize=20*scale_factor, padding=0),
+#                 widget.TextBox('📅', background="928374"),
+#                 widget.Clock(format='%a %d-%B %I:%M %p', background="928374", font=alt_font),
+#                 widget.TextBox('🕐', background="928374"),
+#                 widget.TextBox('', foreground='928374', background='3c3836',
+#                                fontsize=20*scale_factor, padding=0),
+#                 # widget.Image(filename='~/.config/qtile/power1.png'),
+#                 widget.Backlight(backlight_name="intel_backlight", update_interval=1, font=alt_font),
+#                 widget.Systray(icon_size=16*scale_factor, padding=7*scale_factor),
+#             ],
+#             20 * scale_factor, background='#3c3836'
+#         ),
+#     ),
+# ]
 
 # Drag floating layouts.
 mouse = [
@@ -492,14 +496,14 @@ focus_on_window_activation = "smart"
 #         f_obj.write(error)
 #         f_obj.write('test')
 
-@libqtile.hook.subscribe.screen_change
-def restart_on_randr(qtile, ev):
-    qtile.cmd_restart()
+# @libqtile.hook.subscribe.screen_change
+# def restart_on_randr(qtile, ev):
+#     qtile.cmd_restart()
 
 
-@libqtile.hook.subscribe.focus_change
-def float_mpv():
-    subprocess.Popen(os.path.expanduser('~/.config/qtile/always_ontop.py'))
+# @libqtile.hook.subscribe.focus_change
+# def float_mpv():
+#     subprocess.Popen(os.path.expanduser('~/.config/qtile/always_ontop.py'))
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
