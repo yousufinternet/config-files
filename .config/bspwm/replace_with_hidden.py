@@ -35,9 +35,11 @@ except subprocess.CalledProcessError:
     pass
 
 cmd_run(f'bspc node {selected_window} --flag hidden=off')
+cmd_run(f'bspc node {selected_window} --flag private=on')
 if swap_flag:
+    cmd_run(f'bspc node {current_win} --flag private=on')
     cmd_run(f'bspc node --swap {selected_window}')
 cmd_run(f'bspc node -f {selected_window}')
 if swap_flag:
     cmd_run(f'bspc node {current_win} -g hidden=on')
-cmd_run(f'bspc node -f {selected_window}')
+    cmd_run(f'bspc node -f {selected_window}')
