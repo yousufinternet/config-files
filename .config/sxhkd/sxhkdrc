@@ -123,8 +123,8 @@ super + {_,shift + }{h,j,k,l}
   bspc node --{focus,to-node} {west,south,north,east}
 
 # focus the node in the given direction
-super + {_,shift + ,alt +}{Left,Down,Up,Right}
-	bspc node --{focus,swap,to-node} {west,south,north,east}
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node --{focus,to-node} {west,south,north,east}
 
 # switch between windows when in monocle mode
 super + {_,shift + } c
