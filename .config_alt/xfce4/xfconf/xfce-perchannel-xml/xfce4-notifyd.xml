@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-notifyd" version="1.0">
+  <property name="primary-monitor" type="uint" value="0"/>
+  <property name="notify-location" type="uint" value="2"/>
+  <property name="log-level" type="uint" value="1"/>
+  <property name="log-level-apps" type="uint" value="1"/>
+  <property name="theme" type="string" value="Default"/>
+  <property name="applications" type="empty">
+    <property name="known_applications" type="array">
+      <value type="string" value=""/>
+      <value type="string" value="Blueman"/>
+      <value type="string" value="calibre"/>
+      <value type="string" value="calibre-gui"/>
+      <value type="string" value="cantata"/>
+      <value type="string" value="chromium"/>
+      <value type="string" value="Firefox"/>
+      <value type="string" value="Hello world"/>
+      <value type="string" value="KDE Connect"/>
+      <value type="string" value="kupfer"/>
+      <value type="string" value="lxqt-panel"/>
+      <value type="string" value="mynote"/>
+      <value type="string" value="nm-applet"/>
+      <value type="string" value="notifications"/>
+      <value type="string" value="notify-send"/>
+      <value type="string" value="opera"/>
+      <value type="string" value="org.kde.konsole"/>
+      <value type="string" value="org.kde.org.kde.kdeconnect.daemon"/>
+      <value type="string" value="org.kde.spectacle"/>
+      <value type="string" value="pasystray"/>
+      <value type="string" value="pavolume"/>
+      <value type="string" value="safeeyes"/>
+      <value type="string" value="Syncthing GTK"/>
+      <value type="string" value="Telegram Desktop"/>
+      <value type="string" value="telegramdesktop"/>
+      <value type="string" value="Thunar"/>
+      <value type="string" value="Thunderbird"/>
+      <value type="string" value="Transmission"/>
+      <value type="string" value="udiskie"/>
+      <value type="string" value="uGet"/>
+      <value type="string" value="vivaldi-stable"/>
+      <value type="string" value="Volume"/>
+      <value type="string" value="Volume_Control"/>
+      <value type="string" value="Xfce volume control"/>
+      <value type="string" value="Xfce4-notifyd settings"/>
+    </property>
+    <property name="muted_applications" type="array">
+    </property>
+  </property>
+  <property name="do-fadeout" type="bool" value="true"/>
+  <property name="do-slideout" type="bool" value="true"/>
+  <property name="notification-log" type="bool" value="true"/>
+  <property name="do-not-disturb" type="bool" value="false"/>
+  <property name="expire-timeout" type="int" value="10"/>
+</channel>

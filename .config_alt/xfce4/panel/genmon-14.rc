@@ -1,0 +1,6 @@
+Command=/home/yusuf/.local/bin/xfce4-genmon-scripts/bspwm-workspaces.py
+UseLabel=0
+Text=(genmon)
+UpdatePeriod=250
+Font=TerminessTTF Nerd Font 11
+
