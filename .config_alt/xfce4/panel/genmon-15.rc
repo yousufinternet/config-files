@@ -1,4 +1,4 @@
-Command=/home/yusuf/.local/bin/xfce4-genmon-scripts/kernel-panel.sh
+Command=.local/bin/xfce4-genmon-scripts/kernel-panel.sh
 UseLabel=1
 Text=\ \ 🐧\ 
 UpdatePeriod=86400000
