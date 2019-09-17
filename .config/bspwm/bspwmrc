@@ -1,4 +1,6 @@
 #! /bin/sh
+localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle,caps:swapescape' &
+setxkbmap -option caps:escape &
 sxhkd &
 xsetroot -cursor_name left_ptr &
 compton -f &
@@ -21,7 +23,7 @@ notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
 
 # polybar mybar &
 # fake configs folder to use a different gtk-3.0.ini file with a different font
-XDG_CONFIG_HOME=~/.config_alt xfce4-panel -d &
+env XDG_CONFIG_HOME=$HOME/.config_alt xfce4-panel -d &
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -35,7 +37,7 @@ bspc config gapless_monocle      true
 bspc desktop 'I' --layout monocle
 #open Funny Java Things
 # bspc config focus_follows_pointer false
-wmname LG3D
+wmname LG3D &
 
 bspc config focus_follows_pointer true
 bspc config external_rules_command "$(which external_rules)"
