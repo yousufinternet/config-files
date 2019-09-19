@@ -508,6 +508,16 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   (setq default-frame-alist '((font . "TerminessTTF Nerd Font-16.0")))
+  ;; (setq default-frame-alist '((font . "fontset-startup")))
+
+  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
+  (set-fontset-font "fontset-startup" 'latin (font-spec :family "TerminessTTF Nerd Font"
+                                                         :size 16.0))
+
+  (set-fontset-font t 'arabic (font-spec :family "DejaVu sans mono"
+                                         :size 14.0))
+
   ;; attempt to set a fallback font
   ;; (set-fontset-font "fontset-default" 'unicode "Dejavu Sans mono")
 

@@ -51,6 +51,9 @@ super +{_, shift +} z
 {F7,F8}
 	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
 
+super + shift + t
+  set_tiled.py
+
 super + q
   bspc node --close
 
@@ -69,8 +72,8 @@ super + r
 super + shift + r
    bspc node @parent --rotate 270
 
-super + {t,shift + t,shift + f,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + {t,shift + f,f}
+	bspc node -t {tiled,floating,fullscreen}
 
 # make current window sticky
 super + shift + s

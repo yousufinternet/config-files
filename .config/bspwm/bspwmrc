@@ -17,6 +17,7 @@ parcellite &
 safeeyes &
 mpd &
 kdeconnect-indicator &
+two_tiled.py &
 ~/.config/i3/dynamic_wallpaper.py &
 notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 &
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
@@ -49,6 +50,8 @@ bspc config top_padding $((GDK_SCALE * 20))
 # bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a zathura state=tiled
 bspc rule -a Zathura state=tiled
+bspc rule -a emacs state=tiled
+bspc rule -a Emacs state=tiled
 bspc rule -a qutebrowser desktop='^1'
 bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
