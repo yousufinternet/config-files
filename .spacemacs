@@ -392,7 +392,7 @@ It should only modify the values of Spacemacs settings."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers relative
+   dotspacemacs-line-numbers 'relative
 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
@@ -489,8 +489,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; This won't work if set in user-config, both files below were downloaded manually
   ;; to be able to set the gruvbox theme in spacemacs 0.2, this is not required in the
   ;; development version 0.3 as autothemer is loaded automatically there
-  (load-file "~/.emacs.d/dash.el")
-  (load-file "~/.emacs.d/autothemer.el")
+  ;; (load-file "~/.emacs.d/dash.el")
+  ;; (load-file "~/.emacs.d/autothemer.el")
   )
 
 (defun dotspacemacs/user-load ()
@@ -507,16 +507,36 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  (setq default-frame-alist '((font . "TerminessTTF Nerd Font-16.0")))
+  (create-fontset-from-fontset-spec
+   "-*-TerminessTTF Nerd Font-medium-normal-normal--20-200-*-*-m-1-fontset-term")
+
+;; arabic:-*-Dejavu Sans mono-normal-normal-normal--14-140-*-*-m-1-arabic-iso8859-6")
+
+  ;; (set-fontset-font "fontset-term" 'arabic (font-spec :family "DejaVu sans mono"
+  ;;                                                     :size 14.0))
+
+  (setq default-frame-alist '((font . "fontset-term")))
+  (defun my-fix-arabic (&optional frame)
+    (set-fontset-font "fontset-default" 'arabic (font-spec :family "DejaVu sans mono"
+                                                        :size 12.0) frame))
+  (my-fix-arabic)
+  (add-hook 'after-make-frame-functions 'my-fix-arabic)
+
+
+  ;; (set-fontset-font "fontset-startup" 'arabic (font-spec :family "DejaVu sans mono"
+  ;;                                                     :size 14.0))
+
+  ;; (set-fontset-font t 'arabic (font-spec :family "DejaVu sans mono"
+  ;;                                                     :size 14.0))
   ;; (setq default-frame-alist '((font . "fontset-startup")))
 
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-  (set-fontset-font "fontset-startup" 'latin (font-spec :family "TerminessTTF Nerd Font"
-                                                         :size 16.0))
+  ;; (set-fontset-font "fontset-startup" 'latin (font-spec :family "TerminessTTF Nerd Font"
+                                                         ;; :size 16.0))
 
-  (set-fontset-font t 'arabic (font-spec :family "DejaVu sans mono"
-                                         :size 14.0))
+  ;; (set-fontset-font "fontset-startup" 'arabic (font-spec :family "DejaVu sans mono"
+                       ;;                  :size 14.0))
 
   ;; attempt to set a fallback font
   ;; (set-fontset-font "fontset-default" 'unicode "Dejavu Sans mono")
