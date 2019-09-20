@@ -509,6 +509,7 @@ before packages are loaded."
 
   (create-fontset-from-fontset-spec
    "-*-TerminessTTF Nerd Font-medium-normal-normal--20-200-*-*-m-1-fontset-term")
+   ;; "-*-Cascadia Code-regular----20-200-*-*-m-1-fontset-term")
 
 ;; arabic:-*-Dejavu Sans mono-normal-normal-normal--14-140-*-*-m-1-arabic-iso8859-6")
 
