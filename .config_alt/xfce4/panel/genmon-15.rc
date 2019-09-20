@@ -1,6 +1,6 @@
 Command=.local/bin/xfce4-genmon-scripts/kernel-panel.sh
 UseLabel=1
-Text=\ \ 🐧\ 
+Text=\ 🐧
 UpdatePeriod=86400000
-Font=TerminessTTF Nerd Font Mono Medium 11
+Font=TerminessTTF Nerd Font Mono Medium 8
 

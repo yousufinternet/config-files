@@ -1,6 +1,6 @@
 Command=.local/bin/xfce4-genmon-scripts/memory-panel.sh
 UseLabel=1
-Text=\ \ 💾\ 
+Text=\ 💾
 UpdatePeriod=30000
-Font=TerminessTTF Nerd Font Mono Medium 11
+Font=TerminessTTF Nerd Font 9
 
