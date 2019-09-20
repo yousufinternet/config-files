@@ -144,7 +144,7 @@ super + ctrl + w
   start_with_optirun.sh qutebrowser
 
 super + ctrl + e
-  emacsclient -c
+  emacsclient -c -a ""
 
 super + ctrl + r
   $TERMINAL -e rtv --enable-media --theme solarized-dark
