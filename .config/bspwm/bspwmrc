@@ -3,7 +3,7 @@ localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle
 setxkbmap -option caps:escape &
 sxhkd &
 xsetroot -cursor_name left_ptr &
-compton --backend glx --blur-method kawase --blur-strength 10 --blur-background &
+compton -f &
 redshift &
 goldendict &
 nm-applet &
