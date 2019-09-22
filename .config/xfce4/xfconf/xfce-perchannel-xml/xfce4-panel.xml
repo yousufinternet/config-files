@@ -61,6 +61,8 @@
     </property>
     <property name="plugin-12" type="string" value="systray">
       <property name="names-ordered" type="array">
+        <value type="string" value="vlc"/>
+        <value type="string" value="pasystray"/>
         <value type="string" value="kmix"/>
         <value type="string" value="zoom"/>
         <value type="string" value="kde connect indicator"/>
