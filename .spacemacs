@@ -79,7 +79,7 @@ This function should only modify configuration layer settings."
      deft
      lsp
      pandoc
-     pdf-tools
+     ;; pdf-tools
      (ranger : variables
              ranger-show-preview t)
      yaml
