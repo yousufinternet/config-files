@@ -44,8 +44,8 @@ This function should only modify configuration layer settings."
      csv
      shell-scripts
      (dart :variables
-           dart-sdk-path "/home/yusuf/.local/bin/flutter/bin/cache/dart-sdk/"
-           dart-enable-analysis-server t)
+           dart-sdk-path "~/.local/bin/flutter/bin/cache/dart-sdk/")
+           ;; dart-enable-analysis-server t)
      python
      ;; (python :variables
      ;;         python-shell-interpreter 'python3)
@@ -105,7 +105,8 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(autothemer
                                       dash
-                                      flutter)
+                                      flutter
+                                      flutter-l10n-flycheck)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -578,8 +579,8 @@ before packages are loaded."
   (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
 
   ;; Assuming usage with dart-mode
-  (use-package dart-mode
-    :ensure-system-package (dart_language_server . "pub global activate dart_language_server"))
+  ;; (use-package dart-mode
+  ;;   :ensure-system-package (dart_language_server . "pub global activate dart_language_server"))
 
   ;; flutter
   (use-package flutter
