@@ -24,6 +24,7 @@ def rotate_if_horz(wins_no):
             print('rotating!')
             cmd_run('bspc node @/ --rotate 90')
 
+
 def get_wins_number():
     try:
         wins_no = len(cmd_output(
@@ -73,16 +74,24 @@ def execute(cmd):
 if os.path.exists(tiled_path):
     os.remove(tiled_path)
 
+a_hidden = ''
+last_window = ''
 for event in execute(['bspc', 'subscribe', 'all']):
     event = event.strip().split()
-    # print(event) # use the logging module instead for better debugging
+    # print(event)  # use the logging module instead for better debugging
     monitor_flag, current_desktop = current_desktop_tiled()
     if not monitor_flag:
         continue
     wins_no = get_wins_number()
     # print('Windows number', end='\t')
     # print(wins_no)
-    if event[0] in ['node_add']:
+    hidden_off, hidden_on = False, False
+    if len(event) >= 6:
+        # TODO : a history file for windows order, although complicated, might solve some issues here
+        evnt = ' '.join((event[0], event[4], event[5]))
+        hidden_off = evnt == 'node_flag hidden off' and not event[3] == a_hidden
+        hidden_on = evnt == 'node_flag hidden on' and not event[3] == last_window
+    if event[0] in ['node_add'] or hidden_off:
         wid = event[3]
         if not is_floating(wid):
             cmd_run(f'bspc node {wid} --flag private=on')
@@ -96,7 +105,7 @@ for event in execute(['bspc', 'subscribe', 'all']):
             cmd_run(f'bspc node {last_window} --flag hidden=on')
             cmd_run(f'bspc node {last_window} --flag private=on')
         rotate_if_horz(get_wins_number())
-    elif event[0] == 'node_remove':
+    elif event[0] == 'node_remove' or hidden_on:
         if not wins_no >= 2 and not is_floating(event[3]):
             try:
                 a_hidden = cmd_output('bspc query -N -n any.hidden.local.window.!floating').strip()
