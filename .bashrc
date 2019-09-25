@@ -21,8 +21,8 @@ export RTV_EDITOR=vim
 # my scripts and flutter executables
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.local/bin/flutter/bin:$PATH
-export PATH=$HOME/.local/bin/flutter/bin/cache/dart-sdk:$PATH
-# export PATH=$HOME/.pub-cache/bin/:$PATH
+export PATH=$HOME/.local/bin/flutter/bin/cache/dart-sdk/bin:$PATH
+export PATH=$HOME/.pub-cache/bin/:$PATH
 
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
