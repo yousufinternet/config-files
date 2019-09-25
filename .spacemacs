@@ -620,15 +620,19 @@ before packages are loaded."
   (with-eval-after-load "pandoc-mode"
     (define-key pandoc-mode-map (kbd "C-c C-a p") 'pandoc-convert-to-pdf))
 
+  ;; smaller doc widget, and at point
+  (setq lsp-ui-doc-max-height 10)
+  (setq lsp-ui-doc-position 'at-point)
+
   ;; bidi aware movement keys for evil
-  (define-key evil-normal-state-map "h" 'left-char)
-  (define-key evil-normal-state-map "l" 'right-char)
-  (define-key evil-normal-state-map [left] 'left-char)
-  (define-key evil-normal-state-map [right] 'right-char)
-  (define-key evil-visual-state-map "h" 'left-char)
-  (define-key evil-visual-state-map "l" 'right-char)
-  (define-key evil-visual-state-map [left] 'left-char)
-  (define-key evil-visual-state-map [right] 'right-char)
+  ;; (define-key evil-normal-state-map "h" 'left-char)
+  ;; (define-key evil-normal-state-map "l" 'right-char)
+  ;; (define-key evil-normal-state-map [left] 'left-char)
+  ;; (define-key evil-normal-state-map [right] 'right-char)
+  ;; (define-key evil-visual-state-map "h" 'left-char)
+  ;; (define-key evil-visual-state-map "l" 'right-char)
+  ;; (define-key evil-visual-state-map [left] 'left-char)
+  ;; (define-key evil-visual-state-map [right] 'right-char)
 
   ;; Make movement keys work like they should
   (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
