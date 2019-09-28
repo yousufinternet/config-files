@@ -213,7 +213,7 @@ It should only modify the values of Spacemacs settings."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
+   dotspacemacs-startup-lists '((recents . 10)
                                 (projects . 7))
 
    ;; True if the home buffer should respond to resize events. (default t)
@@ -321,13 +321,13 @@ It should only modify the values of Spacemacs settings."
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.2
 
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
    ;; (default 'bottom)
-   dotspacemacs-which-key-position 'bottom
+   dotspacemacs-which-key-position 'right-then-bottom
 
    ;; Control where `switch-to-buffer' displays the buffer. If nil,
    ;; `switch-to-buffer' displays the buffer in the current window even if
@@ -470,7 +470,7 @@ It should only modify the values of Spacemacs settings."
    ;; Run `spacemacs/prettify-org-buffer' when
    ;; visiting README.org files of Spacemacs.
    ;; (default nil)
-   dotspacemacs-pretty-docs nil))
+   dotspacemacs-pretty-docs t))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -518,6 +518,7 @@ before packages are loaded."
   ;; (set-fontset-font "fontset-term" 'arabic (font-spec :family "DejaVu sans mono"
   ;;                                                     :size 14.0))
 
+  ;; use dejavu sans mono font for arabic text, no matter what font you use for other scripts
   (setq default-frame-alist '((font . "fontset-term")))
   (defun my-fix-arabic (&optional frame)
     (set-fontset-font "fontset-default" 'arabic (font-spec :family "DejaVu sans mono"
@@ -555,7 +556,7 @@ before packages are loaded."
 
   ;; to avoid an error that freezes emacs and shows the following message :
   ;; Making window-configuration-change-hook buffer-local while locally let-bound!
-  ;; not working :( 
+  ;; not working :(
   ;; (ranger-find-file (read-file-name prompt))
   ;; I am using deer instead now :(
 
@@ -575,8 +576,8 @@ before packages are loaded."
   (setq deft-default-extension "org")
 
   ;; open agenda as soon as spacemacs starts
-  (org-agenda nil "a")
-  (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
+  ;; (org-agenda nil "a")
+  ;; (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
 
   ;; Assuming usage with dart-mode
   ;; (use-package dart-mode
@@ -593,6 +594,7 @@ before packages are loaded."
     :after flutter
     :config
     (flutter-l10n-flycheck-setup))
+
   ;; by default deft searches for notes only in the root directory, this changes this
   (setq deft-recursive t)
 
@@ -624,15 +626,17 @@ before packages are loaded."
   (setq lsp-ui-doc-max-height 10)
   (setq lsp-ui-doc-position 'at-point)
 
+  (setq visual-order-cursor-movement t)
+
   ;; bidi aware movement keys for evil
-  ;; (define-key evil-normal-state-map "h" 'left-char)
-  ;; (define-key evil-normal-state-map "l" 'right-char)
-  ;; (define-key evil-normal-state-map [left] 'left-char)
-  ;; (define-key evil-normal-state-map [right] 'right-char)
-  ;; (define-key evil-visual-state-map "h" 'left-char)
-  ;; (define-key evil-visual-state-map "l" 'right-char)
-  ;; (define-key evil-visual-state-map [left] 'left-char)
-  ;; (define-key evil-visual-state-map [right] 'right-char)
+  (define-key evil-normal-state-map "h" 'left-char)
+  (define-key evil-normal-state-map "l" 'right-char)
+  (define-key evil-normal-state-map [left] 'left-char)
+  (define-key evil-normal-state-map [right] 'right-char)
+  (define-key evil-visual-state-map "h" 'left-char)
+  (define-key evil-visual-state-map "l" 'right-char)
+  (define-key evil-visual-state-map [left] 'left-char)
+  (define-key evil-visual-state-map [right] 'right-char)
 
   ;; Make movement keys work like they should
   (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
