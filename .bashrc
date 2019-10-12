@@ -8,6 +8,10 @@
 # for java applications
 export AWT_TOOLKIT=MToolkit
 
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
+
 # for bspwm
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -30,6 +34,7 @@ alias resrvserv='ssh yusuf@10.127.188.192'
 alias mediacenter='ssh yusuf@192.168.1.109'
 alias worklaptop='ssh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
+alias ec='emacsclient -a "" -c'
 
 # powerline
 PS1='[\u@\h \W]\$ '

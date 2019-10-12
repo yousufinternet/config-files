@@ -1,0 +1,6 @@
+[submodule "Documents/MyBlog/themes/zen"]
+	path = Documents/MyBlog/themes/zen
+	url = https://github.com/frjo/hugo-theme-zen.git
+[submodule "Documents/MyBlog/themes/ananke"]
+	path = Documents/MyBlog/themes/ananke
+	url = https://github.com/budparr/gohugo-theme-ananke.git
