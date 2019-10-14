@@ -61,6 +61,8 @@
     </property>
     <property name="plugin-12" type="string" value="systray">
       <property name="names-ordered" type="array">
+        <value type="string" value="thunar"/>
+        <value type="string" value="steam"/>
         <value type="string" value="vlc"/>
         <value type="string" value="pasystray"/>
         <value type="string" value="kmix"/>
