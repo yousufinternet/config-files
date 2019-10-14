@@ -33,13 +33,15 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(finance
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      html
+     gnus
+     emoji
      javascript
      csv
      shell-scripts
@@ -64,16 +66,10 @@ This function should only modify configuration layer settings."
      evil-commentary
      ;; better-defaults
      emacs-lisp
-     ;; git
-     ;; markdown
      ;; neotree
-     ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
      git
      markdown
      deft
@@ -519,6 +515,7 @@ before packages are loaded."
   ;; use dejavu sans mono font for arabic text, no matter what font you use for other scripts
   (setq default-frame-alist '((font . "fontset-term")))
   (defun my-fix-arabic (&optional frame)
+    (set-face-attribute 'default nil :height 160)
     (set-fontset-font "fontset-default" 'arabic (font-spec :family "DejaVu sans mono"
                                                         :size 12.0) frame))
   (my-fix-arabic)
@@ -575,8 +572,16 @@ before packages are loaded."
 
   ;; open agenda as soon as spacemacs starts
   ;; (org-agenda nil "a")
-  ;; (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "|" "DONE" "CANCELLED" "DELEGATED")))
 
+  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
+        org-todo-keyword-faces
+        '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
+          ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
+        org-agenda-span 7
+        org-agenda-files (quote ("~/Public/Syncthing Global/Notes/"))
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        remember-data-file (quote ("~/Public/Syncthing Global/Notes/remeber.org")))
   ;; Assuming usage with dart-mode
   ;; (use-package dart-mode
   ;;   :ensure-system-package (dart_language_server . "pub global activate dart_language_server"))
