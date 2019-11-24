@@ -30,7 +30,7 @@ export PATH=$HOME/.pub-cache/bin/:$PATH
 
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
-alias resrvserv='ssh yusuf@10.127.188.192'
+alias resrvserv='ssh yusuf@10.127.188.92'
 alias mediacenter='ssh yusuf@192.168.1.109'
 alias worklaptop='ssh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
@@ -67,7 +67,7 @@ shopt -s autocd
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
-. /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+. /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 
 eval "$(fasd --init auto)"
 
