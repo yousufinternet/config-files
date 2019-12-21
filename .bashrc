@@ -28,6 +28,7 @@ export PATH=$HOME/.local/bin/flutter/bin:$PATH
 export PATH=$HOME/.local/bin/flutter/bin/cache/dart-sdk/bin:$PATH
 export PATH=$HOME/.pub-cache/bin/:$PATH
 
+alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
 alias resrvserv='ssh yusuf@10.127.188.92'
