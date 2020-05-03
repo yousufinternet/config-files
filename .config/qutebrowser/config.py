@@ -1789,6 +1789,8 @@
 # Enable JavaScript.
 # Type: Bool
 import os, sys
+import dracula.draw
+
 
 # pylint: disable=C0111
 c = c  # noqa: F821 pylint: disable=E0602,C0103
@@ -1804,7 +1806,9 @@ config.set('content.javascript.enabled', True)
 
 c.spellcheck.languages = ['en-US']
 
-c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
+c.fonts.default_family = ["DejaVu Sans Mono"]
+c.colors.webpage.prefers_color_scheme_dark = True
+# c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
 
 # rofi-pass
 config.bind('pi', 'spawn --userscript qute-pass')
@@ -1827,19 +1831,24 @@ path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
 stylesheets = ' '.join([os.path.join(path, fn) for fn in os.listdir(path)])
 config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webpage.bg ""' % stylesheets)
 config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
-config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
+# config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
+config.bind(',r', 'spawn --userscript readability-js')
 
 # it turns out per-domain settings for content.user-stylesheets is not supported
 # config.set('content.user_stylesheets', os.path.join(path, 'gruvbox-all-sites.css'), '*://github.com/*|*://*.stackexchange.com/*|*://stackoverflow.com/*')
 # prevent gmail from sending protocol handler confirmation dialogs
 config.set('content.register_protocol_handler', True, '*://gmail.com/*')
 config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
+config.set('content.ssl_strict', True)
+config.set('content.ssl_strict', False, '*://mail.westqurna2.com')
+config.set('content.notifications', False)
 # Default zoom level
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'g': 'https://google.com/search?q={}',
+                       'gt': 'https://github.com/search?q={}',
                        'y': 'https://youtube.com/results?search_query={}',
                        'w': 'https://wiki.archlinux.org/index.php?search={}',
                        'tv': 'http://tv.shabakaty.com/?ch=channel{}',
@@ -1848,4 +1857,9 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 # Downloads position, and remove finished after 30 seconds
 config.set('downloads.position', 'bottom')
 config.set('downloads.remove_finished', 90)
-config.source('nord.py')
+# config.source('nord.py')
+
+# Load existing settings made via :set
+config.load_autoconfig()
+
+dracula.draw.blood(c)
