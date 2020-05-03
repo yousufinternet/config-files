@@ -21,7 +21,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export TERM=xterm-256color
 export QT_QPA_PLATFORMTHEME=qt5ct
 export TERMINAL=konsole
-export ROFI_THEME=gruvbox-dark-hard
+export ROFI_THEME=~/.config/rofi/themes/slate.rasi
 export EDITOR=vim
 export RTV_EDITOR=vim
 
@@ -34,9 +34,9 @@ export PATH=$HOME/.pub-cache/bin/:$PATH
 alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'
 alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
 alias ls='ls --color=auto'
-alias resrvserv='ssh yusuf@10.127.188.92'
-alias mediacenter='ssh yusuf@192.168.1.109'
-alias worklaptop='ssh archie-work@192.168.1.107'
+alias resrvserv='mosh yusuf@10.127.188.92'
+alias mediacenter='mosh yusuf@192.168.1.109'
+alias worklaptop='mosh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
 alias ec='emacsclient -a "" -c'
 
@@ -76,7 +76,7 @@ POWERLINE_BASH_SELECT=1
 eval "$(fasd --init auto)"
 
 if xset q &>/dev/null; then
-  screenfetch | lolcat
+ #  screenfetch | lolcat
   cowsay -f tux $(fortune)
 fi
 
