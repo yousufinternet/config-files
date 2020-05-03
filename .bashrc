@@ -12,6 +12,9 @@ export AWT_TOOLKIT=MToolkit
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
     . /usr/share/bash-completion/bash_completion
 
+# cod completion
+source <(cod init $$ bash)
+
 # for bspwm
 export XDG_CONFIG_HOME="$HOME/.config"
 
