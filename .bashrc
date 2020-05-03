@@ -30,15 +30,22 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.local/bin/flutter/bin:$PATH
 export PATH=$HOME/.local/bin/flutter/bin/cache/dart-sdk/bin:$PATH
 export PATH=$HOME/.pub-cache/bin/:$PATH
+export NODE_PATH=$NODE_PATH:$(npm root -g)
 
 alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'
-alias ar5='aria2c -c -V -s 5 --max-connection-per-server=5'
+alias ar5="aria2c -c -V -s 5 --max-connection-per-server=5 --on-download-complete=ding.sh"
 alias ls='ls --color=auto'
 alias resrvserv='mosh yusuf@10.127.188.92'
 alias mediacenter='mosh yusuf@192.168.1.109'
 alias worklaptop='mosh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
 alias ec='emacsclient -a "" -c'
+alias all_cams_low='mpv $(cat Documents/Security-Cams/cam4.strm) & mpv $(cat Documents/Security-Cams/cam1.strm) & mpv $(cat Documents/Security-Cams/cam2.strm)'
+alias all_cams_high='mpv $(cat Documents/Security-Cams_high/cam4.strm) & mpv $(cat Documents/Security-Cams_high/cam1.strm) & mpv $(cat Documents/Security-Cams_high/cam2.strm)'
+alias gst='git status'
+alias gd='git diff'
+alias two_min_pen='for i in {0..120}; do printf "%03d\r" $i; sleep 1; done;mplayer /usr/share/games/xboard/sounds/penalty.wav'
+alias pacman='pacman --color=always'
 
 # powerline
 PS1='[\u@\h \W]\$ '
