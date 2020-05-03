@@ -1,4 +1,5 @@
 #! /bin/sh
+
 localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle,caps:swapescape' &
 setxkbmap -option caps:escape &
 sxhkd &
@@ -20,12 +21,13 @@ kdeconnect-indicator &
 ~/.config/i3/dynamic_wallpaper.py &
 notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 &
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
+motion -b -c ~/.config/motion/motion.conf &
 
 # polybar mybar &
 # fake configs folder to use a different gtk-3.0.ini file with a different font
 env XDG_CONFIG_HOME=$HOME/.config_alt xfce4-panel -d &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor ^1 -d I II III IV V VI VII VIII IX X
 bspc monitor ^2 -d 1 2 3 4 5 6 7 8 9 10
 
 bspc config border_width        $((GDK_SCALE*2))
@@ -59,5 +61,10 @@ bspc rule -a oblogout state=fullscreen
 bspc rule -a Oblogout state=fullscreen
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+bspc rule -a mpv:security-cam-preview state=floating focus=off sticky=on
+bspc rule -a mpv:security-cam-preview1 state=floating focus=off sticky=on
+bspc rule -a mpv:security-cam-preview2 state=floating focus=off sticky=on
+bspc rule -a mpv:security-cam-preview3 state=floating focus=off sticky=on
 
-two_tiled.py &
+automatic_tab.py &
+# two_tiled.py &

@@ -50,10 +50,12 @@ def get_wins_number():
         wins_no = len(cmd_output(
             'bspc query -N -n .local.window.!hidden.!floating.!fullscreen'
         ).strip().split('\n'))
-        logging.debug(f'not hidden, not floating and not fullscreen windows number has been requested, {wins_no} was returned')
+        logging.debug(f'not hidden, not floating and not fullscreen windows '
+                      f'number has been requested, {wins_no} was returned')
         return wins_no
     except subprocess.CalledProcessError:
-        logging.error('not hidden, not floating and not fullscreen windows number has been requested, 0 was returned')
+        logging.error('not hidden, not floating and not fullscreen windows '
+                      'number has been requested, 0 was returned')
         return 0
 
 
@@ -63,7 +65,8 @@ def current_desktop_tiled():
         current_desktop = cmd_output('bspc query -D -d --names').strip()
     except subprocess.CalledProcessError:
         logging.critical(
-            'Failed to get the name of the current desktop using "bspc query -D -d --names"')
+            'Failed to get the name of the current desktop using '
+            '"bspc query -D -d --names"')
         return monitor_flag, 1
     logging.debug(f'current_desktop={current_desktop}')
     if os.path.exists(tiled_path):
@@ -74,7 +77,8 @@ def current_desktop_tiled():
                 # the desktop number therefore the split() thingy
                 if current_desktop == line.strip().split()[0]:
                     monitor_flag = True
-                    logging.info(f'current_desktop {current_desktop} was found to be tiled')
+                    logging.info(f'current_desktop {current_desktop} was '
+                                 'found to be tiled')
                     break
                 else:
                     monitor_flag = False
@@ -93,7 +97,8 @@ def is_floating(wid):
 
 
 def execute(cmd):
-    popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
+    popen = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                             universal_newlines=True)
     for stdout_line in iter(popen.stdout.readline, ""):
         yield stdout_line
     popen.stdout.close()
@@ -111,14 +116,11 @@ last_window = ''
 for event in execute(['bspc', 'subscribe', 'all']):
     event = event.strip().split()
     logging.debug(f'EVENT: {" ".join(event)}')
-    # print(event)  # use the logging module instead for better debugging
     monitor_flag, current_desktop = current_desktop_tiled()
     if not monitor_flag:
         logging.debug('current desktop was found to be not tilling, skipping event check')
         continue
     wins_no = get_wins_number()
-    # print('Windows number', end='\t')
-    # print(wins_no)
     hidden_off, hidden_on = False, False
     if len(event) >= 6:
         logging.debug('A hiding or showing event is suspected')
