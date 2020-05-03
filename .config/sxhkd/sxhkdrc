@@ -1,25 +1,30 @@
+# open the terminal
 super + Return
    $TERMINAL
 
-################
-# rofi
-################
+# all open windows
 super + w
      rofi -show window -terminal $TERMINAL -dpi 0 -theme $ROFI_THEME -modi window,windowcd
+
+# start an application
 super + e
      rofi -show-icons -terminal $TERMINAL -show run -dpi 0 -theme $ROFI_THEME -modi run,drun,ssh
 
-################
-# Brightness and volume controls
-################
-
+# Raise/Lower volume
 XF86Audio{Raise,Lower}Volume
    volume_ctl.sh {+5,-10}
+
+# Raise/Lower volume
 super+{m,n}
    volume_ctl.sh {+5,-10}
 
+# Increase/decrease brightness
 {_,shift+}XF86MonBrightness{Up,Down}
    brightness_ctl.sh {+5,+1,-5,-1}
+
+# Increase/decrease brightness
+super+shift+{m,n}
+   brightness_ctl.sh {+5,-5}
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -35,40 +40,56 @@ super + Escape
 super + Tab
   bspc desktop -l next
 
+# Help: open bspwm man page as pdf in zathura
 super + F1
   man -Tpdf bspc | zathura - 
 
+# Help: opens a rofi menu with all man pages, displays the selected man page in zathura
+super + shift + F1
+  browse_man_pages.py
+
+# move a single floating window into the corner
 super + v
   move_floating.py
   
+# resize root node to 30%/70%
 super +{_, shift +} z
   bspc node @/ --ratio {0.3,0.7}
 
-{F7,F8}
+# Inrease decrease windows gaps in current desktop
+super + {F7,F8}
 	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
 
+# Set windows gaps in current desktop to 0
+super + F9
+  bspc config -d focused window_gap 0
+
+# Mark the current desktop as tiled
 super + shift + t
   set_tiled.py
 
-super + q
-  bspc node --close
+# close/kill focused node
+super + {_,shift + } q
+  tab_aware_close.py {close,kill}
 
-super + shift + q
-  bspc node --kill
-
+# Toggle screen brightness between 1%/100%
 super + shift + b
   toggle_brightness.py
 
+# balance nodes
 super + b
    bspc node @/ --balance
 
+# Rotate nodes
 super + r
    bspc node @/ --rotate 90
 
+# Rotate the current node with parent
 super + shift + r
    bspc node @parent --rotate 270
 
-super + {t,shift + f,f}
+# toggle window state tiled/floating/fullscreen
+super + {space,shift + space,f}
 	bspc node -t {tiled,floating,fullscreen}
 
 # swap the current node and the biggest node
@@ -87,25 +108,33 @@ super + {_,shift + }{1-9,0}
 super + {_,shift +} {comma, period}
   bspc {monitor --focus,node --to-monitor} {prev,next}
 
-# preselect the direction
-super + ctrl + {Left,Down,Up,Right}
-	bspc node --presel-dir ~{west,south,north,east}
+# Switch to next/prev desktop
+super + ctrl + {Left,Right}
+    bspc desktop -f {prev,next}
 
-# cancel the preselection for the focused node
-# super + ctrl + space
-# 	bspc node --presel-dir cancel
+# Switch to next empty/full desktop
+super + ctrl + {Up, Down}
+    empty_desk.py {empty, full}
+
+# put current window in its own tabbed window, remove it from tabbed
+super + t; {c,r,a}
+    tabbed_company.py {create,remove,all}
+
+# join current window with tabbed in DIR
+super + t; {Left,Up,Down,Right}
+    tabbed_company.py join $(bspc query -N -n {west,north,south,east})
 
 # toggle hidden windows
 super + x
   bspc node -g hidden
 
-# replace current node with hidden
-super + shift + x
-  replace_with_hidden.py swap
+# restore/replace current node with hidden
+super + {ctrl,shift} + x
+  replace_with_hidden.py {show,swap}
 
-# restore hidden windows
-super + ctrl + x
-  replace_with_hidden.py
+# hide all windows except focused
+super + alt + x
+  hide_all.py   
 
 super + ctrl + shift + x
    i3lock -e -B --force-clock --keylayout 0 --insidecolor 1e58a46a --indicator
@@ -138,24 +167,28 @@ super + {_,shift + } c
   bspc node --focus {next,prev}.local
 
 # focus the node for the given path jump
-super + {p,o,comma,period}
-	bspc node -f @{parent,brother,first,second}
+super + {p,o}
+	bspc node -f @{parent,brother}
 
-
+# fullscreen screenshot
 @Print
   spectacle --background
 
+# Select region for screenshot
 @shift+Print
   spectacle --background --region
 
+# Quit bspwm
 super + ctrl + shift + q
   bspc quit
 
-super + ctrl + shift + r
+# Restart bspwm
+@super + ctrl + shift + r
   xfce4-panel -r -d;\
   bspc wm --restart
 
-super + ctrl + shift + k
+# Select a window to kill
+@super + ctrl + shift + k
   xkill
 
 #    _             _ _         _   _             
@@ -165,37 +198,39 @@ super + ctrl + shift + k
 #       |_|  |_|                                 
 
 # terminal apps
-super + i ; {e,w,m}
-	{gvim,firefox,thunderbird}
+super + i ; {m,h,n,r,f}
+	konsole -e {ncmpcpp,htop,newsboat,tuir --enable-media,ranger}
 
+# GUI apps
+super + g ; {c,f,g,t,q,r,z}
+  {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
+
+# GUI apps that require graphics card assistance (via optirun)
+super + shift + g ; {f,d} 
+  start_with_optirun.sh {firefox,darktable}
+
+# File manager
 super + ctrl + f
   $TERMINAL -e ranger
 
+# Web browser
 super + ctrl + w
   start_with_optirun.sh qutebrowser
 
+# IDE
 super + ctrl + e
   emacsclient -c -a ""
 
-super + ctrl + r
-  $TERMINAL -e rtv --enable-media --theme solarized-dark
-
-super + ctrl + n
-  $TERMINAL -e newsboat
-
-super + ctrl + h
-  $TERMINAL -e htop
-
-super + ctrl + m
-  $TERMINAL -e ncmpcpp
 #                     _        _                    _     
 #  ___ __  _ _  __ _ | |_  __ | |_   _ __  __ _  __| | ___
 # (_-</ _|| '_|/ _` ||  _|/ _|| ' \ | '_ \/ _` |/ _` |(_-<
 # /__/\__||_|  \__,_| \__|\__||_||_|| .__/\__,_|\__,_|/__/
 #                                   |_|                   
 
+# Terminal dropdown
 super + d
   tdrop -m --wm bspwm -n 1 -y $((GDK_SCALE*20)) --name dropdown_terminal -h 55% -a -f '-p tabtitle=dropdown_terminal' konsole
    
+# calculator dropdown
 super + ctrl + c
   tdrop -m --wm bspwm -n 2 -w 30% -h 30% -x 35% -y 70% --name dropdown_calc -a -f '-p tabtitle=dropdown_calc -e bc' konsole
