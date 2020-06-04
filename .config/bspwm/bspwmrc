@@ -4,7 +4,9 @@ localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle
 setxkbmap -option caps:escape &
 sxhkd &
 xsetroot -cursor_name left_ptr &
-compton -f --backend glx --glx-no-stencil -r 30 &
+# --glx-no-rebind-pixmap --xrender-sync-fence
+# compton -f --backend glx --glx-no-stencil -r 30 &
+picom --backend glx --glx-no-stencil --blur-method kawase --blur-strength 20 --blur-background-exclude 'name ="xfce4-panel"' --blur-background-exclude 'name ="qutebrowser"' & # SHADOW -c -r 30 -C -l -30 -t -30 &
 redshift &
 goldendict &
 nm-applet &
@@ -21,7 +23,12 @@ kdeconnect-indicator &
 ~/.config/i3/dynamic_wallpaper.py &
 notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 &
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
-motion -b -c ~/.config/motion/motion.conf &
+if [ $HOSTNAME = "yusufs-lenovo" ]; then
+    motion -b -c ~/.config/motion/motion.conf &
+fi
+~/.config/bspwm/start_lemonbar.py &
+xfce4-panel -d & # the best sys-tray of them all
+# stalonetray -bg '#000000' --grow-gravity W -i 40 --sticky --geometry 10x1+1520+0 --dockapp-mode simple --window-type dock -d none --window-strut none --window-layer bottom --kludges force_icons_size &
 
 # polybar mybar &
 # fake configs folder to use a different gtk-3.0.ini file with a different font
