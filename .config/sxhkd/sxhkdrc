@@ -102,7 +102,7 @@ super + shift + s
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop --focus,node --to-desktop} 'focused:^{1-9,10}';xfce4-panel --plugin-event=genmon-14:refresh:bool:true    
+	bspc {desktop --focus,node --to-desktop} 'focused:^{1-9,10}'
 
 # move and switch windows between monitors
 super + {_,shift +} {comma, period}
@@ -198,8 +198,8 @@ super + ctrl + shift + q
 #       |_|  |_|                                 
 
 # terminal apps
-super + i ; {m,h,n,r,f}
-	konsole -e {ncmpcpp,htop,newsboat,tuir --enable-media,ranger}
+super + i ; {m,h,n,r,f,p}
+	konsole -e {ncmpcpp,htop,newsboat,tuir --enable-media,ranger,pulsemixer}
 
 # GUI apps
 super + g ; {c,f,g,t,q,r,z}
