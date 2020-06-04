@@ -33,14 +33,13 @@ font pango:DejaVuSansMono Nerd Font 9
 floating_modifier $mod
 
 # start a terminal
-# set $term mlterm
 set $term konsole
+# mlterm with some useful options
 #set $term "mlterm -A --alpha=200 --borderless=true -b=black -f=grey --border=0 --depth=32 --deffont='DejaVuSansMono Nerd Font 36' --type='xft' --term='xterm' --vtcolor='true'"
 # --extkey=true 
 bindsym $mod+Return exec $term 
 # other terminals
 #i3-sensible-terminal
-# mlterm with some useful options
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -307,6 +306,7 @@ exec --no-startup-id parcellite
 exec --no-startup-id udiskie -t
 exec --no-startup-id emacs --daemon
 exec --no-startup-id mpd
+exec --no-startup-id cantata
 
 # no title bar
 new_window pixel 3
