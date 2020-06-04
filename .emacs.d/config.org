@@ -1,0 +1,580 @@
+* References
+Please do check the following configs as this one was heavily inspired by them.
+ - https://github.com/daedreth/UncleDavesEmacs/blob/master/config.org
+ - https://protesilaos.com/dotemacs/
+ - https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
+* Backbones
+** Main Packages
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+ :ensure t
+ :init
+ (setq ivy-use-virtual-buffers t
+            ivy-count-format "%d/%d ")
+	    :commands 
+	    (avy-goto-word-0
+	    ivy-switch-buffers))
+
+(use-package counsel :ensure t)
+(use-package swiper
+ :ensure t
+ :bind ("C-s" . swiper))
+
+(use-package which-key
+  :ensure t
+  :init (which-key-mode))
+
+(use-package async
+  :ensure t
+  :init (dired-async-mode 1))
+#+END_SRC
+
+** Small Packages
+    
+#+BEGIN_SRC emacs-lisp
+(use-package highlight :ensure t)
+(use-package iedit :ensure t)
+;; (use-package evil-iedit :ensure t)
+(use-package anzu :ensure t)
+#+END_SRC
+
+** Applications
+#+BEGIN_SRC emacs-lisp
+(use-package ranger :ensure t)
+(use-package pandoc-mode
+ :ensure t
+ :hook (
+ (markdown-mode . pandoc-mode)
+ (pandoc-mode . pandoc-load-default-settings))
+ )
+ (use-package pdf-tools :ensure t)
+#+END_SRC
+* Emacs tweaks
+** Minor tweaks
+#+BEGIN_SRC emacs-lisp
+(setq delete-old-versions -1 )		; delete excess backup versions silently
+(setq version-control t )		; use version control
+(setq vc-make-backup-files t )		; make backups file even when in version controlled dir
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
+(setq vc-follow-symlinks t )				       ; don't ask for confirmation when opening symlinked file
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ;transform backups file name
+(setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
+(setq ring-bell-function 'ignore )	; silent bell when you make a mistake
+(setq coding-system-for-read 'utf-8 )	; use utf-8 by default
+(setq coding-system-for-write 'utf-8 )
+(setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
+(setq default-fill-column 80)		; toggle wrapping text at the 80th character
+(setq initial-scratch-message "Welcome to Yusuf's Emacs") ; print a default message in the empty scratch buffer opened at startup
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+(setq longlines-wrap-follows-window-size t)
+#+END_SRC
+
+** Highlight current line
+    #+BEGIN_SRC emacs-lisp
+(when window-system (add-hook 'prog-mode-hook 'hl-line-mode))
+    #+END_SRC
+    
+** display relative line numbers
+    instead of using `global-display-line-numbers-mode` which will display line numbers in every single mode, which leads to undesired behavior in some cases (such as numbers in `lsp-ui-imenu` buffer) line numbers will be displayed in prog-mode only. 
+#+BEGIN_SRC emacs-lisp
+  (setq display-line-numbers-type 'relative)
+  ;; (global-display-line-numbers-mode)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+#+END_SRC
+** Scroll conservatively 
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+#+END_SRC
+
+** Change yes-or-no questions into y-or-n questions
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** store customization in custom.el
+    
+#+BEGIN_SRC emacs-lisp
+(use-package cus-edit
+  :config
+  (setq custom-file "~/.emacs.d/custom.el")
+
+  (unless (file-exists-p custom-file)
+    (write-region "" nil custom-file))
+
+  (load custom-file))
+#+END_SRC
+** Enable Recent Files
+#+BEGIN_SRC emacs-lisp
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+;; update recent files list every 5 mins
+(run-at-time nil (* 5 60) 'recentf-save-list)
+#+END_SRC 
+** Bidi aware cursor movement
+    #+BEGIN_SRC emacs-lisp
+  (setq visual-order-cursor-movement t)
+;;  (define-key evil-normal-state-map "h" 'left-char)
+;;  (define-key evil-normal-state-map "l" 'right-char)
+;;  (define-key evil-normal-state-map [left] 'left-char)
+;;  (define-key evil-normal-state-map [right] 'right-char)
+;;  (define-key evil-visual-state-map "h" 'left-char)
+;;  (define-key evil-visual-state-map "l" 'right-char)
+;;  (define-key evil-visual-state-map [left] 'left-char)
+;;  (define-key evil-visual-state-map [right] 'right-char)
+    #+END_SRC
+* Key bindings
+** General Binding
+#+BEGIN_SRC emacs-lisp
+  (use-package general :ensure t
+    :config
+    (general-define-key
+     :states '(normal visual insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+     "C-'" 'avy-goto-word-0
+     "b" '(:ignore t :which-key "Buffers")
+     "bb" 'ivy-switch-buffer
+     "bd" 'evil-delete-buffer
+     "bn" 'evil-next-buffer
+     "bp" 'evil-prev-buffer
+     "i" '(:ignore t :which-key "imenu and ivy")
+     "ii" 'imenu-list
+     "l" '(:ignore t :which-key "LSP")
+     "li" 'lsp-ui-imenu
+     "ld" 'lsp-ui-peek-find-definitions
+     "f" '(:ignore t :which-key "Files")
+     "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
+     "fc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
+     "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
+     "fr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+     "s" '(:ignore t :which-key "Spell check")
+     "sc" 'flyspell-correct-at-point
+     "ss" 'flyspell-correct-wrapper
+     "g" '(:ignore t :which-key "Git")
+     "gg" 'magit-status
+     "gf" 'counsel-git
+     "t" '(:ignore t :which-key "Themes")
+     "tt" 'counsel-load-theme
+     "t+" 'text-scale-adjust
+     "t-" 'text-scale-adjust
+     "h" '(:ignore t :which-key "Help")
+     "hf" 'counsel-describe-function
+     "hv" 'counsel-describe-variable
+     "hk" 'describe-key)
+     (general-define-key
+     :states '(normal visual insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+      :keymaps 'evil-org-mode-map
+      "al" 'org-agenda-list
+      "ce" 'org-edit-src-code)
+     (general-define-key
+     :states '(normal visual insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+      :keymaps 'pandoc-mode-map
+      "p" 'pandoc-main-hydra/body)
+     (general-define-key
+     :states '(normal visual insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+      :keymaps 'elpy-mode-map
+      "pd" 'elpy-doc
+      "pj" 'elpy-goto-definition
+      "pg" 'elpy-goto-definition-other-window
+      "ps" 'elpy-shell-switch-to-shell
+      "pf" 'elpy-format-code
+      "pe" 'elpy-shell-send-statement)
+    )
+  
+  (defun config-reload ()
+    "Reloads ~/.emacs.d/config.org at runtime"
+    )
+#+END_SRC
+** Evil
+*** Some other evil packages to consider
+- evil-visual-mark-mode
+- evil-snipe
+- evil-mc
+- evil-indent-plus
+*** main config
+#+BEGIN_SRC emacs-lisp
+  (setq evil-want-keybinding nil)
+  (setq-default evil-want-C-u-scroll t)
+  (use-package evil
+    :ensure t
+    :config
+    (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
+    (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
+    (evil-global-set-key 'normal (kbd "C-w <up>") 'evil-window-up)
+    (evil-global-set-key 'normal (kbd "C-w <down>") 'evil-window-down)
+    (evil-global-set-key 'normal (kbd "<left>") 'left-char)
+    (evil-global-set-key 'normal (kbd "<right>") 'right-char)
+    (evil-global-set-key 'visual (kbd "<left>") 'left-char)
+    (evil-global-set-key 'visual (kbd "<right>") 'right-char))
+  (evil-mode 1)
+#+END_SRC
+*** Escape key acts like C-g
+#+BEGIN_SRC emacs-lisp
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+  ;; for some reason the above is not recommended see
+  ;; https://emacs.stackexchange.com/questions/14755/how-to-remove-bindings-to-the-esc-prefix-key
+  ;; the following is recommended
+  ;; (define-key key-translation-map (kbd "C-<escape>") (kbd "ESC")) 
+#+END_SRC
+*** Movement across visual lines
+#+BEGIN_SRC emacs-lisp
+  (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+
+  ;; (setq-default evil-cross-lines nil)
+#+END_SRC
+*** Additional Packages
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+  (use-package evil-magit :ensure t)
+  (use-package evil-org 
+  :ensure t
+  :hook (org-mode . evil-org-mode)
+  :commands 'evil-org-mode)
+  (use-package evil-numbers :ensure t)
+  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt)
+  (use-package evil-matchit :ensure t)
+  (use-package evil-escape :ensure t)
+  (use-package evil-easymotion :ensure t)
+  (use-package evil-collection
+  :ensure t
+  :after evil
+  :init (evil-collection-init))
+  (use-package evil-snipe
+  :ensure t
+  :init 
+  (evil-snipe-mode +1)
+  (evil-snipe-override-mode +1))
+  
+  ;; I am yet to see why the evil-leader key is necessary
+  ;; (use-package evil-leader
+  ;;   :ensure t
+  ;;   :config (evil-leader/set-leader "<SPC>"))
+
+  (use-package evil-commentary
+    :ensure t
+    :init (evil-commentary-mode))
+
+  ;; (use-package evil-search-highlight-persist
+  ;;   :ensure t
+  ;;   :init (global-evil-search-highlight-persist t))
+  
+  (use-package evil-visualstar :ensure t)
+  (global-evil-visualstar-mode)
+#+END_SRC
+*** Folding
+    #+BEGIN_SRC emacs-lisp
+    (use-package origami 
+    :ensure t
+    :after evil
+    :hook (python-mode . origami-mode))
+    #+END_SRC
+* Eye candy 
+** Powerline, beacon and rainbows
+#+BEGIN_SRC emacs-lisp
+
+  (use-package diminish
+   :ensure t
+   :command 'diminish
+   :init 
+   (diminish 'evil-org-mode)
+   (diminish 'smartparens-mode)
+   (diminish 'beacon-mode)
+   (diminish 'evil-commentary-mode)
+   (diminish 'evil-snipe-local-mode)
+   (diminish 'undo-tree-mode)
+   (diminish 'flyspell-mode)
+   (diminish 'which-key-mode))
+
+   (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+      ;; (setq spaceline-buffer-encoding-abbrev-p nil)
+      ;; (setq spaceline-line-column-p nil)
+      ;; (setq spaceline-line-p nil)
+      ;; (setq powerline-default-separator (quote arrow))
+      (spaceline-spacemacs-theme))
+
+      ;; (use-package powerline
+      ;;   :ensure t
+      ;;   :config (powerline-center-evil-theme))
+
+      (show-paren-mode)
+
+	(use-package beacon
+	:ensure t
+	:config
+	    (beacon-mode 1))
+    (use-package rainbow-mode
+      :ensure t
+      :init
+	(add-hook 'prog-mode-hook 'rainbow-mode))
+
+    (use-package rainbow-delimiters
+      :ensure t
+      :init
+	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+END_SRC
+** Emojis
+   #+BEGIN_SRC emacs-lisp
+   (use-package company-emoji
+   :ensure t
+   :hook (org-mode . company-emoji-init))
+   #+END_SRC
+** Default font
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'default nil
+		      :family "Dejavu Sans Mono"
+		      :height 115
+		      :weight 'normal
+		      :width 'normal)
+  (setq text-scale-mode-step 1.05)
+#+END_SRC
+
+** Themes
+    
+#+BEGIN_SRC emacs-lisp
+    (use-package autothemer :ensure t)
+    
+    ;; modus-vivendi-theme
+  (setq themes-list '(gotham-theme zerodark-theme spacemacs-theme ample-theme doom-themes))
+
+  ; fetch the list of packages available 
+  (unless package-archive-contents
+    (package-refresh-contents))
+
+  ; install the missing packages
+  (dolist (theme themes-list)
+    (unless (package-installed-p theme)
+      (package-install theme)))
+      
+      (load-theme 'doom-gruvbox t)
+#+END_SRC
+* ORG mode
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+  :ensure t
+  :after org-mode)
+  ;; :commands org-bullets-mode)
+  ;; :hook (org-mode . (lambda () (org-bullets-mode 1))))
+  ;; :hook (org-mode . org-bullets-mode))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (setq org-imenu-depth 5)
+
+  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
+	  org-todo-keyword-faces
+	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
+	    ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
+	  org-agenda-span 7
+	  org-agenda-files (quote ("~/Public/Syncthing Global/Notes/"))
+	  org-agenda-skip-scheduled-if-done t
+	  org-agenda-skip-deadline-if-done t
+	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+#+END_SRC
+
+* Programming Modes
+** lsp
+    please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
+    even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
+#+BEGIN_SRC emacs-lisp
+  ;;    (use-package lsp-mode
+  ;;      :ensure t
+  ;;      :after python-mode
+  ;;      :config (setq lsp-enable-snippet t)
+  ;;      :hook (
+  ;; 	    (python-mode . lsp)
+  ;; 	    (lsp-mode . lsp-enable-which-key-integration))
+  ;;      :commands lsp)
+  ;;    (use-package lsp-ui
+  ;;    :ensure t
+  ;;      :config (setq lsp-ui-doc-delay 1)
+  ;;      :commands lsp-ui-mode)
+  ;;    (use-package lsp-ivy
+  ;;      :ensure t
+  ;;      :commands lsp-ivy-workspace-symbol)
+
+  ;;    (use-package lsp-treemacs
+  ;;      :ensure t
+  ;;      :commands lsp-treemacs-errors-list)
+     
+  ;; (setq gc-cons-threshold 200000000)
+  ;; (setq read-process-output-max (* 1024 1024))
+#+END_SRC
+** Fly stuff
+#+BEGIN_SRC emacs-lisp
+   (use-package flycheck 
+   :ensure t
+   :init (global-flycheck-mode))
+   
+   (use-package flycheck-pos-tip
+   :ensure t
+   :after flycheck
+   :hook (flycheck-mode . flycheck-pos-tip-mode))
+   
+   (use-package flycheck-status-emoji
+   :ensure t
+   :after flycheck
+   :hook (flycheck-mode . flycheck-status-emoji-mode))
+   
+   (use-package flycheck-color-mode-line
+   :ensure t
+   :after flycheck
+   :hook (flycheck-mode . flycheck-color-mode-line-mode))
+#+END_SRC
+*** Spellchecking
+    #+BEGIN_SRC emacs-lisp
+   (use-package flyspell-correct :ensure t)
+   (use-package flyspell-correct-ivy :ensure t)
+   
+   (use-package auto-dictionary
+   :ensure t
+   :hook (flyspell-mode . (lambda () (auto-dictionary-mode 1))))
+    #+END_SRC
+** Python
+*** Elpy
+   
+ #+BEGIN_SRC emacs-lisp
+    ;; pyvenv pytest pyenv-mode py-isort
+    (use-package pyvenv :ensure t)
+    (use-package pyenv-mode :ensure t)
+    (use-package elpy
+    :ensure t
+    :init
+    (elpy-enable)
+    :hook (python-mode . elpy-mode))
+
+    ;; use flycheck instead of flymake
+    (when (load "flycheck" t t)
+   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+   (add-hook 'elpy-mode-hook 'flycheck-mode))
+    ;; (use-package flymake :ensure t) ;; What is the difference?.
+
+    ;; (use-package elpy
+    ;;   :ensure t
+    ;;   :init (elpy-enable)
+    ;;   :hook (flycheck-mode flymake-mode))
+ #+END_SRC
+*** Code Folding and Snippets Hooks
+    #+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook 'evil-close-folds)
+  (add-hook 'python-mode-hook 'hs-minor-mode)
+  (add-hook 'python-mode-hook 'yas-minor-mode)
+    #+END_SRC
+*** iPython
+    #+BEGIN_SRC emacs-lisp
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
+    #+END_SRC
+** LATEX
+    
+#+BEGIN_SRC emacs-lisp
+;; (use-package auctex :ensure t)
+;; (use-package company-auctex :ensure t)
+(with-eval-after-load "tex"
+  ;;   ;; (add-to-list 'TeX-view-program-list '("Zathura" "zathura %o"))
+    (setcdr (assq 'output-pdf TeX-view-program-selection) '("Zathura")))
+
+(setq TeX-source-correlate-start-server t)
+
+;; set XeTeX mode in TeX/LaTeX
+  (add-hook 'LaTeX-mode-hook
+            (lambda()
+              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+              (setq TeX-command-default "XeLaTeX")
+              (setq TeX-save-query nil)
+              (setq TeX-show-compilation t)))
+#+END_SRC
+** Flutter
+    
+#+BEGIN_SRC emacs-lisp
+;; Flutter stuff
+;; (use-package dart-mode :ensure t)
+;; (use-package flutter
+;;     :after dart-mode
+;;     :bind (:map dart-mode-map
+;;                 ("C-M-x" . #'flutter-run-or-hot-reload)))
+
+;; (use-package flutter-l10n-flycheck
+;;     :after flutter
+;;     :config
+;;     (flutter-l10n-flycheck-setup))
+
+#+END_SRC
+** Shell
+    
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :init (company-mode)
+  :config (setq company-minimum-prefix-length 1
+  company-idle-delay 0.0) ;; default is 0.2
+  :hook (
+  (prog-mode . company-mode)
+  (org-mode . company-mode)))
+(use-package company-shell :ensure t)
+#+END_SRC
+** Version Control
+    
+#+BEGIN_SRC emacs-lisp
+(use-package magit :ensure t)
+#+END_SRC
+** yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-reload-all))
+#+END_SRC
+** Modes
+    
+#+BEGIN_SRC emacs-lisp
+(use-package csv-mode :ensure t)
+(use-package markdown-mode :ensure t)
+(add-hook 'text-mode-hook 'visual-line-mode)
+(use-package json-mode :ensure t)
+(use-package highlight-numbers
+ :ensure t
+ :commands highlight-numbers-mode
+ :hook (prog-mode . highlight-numbers-mode))
+ 
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.css\\'"   . web-mode)
+         ("\\.jsx?\\'"  . web-mode)
+         ("\\.tsx?\\'"  . web-mode)
+         ("\\.json\\'"  . web-mode))
+  :config
+  (setq web-mode-markup-indent-offset 2) ; HTML
+  (setq web-mode-css-indent-offset 2)    ; CSS
+  (setq web-mode-code-indent-offset 2)   ; JS/JSX/TS/TSX
+  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
+#+END_SRC
+** Tweaks
+    
+#+BEGIN_SRC emacs-lisp
+(use-package insert-shebang :ensure t)
+(add-to-list 'load-path "/home/yusuf/.emacs.d/highlight-parentheses.el")
+(use-package smartparens
+  :ensure t
+  :init (smartparens-global-mode)
+:hook (prog-mode . smartparens-mode))
+#+END_SRC
