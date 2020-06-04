@@ -18,6 +18,7 @@ seps = [
 ]
 
 
+
 def generate_powerline(bgs, sep, flipped):
     '''
     add colors and formatting to the passed separator
@@ -50,9 +51,10 @@ def create_powerline(modules, bgs):
         if i >= len(modules):
             break
         mod = modules[i]
-        next_mod = modules[i +
-                           1 if not i + 1 >= len(modules) else len(modules) -
-                           1]
+        next_mod = (modules[i+1:i+2] or (modules[-1],))[0]
+        # next_mod = modules[i +
+        #                    1 if not i + 1 >= len(modules) else len(modules) -
+        #                    1]
         print(mod, next_mod)
         if mod == '%{r}':
             modules[i] = '%{F-}%{B-}%{r}'
