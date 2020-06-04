@@ -32,19 +32,28 @@ xfce4-panel -d & # the best sys-tray of them all
 
 # polybar mybar &
 # fake configs folder to use a different gtk-3.0.ini file with a different font
-env XDG_CONFIG_HOME=$HOME/.config_alt xfce4-panel -d &
+# env XDG_CONFIG_HOME=$HOME/.config_alt xfce4-panel -d &
 
 bspc monitor ^1 -d I II III IV V VI VII VIII IX X
 bspc monitor ^2 -d 1 2 3 4 5 6 7 8 9 10
 
-bspc config border_width        $((GDK_SCALE*2))
+bspc config remove_unplugged_monitors true
+
+bspc config border_width        $((GDK_SCALE*3))
 bspc config window_gap          $((GDK_SCALE*6))
 
 bspc config split_ratio          0.7
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc desktop 'I' --layout monocle
+# colors
+bspc config normal_border_color '#928374'
+bspc config active_border_color '#fabd2f'
+bspc config focused_border_color '#fabd2f'
+
+for desk in {I,X,IX,VIII};do
+bspc desktop $desk --layout monocle
+done
 #open Funny Java Things
 # bspc config focus_follows_pointer false
 wmname LG3D &
@@ -55,14 +64,14 @@ bspc config external_rules_command "$(which external_rules)"
 
 bspc config -m ^1 top_padding $((GDK_SCALE * 20))
 
-# bspc rule -a xfce4-panel manage=off
-# bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a zathura state=tiled
 bspc rule -a Zathura state=tiled
 bspc rule -a emacs state=tiled
 bspc rule -a Emacs state=tiled
 bspc rule -a qutebrowser desktop='^1'
 bspc rule -a Chromium desktop='^2'
+bspc rule -a telegram-desktop desktop='^9'
+bspc rule -a TelegramDesktop desktop='^9'
 bspc rule -a mplayer2 state=floating
 bspc rule -a oblogout state=fullscreen
 bspc rule -a Oblogout state=fullscreen
@@ -72,6 +81,7 @@ bspc rule -a mpv:security-cam-preview state=floating focus=off sticky=on
 bspc rule -a mpv:security-cam-preview1 state=floating focus=off sticky=on
 bspc rule -a mpv:security-cam-preview2 state=floating focus=off sticky=on
 bspc rule -a mpv:security-cam-preview3 state=floating focus=off sticky=on
+bspc rule -a stalonetray manage=off
 
-automatic_tab.py &
+# automatic_tab.py &
 # two_tiled.py &
