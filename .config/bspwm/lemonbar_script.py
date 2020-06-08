@@ -18,7 +18,7 @@ except subprocess.CalledProcessError:
 
 if os.path.exists('lemonbar.log'):
     os.remove('lemonbar.log')
-logging.basicConfig(filename='lemonbar.log', level=logging.DEBUG)
+logging.basicConfig(filename='lemonbar.log', level=logging.ERROR)
 
 
 class GracefulKiller:

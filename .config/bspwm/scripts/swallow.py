@@ -51,28 +51,33 @@ def is_child(pid, child_pid):
     return False
 
 
-swallowed = {}
-for event in execute('bspc subscribe all'):
-    event = event.split()
-    if event[0] == 'node_add':
-        new_wid = event[-1]
-        last_wid = cmd_output('bspc query -N -d -n last.window')
-        if any([is_floating(new_wid), is_floating(last_wid),
-                is_fullscreen(new_wid), is_fullscreen(last_wid)]):
-            continue
-        new_pid = get_pid(new_wid)
-        last_pid = get_pid(last_wid)
-        if not all([new_pid, last_pid]):
-            continue
-        if is_child(last_pid, new_pid):
-            cmd_run(f'bspc node --swap {last_wid} --follow')
-            cmd_run(f'bspc node {new_wid} --flag private=on')
-            cmd_run(f'bspc node {last_wid} --flag hidden=on')
-            cmd_run(f'bspc node {last_wid} --flag private=on')
-            swallowed[new_wid] = last_wid
-    if event[0] == 'node_remove':
-        removed_wid = event[-1]
-        if removed_wid in swallowed.keys():
-            swallowed_id = swallowed[removed_wid]
-            cmd_run(f'bspc node {swallowed_id} --flag hidden=off')
-            cmd_run(f'bspc node --focus {swallowed_id}')
+def swallow():
+    swallowed = {}
+    for event in execute('bspc subscribe all'):
+        event = event.split()
+        if event[0] == 'node_add':
+            new_wid = event[-1]
+            last_wid = cmd_output('bspc query -N -d -n last.window')
+            if any([is_floating(new_wid), is_floating(last_wid),
+                    is_fullscreen(new_wid), is_fullscreen(last_wid)]):
+                continue
+            new_pid = get_pid(new_wid)
+            last_pid = get_pid(last_wid)
+            if not all([new_pid, last_pid]):
+                continue
+            if is_child(last_pid, new_pid):
+                cmd_run(f'bspc node --swap {last_wid} --follow')
+                cmd_run(f'bspc node {new_wid} --flag private=on')
+                cmd_run(f'bspc node {last_wid} --flag hidden=on')
+                cmd_run(f'bspc node {last_wid} --flag private=on')
+                swallowed[new_wid] = last_wid
+        if event[0] == 'node_remove':
+            removed_wid = event[-1]
+            if removed_wid in swallowed.keys():
+                swallowed_id = swallowed[removed_wid]
+                cmd_run(f'bspc node {swallowed_id} --flag hidden=off')
+                cmd_run(f'bspc node --focus {swallowed_id}')
+
+
+if __name__ == '__main__':
+    swallow()

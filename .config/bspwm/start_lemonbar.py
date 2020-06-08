@@ -13,10 +13,14 @@ from bar_modules import BspwmWorkspaces, CoronaVirus, ServerStatus,\
 bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
 
 seps = [
-    '%{T2}%{O-27}%{T-}', '%{F#a89984}%{T2} %{T-}%{F-}', '%{T2}%{O-28}%{T-}',
-    '%{F#a89984}%{T2} %{T-}%{F-}'
+    '%{T2}\uE0B0%{O-27}%{T-}', '%{F#a89984}%{T2} \uE0B1%{T-}%{F-}',
+    '%{T2}\uE0B2%{O-28}%{T-}', '%{F#a89984}%{T2} \uE0B3%{T-}%{F-}'
 ]
 
+# seps = [
+#     '%{T2}\uE0BC%{T-}', '%{F#a89984}%{T2} \uE0BB%{T-}%{F-}',
+#     '%{T2}\uE0BE%{T-}', '%{F#a89984}%{T2} \uE0B9%{T-}%{F-}'
+# ]
 
 
 def generate_powerline(bgs, sep, flipped):
@@ -52,9 +56,6 @@ def create_powerline(modules, bgs):
             break
         mod = modules[i]
         next_mod = (modules[i+1:i+2] or (modules[-1],))[0]
-        # next_mod = modules[i +
-        #                    1 if not i + 1 >= len(modules) else len(modules) -
-        #                    1]
         print(mod, next_mod)
         if mod == '%{r}':
             modules[i] = '%{F-}%{B-}%{r}'
