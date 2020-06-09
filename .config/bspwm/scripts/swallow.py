@@ -1,10 +1,24 @@
 #!/usr/bin/env python
 
+import re
 import subprocess
 from functools import partial
 
 
+EXCLUDED_CLASSES = ['qutebrowser', 'xev']
+
 cmd_run = partial(subprocess.Popen, text=True, shell=True)
+
+
+def get_class(wid):
+    try:
+        out = cmd_output(f'xprop -id {wid}')
+        wids = re.search(r'^wm_class\(string\)\s=\s(.*?)$', out,
+                        flags=re.IGNORECASE | re.MULTILINE).group(1)
+        wids = [wid.strip('"') for wid in wids.split(', ')][1]
+        return wids
+    except Exception:
+        return ''
 
 
 def cmd_output(cmd):
@@ -32,7 +46,6 @@ def is_fullscreen(wid):
 
 def is_floating(wid):
     return cmd_output(f'bspc query -N -n {wid}.floating').strip()
-    
 
 
 def get_pid(wid):
@@ -58,18 +71,22 @@ def swallow():
         if event[0] == 'node_add':
             new_wid = event[-1]
             last_wid = cmd_output('bspc query -N -d -n last.window')
-            if any([is_floating(new_wid), is_floating(last_wid),
-                    is_fullscreen(new_wid), is_fullscreen(last_wid)]):
+            is_excluded = [c for c in EXCLUDED_CLASSES
+                           if any(c in get_class(id)
+                                  for id in (new_wid, last_wid))]
+            if any((is_floating(new_wid), is_floating(last_wid),
+                    is_fullscreen(new_wid), is_fullscreen(last_wid),
+                    is_excluded)):
                 continue
             new_pid = get_pid(new_wid)
             last_pid = get_pid(last_wid)
             if not all([new_pid, last_pid]):
                 continue
             if is_child(last_pid, new_pid):
-                cmd_run(f'bspc node --swap {last_wid} --follow')
-                cmd_run(f'bspc node {new_wid} --flag private=on')
-                cmd_run(f'bspc node {last_wid} --flag hidden=on')
                 cmd_run(f'bspc node {last_wid} --flag private=on')
+                cmd_run(f'bspc node --swap {last_wid} --follow')
+                cmd_run(f'bspc node {last_wid} --flag hidden=on')
+                cmd_run(f'bspc node {new_wid} --flag private=on')
                 swallowed[new_wid] = last_wid
         if event[0] == 'node_remove':
             removed_wid = event[-1]
