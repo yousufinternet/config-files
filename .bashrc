@@ -21,7 +21,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export TERM=xterm-256color
 export QT_QPA_PLATFORMTHEME=qt5ct
 export TERMINAL=konsole
-export ROFI_THEME=gruvbox-dark-hard
+export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
 export EDITOR=vim
 export RTV_EDITOR=vim
 

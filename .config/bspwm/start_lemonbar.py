@@ -10,11 +10,14 @@ from bar_modules import BspwmWorkspaces, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate
 
-bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
+
+
+# bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
+bgs = ['#282A36', '#000000', '#4D4D4D']
 
 seps = [
-    '%{T2}\uE0B0%{O-27}%{T-}', '%{F#a89984}%{T2} \uE0B1%{T-}%{F-}',
-    '%{T2}\uE0B2%{O-28}%{T-}', '%{F#a89984}%{T2} \uE0B3%{T-}%{F-}'
+    '%{T2}\uE0B0%{O-27}%{T-}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
+    '%{T2}\uE0B2%{O-28}%{T-}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
 ]
 
 # seps = [
@@ -81,15 +84,16 @@ def create_powerline(modules, bgs):
 
 
 def lemonbar_below_xfcepanel():
+    '''
+    Put lemonbar below xfce4-panel
+    '''
     try:
         time.sleep(0.1)
-        xfce_ids = subprocess.check_output('xdo id -a xfce4-panel',
-                                           text=True,
-                                           shell=True).strip().split('\n')
-        for id in xfce_ids:
-            subprocess.Popen(f'xdo below -t {id} -a lemonbar_python',
-                             text=True,
-                             shell=True)
+        xfce_ids = subprocess.check_output(
+            'xdo id -a xfce4-panel', text=True, shell=True).strip().split('\n')
+        for i in xfce_ids:
+            subprocess.Popen(
+                f'xdo below -t {i} -a lemonbar_python', text=True, shell=True)
     except subprocess.CalledProcessError:
         pass
 
@@ -115,7 +119,7 @@ if __name__ == '__main__':
 
     create_powerline(modules, bgs)
 
-    main_loop = MainLoop(modules, sep='', bg=bgs[0], fg='#ebdbb2')
+    main_loop = MainLoop(modules, sep='', bg=bgs[0], fg='#F8F8F2')
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()
