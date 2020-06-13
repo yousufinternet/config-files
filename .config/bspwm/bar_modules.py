@@ -25,6 +25,15 @@ cdict = {
         'cyan': '#83a598'}
 
 
+cdict = {
+        'red': '#FF5555',
+        'l_yellow': '#F1FA8C',
+        'teal': '#8BE9FD',
+        'orange': '#FF79C6',
+        'green': '#5AF78E',
+        'cyan': '#BD93F9'}
+
+
 def cmd_output(cmd, **kwargs):
     try:
         out = subprocess.check_output(cmd, text=True, shell=True).strip()
