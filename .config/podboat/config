@@ -1,0 +1,4 @@
+delete-played-files yes
+player mpv
+max-downloads 2
+podlist-format "%4i %-20S %50b [%6dMB/%6tMB] [%5p%%]%> [%8K]"

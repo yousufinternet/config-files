@@ -15,12 +15,11 @@ export AWT_TOOLKIT=MToolkit
 # cod completion
 source <(cod init $$ bash)
 
+# git completions
+. /usr/share/git/completion/git-completion.bash
+
 # for bspwm
 export XDG_CONFIG_HOME="$HOME/.config"
-
-export TERM=xterm-256color
-export QT_QPA_PLATFORMTHEME=qt5ct
-export TERMINAL=konsole
 export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
 export EDITOR=vim
 export RTV_EDITOR=vim
@@ -30,6 +29,7 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.local/bin/flutter/bin:$PATH
 export PATH=$HOME/.local/bin/flutter/bin/cache/dart-sdk/bin:$PATH
 export PATH=$HOME/.pub-cache/bin/:$PATH
+export PATH=$HOME/.config/bspwm/scripts/:$PATH
 export NODE_PATH=$NODE_PATH:$(npm root -g)
 
 alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'

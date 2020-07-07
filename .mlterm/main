@@ -1,22 +1,38 @@
-fg_color = #eeeeeeeeecec
-bg_color = #000000000000
+depth = 32
 use_anti_alias = true
-use_variable_column_width = false
-tabsize = 4
+use_variable_column_width = true
 type_engine = cairo
-scrollbar_mode = none
 ot_features = clig,dlig,hlig,liga
-use_dynamic_comb = true
+use_dynamic_comb = false
 use_multi_column_char = true
 receive_string_via_ucs = true
 col_size_of_width_a = 1
-use_combining = true
-alpha = 223
-use_transbg = true
-wall_picture = 
+use_combining = false
 only_use_unicode_font = false
 not_use_unicode_font = false
+
+tabsize = 4
+scrollbar_mode = none
 logsize = 1024
-mod_meta_mode = none
-vt_color_mode = true
+mod_meta_mode = 8bit
+ot_script = arab
+use_ot_layout = false
+bel_mode = sound|visual
+blink_cursor = true
+use_extended_scroll_shortcut = true
+regard_uri_as_word = true
+application_name = mlterm
+
+use_clipboard = true
+
+bg_color = #282A36c3
+fg_color = #ffffff
+
+step_in_changing_font_size = 2
 fontsize = 30
+box_drawing_font = noconv
+
+termtype = xterm-color
+vt_color_mode = true
+
+emoji_path = /usr/share/fonts/noto/NotoColorEmoji.ttf

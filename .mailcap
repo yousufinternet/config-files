@@ -48,7 +48,7 @@ video/*; mpv '%s' --autofit 640x480 --loop=inf; test=test -n "$DISPLAY"
 
 # View true images in the terminal, supported by rxvt-unicode, xterm and st
 # Requires the w3m-img package
-# image/*; w3m -o 'ext_image_viewer=off' '%s'; needsterminal
+image/*; w3m -o 'ext_image_viewer=off' '%s'; needsterminal
 
 # Don't have a solution for albums yet
 image/x-imgur-album; echo
@@ -56,14 +56,15 @@ image/x-imgur-album; echo
 # 256 color images using half-width unicode characters
 # Much higher quality that img2txt, but must be built from source
 # https://github.com/rossy/img2xterm
-image/*; curl -s '%s' | convert -resize 80x80 - jpg:/tmp/rtv.jpg && img2xterm /tmp/rtv.jpg; needsterminal; copiousoutput
+# image/*; curl -s '%s' | convert -resize 80x80 - jpg:/tmp/rtv.jpg && img2xterm /tmp/rtv.jpg; needsterminal; copiousoutput
 
 # Display images in classic ascii using img2txt and lib-caca
-image/*; curl -s '%s' | convert - jpg:/tmp/rtv.jpg && img2txt -f utf8 /tmp/rtv.jpg; needsterminal; copiousoutput
+# image/*; curl -s '%s' | convert - jpg:/tmp/rtv.jpg && img2txt -f utf8 /tmp/rtv.jpg; needsterminal; copiousoutput
 
 # Full motion videos - requires a framebuffer to view
-video/x-youtube; mpv -vo drm -quiet '%s'; needsterminal
-video/*; mpv -vo drm -quiet '%s'; needsterminal
+video/x-youtube;~/.config/bspwm/scripts/open_with_mpv.sh '%s'; needsterminal
+# video/x-youtube; mpv -vo drm -quiet '%s'; needsterminal
+video/*; mpv -vo drm -quiet '%s' #; needsterminal
 
 # Ascii videos
 # video/x-youtube; youtube-dl -q -o - '%s' | mplayer -cache 8192 -vo caca -quiet -; needsterminal

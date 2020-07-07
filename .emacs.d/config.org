@@ -1,5 +1,8 @@
+#+TITLE: Emacs org init
+#+AUTHOR: Yusuf Mohammad
+
 * References
-Please do check the following configs as this one was heavily inspired by them.
+Please do check the following /configs/ as this one was heavily inspired by them.
  - https://github.com/daedreth/UncleDavesEmacs/blob/master/config.org
  - https://protesilaos.com/dotemacs/
  - https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
@@ -11,7 +14,7 @@ Please do check the following configs as this one was heavily inspired by them.
  :init
  (setq ivy-use-virtual-buffers t
             ivy-count-format "%d/%d ")
-	    :commands 
+ :commands 
 	    (avy-goto-word-0
 	    ivy-switch-buffers))
 
@@ -34,7 +37,7 @@ Please do check the following configs as this one was heavily inspired by them.
 #+BEGIN_SRC emacs-lisp
 (use-package highlight :ensure t)
 (use-package iedit :ensure t)
-;; (use-package evil-iedit :ensure t)
+(use-package evil-iedit :ensure t)
 (use-package anzu :ensure t)
 #+END_SRC
 
@@ -47,7 +50,9 @@ Please do check the following configs as this one was heavily inspired by them.
  (markdown-mode . pandoc-mode)
  (pandoc-mode . pandoc-load-default-settings))
  )
- (use-package pdf-tools :ensure t)
+ (use-package pdf-tools 
+  :ensure t
+  :defer 10)
 #+END_SRC
 * Emacs tweaks
 ** Minor tweaks
@@ -125,6 +130,19 @@ Please do check the following configs as this one was heavily inspired by them.
 ;;  (define-key evil-visual-state-map [left] 'left-char)
 ;;  (define-key evil-visual-state-map [right] 'right-char)
     #+END_SRC
+** Auto package update
+   #+BEGIN_SRC emacs-lisp
+    (use-package auto-package-update
+    :ensure t
+    :config
+    (setq auto-package-update-delete-old-versions t
+	    auto-package-update-interval 4)
+    (auto-package-update-maybe))
+   #+END_SRC
+** Org mode as the default mode for scratch buffer
+   #+BEGIN_SRC emacs-lisp
+   (setq initial-major-mode 'org-mode)
+   #+END_SRC
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
@@ -135,6 +153,9 @@ Please do check the following configs as this one was heavily inspired by them.
      :prefix "SPC"
      :non-normal-prefix "C-SPC"
      "C-'" 'avy-goto-word-0
+     "a" '(:ignore t :which-key "Applications")
+     "ar" 'ranger
+     "ad" '(dired ".")
      "b" '(:ignore t :which-key "Buffers")
      "bb" 'ivy-switch-buffer
      "bd" 'evil-delete-buffer
@@ -166,10 +187,12 @@ Please do check the following configs as this one was heavily inspired by them.
      "hk" 'describe-key)
      (general-define-key
      :states '(normal visual insert emacs)
-     :prefix "SPC"
-     :non-normal-prefix "C-SPC"
+     :prefix "SPC o"
+     :non-normal-prefix "C-SPC o"
       :keymaps 'evil-org-mode-map
-      "al" 'org-agenda-list
+      "a" 'org-agenda-list
+      "d" 'org-deadline
+      "s" 'org-schedule
       "ce" 'org-edit-src-code)
      (general-define-key
      :states '(normal visual insert emacs)
@@ -177,6 +200,10 @@ Please do check the following configs as this one was heavily inspired by them.
      :non-normal-prefix "C-SPC"
       :keymaps 'pandoc-mode-map
       "p" 'pandoc-main-hydra/body)
+      (general-define-key
+      :states '(visual)
+      :keymaps 'evil-surround-mode-map
+      "s" 'evil-surround-region)
      (general-define-key
      :states '(normal visual insert emacs)
      :prefix "SPC"
@@ -187,7 +214,13 @@ Please do check the following configs as this one was heavily inspired by them.
       "pg" 'elpy-goto-definition-other-window
       "ps" 'elpy-shell-switch-to-shell
       "pf" 'elpy-format-code
-      "pe" 'elpy-shell-send-statement)
+      "pe" 'elpy-shell-send-statement
+      "pii" 'iedit-mode
+      "piH" 'iedit-restrict-function
+      "pin" 'iedit-expand-down-to-occurrence
+      "pip" 'iedit-expand-up-to-occurrence
+      "pi}" 'iedit-expand-down-a-line
+      "pi{" 'iedit-expand-up-a-line)
     )
   
   (defun config-reload ()
@@ -240,7 +273,7 @@ Please do check the following configs as this one was heavily inspired by them.
     :ensure t
     :config
     (global-evil-surround-mode 1))
-  (use-package evil-magit :ensure t)
+  ;; (use-package evil-magit :ensure t)
   (use-package evil-org 
   :ensure t
   :hook (org-mode . evil-org-mode)
@@ -260,7 +293,7 @@ Please do check the following configs as this one was heavily inspired by them.
   :init 
   (evil-snipe-mode +1)
   (evil-snipe-override-mode +1))
-  
+
   ;; I am yet to see why the evil-leader key is necessary
   ;; (use-package evil-leader
   ;;   :ensure t
@@ -273,7 +306,7 @@ Please do check the following configs as this one was heavily inspired by them.
   ;; (use-package evil-search-highlight-persist
   ;;   :ensure t
   ;;   :init (global-evil-search-highlight-persist t))
-  
+
   (use-package evil-visualstar :ensure t)
   (global-evil-visualstar-mode)
 #+END_SRC
@@ -290,8 +323,8 @@ Please do check the following configs as this one was heavily inspired by them.
 
   (use-package diminish
    :ensure t
-   :command 'diminish
-   :init 
+   :commands 'diminish
+   :config
    (diminish 'evil-org-mode)
    (diminish 'smartparens-mode)
    (diminish 'beacon-mode)
@@ -305,15 +338,7 @@ Please do check the following configs as this one was heavily inspired by them.
     :ensure t
     :config
     (require 'spaceline-config)
-      ;; (setq spaceline-buffer-encoding-abbrev-p nil)
-      ;; (setq spaceline-line-column-p nil)
-      ;; (setq spaceline-line-p nil)
-      ;; (setq powerline-default-separator (quote arrow))
       (spaceline-spacemacs-theme))
-
-      ;; (use-package powerline
-      ;;   :ensure t
-      ;;   :config (powerline-center-evil-theme))
 
       (show-paren-mode)
 
@@ -331,20 +356,30 @@ Please do check the following configs as this one was heavily inspired by them.
       :init
 	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
-** Emojis
+** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
    (use-package company-emoji
    :ensure t
    :hook (org-mode . company-emoji-init))
+   (use-package pretty-mode
+:ensure t
+:commands (global-pretty-mode)
+:config (global-pretty-mode t))
    #+END_SRC
 ** Default font
+   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
+  (setq text-scale-mode-step 1.05)
+(defun reapply-font (&optional frame)
   (set-face-attribute 'default nil
-		      :family "Dejavu Sans Mono"
-		      :height 115
+		      :family "Cascadia Code"
+		      :height 125
 		      :weight 'normal
 		      :width 'normal)
-  (setq text-scale-mode-step 1.05)
+  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono")))
+  
+  (reapply-font)
+  (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
 ** Themes
@@ -353,7 +388,7 @@ Please do check the following configs as this one was heavily inspired by them.
     (use-package autothemer :ensure t)
     
     ;; modus-vivendi-theme
-  (setq themes-list '(gotham-theme zerodark-theme spacemacs-theme ample-theme doom-themes))
+  (setq themes-list '(gotham-theme zerodark-theme spacemacs-theme ample-theme doom-themes modus-vivendi-theme))
 
   ; fetch the list of packages available 
   (unless package-archive-contents
@@ -364,8 +399,18 @@ Please do check the following configs as this one was heavily inspired by them.
     (unless (package-installed-p theme)
       (package-install theme)))
       
-      (load-theme 'doom-gruvbox t)
+      (load-theme 'doom-dracula t)
 #+END_SRC
+
+*** Workaround for theme not applied to emacsclient frames
+    #+BEGIN_SRC emacs-lisp
+    (if (daemonp)
+	(add-hook 'after-make-frame-functions
+	    (lambda (frame)
+		(with-selected-frame frame
+		    (load-theme 'doom-dracula t))))
+	(load-theme 'doom-dracula t))
+    #+END_SRC
 * ORG mode
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
@@ -376,7 +421,13 @@ Please do check the following configs as this one was heavily inspired by them.
   ;; :hook (org-mode . org-bullets-mode))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
-  (setq org-imenu-depth 5)
+  
+  (setq org-imenu-depth 3)
+  
+  ;; experimental
+  (setq org-log-done 'note')
+  (org-agenda nil "a")
+  (setq org-log-into-drawer t)
 
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	  org-todo-keyword-faces
@@ -456,9 +507,10 @@ Please do check the following configs as this one was heavily inspired by them.
     (use-package pyenv-mode :ensure t)
     (use-package elpy
     :ensure t
+    :commands elpy-enable
     :init
-    (elpy-enable)
-    :hook (python-mode . elpy-mode))
+    (elpy-enable))
+    ;; :hook (python-mode . elpy-mode))
 
     ;; use flycheck instead of flymake
     (when (load "flycheck" t t)
@@ -540,7 +592,7 @@ Please do check the following configs as this one was heavily inspired by them.
 (use-package yasnippet
   :ensure t
   :config
-    (use-package yasnippet-snippets
+  (use-package yasnippet-snippets
       :ensure t)
     (yas-reload-all))
 #+END_SRC
@@ -575,6 +627,6 @@ Please do check the following configs as this one was heavily inspired by them.
 (add-to-list 'load-path "/home/yusuf/.emacs.d/highlight-parentheses.el")
 (use-package smartparens
   :ensure t
-  :init (smartparens-global-mode)
+  :config (smartparens-global-mode)
 :hook (prog-mode . smartparens-mode))
 #+END_SRC

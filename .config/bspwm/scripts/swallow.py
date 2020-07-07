@@ -1,110 +1,78 @@
 #!/usr/bin/env python
 '''
 Swallow function for bspwm
-when spawning a child process hide the parent window
-WARNING: not tested on multiple monitors setup
+when spawning a child process hide the parent process window
 '''
 
 import os
-import re
 import sys
-import json
 import logging
+import inspect
 import traceback
-import subprocess
-from functools import partial
+
+cmd_folder = os.path.realpath(
+    os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0]))
+sys.path.append(os.path.join(cmd_folder, 'wmutils'))
+
+from wmutils.processes import cmd_run, cmd_output, execute, is_child
+from wmutils.utils import get_class, is_floating, is_fullscreen, desk_layout, get_pid
 
 
-EXCLUDED_CLASSES = ['qutebrowser', 'xev', 'lemonbar', 'xfce4-panel']
+EXCLUDED_CLASSES = [
+    'qutebrowser', 'xev', 'lemonbar', 'xfce4-panel', 'emacs', 'Emacs'
+]
 
 logging_level = logging.ERROR if len(sys.argv) == 1 else sys.argv[1]
 logging.basicConfig(filename=os.path.expanduser('~/.swallow.log'),
                     level=logging_level)
 
-cmd_run = partial(subprocess.Popen, text=True, shell=True)
 
-
-def get_class(wid):
-    '''lemonbar
-    get passed window id class using xprop output
-    '''
-    try:
-        out = cmd_output(f'xprop -id {wid}')
-        wids = re.search(r'^wm_class\(string\)\s=\s(.*?)$', out,
-                         flags=re.IGNORECASE | re.MULTILINE).group(1)
-        wids = [wid.strip('"') for wid in wids.split(', ')][1]
-        logging.debug(f'get_class output: {wids} {out} {wid}')
-        return wids
-    except Exception as e:
-        logging.debug(f'Error in get_class: {wid}: {e}')
-        return ''
-
-
-def cmd_output(cmd):
-    '''
-    subprocess's check output with some defaults and exception handling
-    '''
-    try:
-        out = subprocess.check_output(cmd, text=True, shell=True).strip()
-    except Exception:
-        out = ''
-    return out
-
-
-def execute(cmd):
-    '''
-    execute and yield the output
-    '''
-    popen = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                             universal_newlines=True, text=True, shell=True)
-    for stdout_line in iter(popen.stdout.readline, ""):
-        yield stdout_line
-    popen.stdout.close()
-    return_code = popen.wait()
-    if return_code:
-        raise subprocess.CalledProcessError(return_code, cmd)
-
-
-def desk_layout():
-    '''
-    return True if desktop is monocle
-    '''
-    return json.loads(cmd_output('bspc query -T -d'))['layout']
-
-
-def is_fullscreen(wid):
-    '''
-    check whether passed window id refers to a fullscreen window
-    '''
-    return cmd_output(f'bspc query -N -n {wid}.fullscreen').strip()
-
-
-def is_floating(wid):
-    '''
-    check whether passed window id refers to a floating window
-    '''
-    return cmd_output(f'bspc query -N -n {wid}.floating').strip()
-
-
-def get_pid(wid):
-    '''
-    get window process id using xprop output
-    '''
-    out = cmd_output(f'xprop -id {wid} | grep WM_PID')
-    if out:
-        return out.split(' = ')[1]
-    else:
-        return ''
-
-
-def is_child(pid, child_pid):
-    '''
-    check whether child_pid is a child of pid
-    '''
-    tree = cmd_output(f'pstree -T -p {pid}')
-    for line in tree.split('\n'):
-        if child_pid in line:
+def advance_is_child(pid1, pid2):
+    ps_out = [line.split(maxsplit=3) for line in
+              cmd_output(f'ps --ppid {pid1}').split('\n')[1:]]
+    print(ps_out)
+    if any(line[-1] == 'tmux: client' for line in ps_out):
+        tmux_shell_pid = cmd_output("tmux list-panes -F '#{pane_pid}'")
+        print('tmux shell')
+        print(tmux_shell_pid, pid2)
+        return is_child(tmux_shell_pid, pid2)
+    elif any(line[-1] == 'ranger' for line in ps_out):
+        print(cmd_output(f'pstree -ls {pid2}').startswith('systemd---sh'))
+        if cmd_output(f'pstree -ls {pid2}').startswith('systemd---sh'):
             return True
+        return False
+    else:
+        return is_child(pid1, pid2)
+
+
+def advance_is_child_depr(pid1, pid2):
+    # TODO finish this
+    # is this a terminal?
+    ps_out = [line.split(maxsplit=3) for line in
+              cmd_output(f'ps --ppid {pid1}').split('\n')[1:]]
+    print(ps_out)
+    ttys = {line[1]: (line[0], line[-1]) for line in ps_out if line[1] != '?'}
+    print(ttys)
+    if ttys:
+        if any('tmux: client' in x[1] for x in ttys.values()):
+            last_tmux_pid = cmd_output("tmux ")
+            tmux_server_pid = cmd_output("pgrep 'tmux: server'")
+            print(tmux_server_pid)
+            ps_out = [line.split(maxsplit=3) for line in cmd_output(
+                      f'ps --ppid {tmux_server_pid}').split('\n')[1:]]
+            tmux_ttys = {line[1]: (line[0], line[-1]) for line in ps_out if line[1] != '?'}
+            print(ps_out)
+            print(tmux_ttys)
+            for tty in ttys:
+                tty_pid = tmux_ttys.get(tty, '')
+                print(tty_pid)
+                if tty_pid:
+                    if is_child(tty_pid[0], pid2):
+                        return True
+        else:
+            for tty_pid, _ in ttys.values():
+                if is_child(tty_pid, pid2):
+                    return True
     return False
 
 
@@ -113,9 +81,9 @@ def swallow_cond(new_wid, last_wid):
     True if window should be swallowed False if not
     Modify it to your liking
     '''
-    logging.debug(f'swallow_cond: {new_wid} {last_wid}')
+    print('swallow_cond')
     if desk_layout() == 'monocle':
-        logging.debug('current desktop is monocle returning False')
+        print(False)
         return False
     is_excluded = [c for c in EXCLUDED_CLASSES
                    if any(c in get_class(id)
@@ -143,14 +111,18 @@ def swallow():
                 continue
             if event[0] == 'node_add':
                 new_wid = event[-1]
-                last_wid = cmd_output('bspc query -N -d -n last.window')
+                last_wid = cmd_output("bspc query -N -d -n 'last.window.!floating.!fullscreen'")
+                print(new_wid, last_wid)
+                print(swallow_cond(new_wid, last_wid))
                 if not swallow_cond(new_wid, last_wid):
                     continue
                 new_pid = get_pid(new_wid)
                 last_pid = get_pid(last_wid)
+                print(new_pid, last_pid)
+                print(advance_is_child(last_pid, new_pid))
                 if not all([new_pid, last_pid]):
                     continue
-                if is_child(last_pid, new_pid):
+                if advance_is_child(last_pid, new_pid):
                     cmd_run(f'bspc node {last_wid} --flag private=on')
                     cmd_run(f'bspc node --swap {last_wid} --follow')
                     cmd_run(f'bspc node {last_wid} --flag hidden=on')
@@ -163,6 +135,8 @@ def swallow():
                     cmd_run(f'bspc node {swallowed_id} --flag hidden=off')
                     cmd_run(f'bspc node --focus {swallowed_id}')
         except Exception as e:
+            print(e)
+            print(traceback.format_exc())
             logging.debug('Error occured in mainloop:'
                           f'\n{e}\n{traceback.format_exc()}')
 

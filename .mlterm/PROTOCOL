@@ -1,0 +1,218 @@
+comment -*- mode: text; tab-width:2; indent-tabs-mode:nil -*-
+
+mlterm configuration protocol
+version 20200426
+
+* Protocol
+  exec          = "\x1b]5379;" <command> "\x07"
+  set           = "\x1b]5379" ( ";" ( "/dev/..." ":" ) <key> "=" <value> )* "\x07"
+  get(pty)      = "\x1b]5380;" (<challenge> ";") ( "/dev/..." ":" ) <key> "\x07"
+  get(GUI menu) = "\x1b]5381;" ( "/dev/..." ":" ) <key> "\x07"
+  set&save      = "\x1b]5383;" <challenge> ( ";" ( "/dev/..." ":" ) <key> "=" <value> )* "\x07"
+
+  set font      = "\x1b]5379;" <font filename> ":" <key> "=" <value> "\x07"
+  get(pty)      = "\x1b]5380;" (<challenge> ";") <font filename> ":" <key> "\x07"
+  get(GUI menu)	= "\x1b]5381;" <font filename> ":" <key> "\x07"
+  set&save      = "\x1b]5383;" <challenge> ";" <font filename> ":" <key> "=" <value> "\x07"
+
+  set color     = "\x1b]5379;color:" <key> "=" <value> "\x07"
+  get(pty)      = "\x1b]5380;" (<challenge> ";color:") <key> "\x07"
+  get(GUI menu)	= "\x1b]5381;color:" <key> "\x07"
+  set&save      = "\x1b]5383;" <challenge> ";color:" <key> "=" <value> "\x07"
+
+  return value  = "#" <key> "=" <value> "\x0a" | "#error\x0a" | "#forbidden\x0a"
+
+  exec command  = autoscroll <count> | close_pty (<dev>) | close_screen | full_reset |
+                  gen_proto_challenge | hresize_screen (+<rows>|-<rows>|<rows>|<percent>%) |
+                  hsplit_screen (<rows>|<percent>%) |
+                  mlclient "<prefix options>" "<options>" |
+                  mlclientx "<prefix options>" "<options>" | mlconfig | next_pty | next_screen |
+                  open_pty | open_screen | paste (*) | prev_pty | prev_screen |
+                  scp "(local:|remote:)<src file name>" "(local:|remote:)<dst directory name>"
+                      "(<encoding name>)" |
+                  search_next <pattern> | search_prev <pattern> | select_pty <dev> |
+                  set_shortcut <key>=<operation> (*) |
+                  snapshot ("<file name>") ("<encoding name>") | update_all |
+                  vresize_screen (+<columns>|-<columns>|<columns>|<percent>%) |
+                  vsplit_screen (<columns>|<percent>%) | zmodem_start
+
+  set key       = alpha | allow_osc52 (*) | allow_scp (*) | auto_detect_encodings | auto_restart |
+                  baseline_offset | bd_color | bel_mode | bg_color | bidi_mode |
+                  bidi_separators | bl_color | borderless | box_drawing_font | brightness |
+                  click_interval | co_color | col_size_of_width_a | console_encoding |
+                  console_sixel_colors | contrast | cursor_bg_color | cursor_fg_color |
+                  emoji_path | encoding | exit_backscroll_by_pty | fade_ratio | fg_color |
+                  fontsize | gamma | geometry | hide_underline | icon_path | input_method |
+                  it_color | letter_space | line_space | local_echo_wait | locale | logging_msg |
+                  logging_vt_seq | logsize | mod_meta_key | mod_meta_mode | not_use_unicode_font |
+                  only_use_unicode_font | ot_features | ot_script | receive_string_via_ucs |
+                  regard_uri_as_word | rv_color | sb_bg_color | sb_fg_color | screen_width_ratio |
+                  scrollbar_mode | scrollbar_view_name | send_file static_backscroll_mode |
+                  tabsize | trim_trailing_newline_in_pasting | type_engine | ul_color |
+                  underline_offset | unicode_full_width_areas | unicode_half_width_areas |
+                  unicode_noconv_areas | use_alt_buffer | use_ansi_colors | use_anti_alias |
+                  use_auto_detect | use_bold_font | use_clipboard | use_combining | use_ctl |
+                  use_dynamic_comb | use_extended_scroll_shortcut | use_italic_font |
+                  use_local_echo | use_multi_column_char | use_ot_layout | use_transbg |
+                  use_urgent_bell | use_variable_column_width | use_vertical_cursor |
+                  vertical_mode | vt_color_mode | vt_seq_format | wall_picture | word_separators
+
+  get key       = alpha | allow_osc52 | allow_scp | auto_detect_encodings | baseline_offset |
+                  bd_color | bel_mode | bg_color | bidi_mode | bidi_separators | bl_color |
+                  borderless | box_drawing_font | brightness | click_interval | co_color |
+                  col_size_of_width_a | cols | contrast | cursor_bg_color | cursor_fg_color |
+                  emoji_path | encoding | fade_ratio | fg_color | fontconfig | fontsize | gamma |
+                  gui | hide_underline | icon_path | input_method | is_auto_encoding | it_color |
+                  letter_space | line_space | local_echo_wait | locale | logging_vt_seq | logsize |
+                  mod_meta_key | mod_meta_mode | not_use_unicode_font | only_use_unicode_font |
+                  ot_features | ot_script | pty_list | pty_name | pwd | receive_directory |
+                  receive_string_via_ucs | regard_uri_as_word | rows | rv_color | sb_bg_color |
+                  sb_fg_color | screen_width_ratio | scrollbar_mode | scrollbar_view_name |
+                  send_file | static_backscroll_mode | tabsize | trim_trailing_newline_in_pasting |
+                  type_engine | ul_color | underline_offset | unicode_full_width_areas |
+                  unicode_half_width_areas | unicode_noconv_areas | use_aafont | use_alt_buffer |
+                  use_ansi_colors | use_anti_alias | use_auto_detect | use_bold_font |
+                  use_clipboard | use_combining | use_ctl | use_dynamic_comb | use_italic_font |
+                  use_local_echo | use_multi_column_char | use_ot_layout | use_transbg |
+                  use_variable_column_width | use_vertical_cursor | vertical_mode | vt_seq_format |
+                  wall_picture | word_separators
+
+                  (*): Works as "proto:xxxx" shortcut in ~/.mlterm/key.
+
+  value         = <values for each key>
+  challenge     = <string in ~/.mlterm/challenge>
+
+  font filename = font | aafont | vfont | tfont | vaafont | taafont
+  font key      = see man/mlterm.1 or "USASCII"
+  font value    = see man/mlterm.1
+  fontsize      = <fontsize digit>
+
+  color key     = see man/mlterm.1
+  color value   = see man/mlterm.1
+
+* Values for each key
+  alpha = <any ASCII decimal digit>
+  allow_osc52 = true | false | switch
+  allow_scp = true | false | switch
+  auto_restart = true | false | switch | <restart command>
+  auto_detect_encodings = (<encoding name>,)*
+  baseline_offset = <any ASCII decimal digit>
+  bidi_separators = <any ASCII sign>*
+  bd_color = <color name> | <color rgb>
+  bl_color = <color name> | <color rgb>
+  bel_mode = none | sound | visual
+  bg_color = <color name> | <color rgb>
+  box_drawing_font = unicode | decsp | noconv
+  brightness = <any ASCII decimal digit>
+  click_interval = <any ASCII decimal digit>
+  cols = <any ASCII decimal digit>
+  col_size_of_width_a = 1 | 2 | switch
+  contrast = <any ASCII decimal digit>
+  co_colors = <color name> | <color rgb>
+  console_encoding = <encoding name> | auto
+  console_sixel_colors = 16 | 256 | full
+  cursor_bg_color = <color name> | <color rgb>
+  cursor_fg_color = <color name> | <color rgb>
+  emoji_path = <directory> | <open type font file>
+  encoding = <encoding name> | auto
+  fade_ratio = <any ASCII decimal digit>
+  fg_color = <color name> | <color rgb>
+  fontsize = <any ASCII decimal digit> | larger | smaller
+  gamma = <any ASCII decimal digit>
+  hide_underline = true | false | switch
+  icon_path = <file path>
+  input_method = <input method> ":" <input method specific options> ...
+  it_color = <color name> | <color rgb>
+  line_space = <any ASCII decimal digit>
+  locale = <locale name>
+  local_echo_wait = <any ASCII decimal digit>
+  logsize = <any ASCII decimal digit>
+  mod_meta_key = none | mod1 | mod2 | mod3 | mod4 | meta | alt | super | hyper
+  mod_meta_mode = none | esc | 8bit
+  not_use_unicode_font = true | false | switch
+  only_use_unicode_font = true | false | switch
+  ot_script = <script name>
+  ot_features = (<feature>,)*
+  pty_list = (<pty dev>:<active flag>;)*
+  pty_name = <pty dev> | <pty title>
+  pwd = <current working directory>
+  receive_directory = <directory path>
+  receive_string_via_ucs = true | false | switch
+  regard_uri_as_word = true | false | switch
+  rows = <any ASCII decimal digit>
+  rv_color = <color name> | <color rgb>
+  send_file = <file path>
+  sb_bg_color = <color name> | <color rgb>
+  sb_fg_color = <color name> | <color rgb>
+  screen_width_ratio = <any ASCII decimal digit>
+  scrollbar_mode = none | left | right
+  scrollbar_view_name = <name>
+  stataic_backscroll_mode = true | false | switch
+  tabsize = <any ASCII decimal digit>
+  trim_trailing_newline_in_pasting = true | false | switch
+  type_engine = xcore | xft | cairo
+  ul_color = <color name> | <color rgb>
+  underline_offset = <any ASCII decimal digit>
+  unicode_noconv_areas = (U+XXXX-XXXX,)*
+  unicode_full_width_areas = (U+XXXX-XXXX,)*
+  unicode_half_width_areas = (U+XXXX-XXXX,)*
+  use_aafont = true | false
+  use_alt_buffer = true | false | switch
+  use_ansi_colors = true | false | switch
+  use_anti_alias = true | false | switch
+  use_auto_detect = true | false | switch
+  use_bold_font = true | false | switch
+  use_ctl = true | false | switch
+  use_combining = true | false | switch
+  use_italic_font = true | false | switch
+  use_dynamic_comb = true | false | switch
+  use_local_echo = true | false | switch
+  use_multi_column_char = true | false | switch
+  use_ot_layout = true | false | switch
+  use_transbg = true | false | switch
+  use_variable_column_width = true | false | switch
+  use_vertical_cursor = true | false | switch
+  vertical_mode = none | cjk | mongol
+  vt_color_mode = 256 | high | true
+  vt_seq_format = raw | ttyrec
+  wall_picture = <file path>
+  logging_vt_seq = true | false | switch
+  logging_msg = true | false | switch
+
+* Note
+  o Encoding names are regularized , that is , `-' , `_' are removed , and only
+    upper case letters are used. But encoding names which are not regularized
+    can be used in ESC ] 5379 ; encoding= <value> BEL sequence by secondary
+    effect.
+  o Adjusting and operation arguments of  ESC ] 20 ; pt BEL sequence are not
+    used for now.
+  o It is configuration programs themselves that search ~/.mlterm/xim and
+    ${SYSCONFDIR}/mlterm/xim files for pairs of xim name and its preferable
+    locale.
+  o If /dev/... is specified with 'pty_name' key, <pty title> is returned.
+    Otherwise, <pty dev> returned.
+  o /dev/... in 5379,5382,5383 proto is ignored for now.
+  o If "snapshot" command issued without <file name> or with no value,
+    screen snapshot is output to ~/.mlterm/[tty].snp.
+  o "mlclient" command accepts arguments like mlclient comman except '='.
+    mlclient or mlclientx executables of tool/mlclient is recommended to use.
+    e.g. "\x1b]5379;mlclient --km utf8\x07"
+  o "mlclientx" command is similar to "mlclient" one except for not creating
+    any new window.
+  o "mlclient" and "mlclientx" commands doesn't accept "-e", "--initstr",
+    "--osc52" and "--shortcut" options, while they are available in ~/.mlterm/key
+    like Control+F1="proto:mlclient -osc52".
+  o "selected_text(:encoding)" command returns selected text in which NL is
+    replaced to CR.
+  o "paste" command works like INSERT_SELECTION.
+  o "\x1b]5379;fontconfig\x07" shows current font settings.
+  o See doc/en/README.transfer for "scp" command.
+
+* Note about color configuration
+  If you specify "" as <value>, previous setting of <key> color is cleared.
+
+* Compatibility with other terminals
+  set fg color     = "\x1b" "]" "10" ";" <color name> "\x07"
+  set bg color     = "\x1b" "]" "11" ";" <color name> "\x07"
+  set cursor color = "\x1b" "]" "12" ";" <color name> "\x07"
+  set picture      = "\x1b" "]" "20" ";" <path> "[" ";" <adjusting> "]" "[" ":" <operation> "]" "\x07"
