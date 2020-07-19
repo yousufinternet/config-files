@@ -38,7 +38,7 @@ if len(fullscreen_wins) == 0 and dont_disturb == 'false':
             geometry='960x540+2880+1620'
             if '--video-rotate=90' in sys.argv:
                 geometry = '540x960+3300+1200'
-            cmd_run(f'mpv --mute=yes --no-terminal --length=10 --geometry={geometry} {" ".join(sys.argv[1:])}')
+            cmd_run(f'mpv --mute=yes --profile=low-latency --no-terminal --length=10 --geometry={geometry} {" ".join(sys.argv[1:])}')
             # cmd_run(f'mpv --no-terminal --geometry={geometry} --length=5 {" ".join(sys.argv[1:])}')
 else:
     cmd_run(f'notify-send "Motion: Security Camera #{cam_num} Event"')

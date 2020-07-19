@@ -89,7 +89,7 @@ def lemonbar_below_xfcepanel():
     Put lemonbar below xfce4-panel
     '''
     try:
-        time.sleep(0.1)
+        time.sleep(1)
         xfce_ids = subprocess.check_output(
             'xdo id -a xfce4-panel', text=True, shell=True).strip().split('\n')
         for i in xfce_ids:
