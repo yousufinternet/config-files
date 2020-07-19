@@ -8,9 +8,7 @@ from wmutils.processes import cmd_run
 
 def randomize_hue(bg_hex):
     color_obj = Color(bg_hex)
-    # randomized = [random.random() for _ in range(100)][random.randint(0,99)]
     randomized = random.random()
-    print(randomized)
     color_obj.hue = randomized
     sat = color_obj.saturation
     color_obj.saturation = sat+randomized if (sat+randomized) <= 0.8 else 0.8
