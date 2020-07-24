@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 
 from colors import dracula as cdict
 
+from lemonbar_script import GDKSCALE
+
 
 def cmd_output(cmd, **kwargs):
     try:
@@ -48,7 +50,7 @@ class CoronaVirus():
         T = threading.Thread(target=self.worldometer_thread)
         T.start()
         return ('%{A:CORONA:}%{F'+cdict['green']+'}%{T2}\ue214%'
-                '{T-}%{F-}%{O-10}'+self.cache+'%{A}')
+                '{T-}%{F-}'+f'%{{O-{5*GDKSCALE}}}'+self.cache+'%{A}')
 
     def command(self, event):
         if event.startswith('CORONA'):
@@ -94,7 +96,7 @@ class PacmanUpdates():
         T = threading.Thread(target=self.pacman_thread)
         T.start()
         return ('%{A:PACMAN:}%{F'+cdict['l_yellow']+'}%{T2}\uf8d6%'
-                '{T-}%{F-}%{O-15}'+f'{self.cache}%{{A}}')
+                '{T-}%{F-}'+f'%{{O-{7.5*GDKSCALE}}}'+f'{self.cache}%{{A}}')
 
     def command(self, event):
         if event.startswith('PACMAN'):
@@ -199,8 +201,8 @@ class NetworkTraffic():
                  0, 0) for i in range(len(ifaces))]
         formated_speeds = '/ '.join(
             (f'%{{F{cdict["teal"]}}}{x[0].upper()}%{{F-}} '
-             f'{x[2]} %{{F{cdict["orange"]}}}%{{T2}}\uf55c%{{T-}}%{{F-}}%{{O-10}}'
-             f'{x[1]} %{{F{cdict["green"]}}}%{{T2}}\uf544%{{T-}}%{{F-}}%{{O-15}}')
+             f'{x[2]} %{{F{cdict["orange"]}}}%{{T2}}\uf55c%{{T-}}%{{F-}}%{{O-{5*GDKSCALE}}}'
+             f'{x[1]} %{{F{cdict["green"]}}}%{{T2}}\uf544%{{T-}}%{{F-}}%{{O-{7.5*GDKSCALE}}}')
             for x in speeds)
         self.cache = self.get_ip_out()
         return formated_speeds
@@ -258,9 +260,9 @@ class CPUTemp():
         avg_temp = sum(temps)/len(temps)
         icon = [v for k, v in self.icons_dict.items() if k >= avg_temp or k == 90][0]
         if avg_temp > 80:
-            return '%{F'+cdict['red']+'}%{T2}'+icon+'%{T-}%{O-15}'+str(round(avg_temp))+'%{F-}'
+            return '%{F'+cdict['red']+'}%{T2}'+icon+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'+str(round(avg_temp))+'%{F-}'
         else:
-            return '%{T2}'+icon+'%{T-}%{O-15}'+str(round(avg_temp))
+            return '%{T2}'+icon+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'+str(round(avg_temp))
 
     def command(self, event):
         pass
@@ -485,8 +487,8 @@ class TimeDate():
         current_face = now.hour if now.hour < 12 else now.hour-12
         # 0 if now.minute < 30 else 30)
         date_time = datetime.datetime.strftime(
-            now, '%{T2}%{F'+cdict['l_yellow']+'}\uf073 %{F-}%{T1}%{O-15}%a %Y-%m-%d %H:%M:%S')
-        return date_time+'%{T2} '+clock_faces[current_face]+'%{T-}%{O-15}'
+            now, '%{T2}%{F'+cdict['l_yellow']+'}\uf073 %{F-}%{T1}'+f'%{{O-{7.5*GDKSCALE}}}%a %Y-%m-%d %H:%M:%S')
+        return date_time+'%{T2} '+clock_faces[current_face]+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'
 
     def command(self, event):
         print(event)

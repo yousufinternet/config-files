@@ -20,6 +20,8 @@ if os.path.exists('lemonbar.log'):
     os.remove('lemonbar.log')
 logging.basicConfig(filename='lemonbar.log', level=logging.DEBUG)
 
+GDKSCALE = int(os.getenv("GDK_SCALE"))
+
 
 class GracefulKiller:
     kill_now = False
@@ -49,14 +51,14 @@ class MainLoop():
     def start_lemonbar(self):
         # TODO arguments to lemonbar should be passed from start script
         self.lemonbar_P = subprocess.Popen(
-            ('lemonbar -p -u 6'
+            (f'lemonbar -p -u {3*GDKSCALE}'
              f' -n lemonbar_python -B "{self.bg}" -F "{self.fg}"'
              # ' -f "TerminessTTF Nerd Font-12:charwidth=14.5"'
              ' -f "SF Pro Display-10"'
-             ' -f "TerminessTTF Nerd Font-12:charwidth=45"'
+             f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
              # ' -f "FontAwesome"'
-             ' -f "TerminessTTF Nerd Font-12:charwidth=14.5"'
-             f' -a 100 -g x{20*int(os.getenv('GDK_SCALE'))}'),
+             f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
+             f' -a 100 -g x{20*GDKSCALE}'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')
         logging.debug(

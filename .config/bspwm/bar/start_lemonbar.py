@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import os
+import sys
 import time
 import random
 import subprocess
@@ -11,13 +13,14 @@ from bar_modules import BspwmWorkspaces, CoronaVirus, ServerStatus,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate
 
 
-
+GDKSCALE = int(os.getenv("GDK_SCALE"))
+HOSTNAME = subprocess.check_output('echo "$HOSTNAME"', text=True, shell=True).strip()
 # bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
 bgs = ['#282A36', '#000000']
 
 seps = [
-    '%{T2}\uE0B0%{O-27}%{T-}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
-    '%{T2}\uE0B2%{O-28}%{T-}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
+    f'%{{T2}}\uE0B0%{{O-{13.5*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
+    f'%{{T2}}\uE0B2%{{O-{14*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
 ]
 
 # seps = [' %{O-5}',]*4
@@ -100,23 +103,38 @@ def lemonbar_below_xfcepanel():
 
 
 if __name__ == '__main__':
-    modules = [
-        BspwmWorkspaces(),
-        CoronaVirus(),
-        ServerStatus('192.168.1.109', 'MC', 22, 'yusuf'),
-        PingTimeOut(),
-        PacmanUpdates(),
-        NetworkTraffic(['lo', 'enp9s0', 'vboxne']), '%{r}',
-        DiskUsage('/home', '\uf015'),
-        SARCPUUsage(),
-        CPUTemp(),
-        RamUsage(),
-        Volume(),
-        Battery(),
-        RandomNum(),
-        KeyboardLayout(),
-        TimeDate()
-    ]
+    if HOSTNAME == 'yusuf-dell':
+        modules = [
+            BspwmWorkspaces(),
+            NetworkTraffic(['lo', 'eno1', 'enp9s0', 'vboxne']), 
+            KeyboardLayout(),
+            CoronaVirus(),
+            '%{r}',
+            SARCPUUsage(),
+            CPUTemp(),
+            RamUsage(),
+            Volume(),
+            Battery(),
+            TimeDate()
+        ]
+    else:
+        modules = [
+            BspwmWorkspaces(),
+            CoronaVirus(),
+            ServerStatus('192.168.1.109', 'MC', 22, 'yusuf'),
+            PingTimeOut(),
+            PacmanUpdates(),
+            NetworkTraffic(['lo', 'enp9s0', 'vboxne']), '%{r}',
+            DiskUsage('/home', '\uf015'),
+            SARCPUUsage(),
+            CPUTemp(),
+            RamUsage(),
+            Volume(),
+            Battery(),
+            RandomNum(),
+            KeyboardLayout(),
+            TimeDate()
+        ]
 
     create_powerline(modules, bgs)
 
