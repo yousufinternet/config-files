@@ -1,7 +1,11 @@
 # Type: Bool
 import os
+import sys
 import dracula.draw
 
+sys.path.append(os.path.expanduser('~/.config/bspwm/scripts/'))
+
+from wmutils.utils import screen_dim
 # pylint: disable=C0111
 c = c  # noqa: F821 pylint: disable=E0602,C0103
 config = config  # noqa: F821 pylint: disable=E0602,C0103
@@ -37,14 +41,29 @@ c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 # view youtube vidoes with mpv
 # tsp is a task spooler that adds tasks to a queue 
 
-mpv_command = 'mpv --slang=en --force-window=immediate --no-terminal --geometry=1280x720-0-0 --autofit=1280x720 --ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
-mpv_720 = mpv_command.format('720')
-mpv_480 = mpv_command.format('480')
+screen_dims = screen_dim()
+mpv_command = 'mpv --slang=en --force-window=immediate --no-terminal --geometry={} --autofit=1280x720 --ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
+mpv_720 = mpv_command.format(
+    f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
+    '720')
+mpv_480 = mpv_command.format(
+    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    '480')
+mpv_360 = mpv_command.format(
+    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    '360')
+mpv_240 = mpv_command.format(
+    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    '240')
+config.bind(';m2', f'hint links spawn tsp {mpv_240} {{hint-url}}')
+config.bind(';m3', f'hint links spawn tsp {mpv_360} {{hint-url}}')
 config.bind(';m4', f'hint links spawn tsp {mpv_480} {{hint-url}}')
 config.bind(';m7', f'hint links spawn tsp {mpv_720} {{hint-url}}')
-config.bind(';M', f'hint links spawn tsp {mpv_command} {{hint-url}}')
-config.bind(',y', 'spawn konsole -e youtube-dl --all-subs --embed-subs {url};; tab-close')
-config.bind(',m', 'spawn tsp mpv --ytdl-format 22 {url};; back')
+config.bind(',m2', f'spawn tsp {mpv_240} {{url}};; back')
+config.bind(',m3', f'spawn tsp {mpv_360} {{url}};; back')
+config.bind(',m4', f'spawn tsp {mpv_480} {{url}};; back')
+config.bind(',m7', f'spawn tsp {mpv_720} {{url}};; back')
+config.bind(',y', 'spawn mlterm -e youtube-dl --all-subs --embed-subs {url};; tab-close')
 
 # dark style sheets
 path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
@@ -83,13 +102,15 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 config.set('downloads.position', 'bottom')
 config.set('downloads.remove_finished', 90)
 
+dracula.draw.blood(c)
+
 # tabs positioning
 config.set('tabs.position', 'left')
-config.set('tabs.padding', {'top':1, 'bottom':1, 'left':2, 'right':2})
-config.set('tabs.indicator.width', 0)
+config.set('tabs.padding', {'top':1, 'bottom':1, 'left':3, 'right':3})
+config.set('tabs.indicator.width', 1)
 config.set('tabs.title.format', '{index}')
 config.set('tabs.title.format_pinned', '{index}')
-config.set('tabs.width', 20)
+config.set('tabs.width', 25)
 config.set('tabs.show', 'multiple')
 
 # allow the last tab to be closed and thus closing the window
@@ -102,8 +123,6 @@ config.set('colors.webpage.prefers_color_scheme_dark', True)
 config.set('colors.webpage.bg', 'black')
 config.set('colors.webpage.darkmode.enabled', True)
 config.set('colors.webpage.darkmode.policy.images', 'smart')
-
 # Load existing settings made via :set
 
-dracula.draw.blood(c)
 # config.source('nord.py')

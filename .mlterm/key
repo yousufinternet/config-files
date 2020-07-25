@@ -9,6 +9,7 @@ Control+equal="proto:fontsize=larger"
 Control+Shift+parenleft=HSPLIT_SCREEN
 Control+Shift+parenright=VSPLIT_SCREEN
 Control+Shift+V=INSERT_SELECTION
+Control+p="proto:paste"
 Control+Shift+F="proto:exec search_next"
 Control+Shift+Right=NEXT_SCREEN
 Control+Shift+Left=PREV_SCREEN

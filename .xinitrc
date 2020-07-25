@@ -52,7 +52,7 @@ fi
 if [ "$GDK_SCALE" -eq 2 ]; then
   xrandr --dpi 200
 fi
-qtile
+exec bspwm
 # exec openbox --startup "steam-native --big-picture"
 # exec spectrwm
 #i3

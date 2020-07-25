@@ -17,7 +17,7 @@
  '(org-agenda-files (quote ("~/Public/Syncthing Global/Notes/TODO.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets rainbow-mode rainbow-delimiters spacemacs-theme counsel org-bullets evil-leader zerodark-theme gruvbox-theme modus-vivendi-theme lsp-ui lsp-mode evil-collection evil-org evil-easymotion evil-iedit evil-iedit-state use-package)))
+    (flycheck elpy yasnippet-snippets rainbow-mode rainbow-delimiters spacemacs-theme counsel org-bullets evil-leader zerodark-theme gruvbox-theme modus-vivendi-theme lsp-ui lsp-mode evil-collection evil-org evil-easymotion evil-iedit evil-iedit-state use-package)))
  '(pdf-view-midnight-colors (cons "#dddddd" "#1b1d1e"))
  '(rustic-ansi-faces
    ["#1b1d1e" "#d02b61" "#60aa00" "#d08928" "#6c9ef8" "#b77fdb" "#00aa80" "#dddddd"])

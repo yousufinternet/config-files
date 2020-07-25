@@ -199,7 +199,7 @@ super + ctrl + shift + q
 
 # terminal apps
 super + i ; {m,h,n,r,f,p,s}
-	$TERMINAL -w 45 -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
+	$TERMINAL -w $((23*GDK_SCALE)) -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
 super + g ; {c,f,g,t,q,r,z}
