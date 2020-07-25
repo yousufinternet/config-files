@@ -22,6 +22,8 @@ source <(cod init $$ bash)
 export XDG_CONFIG_HOME="$HOME/.config"
 export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
 export EDITOR=vim
+export TERMINAL="$HOME/.config/bspwm/scripts/mlterm_rand_bg.py"
+export GDK_SCALE=1
 export RTV_EDITOR=vim
 
 # my scripts and flutter executables
@@ -76,10 +78,10 @@ shopt -s checkwinsize
 shopt -s autocd
 
 # Powerline prompt
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-. /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
+# powerline-daemon -q
+# POWERLINE_BASH_CONTINUATION=1
+# POWERLINE_BASH_SELECT=1
+# . /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 
 eval "$(fasd --init auto)"
 
