@@ -29,12 +29,15 @@ def get_pid(wid):
         return ''
 
 
-def screen_dim(mon_name):
+def screen_dim(mon_name=None):
     '''
     given a monitor name return the screen dimensions
     '''
     screen_dimensions = cmd_output('xrandr --listactivemonitors')
-    regex_obj = re.search(mon_name + r'\s+(\d{3,4})/\d+x(\d{3,4})',
+    if mon_name is None:
+        screen_dimensions = '\n'.join(screen_dimensions.split('\n')[:2])
+    regex_obj = re.search(('' if mon_name is None else mon_name) +
+                          r'\s+(\d{3,4})/\d+x(\d{3,4})',
                           screen_dimensions,
                           flags=re.MULTILINE)
     screen_dims = {
