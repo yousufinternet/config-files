@@ -47,13 +47,13 @@ mpv_720 = mpv_command.format(
     f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '720')
 mpv_480 = mpv_command.format(
-    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '480')
 mpv_360 = mpv_command.format(
-    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '360')
 mpv_240 = mpv_command.format(
-    f'{int(screen_dims["width"]*0.15)}x{int(screen_dims["height"]*0.15)}-0-0',
+    f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '240')
 config.bind(';m2', f'hint links spawn tsp {mpv_240} {{hint-url}}')
 config.bind(';m3', f'hint links spawn tsp {mpv_360} {{hint-url}}')

@@ -193,6 +193,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
       "a" 'org-agenda-list
       "d" 'org-deadline
       "s" 'org-schedule
+      "e" 'org-export-dispatch
+      "t" '(:ignore t :which-key "Org Toggle Funcs")
+      "ti" 'org-toggle-inline-images
+      "tl" 'org-toggle-link-display
+      "tc" 'org-toggle-checkbox
       "ce" 'org-edit-src-code)
      (general-define-key
      :states '(normal visual insert emacs)
@@ -428,6 +433,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq org-log-done 'note')
   (org-agenda nil "a")
   (setq org-log-into-drawer t)
+  (setq org-confirm-babel-evaluate nil)
 
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	  org-todo-keyword-faces
@@ -438,6 +444,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	  org-agenda-skip-scheduled-if-done t
 	  org-agenda-skip-deadline-if-done t
 	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+	  
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
+    (python . t)))
 #+END_SRC
 
 * Programming Modes

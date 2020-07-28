@@ -372,6 +372,7 @@ class Battery():
     def output(self):
         battery = cmd_output('acpi --battery')
         if battery != '':
+            charging = 'Charging' in battery
             battery = battery.split(': ')[1].split(', ')[1]
             bat_vlu = int(battery.rstrip('%'))
             icon = [v for k, v in self.icons.items() if k >= bat_vlu][0]
@@ -379,6 +380,8 @@ class Battery():
                 return f'%{{B{cdict["red"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{B-}'
             elif bat_vlu == 100:
                 return f'%{{F{cdict["green"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{F-}'
+            elif charging:
+                return f'%{{F{cdict["l_yellow"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{F-}'
             else:
                 return f'%{{T2}}{icon} %{{T-}}'+battery
 
