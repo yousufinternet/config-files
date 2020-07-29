@@ -37,7 +37,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+BEGIN_SRC emacs-lisp
 (use-package highlight :ensure t)
 (use-package iedit :ensure t)
-(use-package evil-iedit :ensure t)
 (use-package anzu :ensure t)
 #+END_SRC
 
@@ -54,6 +53,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   :ensure t
   :defer 10)
 #+END_SRC
+
 * Emacs tweaks
 ** Minor tweaks
 #+BEGIN_SRC emacs-lisp
@@ -345,18 +345,18 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (require 'spaceline-config)
       (spaceline-spacemacs-theme))
 
-      (show-paren-mode)
+   (show-paren-mode)
 
-	(use-package beacon
+   (use-package beacon
 	:ensure t
 	:config
 	    (beacon-mode 1))
-    (use-package rainbow-mode
+   (use-package rainbow-mode
       :ensure t
       :init
 	(add-hook 'prog-mode-hook 'rainbow-mode))
 
-    (use-package rainbow-delimiters
+   (use-package rainbow-delimiters
       :ensure t
       :init
 	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -365,6 +365,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
    #+BEGIN_SRC emacs-lisp
    (use-package company-emoji
    :ensure t
+   :after company
    :hook (org-mode . company-emoji-init))
    (use-package pretty-mode
 :ensure t
