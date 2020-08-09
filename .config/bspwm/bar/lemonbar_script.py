@@ -54,10 +54,11 @@ class MainLoop():
             (f'lemonbar -p -u {3*GDKSCALE}'
              f' -n lemonbar_python -B "{self.bg}" -F "{self.fg}"'
              # ' -f "TerminessTTF Nerd Font-12:charwidth=14.5"'
-             ' -f "SF Pro Display-10"'
+             # ' -f "SF Pro Display-10"'
+             ' -f "Iosevka-10"'
              f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
              # ' -f "FontAwesome"'
-             f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
+             # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
              f' -a 100 -g x{20*GDKSCALE}'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')

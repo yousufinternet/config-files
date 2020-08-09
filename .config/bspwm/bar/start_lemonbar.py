@@ -121,7 +121,7 @@ if __name__ == '__main__':
         modules = [
             BspwmWorkspaces(),
             CoronaVirus(),
-            ServerStatus('192.168.1.109', 'MC', 22, 'yusuf'),
+            ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
             PingTimeOut(),
             PacmanUpdates(),
             NetworkTraffic(['lo', 'enp9s0', 'vboxne']), '%{r}',

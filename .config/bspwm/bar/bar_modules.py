@@ -418,8 +418,9 @@ class BspwmWorkspaces():
         pre3 = '%{A5:BSPWM_WIDGETprev:}'
         formatted_ws = []
         for w in all_workspaces:
-            # wor = f' {w} '
-            wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
+            wor = f' {w} '
+            # wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
+            # wor = w
             if w == current:
                 formatted_ws.append('%{R}'+wor+'%{R}')
             elif w in urgent:

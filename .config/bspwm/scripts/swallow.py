@@ -19,7 +19,7 @@ from wmutils.utils import get_class, is_floating, is_fullscreen, desk_layout, ge
 
 
 EXCLUDED_CLASSES = [
-    'qutebrowser', 'xev', 'lemonbar', 'xfce4-panel', 'emacs', 'Emacs'
+    'qutebrowser', 'xev', 'lemonbar', 'xfce4-panel', 'emacs', 'Emacs', 'Safeeyes', 'safeeyes'
 ]
 
 logging_level = logging.ERROR if len(sys.argv) == 1 else sys.argv[1]

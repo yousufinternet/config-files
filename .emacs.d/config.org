@@ -378,7 +378,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq text-scale-mode-step 1.05)
 (defun reapply-font (&optional frame)
   (set-face-attribute 'default nil
-		      :family "Cascadia Code"
+		      :family "Iosevka"
 		      :height 125
 		      :weight 'normal
 		      :width 'normal)
