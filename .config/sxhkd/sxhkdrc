@@ -164,7 +164,7 @@ super + {_,shift + }{Left,Down,Up,Right}
 
 # switch between windows when in monocle mode
 super + {_,shift + } c
-  bspc node --focus {next,prev}.local
+  bspc node --focus '{next,prev}.local.!hidden.window'
 
 # focus the node for the given path jump
 super + {p,o}
