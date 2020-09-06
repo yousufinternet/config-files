@@ -431,7 +431,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq org-imenu-depth 3)
   
   ;; experimental
-  (setq org-log-done 'note')
+  (setq org-log-done "note")
   (org-agenda nil "a")
   (setq org-log-into-drawer t)
   (setq org-confirm-babel-evaluate nil)

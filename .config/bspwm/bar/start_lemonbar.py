@@ -124,7 +124,7 @@ if __name__ == '__main__':
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
             PingTimeOut(),
             PacmanUpdates(),
-            NetworkTraffic(['lo', 'enp9s0', 'vboxne']), '%{r}',
+            NetworkTraffic(['lo', 'vboxne']), '%{r}',
             DiskUsage('/home', '\uf015'),
             SARCPUUsage(),
             CPUTemp(),

@@ -1,9 +1,9 @@
 DEFAULT = Iosevka 0
 U+1F000-1F77F = Noto Color Emoji 0
 ISO10646_UCS4_1 = Iosevka Term 0
-U+0600-06FF = Dejavu Sans Mono 0:140
-U+0750-77F = Dejavu Sans Mono 0:140
-U+08A0-8FF = Dejavu Sans Mono 0:140
-U+FB50-FDFF = Dejavu Sans Mono 0:140
-U+FE70-FEFF = Dejavu Sans Mono 0:140
-U+1EE00-1EEFF = Dejavu Sans Mono 0:140
+U+0600-06FF = Iosevka Term 0
+U+0750-77F = Iosevka Term 0
+U+08A0-8FF = Iosevka Term 0
+U+FB50-FDFF = Iosevka Term 0
+U+FE70-FEFF = Iosevka Term 0
+U+1EE00-1EEFF = Iosevka Term 0

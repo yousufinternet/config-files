@@ -13,7 +13,7 @@ def randomize_hue(bg_hex):
     randomized = random.random()
     color_obj.hue = randomized
     sat = color_obj.saturation
-    color_obj.saturation = sat+randomized if (sat+randomized) <= 0.8 else 0.8
+    color_obj.saturation = sat+randomized if (sat+randomized) <= 0.6 else 0.6
     return color_obj.get_hex()
 
 

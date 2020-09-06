@@ -37,7 +37,7 @@ alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'
 alias ar5="aria2c -c -V -s 5 --max-connection-per-server=5 --on-download-complete=ding.sh"
 alias ls='ls --color=auto'
 alias resrvserv='mosh yusuf@10.127.188.92'
-alias mediacenter='mosh yusuf@192.168.1.109'
+alias mediacenter='mosh yusuf@192.168.1.110'
 alias worklaptop='mosh archie-work@192.168.1.107'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
 alias ec='emacsclient -a "" -c'

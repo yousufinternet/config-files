@@ -63,7 +63,7 @@ config.bind(',m2', f'spawn tsp {mpv_240} {{url}};; back')
 config.bind(',m3', f'spawn tsp {mpv_360} {{url}};; back')
 config.bind(',m4', f'spawn tsp {mpv_480} {{url}};; back')
 config.bind(',m7', f'spawn tsp {mpv_720} {{url}};; back')
-config.bind(',y', 'spawn mlterm -e youtube-dl --all-subs --embed-subs {url};; tab-close')
+config.bind(',y', 'spawn mlterm -e youtube-dl --cookies=cookies.txt --all-subs --embed-subs {url};; tab-close')
 
 # dark style sheets
 path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
