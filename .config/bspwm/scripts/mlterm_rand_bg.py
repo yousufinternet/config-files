@@ -24,5 +24,5 @@ def main(bg_hex, trans):
 
 if __name__ == '__main__':
     bg_hex = '#282A36'
-    trans = 'ae'
+    trans = 'd1'
     main(bg_hex, trans)

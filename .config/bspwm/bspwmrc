@@ -5,7 +5,7 @@ setxkbmap -option "caps:escape" -option "altwin:menu_win" -option "terminate:ctr
 perWindowLayoutD &
 sxhkd &
 xsetroot -cursor_name left_ptr &
-picom &
+picom --experimental-backends &
 redshift &
 goldendict &
 nm-applet &
@@ -22,7 +22,6 @@ kdeconnect-indicator &
 ~/.config/bspwm/scripts/set_wallpaper.py &
 notify-send.py "brightness notification" --replaces-process brightness_ctl -t 1 &
 notify-send.py "volume notification" --replaces-process volume_ctl -t 1 &
-~/.config/bspwm/scripts/set_wallpaper.py &
 if [ $HOSTNAME = "yusufs-lenovo" ]; then
     motion -b -c ~/.config/motion/motion.conf &
 fi

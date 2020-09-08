@@ -25,7 +25,7 @@ application_name = mlterm
 
 use_clipboard = true
 
-bg_color = #282A36c3
+bg_color = #a32A36c3
 fg_color = #ffffff
 
 step_in_changing_font_size = 2
