@@ -24,9 +24,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import signal
 import libqtile
+import logging
 from libqtile.config import Key, ScratchPad, DropDown, Screen, Group, Drag, Click, Match
-from libqtile.command import lazy, Client
+from libqtile.command import lazy
+from libqtile.command_client import InteractiveCommandClient
 from libqtile import layout, bar, widget, hook
 import os, subprocess
 # from powerline.bindings.qtile.widget import PowerlineTextBox
@@ -44,9 +47,8 @@ try:
     FAILED_NOTIFY = False
 except Exception:
     FAILED_NOTIFY = True
-
 mod = "mod4"
-terminal = "konsole"
+terminal = os.path.expanduser("~/.config/bspwm/scripts/mlterm_rand_bg.py")
 
 # Detect if the screen is HiDPI or not
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
@@ -57,11 +59,6 @@ cmd = "pacman -Qe | grep 'bumblebee'"
 hybrid_grphcs = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True,
                                  shell=True).communicate()[0] != ''
 
-rofi_theme = '~/.cache/wal/colors-rofi-dark.rasi'
-rofi_win = (f"rofi -show windowcd -dpi 0 -theme {rofi_theme}"
-            " -modi window,windowcd")
-rofi_exec = ("rofi -terminal {terminal} -show-icons -show run -dpi 0"
-             f" -theme {rofi_theme} -modi run,drun,ssh")
 
 Notify.init("notifications")
 notification = Notify.Notification.new("", "")
@@ -96,6 +93,32 @@ def current_win_alwaysontop():
             [os.path.expanduser('~/.config/qtile/always_ontop.py'), '--store'])
     return __inner
 
+
+@hook.subscribe.client_killed
+@hook.subscribe.client_focus
+@hook.subscribe.client_urgent_hint_changed
+@hook.subscribe.changegroup
+@hook.subscribe.client_new
+def update_bar(*args):
+    pid_path = '/tmp/qtile_signal_handler_pid'
+    if os.path.exists(pid_path):
+        with open(pid_path, 'r') as f_obj:
+            pid = f_obj.read().strip()
+        os.kill(int(pid), signal.SIGUSR1)
+
+
+# @hook.subscribe.client_new
+# def floating_wins_always_above(window):
+#     logging.error(str(dir(window.window)))
+#     cur_group = window.group.info()['name']
+#     wins = window.windows()
+#     floating_wins = [win['id'] for win in wins if win['floating'] and win['group'] == cur_group]
+#     for win in floating_wins:
+#         qtile.window[win].bring_to_front()
+
+@hook.subscribe.client_new
+def floating_wins_always_above(*args):
+    subprocess.Popen(os.path.expanduser('~/.config/qtile/floating_wins_always_above.py'))
 
 def no_win_alwaysontop():
     @lazy.function
@@ -192,10 +215,6 @@ def to_next_empty_group():
     return __inner
 
 
-def toggle_bar(qtile):
-    libqtile.manager.Qtile.cmd_hide_show_bar(qtile)
-
-
 def to_urgent(qtile):
     cg = qtile.currentGroup
     for group in qtile.groupMap.values():
@@ -216,8 +235,10 @@ keys = [
     Key([mod], "Up", lazy.layout.up()),
     Key([mod], "Left", lazy.layout.left()),
     Key([mod], "Right", lazy.layout.right()),
-    Key([mod, "control"], "Left", lazy.screen.prev_group()),
-    Key([mod, "control"], "Right", lazy.screen.next_group()),
+    # Key([mod, "control"], "Left", lazy.screen.prev_group()),
+    # Key([mod, "control"], "Right", lazy.screen.next_group()),
+    Key([mod, "control"], "Left", lazy.layout.prev()),
+    Key([mod, "control"], "Right", lazy.layout.next()),
     Key([mod], "v", to_next_empty_group()),
     Key([mod, 'shift'], "v", moveto_next_empty_group()),
     Key([mod], "a", current_win_alwaysontop()),
@@ -229,8 +250,6 @@ keys = [
     # easy to reach calculator
     Key([mod], "c", lazy.group["scratchpad"].dropdown_toggle("calc")),
     Key([mod, 'shift'], "i", lazy.group["scratchpad"].dropdown_toggle("ipython")),
-    Key([mod, 'shift'], "h", lazy.group["scratchpad"].dropdown_toggle("htop")),
-    Key([mod, 'shift'], "m", lazy.group["scratchpad"].dropdown_toggle("ncmpcpp")),
 
     # toggle floating
     Key([mod, "shift"], "space", lazy.window.toggle_floating()),
@@ -245,10 +264,6 @@ keys = [
     Key([mod, "shift"], "z", lazy.layout.shrink()),
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "m", lazy.group["scratchpad"].dropdown_toggle("pulsemixer")),
-
-    # Screenshots
-    Key([], "Print", lazy.spawn("spectacle --background")),
-    Key(["shift"], "Print", lazy.spawn("spectacle --background --region")),
 
     # Move windows up or down in current stack
     Key([mod, "control"], "k", lazy.layout.shuffle_down()),
@@ -273,38 +288,9 @@ keys = [
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
 
-    # Apps shortcuts
-    Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod], "e", lazy.spawn(rofi_exec)),
-    Key([mod], "w", lazy.spawn(rofi_win)),
-    Key([mod, "control"], "w",
-        lazy.spawn("optirun qutebrowser" if hybrid_grphcs else "qutebrowser")),
-    Key([mod, "control"], "n", lazy.spawn(
-        "konsole --profile NewsBoat --notransparency -e newsboat -r")),
-    Key([mod, "shift"], "f", lazy.spawn("krusader")),
-    Key([mod, "control"], "f", lazy.spawn("%s -e ranger" % terminal)),
-    Key([mod, "control"], "e", lazy.spawn("emacsclient -c")),
-    Key([mod, "shift"], "e", lazy.spawn("oblogout")),
-    Key([mod, "control"], "h", lazy.spawn("%s -e htop" % terminal)),
-    Key([mod, "shift"], "r", lazy.spawn(
-        f"{'optirun ' if hybrid_grphcs else ''}"
-        "alacritty -e rtv --theme molokai --enable-media")),
-    # Key([mod, "control"], "m", lazy.spawn("%s -e ncmpcpp" % terminal)),
     Key([mod, "control"], "x", lazy.spawn("xkill")),
     # probably the -B option will need i3lock-color package
-    Key([mod, "shift", "control"], "x",
-        lazy.spawn("i3lock -e -B --force-clock --keylayout 0"
-                   " --insidecolor 1e58a46a --indicator")),
 
-    # Brightness and Volume controls
-    Key([mod], "period", volume_ctl(5)),
-    Key([mod], "comma", volume_ctl(-10)),
-    Key([], "XF86AudioRaiseVolume", volume_ctl(5)),
-    Key([], "XF86AudioLowerVolume", volume_ctl(-10)),
-    Key([], "XF86MonBrightnessUp", brightness_ctl(2)),
-    Key([], "XF86MonBrightnessDown", brightness_ctl(-5)),
-    Key([mod], "b", lazy.spawn(
-        os.path.expanduser("~/.config/i3/toggle_brightness.py"))),
     # Key([mod, "control"], "z", lazy.spawn("killall vmg; sudo optirun vmg")),
 
     # Toggle between different layouts as defined below
@@ -317,13 +303,13 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
     Key([mod], "F12", lazy.function(to_urgent)),
-    Key([mod, 'shift'], 'b', lazy.function(toggle_bar)),
 ]
 
 layouts = [
     layout.Max(),
-    layout.Columns(fair=True, margin=4*scale_factor,
-                   border_normal='d79921', border_focus='d65d0e'),
+    layout.Columns(
+        fair=True, margin=4*scale_factor, border_width=4*scale_factor,
+        border_normal='d79921', border_focus='d65d0e'),
     layout.Stack(num_stacks=2),
     layout.Matrix(),
     layout.xmonad.MonadTall()
@@ -332,20 +318,13 @@ layouts = [
 groups = [
     ScratchPad(
         "scratchpad",
-        [DropDown("term", terminal, opacity=0.9, height=0.5),
-         DropDown("pulsemixer", "alacritty -e pulsemixer",
-                  opacity=0.8, y=0.25, x=0.25, width=0.5, height=0.5),
+        [DropDown("term", f"{terminal} -e tmux -2", opacity=0.9, height=0.5),
          DropDown("calc", "kcalc", on_focus_lost_hide=False,
                   opacity=0.8, y=0.5, x=0.5, width=0.28),
-         DropDown("ipython", "konsole -e ipython", on_focus_lost_hide=False,
-                  opacity=0.9, y=0, x=0.6, width=0.4, height=1),
-         DropDown("htop", "konsole -e htop", on_focus_lost_hide=False,
-                  opacity=0.9, y=0, x=0, width=0.4, height=1),
-         DropDown("ncmpcpp", "konsole -e ncmpcpp", on_focus_lost_hide=False,
-                  opacity=0.9, y=1-0.4, x=0.25, width=0.5, height=0.4)])] + [
-        Group(str(x+1)) for x in range(8)] + [
-        Group('9', matches=[Match(wm_class=['Steam', 'steam'])]),
-        Group('10', layout='matrix')]
+         DropDown(
+             "ipython", f"{terminal} -e ipython", on_focus_lost_hide=False,
+             opacity=0.9, y=0, x=0.6, width=0.4, height=1)])] + [
+        Group(str(x)) for x in range(1, 11)]
 
 for x, i in enumerate(groups):
     x = 0 if x == 10 else x
@@ -358,17 +337,8 @@ for x, i in enumerate(groups):
             Key([mod, "shift"], str(x), lazy.window.togroup(i.name)),
         ])
 
-widget_defaults = dict(
-    # font='Noto color emoji',
-    font='RobotoMono Nerd Font',
-    fontsize=13*scale_factor,
-    padding=3 if scale_factor == 2 else 1,
-)
-extension_defaults = widget_defaults.copy()
-
-alt_font = 'RobotoMono Nerd Font'
-
-screens = [Screen(top=bar.Gap(40))]
+# screens = [Screen()]
+screens = [Screen()]
 
 # screens = [
 #     Screen(
@@ -463,6 +433,10 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'confirmreset'},  # gitk
     {'wmclass': 'makebranch'},  # gitk
     {'wmclass': 'maketag'},  # gitk
+    {'wmclass': 'pinentry-gtk-2'},
+    {'wmclass': 'Pinentry-gtk-2'},
+    {'wmclass': 'xfce4-panel'},
+    {'wname': 'xfce4-panel'},
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
@@ -496,9 +470,9 @@ focus_on_window_activation = "smart"
 #         f_obj.write(error)
 #         f_obj.write('test')
 
-# @libqtile.hook.subscribe.screen_change
-# def restart_on_randr(qtile, ev):
-#     qtile.cmd_restart()
+@libqtile.hook.subscribe.screen_change
+def restart_on_randr(qtile, ev):
+    qtile.cmd_restart()
 
 
 # @libqtile.hook.subscribe.focus_change

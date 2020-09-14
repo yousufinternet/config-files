@@ -148,7 +148,8 @@ class MainLoop():
                     modl = self.updaters_dict[upd.fileno()]
                     if not isinstance(modl, str):
                         logging.info(f'{modl} updater triggered')
-                        _ = modl[0].updater.readline().rstrip()
+                        upd_txt = modl[0].updater.readline().rstrip()
+                        print(upd_txt)
                         self.outputs[modl[1]] = modl[0].output()
                         modl[0].last_update = time.time()
                         logging.info(f'{modl} updated successfully')

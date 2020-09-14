@@ -1,0 +1,5 @@
+#compdef herbstclient
+# zsh completion for herbstclient
+
+# compadd is documented in zshcompwid(1)
+compadd -QS '' -- "$@" ${(f)"$(herbstclient -q complete_shell "$((CURRENT-2))" "${(@)words[@]:1}")"}

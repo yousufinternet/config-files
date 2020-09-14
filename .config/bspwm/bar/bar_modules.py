@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import random
@@ -387,6 +388,129 @@ class Battery():
 
     def command(self, event):
         pass
+
+
+class QtileWorkspaces():
+    from libqtile.command_client import InteractiveCommandClient as ICC
+    from libqtile.ipc import IPCError
+    def __init__(self):
+        P = subprocess.Popen(
+            os.path.expanduser('~/.config/bspwm/bar/qtile_signal_handler.py'),
+            text=True, stdout=subprocess.PIPE, encoding='UTF-8')
+        self.updater = P.stdout
+        self.wait_time = 60
+        self.icc = self.ICC()
+
+    def output(self):
+        try:
+            return self.__output()
+        except self.IPCError:
+            while True:
+                try:
+                    time.sleep(1)
+                    del self.icc
+                    self.icc = self.ICC()
+                    return self.__output()
+                except ConnectionRefusedError:
+                    continue
+
+    def __output(self):
+        grps = self.icc.groups()
+        all_workspaces = [grp for grp in grps.keys() if not grp == 'scratchpad']
+        just_len = len(max(all_workspaces, key=len))
+        empty_workspaces = [grp for grp in grps.keys()
+                            if not grp == 'scratchpad' and len(grps[grp]['windows']) == 0]
+        current = self.icc.group.info()['name']
+
+        pre1 = '%{A:QTILE_WIDGETdesk'
+        pre2 = '%{A4:QTILE_WIDGETnext:}'
+        pre3 = '%{A5:QTILE_WIDGETprev:}'
+        formatted_ws = []
+        for w in all_workspaces:
+            wor = f' {w} '
+            # wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
+            # wor = w
+            if w == current:
+                formatted_ws.append('%{R}'+wor+'%{R}')
+            # elif w in urgent:
+            #     formatted_ws.append(
+            #         pre1+w+':}'+'%{U'+cdict['red']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
+            elif w in empty_workspaces:
+                formatted_ws.append(
+                    pre1+w+':}'+'%{U'+cdict['cyan']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
+            else:
+                formatted_ws.append(
+                    pre1+w+':}'+wor+'%{A}')
+        return pre2+pre3+''.join(formatted_ws)+'%{A5}%{A4}'
+
+    def command(self, event):
+        if event.startswith('QTILE_WIDGETdesk'):
+            w = event.strip()[16:]
+            self.icc.screen.toggle_group(w)
+        elif event in ['QTILE_WIDGETnext', 'QTILE_WIDGETprev']:
+            if event.endswith('next'):
+                self.icc.screen.next_group()
+            if event.endswith('prev'):
+                self.icc.screen.prev_group()
+
+
+class HerbstluftwmWorkspaces():
+    def __init__(self):
+        P = subprocess.Popen('herbstclient --idle', text=True, shell=True,
+                             stdout=subprocess.PIPE, encoding='UTF-8')
+        self.updater = P.stdout
+        self.wait_time = 60
+
+    def output(self):
+        wor_count = int(cmd_output('herbstclient attr tags.count'))
+        all_workspaces = [cmd_output(f'herbstclient attr tags.{i}.name')
+                          for i in range(wor_count)]
+        just_len = len(max(all_workspaces, key=len))
+        empty_workspaces = []
+        for desk in all_workspaces:
+            wins_count = cmd_output(f"herbstclient attr tags.by-name.{desk}.client_count")
+            if int(wins_count) == 0:
+                empty_workspaces.append(desk)
+        current = cmd_output('herbstclient attr tags.focus.name').strip()
+        clients_list = [wid.strip().rstrip('.') for wid in
+                        cmd_output("herbstclient attr clients").split('\n')
+                        if wid.strip().startswith('0x')]
+        urgent_tags = [
+            cmd_output(f'herbstclient attr clients.{wid}.tag')
+            for wid in clients_list
+            if cmd_output(f'herbstclient attr clients.{wid}.urgent') == 'true']
+
+        pre1 = '%{A:HERBST_WIDGETdesk'
+        pre2 = '%{A4:HERBST_WIDGETnext:}'
+        pre3 = '%{A5:HERBST_WIDGETprev:}'
+        formatted_ws = []
+        for w in all_workspaces:
+            wor = f' {w} '
+            # wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
+            # wor = w
+            if w == current:
+                formatted_ws.append('%{R}'+wor+'%{R}')
+            elif w in urgent_tags:
+                formatted_ws.append(
+                    pre1+w+':}'+'%{U'+cdict['red']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
+            elif w in empty_workspaces:
+                formatted_ws.append(
+                    pre1+w+':}'+'%{U'+cdict['cyan']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
+            else:
+                formatted_ws.append(
+                    pre1+w+':}'+wor+'%{A}')
+
+        return pre2+pre3+''.join(formatted_ws)+'%{A5}%{A4}'
+
+    def command(self, event):
+        if event.startswith('HERBST_WIDGETdesk'):
+            w = event.strip()[17:]
+            print(w)
+            subprocess.Popen(f'herbstclient use {w}', text=True, shell=True)
+        elif event in ['HERBST_WIDGETnext', 'HERBST_WIDGETprev']:
+            event = "-1" if event[-4:] == 'prev' else "+1"
+            subprocess.Popen(f'herbstclient use_index {event}',
+                             text=True, shell=True)
 
 
 class BspwmWorkspaces():
