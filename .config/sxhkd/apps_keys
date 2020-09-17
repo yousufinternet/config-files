@@ -1,0 +1,73 @@
+
+# open the terminal
+super + Return
+   $TERMINAL -e tmux -2
+
+# all open windows
+super + w
+     rofi -show window -terminal $TERMINAL -dpi 0 -theme $ROFI_THEME -modi window,windowcd
+
+# start an application
+super + e
+     rofi -show-icons -terminal $TERMINAL -show run -dpi 0 -theme $ROFI_THEME -modi run,drun,ssh
+
+# Raise/Lower Brightness/Volume
+XF86Audio{Raise,Lower}Volume
+   volume_ctl.sh {+5,-10}
+
+# Increase/decrease brightness
+{_,shift+}XF86MonBrightness{Up,Down}
+   brightness_ctl.sh {+5,+1,-5,-1}
+
+# Raise/Lower volume
+super+{shift+,_}{equal,minus}
+   {brightness_ctl.sh,volume_ctl.sh} {+5,-5}
+
+# Toggle screen brightness between 1%/100%
+super + shift + b
+  toggle_brightness.py
+
+# Lock screen
+super + ctrl + shift + x
+   i3lock -e -B --force-clock --keylayout 0 --insidecolor 1e58a46a --indicator
+
+# shutdown menu
+super + shift + e
+   oblogout
+
+# fullscreen screenshot
+@Print
+  spectacle --background
+
+# Select region for screenshot
+@shift+Print
+  spectacle --background --region
+
+#   /_\  _ __ _ __| (_)__ __ _| |_(_)___ _ _  ___
+#  / _ \| '_ \ '_ \ | / _/ _` |  _| / _ \ ' \(_-<
+# /_/ \_\ .__/ .__/_|_\__\__,_|\__|_\___/_||_/__/
+#       |_|  |_|                                 
+
+# terminal apps
+super + i ; {m,h,n,r,f,p,s}
+	$TERMINAL -w $((23*GDK_SCALE)) -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
+
+# GUI apps
+super + g ; {c,f,g,t,q,r,z}
+  {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
+
+# GUI apps that require graphics card assistance (via optirun)
+super + shift + g ; {f,d} 
+  start_with_optirun.sh {firefox,darktable}
+
+# File manager
+super + ctrl + f
+  $TERMINAL -e ranger
+
+# Web browser
+super + ctrl + w
+  start_with_optirun.sh qutebrowser
+
+# IDE
+super + ctrl + e
+  emacsclient -c -a ""
