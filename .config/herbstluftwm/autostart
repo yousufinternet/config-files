@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
+import os
 import subprocess
+
+GDK_SCALE = int(os.getenv('GDK_SCALE', 1))
 
 
 def hc(*args):
@@ -9,11 +12,13 @@ def hc(*args):
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = not bool(P.stderr.read())
     return P.stdout.read(), err
-    
+
 
 startup_cmds = [
-    "localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty 'grp:alt_shift_toggle,caps:swapescape'",
-    "setxkbmap -option 'caps:escape' -option 'altwin:menu_win' -option 'terminate:ctrl_alt_bksp'",
+    "localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty"
+    " 'grp:alt_shift_toggle,caps:swapescape'",
+    "setxkbmap -option 'caps:escape' -option 'altwin:menu_win'"
+    " -option 'terminate:ctrl_alt_bksp'",
     "perWindowLayoutD",
     "sxhkd -c ~/.config/sxhkd/apps_keys",
     "picom",
@@ -28,13 +33,14 @@ startup_cmds = [
     "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
     "~/.config/bspwm/bar/start_bar_herbst.py",
-    "xfce4-panel -d"]
+    "xfce4-panel -d",
+    "~/.config/herbstluftwm/auto_move_sticky.py"]
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
         subprocess.Popen(cmd, text=True, shell=True)
 
-    
+
 # this is a simple config for herbstluftwm
 hc('emit_hook', 'reload')
 
@@ -75,12 +81,13 @@ tags = {'I': '1', 'II': '2', 'III': '3', 'IV': '4', 'V': '5', 'VI': '6',
         'VII': '7', 'VIII': '8', 'IX': '9', 'X': '0'}
 tags_lst = list(tags.keys())
 
+sticky_script = os.path.expanduser('~/.config/herbstluftwm/switch_tag.py')
 hc(f'rename default {list(tags.keys())[0]}')
 for tag, key in tags.items():
     hc(f'add {tag}')
     # use previous focused tag if the selected tag is currently focused
-    hc(f'keybind {MOD}-{key} or , and . compare '
-       f'tags.focus.name != {tag} . use {tag} , use_previous')
+    hc(f'keybind {MOD}-{key} or , and . chain .-. compare '
+       f'tags.focus.name != {tag} . use {tag} , use_previous ')
     hc('keybind', f'{MOD}-Shift-{key}', 'move', tag)
 
 # cycle through tags
@@ -88,6 +95,8 @@ hc(f'keybind {MOD}-period use_index +1 --skip-visible')
 hc(f'keybind {MOD}-comma  use_index -1 --skip-visible')
 hc(f'keybind {MOD}-f fullscreen toggle')
 hc(f'keybind {MOD}-Shift-f set_attr clients.focus.floating toggle')
+hc(f'keybind {MOD}-Shift-s chain .-. new_attr bool clients.focus.my_sticky'
+   ' .-. set_attr clients.focus.my_sticky toggle ')
 
 
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
@@ -101,9 +110,9 @@ hc(f'mousebind {MOD}-Button3 resize')
 
 # focus
 hc(f'keybind {MOD}-BackSpace   cycle_monitor')
-hc (f'keybind {MOD}-Shift-Tab   cycle_all +1')
-hc (f'keybind {MOD}-c cycle')
-hc (f'keybind {MOD}-grave jumpto urgent')
+hc(f'keybind {MOD}-Shift-Tab   cycle_all +1')
+hc(f'keybind {MOD}-c cycle')
+hc(f'keybind {MOD}-grave jumpto urgent')
 hc(f"keybind {MOD}-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
 
 # Theming and general settings
@@ -113,11 +122,11 @@ hc("set frame_border_active_color '#ff79c6'")
 hc("set frame_border_normal_color '#44475a'")
 hc("set frame_bg_normal_color '#565656'")
 hc("set frame_bg_active_color '#345F0C'")
-hc("set frame_border_width 4*$GDK_SCALE")
+hc(f"set frame_border_width {3*GDK_SCALE}")
 hc("set always_show_frame off")
 hc("set frame_bg_transparent on")
 hc("set frame_transparent_width 0")
-hc("set frame_gap 4")
+hc(f"set frame_gap {4*GDK_SCALE}")
 
 hc("attr theme.active.color '#bd93f9'")
 hc("attr theme.normal.color '#6272a4'")
@@ -125,9 +134,9 @@ hc("attr theme.urgent.color orange")
 hc("attr theme.inner_width 1")
 hc("attr theme.inner_color black")
 hc("attr theme.border_width 3")
-hc("attr theme.floating.border_width 4")
-hc("attr theme.floating.outer_width 1")
-hc("attr theme.floating.outer_color black")
+hc(f"attr theme.floating.border_width {4*GDK_SCALE}")
+hc("attr theme.floating.outer_width 0")
+hc("attr theme.floating.outer_color '#ff79c6'")
 hc("attr theme.active.inner_color '#3E4A00'")
 hc("attr theme.active.outer_color '#3E4A00'")
 hc("attr theme.background_color '#141414'")
@@ -148,7 +157,8 @@ hc('rule focus=on')
 hc('rule floatplacement=smart')
 hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on")
 hc("rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on")
-hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off")
+hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)'"
+   " manage=off")
 hc("rule class='Pinentry-gtk-2' floating=on")
 hc("rule instance='Pinentry-gtk-2' floating=on")
 hc("rule class='Oblogout' fullscreen=on")
@@ -156,5 +166,6 @@ hc(f"rule class='TelegramDesktop' tag='{tags_lst[8]}'")
 hc(f"rule class='transmission' tag='{tags_lst[7]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
 hc("rule name='dropdown_terminal' floating=on")
+hc("rule instance='qutebrowser-youtube' floating=on")
 
 hc("unlock")

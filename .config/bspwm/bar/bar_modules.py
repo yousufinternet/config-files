@@ -456,7 +456,7 @@ class QtileWorkspaces():
 
 class HerbstluftwmWorkspaces():
     def __init__(self):
-        P = subprocess.Popen('herbstclient --idle', text=True, shell=True,
+        P = subprocess.Popen('herbstclient --idle tag_changed', text=True, shell=True,
                              stdout=subprocess.PIPE, encoding='UTF-8')
         self.updater = P.stdout
         self.wait_time = 60

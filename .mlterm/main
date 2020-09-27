@@ -17,15 +17,15 @@ logsize = 1024
 mod_meta_mode = 8bit
 ot_script = arab
 use_ot_layout = false
-bel_mode = sound|visual
-blink_cursor = true
-use_extended_scroll_shortcut = true
-regard_uri_as_word = true
-application_name = mlterm
+bel_mode=sound|visual
+blink_cursor=true
+use_extended_scroll_shortcut=true
+regard_uri_as_word=true
+application_name=mlterm
 
-use_clipboard = true
+use_clipboard=true
 
-bg_color = #a32A36c3
+bg_color = #282a36c3
 fg_color = #ffffff
 
 step_in_changing_font_size = 2

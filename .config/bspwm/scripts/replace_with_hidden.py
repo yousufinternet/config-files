@@ -10,7 +10,9 @@ if len(sys.argv) == 2:
     swap_flag = sys.argv[1] == 'swap'
 
 rofi_theme = os.getenv('ROFI_THEME')
-hidden_windows = cmd_output('bspc query -N -d -n .hidden.local.window')
+hidden_windows = cmd_output(
+    "bspc query -N -d -n '.hidden.local.window.!sticky'")
+
 if len(hidden_windows.split('\n')) == 0:
     sys.exit()
 elif len(hidden_windows.split('\n')) == 1:

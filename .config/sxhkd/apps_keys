@@ -37,11 +37,11 @@ super + shift + e
 
 # fullscreen screenshot
 @Print
-	flameshot full
+	flameshot full -p ~/Pictures/
 
 # Select region for screenshot
 @shift+Print
-	flameshot gui
+	flameshot gui -p ~/Pictures/
 
 #   /_\  _ __ _ __| (_)__ __ _| |_(_)___ _ _  ___
 #  / _ \| '_ \ '_ \ | / _/ _` |  _| / _ \ ' \(_-<
