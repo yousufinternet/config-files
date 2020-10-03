@@ -22,7 +22,7 @@ source <(cod init $$ bash)
 export XDG_CONFIG_HOME="$HOME/.config"
 export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
 export EDITOR=vim
-export TERMINAL="$HOME/.config/bspwm/scripts/mlterm_rand_bg.py"
+export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
 export RTV_EDITOR=vim
 
 # my scripts and flutter executables

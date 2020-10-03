@@ -1,24 +1,24 @@
 
 ## Help
-# opens a rofi menu with all man pages, displays the selected man page in zathura
+# Opens a rofi menu with all man pages, displays the selected man page in zathura
 super + shift + F1
   ~/.config/bspwm/scripts/browse_man_pages.py
 
-# open bspwm man page as pdf in zathura
+# Open bspwm man page as pdf in zathura
 super + F1
   man -Tpdf bspc | zathura - 
 
-# open sxhkdrc help
+# Open sxhkdrc help
 super + ctrl + F1
    $HOME/.config/bspwm/scripts/sxhkdrc_help.py
 
 ## Rofi
-# all open windows
+# Search all open windows
 super + w
      rofi -show window -terminal $TERMINAL -dpi 0 -theme $ROFI_THEME -modi\
      window,windowcd
 
-# start an application
+# Start an application
 super + e
      rofi -show-icons -terminal $TERMINAL -show run -dpi 0 -theme $ROFI_THEME \
      -modi run,drun,ssh
@@ -27,11 +27,11 @@ super + e
 ### Screenshots
 # fullscreen screenshot
 @Print
-  spectacle --background
+   flameshot full
 
 # Select region for screenshot
 @shift+Print
-  spectacle --background --region
+   flameshot gui
 
 ### Brightness/Volume
 # Raise/Lower Brightness/Volume
@@ -190,8 +190,7 @@ super + {p,o}
 	bspc node -f @{parent,brother}
 
 ## Apps
-## Terminal Apps
-### Terminal
+### Terminal Apps
 # open the terminal
 super + Return
    $TERMINAL -e tmux -2
@@ -204,7 +203,7 @@ super + i ; {m,h,n,r,f,p,s}
 super + ctrl + f
   $TERMINAL -e ranger
 
-## GUI apps
+### GUI apps
 # GUI apps with no need for graphics card acceleration
 super + g ; {c,f,g,t,q,r,z}
   {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}

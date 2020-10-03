@@ -147,4 +147,3 @@ if __name__ == '__main__':
     except Exception as e:
         logging.debug('Error occured in mainloop:'
                       f'\n{e}\n{traceback.format_exc()}')
-
