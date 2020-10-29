@@ -171,6 +171,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
      "fc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
      "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
      "fr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+     "o" '(:ignore t :which-key "Global org-mode")
+     "oa" 'org-agenda-list
+     "oc" 'org-capture
+     "ol" 'org-store-link
      "s" '(:ignore t :which-key "Spell check")
      "sc" 'flyspell-correct-at-point
      "ss" 'flyspell-correct-wrapper
@@ -186,11 +190,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
      "hv" 'counsel-describe-variable
      "hk" 'describe-key)
      (general-define-key
-     :states '(normal visual insert emacs)
+     :states '(normal visual)
      :prefix "SPC o"
      :non-normal-prefix "C-SPC o"
-      :keymaps 'evil-org-mode-map
-      "a" 'org-agenda-list
+      :keymaps 'org-mode-map
+      ;; "d" '(:ignore t :which-key "Dates")
       "d" 'org-deadline
       "s" 'org-schedule
       "e" 'org-export-dispatch
@@ -198,7 +202,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
       "ti" 'org-toggle-inline-images
       "tl" 'org-toggle-link-display
       "tc" 'org-toggle-checkbox
-      "ce" 'org-edit-src-code)
+      "ge" 'org-edit-src-code)
      (general-define-key
      :states '(normal visual insert emacs)
      :prefix "SPC"
@@ -227,7 +231,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
       "pi}" 'iedit-expand-down-a-line
       "pi{" 'iedit-expand-up-a-line)
     )
-  
+
   (defun config-reload ()
     "Reloads ~/.emacs.d/config.org at runtime"
     )
@@ -418,7 +422,51 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	(load-theme 'doom-dracula t))
     #+END_SRC
 * ORG mode
+** bidi support in org
+   #+BEGIN_SRC emacs-lisp
+  (defun set-bidi-env ()
+  "interactive"
+  (setq bidi-paragraph-direction 'nil))
+    (add-hook 'org-mode-hook 'set-bidi-env)  
+
+   #+END_SRC
+** Capture setup
+   #+BEGIN_SRC emacs-lisp
+   (setq org-directory "~/Public/Syncthing Global/Notes/")
+   (setq org-default-notes-file (concat org-directory "capture.org"))
+   (setq org-capture-templates
+   '(
+     ("t" "Work/Personal Tasks")
+     ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
+     "** TODO %?\n SCHEDULED: %^t  DEADLINE: %^t")
+     ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
+     "** TODO %?\n SCHEDULED: %^t")
+     ("i" "Interesting thingies")
+     ("iq" "Interesting Quotes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Quotes")
+     "** %?\n %x\n CAPTURED on %t\n")
+     ("ia" "Interesting Articles" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Articles")
+"** %a\n %?\n CAPTURED on: %t\n")
+     ("ir" "Interesting Resources" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Resources")
+"** %?\n %l\n CAPTURED on: %t\n")
+     ("im" "Interesting Movies" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Movies")
+"** %?\n %a\n CAPTURED on: %t\n")
+     ("d" "Download Queue" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Download Queue")
+"** %?\n %a\n CAPTURED on: %t\n")
+     ("c" "Code Notes")
+     ("cc" "Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "General")
+"** %?\n %x\n %t")
+     ("cp" "Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Python tricks")
+"** %?\n %x\n %t")
+     ("co" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Org-tricks")
+"** TODO %?\n %x\n %t\n")
+     ("cm" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "My Code")
+"** TODO %?\n %f\n %x\n %t\n")
+)
+)
+   #+END_SRC
+** General customization
 #+BEGIN_SRC emacs-lisp
+  (require 'org-protocol)
   (use-package org-bullets
   :ensure t
   :after org-mode)
