@@ -123,6 +123,9 @@ super + {_,shift + } q
 super + {space,f}
 	bspc node -t {\~floating,\~fullscreen}
 
+# Make window tiled
+super + shift + space
+      bspc node -t tiled
 # make current window sticky
 super + {shift + s,m,x}
   bspc node --flag {sticky,\~marked,hidden}
