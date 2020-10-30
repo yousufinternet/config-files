@@ -1,3 +1,6 @@
+use_clipboard = true
+allow_osc52 = true
+
 depth = 32
 use_anti_alias = true
 use_variable_column_width = true
@@ -22,8 +25,6 @@ blink_cursor=true
 use_extended_scroll_shortcut=true
 regard_uri_as_word=true
 application_name=mlterm
-
-use_clipboard=true
 
 bg_color = #282a36c3
 fg_color = #ffffff
