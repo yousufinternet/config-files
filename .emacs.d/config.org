@@ -170,6 +170,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
      "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
      "fc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
      "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
+     "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
      "fr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
      "o" '(:ignore t :which-key "Global org-mode")
      "oa" 'org-agenda-list
@@ -194,10 +195,18 @@ Please do check the following /configs/ as this one was heavily inspired by them
      :prefix "SPC o"
      :non-normal-prefix "C-SPC o"
       :keymaps 'org-mode-map
-      ;; "d" '(:ignore t :which-key "Dates")
-      "d" 'org-deadline
-      "s" 'org-schedule
-      "e" 'org-export-dispatch
+      "d" '(:ignore t :which-key "Dates")
+      "dd" 'org-deadline
+      "ds" 'org-schedule
+      "e" '(:ignore t :which-key "Export")
+      "ee" 'org-export-dispatch
+      "ep" 'org-latex-export-to-pdf
+      "eb" 'org-beamer-export-to-pdf
+      "n" '(:ignore t :which-key "Create stuff")
+      "nt" 'org-table-create-with-table.el
+      "n|" 'org-table-create-or-convert-from-region
+      "o" '(:ignore t :which-key "open")
+      "oo" 'org-open-at-point
       "t" '(:ignore t :which-key "Org Toggle Funcs")
       "ti" 'org-toggle-inline-images
       "tl" 'org-toggle-link-display
@@ -236,6 +245,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     "Reloads ~/.emacs.d/config.org at runtime"
     )
 #+END_SRC
+
 ** Evil
 *** Some other evil packages to consider
 - evil-visual-mark-mode
@@ -439,31 +449,45 @@ Please do check the following /configs/ as this one was heavily inspired by them
      ("t" "Work/Personal Tasks")
      ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
      "** TODO %?\n SCHEDULED: %^t  DEADLINE: %^t")
+     
      ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
      "** TODO %?\n SCHEDULED: %^t")
+     
      ("i" "Interesting thingies")
      ("iq" "Interesting Quotes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Quotes")
-     "** %?\n %x\n CAPTURED on %t\n")
+     "** %?\n %x\n CAPTURED on %u\n")
+     
      ("ia" "Interesting Articles" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Articles")
-"** %a\n %?\n CAPTURED on: %t\n")
+"** %a\n %?\n CAPTURED on: %u\n")
+
+     ("il" "Read Later" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Read Later")
+"** TODO %?\n %a\n CAPTURED on: %t\n")
+
      ("ir" "Interesting Resources" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Resources")
-"** %?\n %l\n CAPTURED on: %t\n")
+"** %?\n %l\n CAPTURED on: %u\n")
+
      ("im" "Interesting Movies" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Movies")
-"** %?\n %a\n CAPTURED on: %t\n")
-     ("d" "Download Queue" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Download Queue")
-"** %?\n %a\n CAPTURED on: %t\n")
+"** %?\n %a\n CAPTURED on: %u\n")
+
+     ("d" "Download Queue" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Downloads Queue" )
+"** TODO %a\n CAPTURED on: %t\n" :prepend t :immediate-finish t)
+
      ("c" "Code Notes")
-     ("cc" "Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "General")
-"** %?\n %x\n %t")
-     ("cp" "Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Python tricks")
-"** %?\n %x\n %t")
+     ("cc" "General Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "General")
+"** %?\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n CAPTURED on: %u")
+
+     ("cp" "Python Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Python tricks")
+"** %?\n #+BEGIN_SRC python\n%x\n#+END_SRC\n CAPTURED on: %u")
+
      ("co" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Org-tricks")
-"** TODO %?\n %x\n %t\n")
-     ("cm" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "My Code")
-"** TODO %?\n %f\n %x\n %t\n")
+"** TODO %?\n #+BEGIN_QUOTE\n%x\n#+END_QUOTE\n %t\n")
+
+     ("cm" "My Code" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "My Code")
+"** TODO %?\n %F\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n %t\n")
 )
 )
    #+END_SRC
+   
 ** General customization
 #+BEGIN_SRC emacs-lisp
   (require 'org-protocol)
