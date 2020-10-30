@@ -124,8 +124,13 @@ super + {space,f}
 	bspc node -t {\~floating,\~fullscreen}
 
 # Make window tiled
-super + shift + space
+super + ctrl + space
       bspc node -t tiled
+
+# Switch between floating and tiled windows
+super + shift + space
+    if [ $(bspc query -N -d -n focused.floating) ] ; then  bspc node --focus 'any.local.window.tiled.!hidden';  else  bspc node --focus 'any.window.local.floating.!hidden'; fi
+
 # make current window sticky
 super + {shift + s,m,x}
   bspc node --flag {sticky,\~marked,hidden}
@@ -186,7 +191,7 @@ super + {_,shift + }{Left,Down,Up,Right}
 
 # switch between windows when in monocle mode
 super + {_,shift + } c
-  bspc node --focus '{next,prev}.local.!hidden.window'
+  bspc node --focus '{next,prev}.local.!hidden.!floating.window'
 
 # focus the node for the given path jump
 super + {p,o}
@@ -212,8 +217,8 @@ super + g ; {c,f,g,t,q,r,z}
   {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
-super + shift + g ; {f,d} 
-  start_with_optirun.sh {firefox,darktable}
+super + shift + g ; {f,d,b} 
+  start_with_optirun.sh {firefox,darktable,blender}
 
 # Web browser
 super + ctrl + w
@@ -227,17 +232,17 @@ super + ctrl + e
 # Terminal dropdown
 super + d
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_term -w 0.8 \
-  -ht 0.65 -x 0.1 -y $((GDK_SCALE*20)) --termflags -e tmux -2
+  -ht 0.65 -x 0.1 -y $((GDK_SCALE*20)) --termflags --fade=50 --title="Generic DropDown Terminal" -w $((20*GDK_SCALE)) -e tmux -2 
    
 # calculator dropdown
 super + ctrl + c
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_calc -w 0.3 \
-  -ht 0.3 -x 0.35 -y 0.7 --termflags -e bc
+  -ht 0.3 -x 0.35 -y 0.7 --termflags --title="Calculator DropDown" -e bc
 
 # ipython dropdown
 super + ctrl + i
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_ipython -w 0.3 \
-  -ht 0.8 -x 0.7 -y 0.1 --termflags -e ipython
+  -ht 0.8 -x 0.7 -y 0.1 --termflags --fade=50 --title="iPython DropDown" -e ipython
 
 ## Reload sxhkd
 # make sxhkd reload its configuration files:
