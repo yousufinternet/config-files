@@ -6,9 +6,11 @@ when spawning a child process hide the parent process window
 
 import os
 import sys
+import json
 import logging
 import inspect
 import traceback
+import subprocess as sp
 
 cmd_folder = os.path.realpath(
     os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0]))
@@ -25,6 +27,31 @@ EXCLUDED_CLASSES = [
 logging_level = logging.ERROR if len(sys.argv) == 1 else sys.argv[1]
 logging.basicConfig(filename=os.path.expanduser('~/.swallow.log'),
                     level=logging_level)
+
+
+def node_crawler(prefix, node, path):
+    if node is None:
+        return
+    if node['client'] is None:
+        node_crawler(prefix, node['firstChild'], path+['1'])
+        node_crawler(prefix, node['secondChild'], path+['2'])
+    else:
+        client = node['client']
+        temp_paths[cmd_output(f'bspc query -N -n {node["id"]}')] = {
+            'className': client['className'],
+            'instanceName': client['instanceName'],
+            'path': prefix + '/'.join(path)}
+
+
+def capture_layout():
+    global temp_paths
+    temp_paths = {}
+    state = json.load(cmd_run('bspc wm -d', stdout=sp.PIPE).stdout)
+    for i, monitor in enumerate(state['monitors']):
+        focused_desktop_id = monitor['focusedDesktopId']
+        for j, desktop in enumerate(monitor['desktops']):
+            if desktop['id'] == focused_desktop_id:
+                node_crawler(f'@^{i+1}:^{j+1}:/', desktop['root'], [])
 
 
 def advance_is_child(pid1, pid2):
@@ -110,29 +137,44 @@ def swallow():
             if not event:
                 continue
             if event[0] == 'node_add':
+                rotate_flag = False
                 new_wid = event[-1]
                 last_wid = cmd_output("bspc query -N -d -n 'last.window.!floating.!fullscreen'")
-                print(new_wid, last_wid)
-                print(swallow_cond(new_wid, last_wid))
                 if not swallow_cond(new_wid, last_wid):
                     continue
                 new_pid = get_pid(new_wid)
                 last_pid = get_pid(last_wid)
-                print(new_pid, last_pid)
-                print(advance_is_child(last_pid, new_pid))
                 if not all([new_pid, last_pid]):
                     continue
                 if advance_is_child(last_pid, new_pid):
-                    cmd_run(f'bspc node {last_wid} --flag private=on')
-                    cmd_run(f'bspc node --swap {last_wid} --follow')
+                    capture_layout()
+                    # cmd_run(f'bspc node {last_wid} --flag private=on')
+                    #     split_dir = 'east'
+                    # else:
+                    #     split_dir = 'south'
+                    # cmd_run(f'bspc node --swap {last_wid} --follow')
+                    # cmd_run(f'bspc node {last_wid} --presel-dir \~{split_dir}')
+                    # cmd_run(f"bspc node {new_wid} --to-node $(bspc query -N -n '.!automatic')")
+                    last_path = temp_paths[last_wid]['path']
+                    print(last_path)
+                    new_path = last_path + '/1'
+                    print(new_path)
                     cmd_run(f'bspc node {last_wid} --flag hidden=on')
-                    cmd_run(f'bspc node {new_wid} --flag private=on')
+                    cmd_run(f"bspc node {new_wid} --to-node {new_path}")
                     swallowed[new_wid] = last_wid
             if event[0] == 'node_remove':
                 removed_wid = event[-1]
                 if removed_wid in swallowed.keys():
                     swallowed_id = swallowed[removed_wid]
+                    del swallowed[removed_wid]
                     cmd_run(f'bspc node {swallowed_id} --flag hidden=off')
+                    cmd_run(f"bspc node {last_wid} --to-node {last_path}")
+                    print(last_path.split(':')[-1])
+                    if not len(last_path.split(':')[-1]) <= 5:
+                        if last_path[-3] == '2':
+                            cmd_run(f'bspc node {last_path[:-4]} --rotate 270')
+                        else:
+                            cmd_run(f'bspc node {last_path[:-4]} --rotate 90')
                     cmd_run(f'bspc node --focus {swallowed_id}')
         except Exception as e:
             print(e)
