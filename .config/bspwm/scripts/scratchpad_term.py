@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+import os
 import re
-import sys
 import argparse
 from wmutils.processes import cmd_run, cmd_output
 from wmutils.utils import screen_dim, win_geometry, get_class, is_hidden
@@ -61,7 +61,7 @@ def toggle_hide(wid):
 
 
 def start_terminal(termclass, termargs):
-    cmd_run(f'~/.config/bspwm/scripts/mlterm_rand_bg.py -N {termclass} {" ".join(termargs)}')
+    cmd_run(f'{os.getenv("TERMINAL")} -N {termclass} {" ".join(termargs)}')
 
 
 def repair_geometry(wid, gmt):
@@ -85,7 +85,6 @@ def repair_geometry(wid, gmt):
         cmd_run(f'bspc node {wid} --move 0 {y_chg}')
 
 
-
 def create_geometry_str(x, y, w, h):
     screen_dims = screen_dim(cmd_output('bspc query -M -m --names'))
     if x <= 1:
@@ -105,7 +104,6 @@ def main():
     reapply_rule(args.termclass, geometry)
     wid = win_exists(args.termclass)
     if not wid:
-        cmd_run('notify')
         start_terminal(args.termclass, args.termflags)
     else:
         repair_geometry(wid, geometry)
