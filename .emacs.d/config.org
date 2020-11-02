@@ -490,7 +490,14 @@ Please do check the following /configs/ as this one was heavily inspired by them
    
 ** General customization
 #+BEGIN_SRC emacs-lisp
-  (require 'org-protocol)
+  (use-package org-protocol
+  :ensure t
+  :after org-mode) ;; for handling org-capture links
+  
+  (use-package org-tempo
+  :ensure t
+  :after org-mode) ;; Better completions
+  
   (use-package org-bullets
   :ensure t
   :after org-mode)
@@ -523,6 +530,16 @@ Please do check the following /configs/ as this one was heavily inspired by them
   '((emacs-lisp . t)
     (python . t)))
 #+END_SRC
+
+** Markup enhancements
+   #+begin_src emacs-lisp
+(setq org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+   #+end_src
 
 * Programming Modes
 ** lsp
