@@ -490,13 +490,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
    
 ** General customization
 #+BEGIN_SRC emacs-lisp
-  (use-package org-protocol
-  :ensure t
-  :after org-mode) ;; for handling org-capture links
-  
-  (use-package org-tempo
-  :ensure t
-  :after org-mode) ;; Better completions
+  (require 'org-tempo)
+  (require 'org-protocol)
   
   (use-package org-bullets
   :ensure t
