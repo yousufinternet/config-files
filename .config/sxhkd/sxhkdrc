@@ -232,17 +232,17 @@ super + ctrl + e
 # Terminal dropdown
 super + d
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_term -w 0.8 \
-  -ht 0.65 -x 0.1 -y $((GDK_SCALE*20)) --termflags --fade=50 --title="Generic DropDown Terminal" -w $((20*GDK_SCALE)) -e tmux -2 
-   
+  -ht 0.65 -y $((GDK_SCALE*20)) -x 0.1 --termflags --title="Dropdown_Terminal"  --fontsize=$((20*GDK_SCALE)) --fade=50 -e tmux -2 
+  #  
 # calculator dropdown
 super + ctrl + c
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_calc -w 0.3 \
-  -ht 0.3 -x 0.35 -y 0.7 --termflags --title="Calculator DropDown" -e bc
+  -ht 0.3 -x 0.35 -y 0.7 --termflags --title="Calculator_DropDown" -e bc
 
 # ipython dropdown
 super + ctrl + i
   $HOME/.config/bspwm/scripts/scratchpad_term.py -c dropdown_ipython -w 0.3 \
-  -ht 0.8 -x 0.7 -y 0.1 --termflags --fade=50 --title="iPython DropDown" -e ipython
+  -ht 0.8 -x 0.7 -y 0.1 --termflags --fade=50 --title="iPython_DropDown" -e ipython
 
 ## Reload sxhkd
 # make sxhkd reload its configuration files:
