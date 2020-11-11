@@ -8,6 +8,9 @@
 # for java applications
 export AWT_TOOLKIT=MToolkit
 
+# powerline
+PS1='[\u@\h \W]\$ '
+
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
     . /usr/share/bash-completion/bash_completion
@@ -33,7 +36,7 @@ export PATH=$HOME/.pub-cache/bin/:$PATH
 export PATH=$HOME/.config/bspwm/scripts/:$PATH
 export NODE_PATH=$NODE_PATH:$(npm root -g)
 
-alias radiogolha='mplayer mms://www.radiogolha.net/RadioGolha'
+alias radiogolha='cvlc mms://www.radiogolha.net/RadioGolha'
 alias ar5="aria2c -c -V -s 5 --max-connection-per-server=5 --on-download-complete=ding.sh"
 alias ls='ls --color=auto'
 alias resrvserv='mosh yusuf@10.127.188.92'
@@ -46,11 +49,8 @@ alias all_cams_high='mpv $(cat Documents/Security-Cams_high/cam4.strm) & mpv $(c
 alias gst='git status'
 alias gd='git diff'
 alias two_min_pen='for i in {0..120}; do printf "%03d\r" $i; sleep 1; done;mplayer /usr/share/games/xboard/sounds/penalty.wav'
-alias pacman='pacman --color=always'
+alias pacman='sudo pacman --color=always'
 alias hcat="highlight -O ansi --force"
-
-# powerline
-PS1='[\u@\h \W]\$ '
 
 # vi mode in bash
 set -o vi
@@ -85,8 +85,8 @@ POWERLINE_BASH_SELECT=1
 eval "$(fasd --init auto)"
 
 if xset q &>/dev/null; then
- #  screenfetch | lolcat
-  cowsay -f tux $(fortune)
+  # screenfetch | lolcat
+  cowsay -f tux $(fortune) | lolcat -p 1
 fi
 
 if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
