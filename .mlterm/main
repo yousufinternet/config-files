@@ -1,5 +1,6 @@
 use_clipboard = true
 allow_osc52 = true
+allow_scp = true
 
 depth = 32
 use_anti_alias = true
@@ -25,6 +26,7 @@ blink_cursor=true
 use_extended_scroll_shortcut=true
 regard_uri_as_word=true
 application_name=mlterm
+exit_backscroll_by_pty = false
 
 bg_color = #282a36c3
 fg_color = #ffffff
