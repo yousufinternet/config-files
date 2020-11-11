@@ -71,7 +71,11 @@ super + shift + t
 ### Moving windows
 # swap the current node and the biggest node
 super + s
-	bspc node -s biggest.local
+   bspc node -s biggest.local
+
+# swap the current node and the biggest node
+super + ctrl + s
+   bspc node -s any.marked
 
 # move a single floating window into the corner
 super + v
@@ -133,7 +137,7 @@ super + shift + space
 
 # make current window sticky
 super + {shift + s,m,x}
-  bspc node --flag {sticky,\~marked,hidden}
+  bspc node --flag {sticky,marked,hidden}
 
 # restore/replace current node with hidden
 super + {ctrl,shift} + x
