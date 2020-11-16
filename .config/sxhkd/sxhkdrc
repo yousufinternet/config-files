@@ -1,4 +1,3 @@
-
 ## Help
 # Opens a rofi menu with all man pages, displays the selected man page in zathura
 super + shift + F1
@@ -27,7 +26,7 @@ super + e
 ### Screenshots
 # fullscreen screenshot
 @Print
-   flameshot full
+   flameshot full -c
 
 # Select region for screenshot
 @shift+Print
@@ -203,9 +202,13 @@ super + {p,o}
 
 ## Apps
 ### Terminal Apps
-# open the terminal
+# open the terminal with tmux
 super + Return
    $TERMINAL -e tmux -2
+
+# open the terminal
+super + shift + Return
+   $TERMINAL
 
 # Terminal apps with large font size
 super + i ; {m,h,n,r,f,p,s}
