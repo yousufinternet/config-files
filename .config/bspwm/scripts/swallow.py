@@ -148,13 +148,6 @@ def swallow():
                     continue
                 if advance_is_child(last_pid, new_pid):
                     capture_layout()
-                    # cmd_run(f'bspc node {last_wid} --flag private=on')
-                    #     split_dir = 'east'
-                    # else:
-                    #     split_dir = 'south'
-                    # cmd_run(f'bspc node --swap {last_wid} --follow')
-                    # cmd_run(f'bspc node {last_wid} --presel-dir \~{split_dir}')
-                    # cmd_run(f"bspc node {new_wid} --to-node $(bspc query -N -n '.!automatic')")
                     last_path = temp_paths[last_wid]['path']
                     print(last_path)
                     new_path = last_path + '/1'
