@@ -1,0 +1,53 @@
+.tab .twisty {
+    visibility: hidden;
+}
+
+tab-item tab-twisty {
+  margin-right: -1em;
+  opacity: 0 !important;
+}
+
+.newtab-button {
+    display: none !important;
+}
+
+:root, #background {
+  background: #2c2e34;
+}
+
+.tab {
+  height: 32px;
+  border: none;
+  background: #2c2e34;  
+}
+
+tab-item {
+	padding-left: 6px;
+}
+
+tab-item.discarded tab-favicon {
+	filter: grayscale(100%) !important;
+}
+tab-item.active {
+    background: #52596B !important;
+}
+
+.closebox {
+  display: none;
+}
+
+.label-content {
+  display: none;
+}
+
+.contextual-identity-marker {
+  width: 0 !important;
+}
+
+:root .tab .highlighter::before {
+  width: 0 !important;
+}
+
+#tabbar {
+  bottom: 0 !important; /* Eliminate dead space on bottom */
+}

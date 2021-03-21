@@ -1,0 +1,15 @@
+* {
+    scrollbar-width: none !important;
+}
+@-moz-document url("about:newtab") {
+ body { background-color: #2c2e34 !important;}
+}
+#newtab-search-text {
+	background-color: #2c2e34 !important;
+	font-size: 18px !important;
+	color: #e3e1e4 !important;
+	box-shadow: none !important;
+	text-align: center !important;
+	/* border:none !important; */
+	font-weight: bold !important;
+}

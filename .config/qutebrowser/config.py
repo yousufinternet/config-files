@@ -40,7 +40,6 @@ c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 
 # view youtube vidoes with mpv
 # tsp is a task spooler that adds tasks to a queue 
-
 screen_dims = screen_dim()
 mpv_command = 'mpv --slang=en --force-window=immediate --no-terminal --geometry={} --autofit=1280x720 --ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
 mpv_720 = mpv_command.format(
