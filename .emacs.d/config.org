@@ -438,7 +438,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
   "interactive"
   (setq bidi-paragraph-direction 'nil))
     (add-hook 'org-mode-hook 'set-bidi-env)  
-
+  
+(setq org-latex-package-alist '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
    #+END_SRC
 ** Capture setup
    #+BEGIN_SRC emacs-lisp
@@ -507,7 +508,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   ;; experimental
   (setq org-log-done "note")
   (org-agenda nil "a")
-  (setq org-log-into-drawer t)
+  (setq org-log-into-drawer "LOGBOOK")
   (setq org-confirm-babel-evaluate nil)
 
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
@@ -531,9 +532,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq org-latex-listings 'minted
       org-latex-packages-alist '(("" "minted"))
       org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
    #+end_src
 
 * Programming Modes

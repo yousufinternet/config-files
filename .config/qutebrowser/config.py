@@ -10,6 +10,8 @@ from wmutils.utils import screen_dim
 c = c  # noqa: F821 pylint: disable=E0602,C0103
 config = config  # noqa: F821 pylint: disable=E0602,C0103
 
+config.load_autoconfig(False)
+
 c.bindings.key_mappings = {
     'ه': 'i',
     'خ': 'o',
@@ -123,10 +125,13 @@ c.tabs.last_close = 'close'
 c.completion.height = '30%'
 
 # Dark Mode
-config.set('colors.webpage.prefers_color_scheme_dark', True)
+config.set('colors.webpage.preferred_color_scheme', 'dark')
 config.set('colors.webpage.bg', 'black')
 config.set('colors.webpage.darkmode.enabled', True)
 config.set('colors.webpage.darkmode.policy.images', 'smart')
 # Load existing settings made via :set
 
 # config.source('nord.py')
+
+# ad-blocking
+config.set('content.blocking.method', 'both')
