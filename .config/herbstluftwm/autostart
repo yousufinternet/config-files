@@ -4,6 +4,7 @@ import os
 import subprocess
 
 GDK_SCALE = int(os.getenv('GDK_SCALE', 1))
+HOSTNAME = subprocess.check_output('echo "$HOSTNAME"', shell=True, text=True).strip()
 
 
 def hc(*args):
@@ -25,7 +26,7 @@ startup_cmds = [
     "redshift",
     "nm-applet",
     "udiskie -t",
-    "/usr/lib/xfce4/notifyd/xfce4-notifyd",
+    'dunst -geometry "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((8+GDK_SCALE))" -corner_radius 25 -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE))',
     "blueman-applet",
     "emacs --daemon",
     "pasystray",
@@ -39,6 +40,15 @@ startup_cmds = [
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
         subprocess.Popen(cmd, text=True, shell=True)
+    if HOSTNAME == 'yusufs-lenovo':
+        xinput_list = subprocess.check_output('xinput list --name-only',
+                                              shell=True, text=True)
+        if 'Logitech USB Optical Mouse' in xinput_list.splitlines():
+            subprocess.Popen(
+                'xinput set-prop "Logitech USB Optical Mouse" "libinput Accel Speed" 1',
+                shell=True, text=True)
+        subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
+        subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
 
 
 # this is a simple config for herbstluftwm
@@ -93,11 +103,23 @@ for tag, key in tags.items():
 # cycle through tags
 hc(f'keybind {MOD}-period use_index +1 --skip-visible')
 hc(f'keybind {MOD}-comma  use_index -1 --skip-visible')
+
+# window states
+hc(f'keybind {MOD}-m set_attr clients.focus.minimized on')
+hc(f"keybind {MOD}-Ctrl-m spawn sh -c '~/.config/herbstluftwm/restore_minimized.py'")
 hc(f'keybind {MOD}-f fullscreen toggle')
 hc(f'keybind {MOD}-Shift-f set_attr clients.focus.floating toggle')
 hc(f'keybind {MOD}-Shift-s chain .-. new_attr bool clients.focus.my_sticky'
    ' .-. set_attr clients.focus.my_sticky toggle ')
 
+# move floating
+hc(f"keybind {MOD}-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner.py'")
+hc(f"keybind {MOD}-Shift-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner.py -1'")
+
+# scratchpads
+hc(f"keybind {MOD}-d spawn sh -c '~/.config/herbstluftwm/scratch.py -c scratch_term -w 0.8 -ht 0.65 -y {20*GDK_SCALE} -x 0.1 --termflags --title=Dropdown_terminal --fontsize={20*GDK_SCALE} --fade=50 -e tmux -2'")
+hc(f"keybind {MOD}-Ctrl-c spawn sh -c '~/.config/herbstluftwm/scratch.py -c dropdown_calc -w 0.3 \
+  -ht 0.3 -x 0.35 -y 0.7 --termflags --title=Calculator_DropDown -e bc'")
 
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
    '. cycle_layout +1 , cycle_layout +1')
@@ -112,6 +134,7 @@ hc(f'mousebind {MOD}-Button3 resize')
 hc(f'keybind {MOD}-BackSpace   cycle_monitor')
 hc(f'keybind {MOD}-Shift-Tab   cycle_all +1')
 hc(f'keybind {MOD}-c cycle')
+hc(f'keybind {MOD}-Shift-c cycle -1')
 hc(f'keybind {MOD}-grave jumpto urgent')
 hc(f"keybind {MOD}-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
 
@@ -159,8 +182,8 @@ hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on")
 hc("rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on")
 hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)'"
    " manage=off")
-hc("rule class='Pinentry-gtk-2' floating=on")
-hc("rule instance='Pinentry-gtk-2' floating=on")
+hc("rule class='pinentry-gtk-2' floating=on")
+hc("rule instance='pinentry-gtk-2' floating=on")
 hc("rule class='Oblogout' fullscreen=on")
 hc(f"rule class='TelegramDesktop' tag='{tags_lst[8]}'")
 hc(f"rule class='transmission' tag='{tags_lst[7]}'")

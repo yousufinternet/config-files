@@ -153,6 +153,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
      :prefix "SPC"
      :non-normal-prefix "C-SPC"
      "C-'" 'avy-goto-word-0
+     ":" 'counsel-M-x
      "a" '(:ignore t :which-key "Applications")
      "ar" 'ranger
      "ad" '(dired ".")
@@ -163,15 +164,19 @@ Please do check the following /configs/ as this one was heavily inspired by them
      "bp" 'evil-prev-buffer
      "i" '(:ignore t :which-key "imenu and ivy")
      "ii" 'imenu-list
+     "ic" 'counsel-imenu
      "l" '(:ignore t :which-key "LSP")
      "li" 'lsp-ui-imenu
      "ld" 'lsp-ui-peek-find-definitions
      "f" '(:ignore t :which-key "Files")
+     "ff" 'counsel-find-file
+     "fr" 'counsel-recentf
+     "fl" 'counsel-locate
      "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
-     "fc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
+     "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
      "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
      "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
-     "fr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+     "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
      "o" '(:ignore t :which-key "Global org-mode")
      "oa" 'org-agenda-list
      "oc" 'org-capture
@@ -258,6 +263,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq-default evil-want-C-u-scroll t)
   (use-package evil
     :ensure t
+    :init
+    (global-undo-tree-mode)
+    :custom
+    (evil-undo-system 'undo-tree)
     :config
     (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
     (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
@@ -266,7 +275,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (evil-global-set-key 'normal (kbd "<left>") 'left-char)
     (evil-global-set-key 'normal (kbd "<right>") 'right-char)
     (evil-global-set-key 'visual (kbd "<left>") 'left-char)
-    (evil-global-set-key 'visual (kbd "<right>") 'right-char))
+    (evil-global-set-key 'visual (kbd "<right>") 'right-char)
+    )
   (evil-mode 1)
 #+END_SRC
 *** Escape key acts like C-g
@@ -535,6 +545,17 @@ Please do check the following /configs/ as this one was heavily inspired by them
       '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+   #+end_src
+
+** org-alert
+
+   #+begin_src emacs-lisp
+   (use-package org-alert 
+:ensure t
+:after org-mode
+:commands org-alert-enable
+:config (org-alert-enable)
+         (setq alert-default-style 'libnotify))
    #+end_src
 
 * Programming Modes

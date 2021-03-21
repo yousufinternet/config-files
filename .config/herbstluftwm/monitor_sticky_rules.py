@@ -24,6 +24,7 @@ def execute(cmd):
 for event in execute('herbstclient --idle'):
     event = event.strip().split()
     # make sticky windows sticky!
+    print(event)
     if event[0] == 'rule' and event[1] == 'make_sticky':
         hc(f'chain .-. new_attr bool clients.{event[2]}.my_sticky'
            f' .-. set_attr clients.{event[2]}.my_sticky on')

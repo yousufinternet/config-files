@@ -1,0 +1,164 @@
+@-moz-document url(chrome://browser/content/browser.xul),
+               url(chrome://browser/content/browser.xhtml) {
+
+  /* hide navigation bar when it is not focused; use Ctrl+L to get focus */
+  #main-window:not([customizing]) #navigator-toolbox:not(:focus-within) {
+    margin-top: -34px;
+  }
+  #navigator-toolbox {
+    transition: 0.05s margin-top ease-out;
+  }
+
+}
+
+#nav-bar-customization-target {
+	background-color: #2c2e34 !important;
+}
+
+#navigator-toolbox { --tabs-border-color: transparent !important; }
+.toolbarbutton-1 {
+    /* fill: #A3AFC1 !important; */
+    background-color: #2c2e34 !important;
+}
+
+#nav-bar {
+  -moz-box-ordinal-group: 1 !important;
+}
+#PersonalToolbar {
+  -moz-box-ordinal-group: 2 !important;
+}
+#titlebar {
+  -moz-box-ordinal-group: 3 !important;
+}
+
+/* Hide blue stripe on active tab */
+/* .tab-line[selected="true"] { */
+/*   opacity: 0 !important; */
+/* } */
+
+/* .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-bottom-line { */
+/* height: 0 !important; */
+/* } */
+
+/* #browser-panel:-moz-lwtheme:-moz-window-inactive #toolbar-menubar, */
+/* #browser-panel:-moz-lwtheme:-moz-window-inactive #toolbar-menubar { */
+/*   background-color: #8bb !important; */
+/* } */
+
+/*** BEGIN Firefox 77 (June 2, 2020) Override URL bar enlargement ***/
+
+  /* Compute new position, width, and padding */
+
+#urlbar[breakout][breakout-extend] {
+  top: 5px !important;
+  left: 0px !important;
+  width: 100% !important;
+  padding: 0px !important;
+}
+
+#urlbar-input-container{
+    border: none !important;
+    background-color: #2c2e34 !important;
+ }
+#urlbar-background {
+    background: #2c2e34 !important;
+}
+/* for alternate Density settings */
+/* [uidensity="compact"] #urlbar[breakout][breakout-extend] { */
+/*   top: 3px !important; */
+/* } */
+/* [uidensity="touch"] #urlbar[breakout][breakout-extend] { */
+/*   top: 4px !important; */
+/* } */
+
+/* Prevent shift of URL bar contents */
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+  height: var(--urlbar-height) !important;
+  padding: 0 !important;
+}
+
+/* Do not animate */
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  animation: none !important;;
+}
+
+/* Remove shadows */
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  border: none !important;
+}
+
+/* *tab border */
+/* .tab-content[selected="true"] */
+/* { */
+/*   background-color: #52596B !important; */
+/*   color : #e3e1e4 !important; */
+/* } */
+
+/* .tab-content[selected="true"]:-moz-window-inactive */
+/* { */
+/*   background-color: #505050 !important; */
+/* } */
+
+/* tab */
+/* { */
+/*   background-color: #2c2e34 !important; */
+/*   color : #e3e1e4 !important; */
+/* } */
+
+/* #tabbrowser-tabs */
+/* { */
+/*   background-color: #2c2e34 !important; */
+/* } */
+
+/* .tabbrowser-tab{ opacity: 0.75 } */
+/* .tabbrowser-tab:hover{ opacity: 0.85 } */
+/* .tabbrowser-tab[selected]{ opacity: 1 } */
+
+/* tabs { */
+/*   counter-reset: tab-counter; */
+/* } */
+
+/* tab:nth-child(1) .tab-label::before, */
+/* tab:nth-child(2) .tab-label::before, */
+/* tab:nth-child(3) .tab-label::before, */
+/* tab:nth-child(4) .tab-label::before, */
+/* tab:nth-child(5) .tab-label::before, */
+/* tab:nth-child(6) .tab-label::before, */
+/* tab:nth-child(7) .tab-label::before, */
+/* tab:nth-child(8) .tab-label::before { */
+/*   counter-increment: tab-counter; */
+/*   content: counter(tab-counter) ""; */
+/*   position: relative; */
+/*   top: -0.38rem; */
+/*   font-weight: bold; */
+/* } */
+
+#TabsToolbar { visibility: collapse ! important; }
+#sidebar {
+    max-width: none !important;
+    min-width: 0px !important;
+}
+/* Hide splitter, when using Tree Style Tab. */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] + #sidebar-splitter {
+    display: none !important;
+}
+/* Hide sidebar header, when using Tree Style Tab. */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+    display: none !important;
+}
+
+:root {
+    --thin-tab-width: 30px;
+    --wide-tab-width: 200px;
+}
+#sidebar-box:not([sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]) {
+    min-width: var(--wide-tab-width) !important;
+    max-width: none !important;
+}
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
+    min-width: var(--thin-tab-width) !important;
+    max-width: var(--thin-tab-width) !important;
+}

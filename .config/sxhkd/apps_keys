@@ -57,8 +57,8 @@ super + g ; {c,f,g,t,q,r,z}
   {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
-super + shift + g ; {f,d} 
-  start_with_optirun.sh {firefox,darktable}
+super + shift + g ; {f,d,b,s} 
+  ~/.config/bspwm/scripts/optimus_run.py {firefox,darktable,blender,steam-native}
 
 # File manager
 super + ctrl + f
@@ -66,7 +66,7 @@ super + ctrl + f
 
 # Web browser
 super + ctrl + w
-  start_with_optirun.sh qutebrowser
+  ~/.config/bspwm/scripts/optimus_run.py qutebrowser
 
 # IDE
 super + ctrl + e
