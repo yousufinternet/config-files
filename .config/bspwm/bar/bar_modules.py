@@ -66,7 +66,7 @@ class KeyboardLayout():
         P = subprocess.Popen('xkb-switch -W', text=True, shell=True,
                              stdout=subprocess.PIPE)
         self.updater = P.stdout
-        self.wait_time = 60
+        self.wait_time = 600
 
     def output(self):
         layout = cmd_output('xkb-switch').upper()
@@ -106,7 +106,7 @@ class PacmanUpdates():
 
 class DiskUsage():
     def __init__(self, mount_point, icon=None):
-        self.wait_time = 900
+        self.wait_time = 9000
         self.updater = None
         self.mount_point = mount_point
         self.icon = icon
@@ -127,7 +127,7 @@ class DiskUsage():
 
 class SARCPUUsage():
     def __init__(self):
-        self.wait_time = 3
+        self.wait_time = 30
         sar_thread = threading.Thread(target=self.sar_thread)
         sar_thread.start()
         self.updater = None
@@ -166,7 +166,7 @@ class SARCPUUsage():
 
 class NetworkTraffic():
     def __init__(self, exclude=['lo']):
-        self.wait_time = 5
+        self.wait_time = 30
         self.updater = None
         self.cache = []
         self.exclude = exclude
@@ -180,7 +180,7 @@ class NetworkTraffic():
              d['stats64']['tx']['bytes']/1000)
             for d in json.loads(iface)
             if not any(x in d['ifname'] for x in self.exclude)
-            and 'UP' in d['flags']]
+            and d['operstate'] == 'UP']
         return ifaces
 
     def output(self):
@@ -249,7 +249,7 @@ class PingTimeOut():
 
 class CPUTemp():
     def __init__(self):
-        self.wait_time = 10
+        self.wait_time = 30
         self.updater = None
         self.icons_dict = {50: '\uf2cb', 60: '\uf2ca', 70: '\uf2c9',
                            80: '\uf2c8', 90: '\uf2c7'}
@@ -290,16 +290,23 @@ class CPUUsage():
 
 
 class RamUsage():
-    def __init__(self):
+    def __init__(self, percent=False):
         self.wait_time = 30
         self.updater = None
         self.icon = '\ue266'
+        self.percent = percent
 
     def output(self):
         ram = cmd_output('vmstat -s').split('\n')
         used = int(ram[1].strip().split()[0])/(1024**2)
         total = int(ram[0].strip().split()[0])/(1024**2)
-        if used/total > 0.85:
+        percent = f'{used/total:0>3.0%}'
+        if self.percent and used/total > 0.85:
+            return ('%{F'+cdict['red']+'}%{T2}'
+                    f'{self.icon}%{{T-}}{percent}'+'%{F-}')
+        elif self.percent:
+            return f'%{{F{cdict["green"]}}}%{{T2}}{self.icon}%{{T-}}%{{F-}}{percent}'
+        elif not self.percent and used/total > 0.85:
             return ('%{F'+cdict['red']+'}%{T2}'
                     f'{self.icon}%{{T-}}{used:0.1f}G/{total:0.1f}G'+'%{F-}')
         else:
@@ -513,6 +520,72 @@ class HerbstluftwmWorkspaces():
                              text=True, shell=True)
 
 
+class HerbstluftwmWorkspacesDots():
+    def __init__(self):
+        P = subprocess.Popen("herbstclient --idle 'focus_changed|tag_changed'", text=True, shell=True,
+                             stdout=subprocess.PIPE, encoding='UTF-8')
+        self.updater = P.stdout
+        self.wait_time = 60
+
+    def output(self):
+        wor_count = int(cmd_output('herbstclient attr tags.count'))
+        all_workspaces = [cmd_output(f'herbstclient attr tags.{i}.name')
+                          for i in range(wor_count)]
+        just_len = len(max(all_workspaces, key=len))
+        empty_workspaces, urgent_tags = [], []
+        for desk in all_workspaces:
+            wins_count = cmd_output(f"herbstclient attr tags.by-name.{desk}.client_count")
+            urgent_count = cmd_output(f'herbstclient attr tags.by-name.{desk}.urgent_count')
+            urgent_count = 0 if urgent_count == '' else urgent_count
+            if int(wins_count) == 0:
+                empty_workspaces.append(desk)
+            if int(urgent_count) != 0:
+                urgent_tags.append(desk)
+        current = cmd_output('herbstclient attr tags.focus.name').strip()
+
+        pre1 = '%{A:HERBST_WIDGETdesk'
+        pre2 = '%{A4:HERBST_WIDGETnext:}'
+        pre3 = '%{A5:HERBST_WIDGETprev:}'
+        formatted_ws = []
+        for w in all_workspaces:
+            wor = ''
+            suffix = '%{T-}%{-o}%{U-}%{A}'
+            spacing = str(3*GDKSCALE)
+            other_side = str(int(spacing)-9*GDKSCALE)
+            if w == current:
+                if w in empty_workspaces:
+                    wor = ''
+                formatted_ws.append(
+                    '%{R}%{O'+spacing+'}%{T2}'+wor+'%{T-}%{R}'+'%{O'+
+                    other_side+'}')
+            elif w in urgent_tags:
+                formatted_ws.append(
+                    pre1+w+':}'+'%{U'+cdict['red']+'}%{+o}%{O'+
+                    spacing+'}%{T2}'+wor+suffix+'%{O'+other_side+'}')
+                # 7 is the fixed spacing afterward this symbol that needs to be removed
+            elif w in empty_workspaces:
+                wor = ''
+                formatted_ws.append(
+                    pre1+w+':}'+'%{O'+spacing+'}%{T2}'+wor+'%{T-}%{A}'+'%{O'+
+                    other_side+'}')
+            else:
+                formatted_ws.append(
+                    pre1+w+':}%{O'+spacing+'}%{T2}'+wor+'%{T-}%{A}'+
+                    '%{O'+other_side+'}')
+
+        return pre2+pre3+''.join(formatted_ws)+'%{A5}%{A4}'
+
+    def command(self, event):
+        if event.startswith('HERBST_WIDGETdesk'):
+            w = event.strip()[17:]
+            print(w)
+            subprocess.Popen(f'herbstclient use {w}', text=True, shell=True)
+        elif event in ['HERBST_WIDGETnext', 'HERBST_WIDGETprev']:
+            event = "-1" if event[-4:] == 'prev' else "+1"
+            subprocess.Popen(f'herbstclient use_index {event}',
+                             text=True, shell=True)
+
+
 class BspwmWorkspaces():
     def __init__(self):
         P = subprocess.Popen('bspc subscribe', text=True, shell=True,
@@ -571,7 +644,7 @@ class BspwmWorkspaces():
 
 class Volume():
     def __init__(self):
-        self.wait_time = 4
+        self.wait_time = 30
         self.updater = None
         self.icons = {0: '\uf466', 25: '\uf027', 100: '\uf028'}
 
@@ -595,9 +668,10 @@ class Volume():
 
 
 class TimeDate():
-    def __init__(self):
-        self.wait_time = 1
+    def __init__(self, timeformat=None):
+        self.wait_time = 60
         self.updater = None
+        self.timeformat = timeformat
 
     def output(self):
         clock_faces = {(0, 0): "🕛", (1, 0): "🕐", (2, 0): "🕑",
@@ -615,7 +689,7 @@ class TimeDate():
         current_face = now.hour if now.hour < 12 else now.hour-12
         # 0 if now.minute < 30 else 30)
         date_time = datetime.datetime.strftime(
-            now, '%{T2}%{F'+cdict['l_yellow']+'}\uf073 %{F-}%{T1}'+f'%{{O-{7.5*GDKSCALE}}}%a %Y-%m-%d %H:%M:%S')
+            now, '%{T2}%{F'+cdict['l_yellow']+'}\uf073 %{F-}%{T1}'+f'%{{O-{7.5*GDKSCALE}}}%a %d-%b,%y %H:%M')
         return date_time+'%{T2} '+clock_faces[current_face]+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'
 
     def command(self, event):
