@@ -216,7 +216,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
       "ti" 'org-toggle-inline-images
       "tl" 'org-toggle-link-display
       "tc" 'org-toggle-checkbox
-      "ge" 'org-edit-src-code)
+      "ge" 'org-edit-src-code
+      "ga" 'org-archive-subtree
+)
      (general-define-key
      :states '(normal visual insert emacs)
      :prefix "SPC"
@@ -276,6 +278,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (evil-global-set-key 'normal (kbd "<right>") 'right-char)
     (evil-global-set-key 'visual (kbd "<left>") 'left-char)
     (evil-global-set-key 'visual (kbd "<right>") 'right-char)
+    (setq evil-auto-balance-windows nil)
     )
   (evil-mode 1)
 #+END_SRC
@@ -363,11 +366,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
    (diminish 'flyspell-mode)
    (diminish 'which-key-mode))
 
-   (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-      (spaceline-spacemacs-theme))
+   ;; (use-package spaceline
+   ;;  :ensure t
+   ;;  :config
+   ;;  (require 'spaceline-config)
+   ;;    (spaceline-spacemacs-theme))
 
    (show-paren-mode)
 
@@ -387,14 +390,15 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+END_SRC
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
-   (use-package company-emoji
-   :ensure t
-   :after company
-   :hook (org-mode . company-emoji-init))
-   (use-package pretty-mode
-:ensure t
-:commands (global-pretty-mode)
-:config (global-pretty-mode t))
+     (use-package company-emoji
+	       :ensure t
+	       :after company
+	       :hook (org-mode . company-emoji-init))
+
+     (use-package pretty-mode
+	    :ensure t
+	    :commands (global-pretty-mode)
+	    :config (global-pretty-mode t))
    #+END_SRC
 ** Default font
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
@@ -416,7 +420,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     
 #+BEGIN_SRC emacs-lisp
     (use-package autothemer :ensure t)
-    
+
     ;; modus-vivendi-theme
   (setq themes-list '(gotham-theme zerodark-theme spacemacs-theme ample-theme doom-themes modus-vivendi-theme))
 
@@ -428,8 +432,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (dolist (theme themes-list)
     (unless (package-installed-p theme)
       (package-install theme)))
-      
-      (load-theme 'doom-dracula t)
+
+  (setq default-theme 'doom-dark+)
+  (load-theme default-theme t)
 #+END_SRC
 
 *** Workaround for theme not applied to emacsclient frames
@@ -438,8 +443,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	(add-hook 'after-make-frame-functions
 	    (lambda (frame)
 		(with-selected-frame frame
-		    (load-theme 'doom-dracula t))))
-	(load-theme 'doom-dracula t))
+		    (load-theme default-theme t))))
+	(load-theme default-theme t))
     #+END_SRC
 * ORG mode
 ** bidi support in org
@@ -447,7 +452,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (defun set-bidi-env ()
   "interactive"
   (setq bidi-paragraph-direction 'nil))
-    (add-hook 'org-mode-hook 'set-bidi-env)  
+  (add-hook 'org-mode-hook 'set-bidi-env)  
   
 (setq org-latex-package-alist '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
    #+END_SRC
@@ -549,42 +554,52 @@ Please do check the following /configs/ as this one was heavily inspired by them
 
 ** org-alert
 
-   #+begin_src emacs-lisp
-   (use-package org-alert 
-:ensure t
-:after org-mode
-:commands org-alert-enable
-:config (org-alert-enable)
-         (setq alert-default-style 'libnotify))
-   #+end_src
+#+BEGIN_SRC emacs-lisp
+ (use-package org-notifications
+ :ensure t
+ :commands org-notification-start
+ :config
+     (setq org-notifications-non-agenda-file
+	   '("~/Public/Syncthing Global/Notes/capture.org"
+	     "~/Public/Syncthing Global/Notes/TODO.org"))
+ )
+#+END_SRC
 
 * Programming Modes
 ** lsp
     please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
     even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
 #+BEGIN_SRC emacs-lisp
-  ;;    (use-package lsp-mode
-  ;;      :ensure t
-  ;;      :after python-mode
-  ;;      :config (setq lsp-enable-snippet t)
-  ;;      :hook (
-  ;; 	    (python-mode . lsp)
-  ;; 	    (lsp-mode . lsp-enable-which-key-integration))
-  ;;      :commands lsp)
-  ;;    (use-package lsp-ui
-  ;;    :ensure t
-  ;;      :config (setq lsp-ui-doc-delay 1)
-  ;;      :commands lsp-ui-mode)
-  ;;    (use-package lsp-ivy
-  ;;      :ensure t
-  ;;      :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-mode
+    :ensure t
+    :commands lsp
+    :after python-mode
+    :config
+    (setq lsp-enable-snippet t
+	  lsp-log-io nil
+	  gc-cons-threshold 200000000
+	  read-process-output-max (* 3072 3072)
+	  lsp-idle-delay 1
+	  lsp-enable-file-watchers nil
+	  company-idle-delay 0.2
+	  lsp-ui-imenu-auto-refresh t
+     )
+(add-hook 'python-mode-hook #'lsp-deferred)
+    :hook (
+      (lsp-mode . lsp-enable-which-key-integration))
+     )
 
-  ;;    (use-package lsp-treemacs
-  ;;      :ensure t
-  ;;      :commands lsp-treemacs-errors-list)
-     
-  ;; (setq gc-cons-threshold 200000000)
-  ;; (setq read-process-output-max (* 1024 1024))
+     (use-package lsp-ui
+     :ensure t
+       :config (setq lsp-ui-doc-delay 2)
+       :commands lsp-ui-mode)
+     (use-package lsp-ivy
+       :ensure t
+       :commands lsp-ivy-workspace-symbol)
+
+     (use-package lsp-treemacs
+       :ensure t
+       :commands lsp-treemacs-errors-list)
 #+END_SRC
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
@@ -623,11 +638,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
     ;; pyvenv pytest pyenv-mode py-isort
     (use-package pyvenv :ensure t)
     (use-package pyenv-mode :ensure t)
-    (use-package elpy
-    :ensure t
-    :commands elpy-enable
-    :init
-    (elpy-enable))
+    ;; (use-package elpy
+    ;; :ensure t
+    ;; :commands elpy-enable
+    ;; :init
+    ;; (elpy-enable))
     ;; :hook (python-mode . elpy-mode))
 
     ;; use flycheck instead of flymake
