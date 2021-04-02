@@ -71,7 +71,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (setq initial-scratch-message "Welcome to Yusuf's Emacs") ; print a default message in the empty scratch buffer opened at startup
 (menu-bar-mode -1)
-(toggle-scroll-bar -1)
+(scroll-bar-mode -1)
 (tool-bar-mode -1)
 (setq longlines-wrap-follows-window-size t)
 #+END_SRC
@@ -352,7 +352,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
 * Eye candy 
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
-
   (use-package diminish
    :ensure t
    :commands 'diminish
@@ -366,11 +365,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
    (diminish 'flyspell-mode)
    (diminish 'which-key-mode))
 
-   ;; (use-package spaceline
-   ;;  :ensure t
-   ;;  :config
-   ;;  (require 'spaceline-config)
-   ;;    (spaceline-spacemacs-theme))
+   (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+      (spaceline-spacemacs-theme))
 
    (show-paren-mode)
 
@@ -570,36 +569,36 @@ Please do check the following /configs/ as this one was heavily inspired by them
     please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
     even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :ensure t
-    :commands lsp
-    :after python-mode
-    :config
-    (setq lsp-enable-snippet t
-	  lsp-log-io nil
-	  gc-cons-threshold 200000000
-	  read-process-output-max (* 3072 3072)
-	  lsp-idle-delay 1
-	  lsp-enable-file-watchers nil
-	  company-idle-delay 0.2
-	  lsp-ui-imenu-auto-refresh t
-     )
-(add-hook 'python-mode-hook #'lsp-deferred)
-    :hook (
-      (lsp-mode . lsp-enable-which-key-integration))
-     )
+  ;; (use-package lsp-mode
+  ;;   :ensure t
+  ;;   :commands lsp
+  ;;   :after python-mode
+  ;;   :config
+  ;;   (setq lsp-enable-snippet t
+  ;; 	lsp-log-io nil
+  ;; 	gc-cons-threshold 200000000
+  ;; 	read-process-output-max (* 3072 3072)
+  ;; 	lsp-idle-delay 1
+  ;; 	lsp-enable-file-watchers nil
+  ;; 	company-idle-delay 0.2
+  ;; 	lsp-ui-imenu-auto-refresh t
+  ;;    )
+  ;;   :hook (
+  ;;     (lsp-mode . lsp-enable-which-key-integration))
+  ;;     (python-mode . lsp-deferred)
+  ;;    )
 
-     (use-package lsp-ui
-     :ensure t
-       :config (setq lsp-ui-doc-delay 2)
-       :commands lsp-ui-mode)
-     (use-package lsp-ivy
-       :ensure t
-       :commands lsp-ivy-workspace-symbol)
+  ;;    (use-package lsp-ui
+  ;;    :ensure t
+  ;;      :config (setq lsp-ui-doc-delay 2)
+  ;;      :commands lsp-ui-mode)
+  ;;    (use-package lsp-ivy
+  ;;      :ensure t
+  ;;      :commands lsp-ivy-workspace-symbol)
 
-     (use-package lsp-treemacs
-       :ensure t
-       :commands lsp-treemacs-errors-list)
+  ;;    (use-package lsp-treemacs
+  ;;      :ensure t
+  ;;      :commands lsp-treemacs-errors-list)
 #+END_SRC
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
@@ -638,12 +637,12 @@ Please do check the following /configs/ as this one was heavily inspired by them
     ;; pyvenv pytest pyenv-mode py-isort
     (use-package pyvenv :ensure t)
     (use-package pyenv-mode :ensure t)
-    ;; (use-package elpy
-    ;; :ensure t
-    ;; :commands elpy-enable
-    ;; :init
-    ;; (elpy-enable))
-    ;; :hook (python-mode . elpy-mode))
+    (use-package elpy
+    :ensure t
+    :commands elpy-enable
+    :init
+    (elpy-enable)
+    :hook (python-mode . elpy-mode))
 
     ;; use flycheck instead of flymake
     (when (load "flycheck" t t)
