@@ -74,6 +74,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (setq longlines-wrap-follows-window-size t)
+(setq idle-update-delay 1)
+(setq icomplete-compute-delay 1)
+(setq gc-cons-threshold 200000000)
+(setq read-process-output-max (* 3072 3072))
 #+END_SRC
 
 ** Highlight current line
@@ -576,8 +580,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
   ;;   :config
   ;;   (setq lsp-enable-snippet t
   ;; 	lsp-log-io nil
-  ;; 	gc-cons-threshold 200000000
-  ;; 	read-process-output-max (* 3072 3072)
   ;; 	lsp-idle-delay 1
   ;; 	lsp-enable-file-watchers nil
   ;; 	company-idle-delay 0.2
@@ -602,24 +604,27 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+END_SRC
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
-   (use-package flycheck 
-   :ensure t
-   :init (global-flycheck-mode))
-   
-   (use-package flycheck-pos-tip
-   :ensure t
-   :after flycheck
-   :hook (flycheck-mode . flycheck-pos-tip-mode))
-   
-   (use-package flycheck-status-emoji
-   :ensure t
-   :after flycheck
-   :hook (flycheck-mode . flycheck-status-emoji-mode))
-   
-   (use-package flycheck-color-mode-line
-   :ensure t
-   :after flycheck
-   :hook (flycheck-mode . flycheck-color-mode-line-mode))
+     (use-package flycheck 
+     :ensure t
+     :init (global-flycheck-mode)
+  :config (setq flycheck-idle-change-delay 1
+  flycheck-display-errors-delay 1
+  flycheck-idle-switch-buffer-delay 1))
+
+     (use-package flycheck-pos-tip
+     :ensure t
+     :after flycheck
+     :hook (flycheck-mode . flycheck-pos-tip-mode))
+
+     ;; (use-package flycheck-status-emoji
+     ;; :ensure t
+     ;; :after flycheck
+     ;; :hook (flycheck-mode . flycheck-status-emoji-mode))
+
+     (use-package flycheck-color-mode-line
+     :ensure t
+     :after flycheck
+     :hook (flycheck-mode . flycheck-color-mode-line-mode))
 #+END_SRC
 *** Spellchecking
     #+BEGIN_SRC emacs-lisp
@@ -704,15 +709,38 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Shell
     
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :ensure t
-  :init (company-mode)
-  :config (setq company-minimum-prefix-length 1
-  company-idle-delay 0.0) ;; default is 0.2
-  :hook (
-  (prog-mode . company-mode)
-  (org-mode . company-mode)))
-(use-package company-shell :ensure t)
+	  (use-package company
+	    :ensure t
+	    :init (company-mode)
+	    :config (setq
+	    company-minimum-prefix-length 2
+	    company-idle-delay 0.3
+	    company-echo-delay 0.1
+	    company-show-numbers t
+	    company-tooltip-limit 5
+	) ;; default is 0.2
+	    :hook (
+	    (prog-mode . company-mode)
+	    (org-mode . company-mode)))
+	  (use-package company-shell :ensure t)
+
+      (use-package company-quickhelp
+    :ensure t
+	:after company
+	:config
+	(setq company-quickhelp-idle-delay 0.1)
+	(company-quickhelp-mode 1))
+
+  (use-package company-jedi
+    :ensure t
+    :commands (company-jedi)
+    :after (company python-mode))
+
+  (use-package company-statistics
+    :ensure t
+    :after company
+    :config
+    (company-statistics-mode))
 #+END_SRC
 ** Version Control
     
