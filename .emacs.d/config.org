@@ -25,7 +25,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 
 (use-package which-key
   :ensure t
-  :init (which-key-mode))
+  :config (which-key-mode))
 
 (use-package async
   :ensure t
@@ -91,7 +91,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq display-line-numbers-type 'relative)
   ;; (global-display-line-numbers-mode)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  ;; count the number of lines to use for line number width
+  (setq-default display-line-numbers-width-start t)
 #+END_SRC
+
 ** Scroll conservatively 
 #+BEGIN_SRC emacs-lisp
 (setq scroll-conservatively 100)
@@ -222,6 +225,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
       "tc" 'org-toggle-checkbox
       "ge" 'org-edit-src-code
       "ga" 'org-archive-subtree
+      "gc" '(:ignore t :which-key "Clock Commands")
+      "gci" 'org-clock-in
+      "gco" 'org-clock-out
 )
      (general-define-key
      :states '(normal visual insert emacs)
@@ -393,30 +399,46 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+END_SRC
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
-     (use-package company-emoji
-	       :ensure t
-	       :after company
-	       :hook (org-mode . company-emoji-init))
+	  (use-package company-emoji
+		    :ensure t
+		    :after company
+		    :hook (org-mode . company-emoji-init))
 
-     (use-package pretty-mode
-	    :ensure t
-	    :commands (global-pretty-mode)
-	    :config (global-pretty-mode t))
+	  (use-package pretty-mode
+		 :ensure t
+		 :commands (global-pretty-mode)
+		 :config (global-pretty-mode t))
+
+	  (use-package all-the-icons)
+
+     (defun custom-modeline-mode-icon ()
+       (format " %s"
+	 (propertize icon
+		     'help-echo (format "Major-mode: `%s`" major-mode)
+		     'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
+
    #+END_SRC
-** Default font
+** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 (defun reapply-font (&optional frame)
-  (set-face-attribute 'default nil
-		      :family "Iosevka"
-		      :height 125
-		      :weight 'normal
-		      :width 'normal)
-  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono")))
-  
-  (reapply-font)
-  (add-hook 'after-make-frame-functions 'reapply-font)
+    (set-face-attribute 'default nil
+			:family "Iosevka"
+			:height 125
+			:weight 'normal
+			:width 'normal)
+  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+)
+
+  (use-package unicode-fonts
+     :ensure t
+     :config
+      (unicode-fonts-setup))
+
+    (reapply-font)
+    (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
 ** Themes
@@ -534,10 +556,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
 	    ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
 	  org-agenda-span 7
-	  org-agenda-files (quote ("~/Public/Syncthing Global/Notes/"))
 	  org-agenda-skip-scheduled-if-done t
 	  org-agenda-skip-deadline-if-done t
 	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+	  
+  (setq org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
 	  
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -573,34 +596,50 @@ Please do check the following /configs/ as this one was heavily inspired by them
     please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
     even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :ensure t
-  ;;   :commands lsp
-  ;;   :after python-mode
-  ;;   :config
-  ;;   (setq lsp-enable-snippet t
-  ;; 	lsp-log-io nil
-  ;; 	lsp-idle-delay 1
-  ;; 	lsp-enable-file-watchers nil
-  ;; 	company-idle-delay 0.2
-  ;; 	lsp-ui-imenu-auto-refresh t
-  ;;    )
-  ;;   :hook (
-  ;;     (lsp-mode . lsp-enable-which-key-integration))
-  ;;     (python-mode . lsp-deferred)
-  ;;    )
+      (use-package lsp-mode
+	:ensure t
+	:commands (lsp lsp-deferred)
+	:after python-mode
+	:config
+	(setq lsp-enable-snippet t
+	      lsp-keymap-prefix "C-c l"
+	      lsp-log-io nil
+	      lsp-idle-delay 500
+	      lsp-enable-file-watchers nil
+	 )
+	:hook (
+	  (lsp-mode . lsp-enable-which-key-integration)
+	  )
+	 )
 
-  ;;    (use-package lsp-ui
-  ;;    :ensure t
-  ;;      :config (setq lsp-ui-doc-delay 2)
-  ;;      :commands lsp-ui-mode)
-  ;;    (use-package lsp-ivy
-  ;;      :ensure t
-  ;;      :commands lsp-ivy-workspace-symbol)
+	 (use-package lsp-ui
+	 :ensure t
+	   :config (setq lsp-ui-doc-delay 2
+	   lsp-ui-imenu-auto-refresh t)
+	   :commands lsp-ui-mode)
+	 (use-package lsp-ivy
+	   :ensure t
+	   :commands lsp-ivy-workspace-symbol)
 
-  ;;    (use-package lsp-treemacs
-  ;;      :ensure t
-  ;;      :commands lsp-treemacs-errors-list)
+	 (use-package lsp-treemacs
+	   :ensure t
+	   :commands lsp-treemacs-errors-list)
+
+	  (use-package lsp-pyright
+      :ensure t
+      :config (with-eval-after-load "lsp-mode"
+	(add-to-list 'lsp-disabled-clients 'pyls)
+	(add-to-list 'lsp-disabled-clients 'jedi)
+  (add-to-list 'lsp-enabled-clients 'pyright)) 
+      :hook (python-mode . (lambda ()
+			      (require 'lsp-pyright)
+			      (lsp-deferred))))  ; or lsp-deferred 
+    ;; (use-package lsp-jedi
+    ;;   :ensure t
+    ;;   :config
+    ;;   (with-eval-after-load "lsp-mode"
+    ;;     (add-to-list 'lsp-disabled-clients 'pyls)
+    ;;     (add-to-list 'lsp-enabled-clients 'jedi)))
 #+END_SRC
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
@@ -626,15 +665,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
      :after flycheck
      :hook (flycheck-mode . flycheck-color-mode-line-mode))
 #+END_SRC
-*** Spellchecking
-    #+BEGIN_SRC emacs-lisp
-   (use-package flyspell-correct :ensure t)
-   (use-package flyspell-correct-ivy :ensure t)
-   
-   (use-package auto-dictionary
-   :ensure t
-   :hook (flyspell-mode . (lambda () (auto-dictionary-mode 1))))
-    #+END_SRC
 ** Python
 *** Elpy
    
@@ -642,17 +672,17 @@ Please do check the following /configs/ as this one was heavily inspired by them
     ;; pyvenv pytest pyenv-mode py-isort
     (use-package pyvenv :ensure t)
     (use-package pyenv-mode :ensure t)
-    (use-package elpy
-    :ensure t
-    :commands elpy-enable
-    :init
-    (elpy-enable)
-    :hook (python-mode . elpy-mode))
+   ;;  (use-package elpy
+   ;;  :ensure t
+   ;;  :commands elpy-enable
+   ;;  :init
+   ;;  (elpy-enable)
+   ;;  :hook (python-mode . elpy-mode))
 
-    ;; use flycheck instead of flymake
-    (when (load "flycheck" t t)
-   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-   (add-hook 'elpy-mode-hook 'flycheck-mode))
+   ;;  ;; use flycheck instead of flymake
+   ;;  (when (load "flycheck" t t)
+   ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+   ;; (add-hook 'elpy-mode-hook 'flycheck-mode))
     ;; (use-package flymake :ensure t) ;; What is the difference?.
 
     ;; (use-package elpy
@@ -709,6 +739,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Shell
     
 #+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD
 	  (use-package company
 	    :ensure t
 	    :init (company-mode)
@@ -741,6 +772,17 @@ Please do check the following /configs/ as this one was heavily inspired by them
     :after company
     :config
     (company-statistics-mode))
+=======
+(use-package company
+  :ensure t
+  :init (company-mode)
+  :config (setq company-minimum-prefix-length 2
+  company-idle-delay 0.2) ;; default is 0.2
+  :hook (
+  (prog-mode . company-mode)
+  (org-mode . company-mode)))
+(use-package company-shell :ensure t)
+>>>>>>> 1ecbb7ca539b5e53e0a404dd6d244090f56a61f8
 #+END_SRC
 ** Version Control
     
