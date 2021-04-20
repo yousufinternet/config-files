@@ -74,6 +74,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (setq longlines-wrap-follows-window-size t)
+(setq idle-update-delay 1)
+(setq icomplete-compute-delay 1)
+(setq gc-cons-threshold 200000000)
+(setq read-process-output-max (* 3072 3072))
 #+END_SRC
 
 ** Highlight current line
@@ -359,67 +363,85 @@ Please do check the following /configs/ as this one was heavily inspired by them
 * Eye candy 
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
+
+  (use-package spaceline
+   :ensure t
+   :config
+   (require 'spaceline-config)
+     (spaceline-spacemacs-theme))
+
+  (show-paren-mode)
+
+  (use-package beacon
+       :ensure t
+       :config
+	   (beacon-mode 1))
+  (use-package rainbow-mode
+     :ensure t
+     :init
+       (add-hook 'prog-mode-hook 'rainbow-mode))
+
+  (use-package rainbow-delimiters
+     :ensure t
+     :init
+       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
   (use-package diminish
    :ensure t
    :commands 'diminish
    :config
    (diminish 'evil-org-mode)
    (diminish 'smartparens-mode)
+   (diminish 'rainbow-mode)
    (diminish 'beacon-mode)
    (diminish 'evil-commentary-mode)
    (diminish 'evil-snipe-local-mode)
    (diminish 'undo-tree-mode)
    (diminish 'flyspell-mode)
    (diminish 'which-key-mode))
-
-   (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-      (spaceline-spacemacs-theme))
-
-   (show-paren-mode)
-
-   (use-package beacon
-	:ensure t
-	:config
-	    (beacon-mode 1))
-   (use-package rainbow-mode
-      :ensure t
-      :init
-	(add-hook 'prog-mode-hook 'rainbow-mode))
-
-   (use-package rainbow-delimiters
-      :ensure t
-      :init
-	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
-     (use-package company-emoji
-	       :ensure t
-	       :after company
-	       :hook (org-mode . company-emoji-init))
+	  (use-package company-emoji
+		    :ensure t
+		    :after company
+		    :hook (org-mode . company-emoji-init))
 
-     (use-package pretty-mode
-	    :ensure t
-	    :commands (global-pretty-mode)
-	    :config (global-pretty-mode t))
+	  (use-package pretty-mode
+		 :ensure t
+		 :commands (global-pretty-mode)
+		 :config (global-pretty-mode t))
+
+	  (use-package all-the-icons)
+
+     (defun custom-modeline-mode-icon ()
+       (format " %s"
+	 (propertize icon
+		     'help-echo (format "Major-mode: `%s`" major-mode)
+		     'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
+
    #+END_SRC
-** Default font
+** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 (defun reapply-font (&optional frame)
-  (set-face-attribute 'default nil
-		      :family "Iosevka"
-		      :height 125
-		      :weight 'normal
-		      :width 'normal)
-  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono")))
-  
-  (reapply-font)
-  (add-hook 'after-make-frame-functions 'reapply-font)
+    (set-face-attribute 'default nil
+			:family "Iosevka"
+			:height 125
+			:weight 'normal
+			:width 'normal)
+  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+)
+
+  (use-package unicode-fonts
+     :ensure t
+     :config
+      (unicode-fonts-setup))
+
+    (reapply-font)
+    (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
 ** Themes
@@ -577,81 +599,75 @@ Please do check the following /configs/ as this one was heavily inspired by them
     please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
     even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
 #+BEGIN_SRC emacs-lisp
-    (use-package lsp-mode
+      (use-package lsp-mode
+	:ensure t
+	:commands (lsp lsp-deferred)
+	:after python-mode
+	:config
+	(setq lsp-enable-snippet t
+	      lsp-keymap-prefix "C-c l"
+	      lsp-log-io nil
+	      lsp-idle-delay 500
+	      lsp-enable-file-watchers nil
+	 )
+	:hook (
+	  (lsp-mode . lsp-enable-which-key-integration)
+	  )
+	 )
+
+	 (use-package lsp-ui
+	 :ensure t
+	   :config (setq lsp-ui-doc-delay 2
+	   lsp-ui-imenu-auto-refresh t)
+	   :commands lsp-ui-mode)
+	 (use-package lsp-ivy
+	   :ensure t
+	   :commands lsp-ivy-workspace-symbol)
+
+	 (use-package lsp-treemacs
+	   :ensure t
+	   :commands lsp-treemacs-errors-list)
+
+	  (use-package lsp-pyright
       :ensure t
-      :commands (lsp lsp-deferred)
-      :after python-mode
-      :config
-      (setq lsp-enable-snippet t
-	    lsp-keymap-prefix "C-c l"
-	    lsp-log-io nil
-	    lsp-idle-delay 500
-	    lsp-enable-file-watchers nil
-       )
-      :hook (
-	(lsp-mode . lsp-enable-which-key-integration)
-	)
-       )
-
-       (use-package lsp-ui
-       :ensure t
-	 :config (setq lsp-ui-doc-delay 2
-	 lsp-ui-imenu-auto-refresh t)
-	 :commands lsp-ui-mode)
-       (use-package lsp-ivy
-	 :ensure t
-	 :commands lsp-ivy-workspace-symbol)
-
-       (use-package lsp-treemacs
-	 :ensure t
-	 :commands lsp-treemacs-errors-list)
-
-	(use-package lsp-pyright
-    :ensure t
-    :config (with-eval-after-load "lsp-mode"
-      (add-to-list 'lsp-disabled-clients 'pyls)
-      (add-to-list 'lsp-disabled-clients 'jedi)
-(add-to-list 'lsp-enabled-clients 'pyright)) 
-    :hook (python-mode . (lambda ()
-			    (require 'lsp-pyright)
-			    (lsp-deferred))))  ; or lsp-deferred 
-  (use-package lsp-jedi
-    :ensure t
-    :config
-    (with-eval-after-load "lsp-mode"
-      (add-to-list 'lsp-disabled-clients 'pyls)
-      (add-to-list 'lsp-enabled-clients 'jedi)))
+      :config (with-eval-after-load "lsp-mode"
+	(add-to-list 'lsp-disabled-clients 'pyls)
+	(add-to-list 'lsp-disabled-clients 'jedi)
+  (add-to-list 'lsp-enabled-clients 'pyright)) 
+      :hook (python-mode . (lambda ()
+			      (require 'lsp-pyright)
+			      (lsp-deferred))))  ; or lsp-deferred 
+    ;; (use-package lsp-jedi
+    ;;   :ensure t
+    ;;   :config
+    ;;   (with-eval-after-load "lsp-mode"
+    ;;     (add-to-list 'lsp-disabled-clients 'pyls)
+    ;;     (add-to-list 'lsp-enabled-clients 'jedi)))
 #+END_SRC
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package flycheck 
-  ;; :ensure t
-  ;; :init (global-flycheck-mode))
+     (use-package flycheck 
+     :ensure t
+     :init (global-flycheck-mode)
+  :config (setq flycheck-idle-change-delay 1
+  flycheck-display-errors-delay 1
+  flycheck-idle-switch-buffer-delay 1))
 
-  ;; (use-package flycheck-pos-tip
-  ;; :ensure t
-  ;; :after flycheck
-  ;; :hook (flycheck-mode . flycheck-pos-tip-mode))
+     (use-package flycheck-pos-tip
+     :ensure t
+     :after flycheck
+     :hook (flycheck-mode . flycheck-pos-tip-mode))
 
-  ;; (use-package flycheck-status-emoji
-  ;; :ensure t
-  ;; :after flycheck
-  ;; :hook (flycheck-mode . flycheck-status-emoji-mode))
+     ;; (use-package flycheck-status-emoji
+     ;; :ensure t
+     ;; :after flycheck
+     ;; :hook (flycheck-mode . flycheck-status-emoji-mode))
 
-  ;; (use-package flycheck-color-mode-line
-  ;; :ensure t
-  ;; :after flycheck
-  ;; :hook (flycheck-mode . flycheck-color-mode-line-mode))
+     (use-package flycheck-color-mode-line
+     :ensure t
+     :after flycheck
+     :hook (flycheck-mode . flycheck-color-mode-line-mode))
 #+END_SRC
-*** Spellchecking
-    #+BEGIN_SRC emacs-lisp
-   (use-package flyspell-correct :ensure t)
-   (use-package flyspell-correct-ivy :ensure t)
-   
-   (use-package auto-dictionary
-   :ensure t
-   :hook (flyspell-mode . (lambda () (auto-dictionary-mode 1))))
-    #+END_SRC
 ** Python
 *** Elpy
    
@@ -726,6 +742,40 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Shell
     
 #+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD
+	  (use-package company
+	    :ensure t
+	    :init (company-mode)
+	    :config (setq
+	    company-minimum-prefix-length 2
+	    company-idle-delay 0.3
+	    company-echo-delay 0.1
+	    company-show-numbers t
+	    company-tooltip-limit 5
+	) ;; default is 0.2
+	    :hook (
+	    (prog-mode . company-mode)
+	    (org-mode . company-mode)))
+	  (use-package company-shell :ensure t)
+
+      (use-package company-quickhelp
+    :ensure t
+	:after company
+	:config
+	(setq company-quickhelp-idle-delay 0.1)
+	(company-quickhelp-mode 1))
+
+  (use-package company-jedi
+    :ensure t
+    :commands (company-jedi)
+    :after (company python-mode))
+
+  (use-package company-statistics
+    :ensure t
+    :after company
+    :config
+    (company-statistics-mode))
+=======
 (use-package company
   :ensure t
   :init (company-mode)
@@ -735,6 +785,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (prog-mode . company-mode)
   (org-mode . company-mode)))
 (use-package company-shell :ensure t)
+>>>>>>> 1ecbb7ca539b5e53e0a404dd6d244090f56a61f8
 #+END_SRC
 ** Version Control
     
