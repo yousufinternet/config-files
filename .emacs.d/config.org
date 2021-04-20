@@ -362,40 +362,42 @@ Please do check the following /configs/ as this one was heavily inspired by them
 * Eye candy 
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
+
+  (use-package spaceline
+   :ensure t
+   :config
+   (require 'spaceline-config)
+     (spaceline-spacemacs-theme))
+
+  (show-paren-mode)
+
+  (use-package beacon
+       :ensure t
+       :config
+	   (beacon-mode 1))
+  (use-package rainbow-mode
+     :ensure t
+     :init
+       (add-hook 'prog-mode-hook 'rainbow-mode))
+
+  (use-package rainbow-delimiters
+     :ensure t
+     :init
+       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
   (use-package diminish
    :ensure t
    :commands 'diminish
    :config
    (diminish 'evil-org-mode)
    (diminish 'smartparens-mode)
+   (diminish 'rainbow-mode)
    (diminish 'beacon-mode)
    (diminish 'evil-commentary-mode)
    (diminish 'evil-snipe-local-mode)
    (diminish 'undo-tree-mode)
    (diminish 'flyspell-mode)
    (diminish 'which-key-mode))
-
-   (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-      (spaceline-spacemacs-theme))
-
-   (show-paren-mode)
-
-   (use-package beacon
-	:ensure t
-	:config
-	    (beacon-mode 1))
-   (use-package rainbow-mode
-      :ensure t
-      :init
-	(add-hook 'prog-mode-hook 'rainbow-mode))
-
-   (use-package rainbow-delimiters
-      :ensure t
-      :init
-	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
