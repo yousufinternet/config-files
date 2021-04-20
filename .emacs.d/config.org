@@ -171,6 +171,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
      "l" '(:ignore t :which-key "LSP")
      "li" 'lsp-ui-imenu
      "ld" 'lsp-ui-peek-find-definitions
+     "lr" 'lsp-ui-peek-find-references
      "f" '(:ignore t :which-key "Files")
      "ff" 'counsel-find-file
      "fr" 'counsel-recentf
@@ -239,7 +240,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
      :states '(normal visual insert emacs)
      :prefix "SPC"
      :non-normal-prefix "C-SPC"
-      :keymaps 'elpy-mode-map
+      :keymaps 'python-mode-map
       "pd" 'elpy-doc
       "pj" 'elpy-goto-definition
       "pg" 'elpy-goto-definition-other-window
