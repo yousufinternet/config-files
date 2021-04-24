@@ -364,41 +364,40 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
 
-  (use-package spaceline
-   :ensure t
-   :config
-   (require 'spaceline-config)
-     (spaceline-spacemacs-theme))
+  (use-package doom-modeline
+    :ensure t
+    :custom (setq doom-modeline-height 15)
+    :init (doom-modeline-mode 1))
+    
+    (show-paren-mode)
 
-  (show-paren-mode)
-
-  (use-package beacon
+    (use-package beacon
+	 :ensure t
+	 :config
+	     (beacon-mode 1))
+    (use-package rainbow-mode
        :ensure t
-       :config
-	   (beacon-mode 1))
-  (use-package rainbow-mode
-     :ensure t
-     :init
-       (add-hook 'prog-mode-hook 'rainbow-mode))
+       :init
+	 (add-hook 'prog-mode-hook 'rainbow-mode))
 
-  (use-package rainbow-delimiters
-     :ensure t
-     :init
-       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    (use-package rainbow-delimiters
+       :ensure t
+       :init
+	 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-  (use-package diminish
-   :ensure t
-   :commands 'diminish
-   :config
-   (diminish 'evil-org-mode)
-   (diminish 'smartparens-mode)
-   (diminish 'rainbow-mode)
-   (diminish 'beacon-mode)
-   (diminish 'evil-commentary-mode)
-   (diminish 'evil-snipe-local-mode)
-   (diminish 'undo-tree-mode)
-   (diminish 'flyspell-mode)
-   (diminish 'which-key-mode))
+    (use-package diminish
+     :ensure t
+     :commands 'diminish
+     :config
+     (diminish 'evil-org-mode)
+     (diminish 'smartparens-mode)
+     (diminish 'rainbow-mode)
+     (diminish 'beacon-mode)
+     (diminish 'evil-commentary-mode)
+     (diminish 'evil-snipe-local-mode)
+     (diminish 'undo-tree-mode)
+     (diminish 'flyspell-mode)
+     (diminish 'which-key-mode))
 #+END_SRC
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
@@ -412,36 +411,36 @@ Please do check the following /configs/ as this one was heavily inspired by them
 		 :commands (global-pretty-mode)
 		 :config (global-pretty-mode t))
 
-	  (use-package all-the-icons)
+     ;;      (use-package all-the-icons)
 
-     (defun custom-modeline-mode-icon ()
-       (format " %s"
-	 (propertize icon
-		     'help-echo (format "Major-mode: `%s`" major-mode)
-		     'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
+     ;; (defun custom-modeline-mode-icon ()
+     ;;   (format " %s"
+     ;;     (propertize icon
+     ;; 		'help-echo (format "Major-mode: `%s`" major-mode)
+     ;; 		'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
 
    #+END_SRC
 ** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
-  (setq text-scale-mode-step 1.05)
-(defun reapply-font (&optional frame)
-    (set-face-attribute 'default nil
-			:family "Iosevka"
-			:height 125
-			:weight 'normal
-			:width 'normal)
-  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
-  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
-)
+    (setq text-scale-mode-step 1.05)
+  (defun reapply-font (&optional frame)
+      (set-face-attribute 'default nil
+			  :family "Iosevka"
+			  :height 135
+			  :weight 'normal
+			  :width 'normal)
+    (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+    (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+  )
 
-  (use-package unicode-fonts
-     :ensure t
-     :config
-      (unicode-fonts-setup))
+    (use-package unicode-fonts
+       :ensure t
+       :config
+	(unicode-fonts-setup))
 
-    (reapply-font)
-    (add-hook 'after-make-frame-functions 'reapply-font)
+      (reapply-font)
+      (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
 ** Themes
@@ -461,7 +460,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'doom-dark+)
+  (setq default-theme 'doom-dracula)
   (load-theme default-theme t)
 #+END_SRC
 
@@ -599,44 +598,45 @@ Please do check the following /configs/ as this one was heavily inspired by them
     please refer to [[https://emacs-lsp.github.io/lsp-mode/page/performance/][lsp-mode performance]] page for some of the below settings. 
     even after following the guide on the above link, pyls still have very high cpu usage and becomes unresponsive sometimes so regular python packages will be used
 #+BEGIN_SRC emacs-lisp
-      (use-package lsp-mode
-	:ensure t
-	:commands (lsp lsp-deferred)
-	:after python-mode
-	:config
-	(setq lsp-enable-snippet t
-	      lsp-keymap-prefix "C-c l"
-	      lsp-log-io nil
-	      lsp-idle-delay 500
-	      lsp-enable-file-watchers nil
-	 )
-	:hook (
-	  (lsp-mode . lsp-enable-which-key-integration)
-	  )
-	 )
+  ;;     (use-package lsp-mode
+  ;;       :ensure t
+  ;;       :commands (lsp lsp-deferred)
+  ;;       :after python-mode
+  ;;       :config
+  ;;       (setq lsp-enable-snippet t
+  ;; 	    lsp-keymap-prefix "C-c l"
+  ;; 	    lsp-log-io nil
+  ;; 	    lsp-idle-delay 500
+  ;; 	    lsp-enable-file-watchers nil
+  ;;        )
+  ;;       :hook (
+  ;; 	(lsp-mode . lsp-enable-which-key-integration)
+  ;; 	)
+  ;;        )
 
-	 (use-package lsp-ui
-	 :ensure t
-	   :config (setq lsp-ui-doc-delay 2
-	   lsp-ui-imenu-auto-refresh t)
-	   :commands lsp-ui-mode)
-	 (use-package lsp-ivy
-	   :ensure t
-	   :commands lsp-ivy-workspace-symbol)
+  ;;        (use-package lsp-ui
+  ;;        :ensure t
+  ;; 	 :config (setq lsp-ui-doc-delay 2
+  ;; 	 lsp-ui-imenu-auto-refresh t
+  ;; 	 lsp-ui-doc-show-with-mouse nil)
+  ;; 	 :commands lsp-ui-mode)
+  ;;        (use-package lsp-ivy
+  ;; 	 :ensure t
+  ;; 	 :commands lsp-ivy-workspace-symbol)
 
-	 (use-package lsp-treemacs
-	   :ensure t
-	   :commands lsp-treemacs-errors-list)
+  ;;        (use-package lsp-treemacs
+  ;; 	 :ensure t
+  ;; 	 :commands lsp-treemacs-errors-list)
 
-	  (use-package lsp-pyright
-      :ensure t
-      :config (with-eval-after-load "lsp-mode"
-	(add-to-list 'lsp-disabled-clients 'pyls)
-	(add-to-list 'lsp-disabled-clients 'jedi)
-  (add-to-list 'lsp-enabled-clients 'pyright)) 
-      :hook (python-mode . (lambda ()
-			      (require 'lsp-pyright)
-			      (lsp-deferred))))  ; or lsp-deferred 
+  ;; 	(use-package lsp-pyright
+  ;;     :ensure t
+  ;;     :config (with-eval-after-load "lsp-mode"
+  ;;       (add-to-list 'lsp-disabled-clients 'pyls)
+  ;;       (add-to-list 'lsp-disabled-clients 'jedi)
+  ;; (add-to-list 'lsp-enabled-clients 'pyright)) 
+  ;;     :hook (python-mode . (lambda ()
+  ;; 			    (require 'lsp-pyright)
+  ;; 			    (lsp-deferred))))  ; or lsp-deferred 
     ;; (use-package lsp-jedi
     ;;   :ensure t
     ;;   :config
@@ -644,6 +644,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
     ;;     (add-to-list 'lsp-disabled-clients 'pyls)
     ;;     (add-to-list 'lsp-enabled-clients 'jedi)))
 #+END_SRC
+** eglot
+   #+begin_src emacs-lisp
+   (use-package eglot :ensure t :hook (python-mode . eglot-ensure))
+   #+end_src
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
      (use-package flycheck 
@@ -795,6 +799,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
+  :after eglot
   :ensure t
   :config
   (use-package yasnippet-snippets
@@ -816,6 +821,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
          ("\\.css\\'"   . web-mode)
+         ("\\.qss\\'"   . web-mode)
          ("\\.jsx?\\'"  . web-mode)
          ("\\.tsx?\\'"  . web-mode)
          ("\\.json\\'"  . web-mode))
