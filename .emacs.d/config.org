@@ -6,9 +6,12 @@ Please do check the following /configs/ as this one was heavily inspired by them
  - https://github.com/daedreth/UncleDavesEmacs/blob/master/config.org
  - https://protesilaos.com/dotemacs/
  - https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
+ - https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org
 * Backbones
 ** Main Packages
 #+BEGIN_SRC emacs-lisp
+(use-package ivy :ensure t :config (ivy-mode 1))
+
 (use-package avy
  :ensure t
  :init
@@ -18,7 +21,22 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	    (avy-goto-word-0
 	    ivy-switch-buffers))
 
-(use-package counsel :ensure t)
+(use-package ivy-rich
+  :after ivy
+  :init
+  (ivy-rich-mode 1))
+
+(use-package counsel :ensure t :config (counsel-mode 1))
+
+(use-package ivy-prescient
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  ;; Uncomment the following line to have sorting remembered across sessions!
+  (prescient-persist-mode 1)
+  (ivy-prescient-mode 1))
+  
 (use-package swiper
  :ensure t
  :bind ("C-s" . swiper))
@@ -73,12 +91,26 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
+(set-fringe-mode 10)        ; Give some breathing room
+(column-number-mode)
 (setq longlines-wrap-follows-window-size t)
 (setq idle-update-delay 1)
 (setq icomplete-compute-delay 1)
 (setq gc-cons-threshold 200000000)
 (setq read-process-output-max (* 3072 3072))
 #+END_SRC
+** Display Startup time
+   #+begin_src emacs-lisp
+   (defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                     (time-subtract after-init-time before-init-time)))
+           gcs-done))
+	   
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
+   #+end_src
 
 ** Highlight current line
     #+BEGIN_SRC emacs-lisp
@@ -244,13 +276,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
      :states '(normal visual insert emacs)
      :prefix "SPC"
      :non-normal-prefix "C-SPC"
-      :keymaps 'python-mode-map
-      "pd" 'elpy-doc
-      "pj" 'elpy-goto-definition
-      "pg" 'elpy-goto-definition-other-window
-      "ps" 'elpy-shell-switch-to-shell
-      "pf" 'elpy-format-code
-      "pe" 'elpy-shell-send-statement
+      :keymaps 'prog-mode-map
+      "pd" 'eldoc
+      "pj" 'xref-find-definitions
+      "pg" 'xref-find-definitions-other-window
+      "pr" 'xref-find-references
       "pii" 'iedit-mode
       "piH" 'iedit-restrict-function
       "pin" 'iedit-expand-down-to-occurrence
@@ -272,15 +302,18 @@ Please do check the following /configs/ as this one was heavily inspired by them
 - evil-indent-plus
 *** main config
 #+BEGIN_SRC emacs-lisp
-  (setq evil-want-keybinding nil)
-  (setq-default evil-want-C-u-scroll t)
   (use-package evil
     :ensure t
     :init
+    (setq evil-want-keybinding nil)
     (global-undo-tree-mode)
+    (setq evil-want-integration t)
+    (setq-default evil-want-C-u-scroll t)
+    (setq-default evil-want-C-i-jump t)
     :custom
     (evil-undo-system 'undo-tree)
     :config
+    (evil-mode 1)
     (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
     (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
     (evil-global-set-key 'normal (kbd "C-w <up>") 'evil-window-up)
@@ -289,9 +322,14 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (evil-global-set-key 'normal (kbd "<right>") 'right-char)
     (evil-global-set-key 'visual (kbd "<left>") 'left-char)
     (evil-global-set-key 'visual (kbd "<right>") 'right-char)
+    
+;; allow movement across visual lines
+    (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+    (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+    (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+    (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
     (setq evil-auto-balance-windows nil)
     )
-  (evil-mode 1)
 #+END_SRC
 *** Escape key acts like C-g
 #+BEGIN_SRC emacs-lisp
@@ -301,36 +339,33 @@ Please do check the following /configs/ as this one was heavily inspired by them
   ;; the following is recommended
   ;; (define-key key-translation-map (kbd "C-<escape>") (kbd "ESC")) 
 #+END_SRC
-*** Movement across visual lines
-#+BEGIN_SRC emacs-lisp
-  (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-  (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-  (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-  (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-
-  ;; (setq-default evil-cross-lines nil)
-#+END_SRC
 *** Additional Packages
 #+BEGIN_SRC emacs-lisp
   (use-package evil-surround
     :ensure t
     :config
     (global-evil-surround-mode 1))
-  ;; (use-package evil-magit :ensure t)
+    
   (use-package evil-org 
   :ensure t
   :hook (org-mode . evil-org-mode)
   :commands 'evil-org-mode)
-  (use-package evil-numbers :ensure t)
+  
+  (use-package evil-numbers :ensure t :config 
   (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
-  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+  
   (use-package evil-matchit :ensure t)
+  
   (use-package evil-escape :ensure t)
+  
   (use-package evil-easymotion :ensure t)
+  
   (use-package evil-collection
   :ensure t
   :after evil
   :init (evil-collection-init))
+  
   (use-package evil-snipe
   :ensure t
   :init 
@@ -420,16 +455,18 @@ Please do check the following /configs/ as this one was heavily inspired by them
      ;; 		'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
 
    #+END_SRC
+   
 ** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
     (setq text-scale-mode-step 1.05)
   (defun reapply-font (&optional frame)
       (set-face-attribute 'default nil
-			  :family "Iosevka"
+			  :family "Fira Code"
 			  :height 135
 			  :weight 'normal
 			  :width 'normal)
+      (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
     (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
     (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
   )
@@ -438,7 +475,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
        :ensure t
        :config
 	(unicode-fonts-setup))
-
+	
       (reapply-font)
       (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
@@ -544,6 +581,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   ;; :hook (org-mode . org-bullets-mode))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
   
   (setq org-imenu-depth 3)
   
@@ -592,6 +630,104 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	     "~/Public/Syncthing Global/Notes/TODO.org"))
  )
 #+END_SRC
+
+* Dired
+
+Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
+
+** Key Bindings
+
+*** Navigation
+
+*Emacs* / *Evil*
+- =n= / =j= - next line
+- =p= / =k= - previous line
+- =j= / =J= - jump to file in buffer
+- =RET= - select file or directory
+- =^= - go to parent directory
+- =S-RET= / =g O= - Open file in "other" window
+- =M-RET= - Show file in other window without focusing (previewing files)
+- =g o= (=dired-view-file=) - Open file but in a "preview" mode, close with =q=
+- =g= / =g r= Refresh the buffer with =revert-buffer= after changing configuration (and after filesystem changes!)
+
+*** Marking files
+
+- =m= - Marks a file
+- =u= - Unmarks a file
+- =U= - Unmarks all files in buffer
+- =* t= / =t= - Inverts marked files in buffer
+- =% m= - Mark files in buffer using regular expression
+- =*= - Lots of other auto-marking functions
+- =k= / =K= - "Kill" marked items (refresh buffer with =g= / =g r= to get them back)
+- Many operations can be done on a single file if there are no active marks!
+
+*** Copying and Renaming files
+
+- =C= - Copy marked files (or if no files are marked, the current file)
+- Copying single and multiple files
+- =U= - Unmark all files in buffer
+- =R= - Rename marked files, renaming multiple is a move!
+- =% R= - Rename based on regular expression: =^test= , =old-\&=
+
+*Power command*: =C-x C-q= (=dired-toggle-read-only=) - Makes all file names in the buffer editable directly to rename them!  Press =Z Z= to confirm renaming or =Z Q= to abort.
+
+*** Deleting files
+
+- =D= - Delete marked file
+- =d= - Mark file for deletion
+- =x= - Execute deletion for marks
+- =delete-by-moving-to-trash= - Move to trash instead of deleting permanently
+
+*** Creating and extracting archives
+
+- =Z= - Compress or uncompress a file or folder to (=.tar.gz=)
+- =c= - Compress selection to a specific file
+- =dired-compress-files-alist= - Bind compression commands to file extension
+
+*** Other common operations
+
+- =T= - Touch (change timestamp)
+- =M= - Change file mode
+- =O= - Change file owner
+- =G= - Change file group
+- =S= - Create a symbolic link to this file
+- =L= - Load an Emacs Lisp file into Emacs
+
+** Configuration
+
+#+begin_src emacs-lisp
+
+  (use-package dired
+    :ensure nil
+    :commands (dired dired-jump)
+    :bind (("C-x C-j" . dired-jump))
+    :custom ((dired-listing-switches "-agho --group-directories-first"))
+    :config
+    (evil-collection-define-key 'normal 'dired-mode-map
+      "h" 'dired-single-up-directory
+      "l" 'dired-single-buffer))
+
+  (use-package dired-single
+    :commands (dired dired-jump))
+
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
+
+  (use-package dired-open
+    :commands (dired dired-jump)
+    :config
+    ;; Doesn't work as expected!
+    ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
+    (setq dired-open-extensions '(("png" . "feh")
+                                  ("mkv" . "mpv"))))
+
+  (use-package dired-hide-dotfiles
+    :hook (dired-mode . dired-hide-dotfiles-mode)
+    :config
+    (evil-collection-define-key 'normal 'dired-mode-map
+      "H" 'dired-hide-dotfiles-mode))
+
+#+end_src
 
 * Programming Modes
 ** lsp
@@ -746,50 +882,41 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Shell
     
 #+BEGIN_SRC emacs-lisp
-<<<<<<< HEAD
-	  (use-package company
-	    :ensure t
-	    :init (company-mode)
-	    :config (setq
-	    company-minimum-prefix-length 2
-	    company-idle-delay 0.3
-	    company-echo-delay 0.1
-	    company-show-numbers t
-	    company-tooltip-limit 5
-	) ;; default is 0.2
-	    :hook (
-	    (prog-mode . company-mode)
-	    (org-mode . company-mode)))
-	  (use-package company-shell :ensure t)
+	    (use-package company
+	      :ensure t
+	      :init (company-mode)
+	      :config (setq
+	      company-minimum-prefix-length 2
+	      company-idle-delay 0.3
+	      company-echo-delay 0.1
+	      company-show-numbers t
+	      company-tooltip-limit 5
+	  ) ;; default is 0.2
+	      :hook (
+	      (prog-mode . company-mode)
+	      (org-mode . company-mode)))
+	    (use-package company-shell :ensure t)
 
-      (use-package company-quickhelp
-    :ensure t
-	:after company
-	:config
-	(setq company-quickhelp-idle-delay 0.1)
-	(company-quickhelp-mode 1))
+	(use-package company-quickhelp
+      :ensure t
+	  :after company
+	  :config
+	  (setq company-quickhelp-idle-delay 0.1)
+	  (company-quickhelp-mode 1))
 
-  (use-package company-jedi
-    :ensure t
-    :commands (company-jedi)
-    :after (company python-mode))
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+	  
+    ;; (use-package company-jedi
+    ;;   :ensure t
+    ;;   :commands (company-jedi)
+    ;;   :after (company python-mode))
 
-  (use-package company-statistics
-    :ensure t
-    :after company
-    :config
-    (company-statistics-mode))
-=======
-(use-package company
-  :ensure t
-  :init (company-mode)
-  :config (setq company-minimum-prefix-length 2
-  company-idle-delay 0.2) ;; default is 0.2
-  :hook (
-  (prog-mode . company-mode)
-  (org-mode . company-mode)))
-(use-package company-shell :ensure t)
->>>>>>> 1ecbb7ca539b5e53e0a404dd6d244090f56a61f8
+    (use-package company-statistics
+      :ensure t
+      :after company
+      :config
+      (company-statistics-mode))
 #+END_SRC
 ** Version Control
     

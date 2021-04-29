@@ -14,9 +14,9 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1b1d1e" "#505050"))
  '(objed-cursor-color "#d02b61")
  '(org-agenda-files
-   '("~/Public/Syncthing Global/Notes/109 SBT.org" "~/Public/Syncthing Global/Notes/255_drilling_problems.org" "~/Public/Syncthing Global/Notes/Capture ideas.org" "~/Public/Syncthing Global/Notes/Dhiaa Meeting.org" "~/Public/Syncthing Global/Notes/Download_Queue.org" "~/Public/Syncthing Global/Notes/Getting Started with Orgzly.org" "~/Public/Syncthing Global/Notes/TODO.org" "~/Public/Syncthing Global/Notes/Weekly meetings.org" "~/Public/Syncthing Global/Notes/call dhiaa.org" "~/Public/Syncthing Global/Notes/capture.org" "~/Public/Syncthing Global/Notes/cblwells.org" "~/Public/Syncthing Global/Notes/meeting.org" "~/Public/Syncthing Global/Notes/notes.org" "~/Public/Syncthing Global/Notes/scratchpad.org" "~/Public/Syncthing Global/Notes/shopping list.org" "~/Public/Syncthing Global/Notes/simulation_model.org" "~/Public/Syncthing Global/Notes/sofa dimensions.org" "~/Public/Syncthing Global/Notes/دورة السلامة.org" "~/Public/Syncthing Global/Notes/محضر.org" "~/Public/Syncthing Global/Notes/ملاحظات البيت.org"))
+   '("~/Public/Syncthing Global/Notes/Download_Queue.org" "~/Public/Syncthing Global/Notes/TODO.org" "~/Public/Syncthing Global/Notes/Weekly meetings.org" "~/Public/Syncthing Global/Notes/capture.org" "~/Public/Syncthing Global/Notes/simulation_model.org" "~/Public/Syncthing Global/Notes/sofa dimensions.org"))
  '(package-selected-packages
-   '(eglot doom-modeline lsp-pyright yasnippet-snippets rainbow-mode rainbow-delimiters spacemacs-theme counsel org-bullets evil-leader zerodark-theme gruvbox-theme modus-vivendi-theme lsp-ui lsp-mode evil-collection evil-org evil-easymotion evil-iedit evil-iedit-state use-package))
+   '(company-box ivy-prescient yasnippet-snippets rainbow-mode rainbow-delimiters spacemacs-theme counsel org-bullets evil-leader zerodark-theme gruvbox-theme modus-vivendi-theme lsp-ui lsp-mode evil-collection evil-org evil-easymotion evil-iedit evil-iedit-state use-package))
  '(pdf-view-midnight-colors (cons "#dddddd" "#1b1d1e"))
  '(rustic-ansi-faces
    ["#1b1d1e" "#d02b61" "#60aa00" "#d08928" "#6c9ef8" "#b77fdb" "#00aa80" "#dddddd"])
