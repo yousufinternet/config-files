@@ -464,7 +464,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
       (set-face-attribute 'default nil
 			  :family "Fira Code"
 			  :height 135
-			  :weight 'normal
+			  :weight 'light
 			  :width 'normal)
       (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
     (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
@@ -838,6 +838,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
   (add-hook 'python-mode-hook 'evil-close-folds)
   (add-hook 'python-mode-hook 'hs-minor-mode)
   (add-hook 'python-mode-hook 'yas-minor-mode)
+  (add-hook 'python-mode-hook 'which-function-mode)
     #+END_SRC
 *** iPython
     #+BEGIN_SRC emacs-lisp
