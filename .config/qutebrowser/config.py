@@ -83,9 +83,11 @@ config.bind(',or', 'spawn --userscript qute-capture read -H "Interesting Resourc
 # prevent gmail from sending protocol handler confirmation dialogs
 config.set('content.register_protocol_handler', True, '*://gmail.com/*')
 config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
-config.set('content.ssl_strict', True)
-config.set('content.ssl_strict', False, '*://mail.westqurna2.com')
-config.set('content.notifications', False)
+
+config.set('content.tls.certificate_errors', 'block')
+config.set('content.tls.certificate_errors', 'load-insecurely', '*://mail.westqurna2.com')
+config.set('content.notifications.enabled', False)
+
 # Default zoom level
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
@@ -111,11 +113,11 @@ dracula.draw.blood(c)
 
 # tabs positioning
 config.set('tabs.position', 'left')
-config.set('tabs.padding', {'top':1, 'bottom':1, 'left':3, 'right':3})
+config.set('tabs.padding', {'top':4, 'bottom':4, 'left':3, 'right':3})
 config.set('tabs.indicator.width', 1)
 config.set('tabs.title.format', '{index}')
 config.set('tabs.title.format_pinned', '{index}')
-config.set('tabs.width', 25)
+config.set('tabs.width', 26)
 config.set('tabs.show', 'multiple')
 
 # allow the last tab to be closed and thus closing the window
