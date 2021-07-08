@@ -40,8 +40,8 @@ def reapply_rule(win_class, geometry):
     flags = ('state=floating layer=above '
              f'private=on sticky=on rectangle={geometry}')
     new_rule = f'bspc rule -a {win_class} {flags}'
-    fmt_rule = (f'{win_class}:* => {flags}')
-    if fmt_rule not in cmd_output('bspc rule -l').split('\n'):
+    fmt_rule = f'{win_class}:*:* => {flags}'
+    if fmt_rule not in cmd_output('bspc rule -l').splitlines():
         cmd_run(new_rule)
 
 

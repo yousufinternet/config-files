@@ -172,22 +172,24 @@ class NetworkTraffic():
         self.exclude = exclude
 
     def get_ip_out(self):
-        'parse the json output of ip command'
+        '''parse the json output of ip command'''
         iface = cmd_output('ip -s -j link')
         ifaces = [
             (d['ifname'],
              d['stats64']['rx']['bytes']/1000,
              d['stats64']['tx']['bytes']/1000)
             for d in json.loads(iface)
-            if not any(x in d['ifname'] for x in self.exclude)
-            and d['operstate'] == 'UP']
+            if not any(x in d['ifname'].lower() for x in self.exclude)
+            and d['operstate'] == 'UP' or (d['operstate'] == 'UNKNOWN'
+                                           and 'UP' in d['flags'])]
         return ifaces
 
     def output(self):
-        'lemonbar ready output'
+        '''lemonbar ready output'''
         updt = self.wait_time
         ifaces = self.get_ip_out()
         iftxt_len = 3
+        print(ifaces)
         if len(ifaces) == len(self.cache):
             speeds = [
                 (ifaces[i][0] if len(ifaces[i][0]) < iftxt_len
@@ -197,8 +199,7 @@ class NetworkTraffic():
                 for i in range(len(ifaces))]
         else:
             speeds = [
-                (ifaces[i][0] if len(ifaces[i][0]) < iftxt_len
-                 else ifaces[i][0][:iftxt_len],
+                (ifaces[i][0][:iftxt_len],
                  0, 0) for i in range(len(ifaces))]
         formated_speeds = '/ '.join(
             (f'%{{F{cdict["teal"]}}}{x[0].upper()}%{{F-}} '

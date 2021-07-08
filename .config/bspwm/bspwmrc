@@ -6,11 +6,12 @@ perWindowLayoutD &
 sxhkd &
 xsetroot -cursor_name left_ptr &
 picom &
+optimus-manager-qt &
 redshift &
 goldendict &
 nm-applet &
 udiskie -t &
-dunst -geometry "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((8*GDK_SCALE))" -corner_radius $((25*GDK_SCALE)) -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE)) &
+dunst -geometry "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((10*GDK_SCALE))" -corner_radius $((25*GDK_SCALE)) -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE)) &
 # /usr/lib/xfce4/notifyd/xfce4-notifyd &
 blueman-applet &
 emacs --daemon &
