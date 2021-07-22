@@ -780,6 +780,47 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     ;;     (add-to-list 'lsp-disabled-clients 'pyls)
     ;;     (add-to-list 'lsp-enabled-clients 'jedi)))
 #+END_SRC
+** Eclipse DATA files syntax highlighting
+
+   #+begin_src emacs-lisp
+	  (defun read-lines (filePath)
+	    "Return a list of lines of a file at filePath."
+	    (with-temp-buffer
+	      (insert-file-contents filePath)
+	      (split-string (buffer-string) "\n" t)))
+
+     (setq eclipse-keywords-list (read-lines "eclipse_keywords"))
+
+	       (setq myeclipse-font-lock-keywords
+		     (let* (
+			   ;; define several category of keywords
+			   (x-types '("TITLE" "RUNSPEC" "GRID" "EDIT" "PROPS" "REGIONS" "SOLUTION" "SUMMARY" "SCHEDULE" "OPTIMIZE"))
+			   (x-functions eclipse-keywords-list)
+
+			   ;; generate regex string for each category of keywords
+			   (x-types-regexp (regexp-opt x-types 'words))
+			   (x-functions-regexp (regexp-opt x-functions 'words)))
+
+		       `(
+			 (,"--\\(.*\\)" . font-lock-comment-face)
+			 (,x-types-regexp . font-lock-keyword-face)
+			 (,x-functions-regexp . font-lock-function-name-face)
+			 ;; note: order above matters, because once colored, that part won't change.
+			 ;; in general, put longer words first
+			 )))
+
+	       ;;;###autoload
+	       (define-derived-mode myeclipse-mode c-mode "ECLIPSE mode"
+		 "Major mode for editing Eclipse DATA file"
+
+		 ;; code for syntax highlighting
+		 (setq font-lock-defaults '((myeclipse-font-lock-keywords))))
+
+	       ;; add the mode to the `features' list
+	       (provide 'myeclipse-mode)
+
+	       ;;; mylsl-mode.el ends here
+   #+end_src
 ** eglot
    #+begin_src emacs-lisp
    (use-package eglot :ensure t :hook (python-mode . eglot-ensure))
