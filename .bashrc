@@ -51,6 +51,8 @@ alias gd='git diff'
 alias two_min_pen='for i in {0..120}; do printf "%03d\r" $i; sleep 1; done;mplayer /usr/share/games/xboard/sounds/penalty.wav'
 alias pacman='sudo pacman --color=always'
 alias hcat="highlight -O ansi --force"
+alias eclrun='WINEPREFIX=~/.wine32 WINEARCH=win32 wine ~/.wine32/drive_c/ecl/macros/eclrun.exe'
+
 
 # vi mode in bash
 set -o vi
