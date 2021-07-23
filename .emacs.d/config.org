@@ -182,6 +182,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
    #+BEGIN_SRC emacs-lisp
    (setq initial-major-mode 'org-mode)
    #+END_SRC
+** Recolor pdf-tools midnight mode
+   #+begin_src emacs-lisp
+(setq pdf-view-midnight-colors '("#f8f8f2" . "#282a36"))
+   #+end_src
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
@@ -790,20 +794,24 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 	      (split-string (buffer-string) "\n" t)))
 
      (setq eclipse-keywords-list (read-lines "eclipse_keywords"))
+     (setq eclipse-constants-list (read-lines "eclipse_single_keywords"))
 
 	       (setq myeclipse-font-lock-keywords
 		     (let* (
 			   ;; define several category of keywords
 			   (x-types '("TITLE" "RUNSPEC" "GRID" "EDIT" "PROPS" "REGIONS" "SOLUTION" "SUMMARY" "SCHEDULE" "OPTIMIZE"))
+			   (x-constants eclipse-constants-list)
 			   (x-functions eclipse-keywords-list)
 
 			   ;; generate regex string for each category of keywords
 			   (x-types-regexp (regexp-opt x-types 'words))
+			   (x-constants-regexp (regexp-opt x-constants 'words))
 			   (x-functions-regexp (regexp-opt x-functions 'words)))
 
 		       `(
 			 (,"--\\(.*\\)" . font-lock-comment-face)
 			 (,x-types-regexp . font-lock-keyword-face)
+                         (,x-constants-regexp . font-lock-constant-face)
 			 (,x-functions-regexp . font-lock-function-name-face)
 			 ;; note: order above matters, because once colored, that part won't change.
 			 ;; in general, put longer words first
