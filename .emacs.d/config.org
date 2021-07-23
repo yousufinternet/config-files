@@ -60,16 +60,20 @@ Please do check the following /configs/ as this one was heavily inspired by them
 
 ** Applications
 #+BEGIN_SRC emacs-lisp
-(use-package ranger :ensure t)
-(use-package pandoc-mode
- :ensure t
- :hook (
- (markdown-mode . pandoc-mode)
- (pandoc-mode . pandoc-load-default-settings))
- )
- (use-package pdf-tools 
-  :ensure t
-  :defer 10)
+      (use-package ranger :ensure t)
+
+      (use-package pandoc-mode
+       :ensure t
+       :hook (
+       (markdown-mode . pandoc-mode)
+       (pandoc-mode . pandoc-load-default-settings))
+       )
+
+       (use-package pdf-tools 
+	:ensure t
+  :init (pdf-tools-install) (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
+:config (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
+	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode))
 #+END_SRC
 
 * Emacs tweaks
@@ -185,113 +189,118 @@ Please do check the following /configs/ as this one was heavily inspired by them
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
-  (use-package general :ensure t
-    :config
-    (general-define-key
-     :states '(normal visual insert emacs)
-     :prefix "SPC"
-     :non-normal-prefix "C-SPC"
-     "C-'" 'avy-goto-word-0
-     ":" 'counsel-M-x
-     "a" '(:ignore t :which-key "Applications")
-     "ar" 'ranger
-     "ad" '(dired ".")
-     "b" '(:ignore t :which-key "Buffers")
-     "bb" 'ivy-switch-buffer
-     "bd" 'evil-delete-buffer
-     "bn" 'evil-next-buffer
-     "bp" 'evil-prev-buffer
-     "i" '(:ignore t :which-key "imenu and ivy")
-     "ii" 'imenu-list
-     "ic" 'counsel-imenu
-     "l" '(:ignore t :which-key "LSP")
-     "li" 'lsp-ui-imenu
-     "ld" 'lsp-ui-peek-find-definitions
-     "lr" 'lsp-ui-peek-find-references
-     "f" '(:ignore t :which-key "Files")
-     "ff" 'counsel-find-file
-     "fr" 'counsel-recentf
-     "fl" 'counsel-locate
-     "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
-     "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
-     "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
-     "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
-     "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
-     "o" '(:ignore t :which-key "Global org-mode")
-     "oa" 'org-agenda-list
-     "oc" 'org-capture
-     "ol" 'org-store-link
-     "s" '(:ignore t :which-key "Spell check")
-     "sc" 'flyspell-correct-at-point
-     "ss" 'flyspell-correct-wrapper
-     "g" '(:ignore t :which-key "Git")
-     "gg" 'magit-status
-     "gf" 'counsel-git
-     "t" '(:ignore t :which-key "Themes")
-     "tt" 'counsel-load-theme
-     "t+" 'text-scale-adjust
-     "t-" 'text-scale-adjust
-     "h" '(:ignore t :which-key "Help")
-     "hf" 'counsel-describe-function
-     "hv" 'counsel-describe-variable
-     "hk" 'describe-key)
-     (general-define-key
-     :states '(normal visual)
-     :prefix "SPC o"
-     :non-normal-prefix "C-SPC o"
-      :keymaps 'org-mode-map
-      "d" '(:ignore t :which-key "Dates")
-      "dd" 'org-deadline
-      "ds" 'org-schedule
-      "e" '(:ignore t :which-key "Export")
-      "ee" 'org-export-dispatch
-      "ep" 'org-latex-export-to-pdf
-      "eb" 'org-beamer-export-to-pdf
-      "n" '(:ignore t :which-key "Create stuff")
-      "nt" 'org-table-create-with-table.el
-      "n|" 'org-table-create-or-convert-from-region
-      "o" '(:ignore t :which-key "open")
-      "oo" 'org-open-at-point
-      "t" '(:ignore t :which-key "Org Toggle Funcs")
-      "ti" 'org-toggle-inline-images
-      "tl" 'org-toggle-link-display
-      "tc" 'org-toggle-checkbox
-      "ge" 'org-edit-src-code
-      "ga" 'org-archive-subtree
-      "gc" '(:ignore t :which-key "Clock Commands")
-      "gci" 'org-clock-in
-      "gco" 'org-clock-out
-)
-     (general-define-key
-     :states '(normal visual insert emacs)
-     :prefix "SPC"
-     :non-normal-prefix "C-SPC"
-      :keymaps 'pandoc-mode-map
-      "p" 'pandoc-main-hydra/body)
-      (general-define-key
-      :states '(visual)
-      :keymaps 'evil-surround-mode-map
-      "s" 'evil-surround-region)
-     (general-define-key
-     :states '(normal visual insert emacs)
-     :prefix "SPC"
-     :non-normal-prefix "C-SPC"
-      :keymaps 'prog-mode-map
-      "pd" 'eldoc
-      "pj" 'xref-find-definitions
-      "pg" 'xref-find-definitions-other-window
-      "pr" 'xref-find-references
-      "pii" 'iedit-mode
-      "piH" 'iedit-restrict-function
-      "pin" 'iedit-expand-down-to-occurrence
-      "pip" 'iedit-expand-up-to-occurrence
-      "pi}" 'iedit-expand-down-a-line
-      "pi{" 'iedit-expand-up-a-line)
-    )
+	(use-package general :ensure t
+	  :config
+	  (general-define-key
+	   :states '(normal visual insert emacs)
+	   :prefix "SPC"
+	   :non-normal-prefix "C-SPC"
+	   "C-'" 'avy-goto-word-0
+	   ":" 'counsel-M-x
+	   "a" '(:ignore t :which-key "Applications")
+	   "ar" 'ranger
+	   "ad" '(dired ".")
+	   "b" '(:ignore t :which-key "Buffers")
+	   "bb" 'ivy-switch-buffer
+	   "bd" 'evil-delete-buffer
+	   "bn" 'evil-next-buffer
+	   "bp" 'evil-prev-buffer
+	   "i" '(:ignore t :which-key "imenu and ivy")
+	   "ii" 'imenu-list
+	   "ic" 'counsel-imenu
+	   "l" '(:ignore t :which-key "LSP")
+	   "li" 'lsp-ui-imenu
+	   "ld" 'lsp-ui-peek-find-definitions
+	   "lr" 'lsp-ui-peek-find-references
+	   "f" '(:ignore t :which-key "Files")
+	   "ff" 'counsel-find-file
+	   "fr" 'counsel-recentf
+	   "fl" 'counsel-locate
+	   "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
+	   "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
+	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
+	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
+	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+	   "o" '(:ignore t :which-key "Global org-mode")
+	   "oa" 'org-agenda-list
+	   "oc" 'org-capture
+	   "ol" 'org-store-link
+	   "s" '(:ignore t :which-key "Spell check")
+	   "sc" 'flyspell-correct-at-point
+	   "ss" 'flyspell-correct-wrapper
+	   "g" '(:ignore t :which-key "Git")
+	   "gg" 'magit-status
+	   "gf" 'counsel-git
+	   "t" '(:ignore t :which-key "Themes")
+	   "tt" 'counsel-load-theme
+	   "t+" 'text-scale-adjust
+	   "t-" 'text-scale-adjust
+	   "h" '(:ignore t :which-key "Help")
+	   "hf" 'counsel-describe-function
+	   "hv" 'counsel-describe-variable
+	   "hk" 'describe-key)
+	   (general-define-key
+	   :states '(normal visual)
+	   :prefix "SPC o"
+	   :non-normal-prefix "C-SPC o"
+	    :keymaps 'org-mode-map
+	    "d" '(:ignore t :which-key "Dates")
+	    "dd" 'org-deadline
+	    "ds" 'org-schedule
+	    "e" '(:ignore t :which-key "Export")
+	    "ee" 'org-export-dispatch
+	    "ep" 'org-latex-export-to-pdf
+	    "eb" 'org-beamer-export-to-pdf
+	    "n" '(:ignore t :which-key "Create stuff")
+	    "nt" 'org-table-create-with-table.el
+	    "n|" 'org-table-create-or-convert-from-region
+	    "o" '(:ignore t :which-key "open")
+	    "oo" 'org-open-at-point
+	    "t" '(:ignore t :which-key "Org Toggle Funcs")
+	    "ti" 'org-toggle-inline-images
+	    "tl" 'org-toggle-link-display
+	    "tc" 'org-toggle-checkbox
+	    "ge" 'org-edit-src-code
+	    "ga" 'org-archive-subtree
+	    "gc" '(:ignore t :which-key "Clock Commands")
+	    "gci" 'org-clock-in
+	    "gco" 'org-clock-out
+      )
+	   (general-define-key
+	   :states '(normal visual insert emacs)
+	   :prefix "SPC"
+	   :non-normal-prefix "C-SPC"
+	    :keymaps 'pandoc-mode-map
+	    "p" 'pandoc-main-hydra/body)
+	    (general-define-key
+	    :states '(visual)
+	    :keymaps 'evil-surround-mode-map
+	    "s" 'evil-surround-region)
+	   (general-define-key
+	   :states '(normal visual insert emacs)
+	   :prefix "SPC"
+	   :non-normal-prefix "C-SPC"
+	    :keymaps 'prog-mode-map
+	    "pd" 'eldoc
+	    "pj" 'xref-find-definitions
+	    "pg" 'xref-find-definitions-other-window
+	    "pr" 'xref-find-references
+	    "pii" 'iedit-mode
+	    "piH" 'iedit-restrict-function
+	    "pin" 'iedit-expand-down-to-occurrence
+	    "pip" 'iedit-expand-up-to-occurrence
+	    "pi}" 'iedit-expand-down-a-line
+	    "pi{" 'iedit-expand-up-a-line)
+  (general-define-key
+   :states '(normal visual insert emacs)
+   :keymaps 'doc-view-mode-map
+  "SPC" nil)
+(general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)  
+	  )
 
-  (defun config-reload ()
-    "Reloads ~/.emacs.d/config.org at runtime"
-    )
+	(defun config-reload ()
+	  "Reloads ~/.emacs.d/config.org at runtime"
+	  )
 #+END_SRC
 
 ** Evil
@@ -782,44 +791,54 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 #+END_SRC
 ** Eclipse DATA files syntax highlighting
 
-   #+begin_src emacs-lisp
-	  (defun read-lines (filePath)
-	    "Return a list of lines of a file at filePath."
-	    (with-temp-buffer
-	      (insert-file-contents filePath)
-	      (split-string (buffer-string) "\n" t)))
+#+begin_src emacs-lisp
+    (defun read-lines (filePath)
+    "Return a list of lines of a file at filePath."
+    (with-temp-buffer
+    (insert-file-contents filePath)
+    (split-string (buffer-string) "\n" t)))
 
-     (setq eclipse-keywords-list (read-lines "eclipse_keywords"))
+    (setq eclipse-keywords-list (read-lines "eclipse_keywords"))
+    (setq eclipse-constants-list (read-lines "eclipse_single_keywords"))
 
-	       (setq myeclipse-font-lock-keywords
-		     (let* (
-			   ;; define several category of keywords
-			   (x-types '("TITLE" "RUNSPEC" "GRID" "EDIT" "PROPS" "REGIONS" "SOLUTION" "SUMMARY" "SCHEDULE" "OPTIMIZE"))
-			   (x-functions eclipse-keywords-list)
+    (setq myeclipse-font-lock-keywords
+    (let* (
+    ;; define several category of keywords
+    (x-types '("TITLE" "RUNSPEC" "GRID" "EDIT" "PROPS" "REGIONS" "SOLUTION" "SUMMARY" "SCHEDULE" "OPTIMIZE"))
+     (x-constants eclipse-constants-list)
+     (x-functions eclipse-keywords-list)
 
-			   ;; generate regex string for each category of keywords
-			   (x-types-regexp (regexp-opt x-types 'words))
-			   (x-functions-regexp (regexp-opt x-functions 'words)))
+     ;; generate regex string for each category of keywords
+     (x-types-regexp (regexp-opt x-types 'words))
+     (x-constants-regexp (regexp-opt x-constants 'words))
+     (x-functions-regexp (regexp-opt x-functions 'words)))
 
-		       `(
-			 (,"--\\(.*\\)" . font-lock-comment-face)
-			 (,x-types-regexp . font-lock-keyword-face)
-			 (,x-functions-regexp . font-lock-function-name-face)
-			 ;; note: order above matters, because once colored, that part won't change.
-			 ;; in general, put longer words first
-			 )))
+    `(
+    (,"--\\(.*\\)" . font-lock-comment-face)
+    (,x-types-regexp . font-lock-keyword-face)
+    (,x-constants-regexp . font-lock-constant-face)
+    (,x-functions-regexp . font-lock-function-name-face)
+    ;; note: order above matters, because once colored, that part won't change.
+    ;; in general, put longer words first
+    )))
 
-	       ;;;###autoload
-	       (define-derived-mode myeclipse-mode c-mode "ECLIPSE mode"
-		 "Major mode for editing Eclipse DATA file"
+				 ;; autoload
+    (define-derived-mode myeclipse-mode fundamental-mode "ECLIPSE mode"
+    "Major mode for editing Eclipse DATA file"
+    ;; code for syntax highlighting
+    (setq font-lock-defaults '((myeclipse-font-lock-keywords)))
+       (defun eclipse-outline-level () 1)
+	  (setq-local outline-regexp "RUNSPEC\n\\|GRID\n\\|EDIT\n\\|PROP\n\\|REGIONS\n\\|SOLUTION\n\\|SUMMARY\n\\|SCHEDULE\n\\|OPTIMIZE\n")
+	  (setq-local outline-level 'eclipse-outline-level)
+(outline-minor-mode)
+  )
 
-		 ;; code for syntax highlighting
-		 (setq font-lock-defaults '((myeclipse-font-lock-keywords))))
 
-	       ;; add the mode to the `features' list
-	       (provide 'myeclipse-mode)
+				 ;; add the mode to the `features' list
+				 (provide 'myeclipse-mode)
 
-	       ;;; mylsl-mode.el ends here
+
+				 ;;; mylsl-mode.el ends here
    #+end_src
 ** eglot
    #+begin_src emacs-lisp

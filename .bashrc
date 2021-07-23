@@ -25,7 +25,8 @@ source <(cod init $$ bash)
 export XDG_CONFIG_HOME="$HOME/.config"
 export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
 export EDITOR=vim
-export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
+# export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
+export TERMINAL="konsole"
 export RTV_EDITOR=vim
 
 # my scripts and flutter executables
@@ -41,7 +42,7 @@ alias ar5="aria2c -c -V -s 5 --max-connection-per-server=5 --on-download-complet
 alias ls='ls --color=auto'
 alias resrvserv='mosh yusuf@10.127.188.92'
 alias mediacenter='mosh yusuf@192.168.1.110'
-alias worklaptop='mosh archie-work@192.168.1.107'
+alias worklaptop='mosh archie-work@192.168.1.6'
 alias android-emulator='~/Android/Sdk/emulator/emulator @Pixel_3_API_28'
 alias ec='emacsclient -a "" -c'
 alias all_cams_low='mpv $(cat Documents/Security-Cams/cam4.strm) & mpv $(cat Documents/Security-Cams/cam1.strm) & mpv $(cat Documents/Security-Cams/cam2.strm)'
@@ -52,7 +53,7 @@ alias two_min_pen='for i in {0..120}; do printf "%03d\r" $i; sleep 1; done;mplay
 alias pacman='sudo pacman --color=always'
 alias hcat="highlight -O ansi --force"
 alias eclrun='WINEPREFIX=~/.wine32 WINEARCH=win32 wine ~/.wine32/drive_c/ecl/macros/eclrun.exe'
-
+alias gamescrcpy="scrcpy --max-fps 20 -w -S --disable-screensaver"
 
 # vi mode in bash
 set -o vi
@@ -69,9 +70,6 @@ HISTSIZE=
 HISTFILESIZE=
 HISTCONTROL=erasedups
 
-# Had to use that with mlterm
-# export TERM=xterm-256color
-
 # Supposedly text should wrap as the terminal size changes
 shopt -s checkwinsize
 
@@ -84,8 +82,6 @@ POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
 
-eval "$(fasd --init auto)"
-
 if xset q &>/dev/null; then
   # screenfetch | lolcat
   cowsay -f tux $(fortune) | lolcat -p 1
@@ -95,166 +91,4 @@ if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]
   exec startx
 fi
 
-
-export LF_ICONS="\
-tw=:\
-st=:\
-ow=:\
-dt=:\
-di=:\
-fi=:\
-ln=:\
-or=:\
-ex=:\
-*.c=:\
-*.cc=:\
-*.clj=:\
-*.coffee=:\
-*.cpp=:\
-*.css=:\
-*.d=:\
-*.dart=:\
-*.erl=:\
-*.exs=:\
-*.fs=:\
-*.go=:\
-*.h=:\
-*.hh=:\
-*.hpp=:\
-*.hs=:\
-*.html=:\
-*.java=:\
-*.jl=:\
-*.js=:\
-*.json=:\
-*.lua=:\
-*.md=:\
-*.php=:\
-*.pl=:\
-*.pro=:\
-*.py=:\
-*.rb=:\
-*.rs=:\
-*.scala=:\
-*.ts=:\
-*.vim=:\
-*.cmd=:\
-*.ps1=:\
-*.sh=:\
-*.bash=:\
-*.zsh=:\
-*.fish=:\
-*.tar=:\
-*.tgz=:\
-*.arc=:\
-*.arj=:\
-*.taz=:\
-*.lha=:\
-*.lz4=:\
-*.lzh=:\
-*.lzma=:\
-*.tlz=:\
-*.txz=:\
-*.tzo=:\
-*.t7z=:\
-*.zip=:\
-*.z=:\
-*.dz=:\
-*.gz=:\
-*.lrz=:\
-*.lz=:\
-*.lzo=:\
-*.xz=:\
-*.zst=:\
-*.tzst=:\
-*.bz2=:\
-*.bz=:\
-*.tbz=:\
-*.tbz2=:\
-*.tz=:\
-*.deb=:\
-*.rpm=:\
-*.jar=:\
-*.war=:\
-*.ear=:\
-*.sar=:\
-*.rar=:\
-*.alz=:\
-*.ace=:\
-*.zoo=:\
-*.cpio=:\
-*.7z=:\
-*.rz=:\
-*.cab=:\
-*.wim=:\
-*.swm=:\
-*.dwm=:\
-*.esd=:\
-*.jpg=:\
-*.jpeg=:\
-*.mjpg=:\
-*.mjpeg=:\
-*.gif=:\
-*.bmp=:\
-*.pbm=:\
-*.pgm=:\
-*.ppm=:\
-*.tga=:\
-*.xbm=:\
-*.xpm=:\
-*.tif=:\
-*.tiff=:\
-*.png=:\
-*.svg=:\
-*.svgz=:\
-*.mng=:\
-*.pcx=:\
-*.mov=:\
-*.mpg=:\
-*.mpeg=:\
-*.m2v=:\
-*.mkv=:\
-*.webm=:\
-*.ogm=:\
-*.mp4=:\
-*.m4v=:\
-*.mp4v=:\
-*.vob=:\
-*.qt=:\
-*.nuv=:\
-*.wmv=:\
-*.asf=:\
-*.rm=:\
-*.rmvb=:\
-*.flc=:\
-*.avi=:\
-*.fli=:\
-*.flv=:\
-*.gl=:\
-*.dl=:\
-*.xcf=:\
-*.xwd=:\
-*.yuv=:\
-*.cgm=:\
-*.emf=:\
-*.ogv=:\
-*.ogx=:\
-*.aac=:\
-*.au=:\
-*.flac=:\
-*.m4a=:\
-*.mid=:\
-*.midi=:\
-*.mka=:\
-*.mp3=:\
-*.mpc=:\
-*.ogg=:\
-*.ra=:\
-*.wav=:\
-*.oga=:\
-*.opus=:\
-*.spx=:\
-*.xspf=:\
-*.pdf=:\
-*.nix=:\
-"
+# source ~/.local/share/blesh/ble.sh
