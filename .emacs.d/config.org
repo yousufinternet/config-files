@@ -71,8 +71,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 
        (use-package pdf-tools 
 	:ensure t
-  :init (pdf-tools-install) (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
-:config (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
+  :init (pdf-tools-install) 
+:commands 'pdf-view-mode
+:config (general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode))
 #+END_SRC
 
@@ -295,7 +296,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
    :states '(normal visual insert emacs)
    :keymaps 'doc-view-mode-map
   "SPC" nil)
-(general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map "SPC" nil)  
+(general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map (kbd "SPC") nil)  
 	  )
 
 	(defun config-reload ()
@@ -531,57 +532,66 @@ Please do check the following /configs/ as this one was heavily inspired by them
    #+END_SRC
 ** Capture setup
    #+BEGIN_SRC emacs-lisp
-   (setq org-directory "~/Public/Syncthing Global/Notes/")
-   (setq org-default-notes-file (concat org-directory "capture.org"))
-   (setq org-capture-templates
-   '(
-     ("t" "Work/Personal Tasks")
-     ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
-     "** TODO %?\n SCHEDULED: %^t  DEADLINE: %^t")
-     
-     ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
-     "** TODO %?\n SCHEDULED: %^t")
-     
-     ("i" "Interesting thingies")
-     ("iq" "Interesting Quotes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Quotes")
-     "** %?\n %x\n CAPTURED on %u\n")
-     
-     ("ia" "Interesting Articles" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Articles")
-"** %a\n %?\n CAPTURED on: %u\n")
+	 (setq org-directory "~/Public/Syncthing Global/Notes/")
+	 (setq org-default-notes-file (concat org-directory "capture.org"))
+	 (setq org-capture-templates
+	 '(
+	   ("t" "Work/Personal Tasks")
+	   ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
+	   "** TODO %?\n SCHEDULED: %^t  DEADLINE: %^t")
 
-     ("il" "Read Later" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Read Later")
-"** TODO %?\n %a\n CAPTURED on: %t\n")
+	   ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
+	   "** TODO %?\n SCHEDULED: %^t")
 
-     ("ir" "Interesting Resources" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Resources")
-"** %?\n %l\n CAPTURED on: %u\n")
+	   ("i" "Interesting thingies")
+	   ("iq" "Interesting Quotes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Quotes")
+	   "** %?\n %x\n CAPTURED on %u\n")
 
-     ("im" "Interesting Movies" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Movies")
-"** %?\n %a\n CAPTURED on: %u\n")
+	   ("ia" "Interesting Articles" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Articles")
+      "** %a\n %?\n CAPTURED on: %u\n")
 
-     ("d" "Download Queue" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Downloads Queue" )
-"** TODO %a\n CAPTURED on: %t\n" :prepend t :immediate-finish t)
+	   ("il" "Read Later" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Read Later")
+      "** TODO %?\n %a\n CAPTURED on: %t\n")
 
-     ("c" "Code Notes")
-     ("cc" "General Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "General")
-"** %?\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n CAPTURED on: %u")
+	   ("ir" "Interesting Resources" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Resources")
+      "** %?\n %l\n CAPTURED on: %u\n")
 
-     ("cp" "Python Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Python tricks")
-"** %?\n #+BEGIN_SRC python\n%x\n#+END_SRC\n CAPTURED on: %u")
+	   ("im" "Interesting Movies" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Movies")
+      "** %?\n %a\n CAPTURED on: %u\n")
 
-     ("co" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Org-tricks")
-"** TODO %?\n #+BEGIN_QUOTE\n%x\n#+END_QUOTE\n %t\n")
+	   ("d" "Download Queue" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Downloads Queue" )
+      "** TODO %a\n CAPTURED on: %t\n" :prepend t :immediate-finish t)
 
-     ("cm" "My Code" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "My Code")
-"** TODO %?\n %F\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n %t\n")
-)
-)
+	   ("c" "Code Notes")
+	   ("cc" "General Code Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "General")
+      "** %?\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n CAPTURED on: %u")
+
+	   ("cp" "Python Notes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Python tricks")
+      "** %?\n #+BEGIN_SRC python\n%x\n#+END_SRC\n CAPTURED on: %u")
+
+	   ("co" "Org Tricks" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "Org-tricks")
+      "** TODO %?\n #+BEGIN_QUOTE\n%x\n#+END_QUOTE\n %t\n")
+
+	   ("cm" "My Code" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Code Notes" "My Code")
+      "** TODO %?\n %F\n #+BEGIN_SRC %^{prompt|python|bash|emacs-lisp|latex}\n%x\n#+END_SRC\n %t\n")
+
+   ("v" "Voice" entry
+       (file+olp+datetree "~/Public/Syncthing Global/Notes/capture.org" "Voice Memos")
+"* Record \n\n #+begin_src sh\nrec %(format-time-string \"%Y-%m-%d-%H.%M.%S\").aiff\n#+end\_src\n\n* Play\n#+begin_src sh\nplay %(format-time-string \"%Y-%m-%d-%H.%M.%S\").aiff\n#+end_src\n"
+       :immediate-finish t
+       :jump-to-captured t)
+      ))
+      
    #+END_SRC
    
 ** General customization
 #+BEGIN_SRC emacs-lisp
   (require 'org-tempo)
   (require 'org-protocol)
-  
+
+(org-babel-do-load-languages 'org-babel-load-languages
+  '((shell . t) (python . t) (emacs-lisp . t)))
+
   (use-package org-bullets
   :ensure t
   :after org-mode)
@@ -591,15 +601,15 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
-  
+
   (setq org-imenu-depth 3)
-  
+
   ;; experimental
   (setq org-log-done "note")
   (org-agenda nil "a")
   (setq org-log-into-drawer "LOGBOOK")
   (setq org-confirm-babel-evaluate nil)
-
+  (setq org-edit-src-content-indentation 0)
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	  org-todo-keyword-faces
 	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
@@ -608,9 +618,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	  org-agenda-skip-scheduled-if-done t
 	  org-agenda-skip-deadline-if-done t
 	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
-	  
+
   (setq org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
-	  
+
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
@@ -728,13 +738,13 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     ;; Doesn't work as expected!
     ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
     (setq dired-open-extensions '(("png" . "feh")
-                                  ("mkv" . "mpv"))))
+				  ("mkv" . "mpv"))))
 
-  (use-package dired-hide-dotfiles
-    :hook (dired-mode . dired-hide-dotfiles-mode)
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "H" 'dired-hide-dotfiles-mode))
+  ;; (use-package dired-hide-dotfiles
+  ;;   :hook (dired-mode . dired-hide-dotfiles-mode)
+  ;;   :config
+  ;;   (evil-collection-define-key 'normal 'dired-mode-map
+  ;;     "H" 'dired-hide-dotfiles-mode))
 
 #+end_src
 
@@ -792,14 +802,15 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 ** Eclipse DATA files syntax highlighting
 
 #+begin_src emacs-lisp
+(defun provide-myeclipse-mode ()
     (defun read-lines (filePath)
     "Return a list of lines of a file at filePath."
     (with-temp-buffer
     (insert-file-contents filePath)
     (split-string (buffer-string) "\n" t)))
 
-    (setq eclipse-keywords-list (read-lines "eclipse_keywords"))
-    (setq eclipse-constants-list (read-lines "eclipse_single_keywords"))
+    (setq eclipse-keywords-list (read-lines "~/.emacs.d/eclipse_keywords"))
+    (setq eclipse-constants-list (read-lines "~/.emacs.d/eclipse_single_keywords"))
 
     (setq myeclipse-font-lock-keywords
     (let* (
@@ -815,9 +826,11 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
     `(
     (,"--\\(.*\\)" . font-lock-comment-face)
+    (,"'\\(.*\\)'" . font-lock-string-face)
     (,x-types-regexp . font-lock-keyword-face)
     (,x-constants-regexp . font-lock-constant-face)
-    (,x-functions-regexp . font-lock-function-name-face)
+    (,x-functions-regexp . font-lock-builtin-face)
+    ;; (,x-functions-regexp . font-lock-function-name-face)
     ;; note: order above matters, because once colored, that part won't change.
     ;; in general, put longer words first
     )))
@@ -828,7 +841,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     ;; code for syntax highlighting
     (setq font-lock-defaults '((myeclipse-font-lock-keywords)))
        (defun eclipse-outline-level () 1)
-	  (setq-local outline-regexp "RUNSPEC\n\\|GRID\n\\|EDIT\n\\|PROP\n\\|REGIONS\n\\|SOLUTION\n\\|SUMMARY\n\\|SCHEDULE\n\\|OPTIMIZE\n")
+	  (setq-local outline-regexp "RUNSPEC\\|GRID\\|EDIT\\|PROPS\\|REGIONS\\|SOLUTION\\|SUMMARY\\|SCHEDULE\\|OPTIMIZE")
 	  (setq-local outline-level 'eclipse-outline-level)
 (outline-minor-mode)
   )
@@ -836,7 +849,8 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
 				 ;; add the mode to the `features' list
 				 (provide 'myeclipse-mode)
-
+)
+(provide-myeclipse-mode)
 
 				 ;;; mylsl-mode.el ends here
    #+end_src
