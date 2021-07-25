@@ -809,8 +809,21 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     (insert-file-contents filePath)
     (split-string (buffer-string) "\n" t)))
 
+    (defvar match-from-outline-regex)
+    (defvar eclipse-main-sections)
+    (setq eclipse-main-sections '("RUNSPEC" "GRID" "EDIT" "PROPS" "REGIONS" "SOLUTION" "SUMMARY" "SCHEDULE" "OPTIMIZE"))
+    (defvar eclipse-keywords-list)
     (setq eclipse-keywords-list (read-lines "~/.emacs.d/eclipse_keywords"))
+    (defvar eclipse-constants-list)
     (setq eclipse-constants-list (read-lines "~/.emacs.d/eclipse_single_keywords"))
+
+       ;; (defun eclipse-outline-level () 1)
+       (defun eclipse-outline-level ()
+"Return 1 if outline-regex match is a section, and 2 if its a keyword with records"
+(setq match-from-outline-regex (match-string-no-properties 0))
+(if (member match-from-outline-regex eclipse-main-sections) 1
+ (if (member match-from-outline-regex eclipse-keywords-list) 2 (if (member match-from-outline-regex eclipse-constants-list) 3 nil)))
+)
 
     (setq myeclipse-font-lock-keywords
     (let* (
@@ -836,12 +849,12 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     )))
 
 				 ;; autoload
-    (define-derived-mode myeclipse-mode fundamental-mode "ECLIPSE mode"
+    (define-derived-mode myeclipse-mode prog-mode "ECLIPSE mode"
     "Major mode for editing Eclipse DATA file"
     ;; code for syntax highlighting
     (setq font-lock-defaults '((myeclipse-font-lock-keywords)))
-       (defun eclipse-outline-level () 1)
-	  (setq-local outline-regexp "RUNSPEC\\|GRID\\|EDIT\\|PROPS\\|REGIONS\\|SOLUTION\\|SUMMARY\\|SCHEDULE\\|OPTIMIZE")
+	  ;; (setq-local outline-regexp "RUNSPEC\\|GRID\\|EDIT\\|PROPS\\|REGIONS\\|SOLUTION\\|SUMMARY\\|SCHEDULE\\|OPTIMIZE")
+    (setq-local outline-regexp (regexp-opt (append eclipse-main-sections eclipse-keywords-list eclipse-constants-list) 'words))
 	  (setq-local outline-level 'eclipse-outline-level)
 (outline-minor-mode)
   )
