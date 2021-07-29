@@ -59,6 +59,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+END_SRC
 
 ** Applications
+*** ranger and pdf-tools
 #+BEGIN_SRC emacs-lisp
       (use-package ranger :ensure t)
 
@@ -69,13 +70,84 @@ Please do check the following /configs/ as this one was heavily inspired by them
        (pandoc-mode . pandoc-load-default-settings))
        )
 
+(defun unbind-spc-in-pdf-view-mode ()
+"adding this line to use-package is not working, had to create a hook"
+(general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
+)
        (use-package pdf-tools 
 	:ensure t
   :init (pdf-tools-install) 
 :commands 'pdf-view-mode
-:config (general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
-	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode))
+:config 
+	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
 #+END_SRC
+*** elfeed
+
+    #+begin_src emacs-lisp
+    (use-package elfeed
+      :ensure t
+      :config
+    (setq elfeed-feeds
+	  '(
+	    ;; programming
+	    ("https://news.ycombinator.com/rss" hacker)
+	    ("https://www.reddit.com/r/programming.rss" programming)
+	    ("https://www.reddit.com/r/emacs.rss" emacs)
+
+	    ;; programming languages
+	    ("https://www.reddit.com/r/python.rss" python)
+
+
+    ("https://spreadprivacy.com/rss" tech)
+    ("http://feeds.reuters.com/news/artsculture" art philosophy)
+    ("http://feeds.reuters.com/reuters/healthNews" health)
+    ("http://feeds.reuters.com/reuters/scienceNews" science)
+    ("http://feeds.reuters.com/reuters/technologyNews" tech)
+    ("http://feeds.reuters.com/reuters/topNews" news)
+    ("http://feeds.reuters.com/Reuters/worldNews" news popular)
+    ("https://www.reddit.com/r/worldnews/.rss" news)
+    ("http://feeds.bbci.co.uk/news/world/rss.xml" news popular)
+    ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml" news popular)
+    ("http://www.aljazeera.com/xml/rss/all.xml" news)
+    ("http://feeds.feedburner.com/WarNewsUpdates" news)
+    ("https://www.theguardian.com/world/rss" news popular)
+    ("https://www.rt.com/rss/news" news popular)
+    ("http://www.independent.co.uk/news/world/rss" news popular)
+    ("https://www.thesun.co.uk/news/worldnews/feed" news)
+    ("https://sputniknews.com/export/rss2/world/index.xml" news)
+    ("https://www.vox.com/rss/world/index.xml" news cool)
+    ("http://feeds.feedburner.com/TechCrunch" tech)
+    ("http://feeds.arstechnica.com/arstechnica/technology-lab" tech)
+    ("http://www.computerworld.com/index.rss" tech)
+    ("http://feeds.feedburner.com/Makeuseof" tech)
+    ("http://feeds.bbci.co.uk/news/technology/rss.xml" tech)
+    ("http://feed.androidauthority.com" tech android)
+    ("https://fossbytes.com/feed/?x=1" tech linux)
+    ("https://itsfoss.com/feed/" tech linux)
+    ("https://feeds.feedburner.com/d0od" tech linux)
+    ("https://hackaday.com/blog/feed/" tech linux)
+    ("http://www.ahaparenting.com/RSSRetrieve.aspx?ID=13126&Type=RSS20" parenting)
+    ("http://www.parentingscience.com/parenting.xml" parenting science)
+    ("http://dadandburied.com/feed/" parenting)
+    ("http://www.psy-ed.com/wpblog/feed" parenting science)
+    ("http://feeds.feedburner.com/sciencealert-latestnews" science)
+    ("http://rss.sciam.com/ScientificAmerican-Global" science)
+    ("http://feeds.feedburner.com/AllDiscovermagazinecomContent" science)
+    ("https://www.wired.com/category/science/feed" science)
+    ("http://www.popsci.com/rss.xml" science)
+    ("https://www.linux.com/feeds/original-content/rss" tech linux)
+    ("https://www.linux.com/feeds/news/rss" tech linux)
+    ("https://www.linux.com/feeds/news/embedded-and-mobile/rss" tech linux)
+    ("https://www.linux.com/feeds/news/desktop/rss" tech linux)
+    ("https://aeon.co/feed.rss" philosophy cool)
+    ("https://lukesmith.xyz/rss.xml" cool linux tech)
+    ))
+
+    (setq-default elfeed-search-filter "@2-days-ago +unread")
+    (setq-default elfeed-search-title-max-width 100)
+    (setq-default elfeed-search-title-min-width 100)
+      )
+    #+end_src
 
 * Emacs tweaks
 ** Minor tweaks
@@ -201,6 +273,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   "a" '(:ignore t :which-key "Applications")
 	   "ar" 'ranger
 	   "ad" '(dired ".")
+	   "af" 'elfeed
 	   "b" '(:ignore t :which-key "Buffers")
 	   "bb" 'ivy-switch-buffer
 	   "bd" 'evil-delete-buffer
@@ -267,6 +340,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	    "gci" 'org-clock-in
 	    "gco" 'org-clock-out
       )
+	   (general-define-key :states '(normal motion visual) :prefix "SPC o b" :non-normal-prefix "C-SPC o b" :keymaps 'org-mode-map :prefix-map 'org-babel-map)
 	   (general-define-key
 	   :states '(normal visual insert emacs)
 	   :prefix "SPC"
@@ -469,26 +543,36 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
 #+BEGIN_SRC emacs-lisp
-    (setq text-scale-mode-step 1.05)
-  (defun reapply-font (&optional frame)
-      (set-face-attribute 'default nil
-			  :family "Fira Code"
-			  :height 135
-			  :weight 'light
-			  :width 'normal)
-      (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
-    (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
-    (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
-  )
+  (setq text-scale-mode-step 1.05)
+;; reapply font settings on every new frame. see after-make-frame-functions hook
+(defun reapply-font (&optional frame)
+    (set-face-attribute 'default nil
+			:family "Fira Code"
+			:height 135
+			:weight 'light
+			:width 'normal)
+;; proportional font
+    (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
+;; Monospaced font with arabic support
+  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; display colored emojis in emacs
+  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+;; make org source blocks always monospaced
+(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+)
 
-    (use-package unicode-fonts
-       :ensure t
-       :config
-	(unicode-fonts-setup))
-	
-      (reapply-font)
-      (add-hook 'after-make-frame-functions 'reapply-font)
+  (use-package unicode-fonts
+     :ensure t
+     :config
+      (unicode-fonts-setup))
+
+    (reapply-font)
+    (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
+
+#+RESULTS:
+| (lambda (frame) (let ((old-frame (selected-frame)) (old-buffer (current-buffer))) (unwind-protect (progn (select-frame frame 'norecord) (load-theme default-theme t)) (if (frame-live-p old-frame) (progn (select-frame old-frame 'norecord))) (if (buffer-live-p old-buffer) (progn (set-buffer old-buffer)))))) | reapply-font | doom-modeline-refresh-font-width-cache | doom-modeline-set-selected-window | doom-modeline-set-char-widths | evil-init-esc | x-dnd-init-frame |
 
 ** Themes
     
@@ -590,7 +674,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (require 'org-protocol)
 
 (org-babel-do-load-languages 'org-babel-load-languages
-  '((shell . t) (python . t) (emacs-lisp . t)))
+  '((shell . t) (python . t) (emacs-lisp . t) (ledger . t) (latex . t)))
 
   (use-package org-bullets
   :ensure t
@@ -649,6 +733,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	     "~/Public/Syncthing Global/Notes/TODO.org"))
  )
 #+END_SRC
+
+** python session in org-mode
+   #+begin_src emacs-lisp
+(add-to-list 'org-structure-template-alist '("p" . "src python :session (concat \"*Python: \" (file-name-nondirectory (buffer-file-name)) \"*\") :results output :exports both :tangle yes"))
+   #+end_src
 
 * Dired
 
@@ -716,35 +805,35 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
 #+begin_src emacs-lisp
 
-  (use-package dired
-    :ensure nil
-    :commands (dired dired-jump)
-    :bind (("C-x C-j" . dired-jump))
-    :custom ((dired-listing-switches "-agho --group-directories-first"))
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer))
+;; (use-package dired
+;;   :ensure nil
+;;   :commands (dired dired-jump)
+;;   :bind (("C-x C-j" . dired-jump))
+;;   :custom ((dired-listing-switches "-agho --group-directories-first"))
+;;   :config
+;;   (evil-collection-define-key 'normal 'dired-mode-map
+;;     "h" 'dired-single-up-directory
+;;     "l" 'dired-single-buffer))
 
-  (use-package dired-single
-    :commands (dired dired-jump))
+;; (use-package dired-single
+;;   :commands (dired dired-jump))
 
-  (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode))
+;; (use-package all-the-icons-dired
+;;   :hook (dired-mode . all-the-icons-dired-mode))
 
-  (use-package dired-open
-    :commands (dired dired-jump)
-    :config
-    ;; Doesn't work as expected!
-    ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
-    (setq dired-open-extensions '(("png" . "feh")
-				  ("mkv" . "mpv"))))
+;; (use-package dired-open
+;;   :commands (dired dired-jump)
+;;   :config
+;;   ;; Doesn't work as expected!
+;;   ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
+;;   (setq dired-open-extensions '(("png" . "feh")
+;; 				("mkv" . "mpv"))))
 
-  ;; (use-package dired-hide-dotfiles
-  ;;   :hook (dired-mode . dired-hide-dotfiles-mode)
-  ;;   :config
-  ;;   (evil-collection-define-key 'normal 'dired-mode-map
-  ;;     "H" 'dired-hide-dotfiles-mode))
+;; (use-package dired-hide-dotfiles
+;;   :hook (dired-mode . dired-hide-dotfiles-mode)
+;;   :config
+;;   (evil-collection-define-key 'normal 'dired-mode-map
+;;     "H" 'dired-hide-dotfiles-mode))
 
 #+end_src
 
