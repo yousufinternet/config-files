@@ -54,6 +54,7 @@ alias pacman='sudo pacman --color=always'
 alias hcat="highlight -O ansi --force"
 alias gamescrcpy="prime-run scrcpy --max-fps 20 -w -S --disable-screensaver"
 alias eclrun='WINEPREFIX=~/.wine32 WINEARCH=win32 wine ~/.wine32/drive_c/ecl/macros/eclrun.exe'
+alias adb_input="adb shell input keyevent"
 
 # vi mode in bash
 set -o vi
