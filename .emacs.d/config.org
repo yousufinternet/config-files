@@ -84,69 +84,124 @@ Please do check the following /configs/ as this one was heavily inspired by them
 *** elfeed
 
     #+begin_src emacs-lisp
-    (use-package elfeed
-      :ensure t
-      :config
-    (setq elfeed-feeds
-	  '(
-	    ;; programming
-	    ("https://news.ycombinator.com/rss" hacker)
-	    ("https://www.reddit.com/r/programming.rss" programming)
-	    ("https://www.reddit.com/r/emacs.rss" emacs)
+	(use-package elfeed
+	  :ensure t
+	  :config
+	(setq elfeed-feeds
+	      '(
+		;; programming
+		("https://news.ycombinator.com/rss" hacker)
+		("https://www.reddit.com/r/programming.rss" programming)
+		("https://www.reddit.com/r/emacs.rss" emacs)
 
-	    ;; programming languages
-	    ("https://www.reddit.com/r/python.rss" python)
+		;; programming languages
+		("https://www.reddit.com/r/python.rss" python)
 
 
-    ("https://spreadprivacy.com/rss" tech)
-    ("http://feeds.reuters.com/news/artsculture" art philosophy)
-    ("http://feeds.reuters.com/reuters/healthNews" health)
-    ("http://feeds.reuters.com/reuters/scienceNews" science)
-    ("http://feeds.reuters.com/reuters/technologyNews" tech)
-    ("http://feeds.reuters.com/reuters/topNews" news)
-    ("http://feeds.reuters.com/Reuters/worldNews" news popular)
-    ("https://www.reddit.com/r/worldnews/.rss" news)
-    ("http://feeds.bbci.co.uk/news/world/rss.xml" news popular)
-    ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml" news popular)
-    ("http://www.aljazeera.com/xml/rss/all.xml" news)
-    ("http://feeds.feedburner.com/WarNewsUpdates" news)
-    ("https://www.theguardian.com/world/rss" news popular)
-    ("https://www.rt.com/rss/news" news popular)
-    ("http://www.independent.co.uk/news/world/rss" news popular)
-    ("https://www.thesun.co.uk/news/worldnews/feed" news)
-    ("https://sputniknews.com/export/rss2/world/index.xml" news)
-    ("https://www.vox.com/rss/world/index.xml" news cool)
-    ("http://feeds.feedburner.com/TechCrunch" tech)
-    ("http://feeds.arstechnica.com/arstechnica/technology-lab" tech)
-    ("http://www.computerworld.com/index.rss" tech)
-    ("http://feeds.feedburner.com/Makeuseof" tech)
-    ("http://feeds.bbci.co.uk/news/technology/rss.xml" tech)
-    ("http://feed.androidauthority.com" tech android)
-    ("https://fossbytes.com/feed/?x=1" tech linux)
-    ("https://itsfoss.com/feed/" tech linux)
-    ("https://feeds.feedburner.com/d0od" tech linux)
-    ("https://hackaday.com/blog/feed/" tech linux)
-    ("http://www.ahaparenting.com/RSSRetrieve.aspx?ID=13126&Type=RSS20" parenting)
-    ("http://www.parentingscience.com/parenting.xml" parenting science)
-    ("http://dadandburied.com/feed/" parenting)
-    ("http://www.psy-ed.com/wpblog/feed" parenting science)
-    ("http://feeds.feedburner.com/sciencealert-latestnews" science)
-    ("http://rss.sciam.com/ScientificAmerican-Global" science)
-    ("http://feeds.feedburner.com/AllDiscovermagazinecomContent" science)
-    ("https://www.wired.com/category/science/feed" science)
-    ("http://www.popsci.com/rss.xml" science)
-    ("https://www.linux.com/feeds/original-content/rss" tech linux)
-    ("https://www.linux.com/feeds/news/rss" tech linux)
-    ("https://www.linux.com/feeds/news/embedded-and-mobile/rss" tech linux)
-    ("https://www.linux.com/feeds/news/desktop/rss" tech linux)
-    ("https://aeon.co/feed.rss" philosophy cool)
-    ("https://lukesmith.xyz/rss.xml" cool linux tech)
-    ))
+	("https://spreadprivacy.com/rss" tech)
+	("http://feeds.reuters.com/news/artsculture" art philosophy)
+	("http://feeds.reuters.com/reuters/healthNews" health)
+	("http://feeds.reuters.com/reuters/scienceNews" science)
+	("http://feeds.reuters.com/reuters/technologyNews" tech)
+	("http://feeds.reuters.com/reuters/topNews" news)
+	("http://feeds.reuters.com/Reuters/worldNews" news popular)
+	("https://www.reddit.com/r/worldnews/.rss" news)
+	("http://feeds.bbci.co.uk/news/world/rss.xml" news popular)
+	("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml" news popular)
+	("http://www.aljazeera.com/xml/rss/all.xml" news)
+	("http://feeds.feedburner.com/WarNewsUpdates" news)
+	("https://www.theguardian.com/world/rss" news popular)
+	("https://www.rt.com/rss/news" news popular)
+	("http://www.independent.co.uk/news/world/rss" news popular)
+	("https://www.thesun.co.uk/news/worldnews/feed" news)
+	("https://sputniknews.com/export/rss2/world/index.xml" news)
+	("https://www.vox.com/rss/world/index.xml" news cool)
+	("http://feeds.feedburner.com/TechCrunch" tech)
+	("http://feeds.arstechnica.com/arstechnica/technology-lab" tech)
+	("http://www.computerworld.com/index.rss" tech)
+	("http://feeds.feedburner.com/Makeuseof" tech)
+	("http://feeds.bbci.co.uk/news/technology/rss.xml" tech)
+	("http://feed.androidauthority.com" tech android)
+	("https://fossbytes.com/feed/?x=1" tech linux)
+	("https://itsfoss.com/feed/" tech linux)
+	("https://feeds.feedburner.com/d0od" tech linux)
+	("https://hackaday.com/blog/feed/" tech linux)
+	("http://www.ahaparenting.com/RSSRetrieve.aspx?ID=13126&Type=RSS20" parenting)
+	("http://www.parentingscience.com/parenting.xml" parenting science)
+	("http://dadandburied.com/feed/" parenting)
+	("http://www.psy-ed.com/wpblog/feed" parenting science)
+	("http://feeds.feedburner.com/sciencealert-latestnews" science)
+	("http://rss.sciam.com/ScientificAmerican-Global" science)
+	("http://feeds.feedburner.com/AllDiscovermagazinecomContent" science)
+	("https://www.wired.com/category/science/feed" science)
+	("http://www.popsci.com/rss.xml" science)
+	("https://www.linux.com/feeds/original-content/rss" tech linux)
+	("https://www.linux.com/feeds/news/rss" tech linux)
+	("https://www.linux.com/feeds/news/embedded-and-mobile/rss" tech linux)
+	("https://www.linux.com/feeds/news/desktop/rss" tech linux)
+	("https://aeon.co/feed.rss" philosophy cool)
+	("https://lukesmith.xyz/rss.xml" cool linux tech)
+	))
 
-    (setq-default elfeed-search-filter "@2-days-ago +unread")
-    (setq-default elfeed-search-title-max-width 100)
-    (setq-default elfeed-search-title-min-width 100)
+	(setq-default elfeed-search-filter "@2-days-ago +unread")
+	;; (setq-default elfeed-search-title-max-width 100)
+	;; (setq-default elfeed-search-title-min-width 100)
+
+
+    (setq elfeed-show-entry-switch #'elfeed-display-buffer)
+
+    (defun elfeed-display-buffer (buf &optional act)
+      (pop-to-buffer buf)
+      (set-window-text-height (get-buffer-window) (round (* 0.5 (frame-height))))
+      (other-window 1)
       )
+
+    (defface relevant-elfeed-entry
+      `((t :inherit border))
+      "Marks a relevant Elfeed entry.")
+
+    (defface important-elfeed-entry  
+      `((t :inherit compilation-error))
+      ;; `((t :background ,(color-lighten-name "OrangeRed2" 40)))
+      "Marks an important Elfeed entry.")
+
+    (push '(relevant relevant-elfeed-entry)
+	  elfeed-search-face-alist)
+
+    (push '(important important-elfeed-entry)
+	  elfeed-search-face-alist)
+
+    (defun score-elfeed-entry (entry)
+      (let ((title (elfeed-entry-title entry))
+	    (content (elfeed-deref (elfeed-entry-content entry)))
+	    (score 0))
+	(loop for (pattern n) in '(("petroleum engineering\\|oil industry\\|reservoir engineering" 2)
+				   ("oil price" 2)
+				   ("machine learning\\|data science" 1)
+				   ("python\\|flutter" 1)
+				   ("israel\\|iraq\\|iran" 1)
+				   ("petroleum\\|oil" 1)
+				   )
+	      if (string-match pattern title)
+	      do (incf score n)
+	      if (string-match pattern content)
+	      do (incf score n))
+	(message "%s - %s" title score)
+
+	;; store score for later in case I ever integrate machine learning
+	(setf (elfeed-meta entry :my/score) score)
+
+	(cond
+	 ((= score 1)
+	  (elfeed-tag entry 'relevant))
+	 ((> score 1)
+	  (elfeed-tag entry 'important)))
+	entry))
+
+    (add-hook 'elfeed-new-entry-hook 'score-elfeed-entry)
+
+    )
+
     #+end_src
 
 * Emacs tweaks
@@ -309,10 +364,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   "tt" 'counsel-load-theme
 	   "t+" 'text-scale-adjust
 	   "t-" 'text-scale-adjust
-	   "h" '(:ignore t :which-key "Help")
-	   "hf" 'counsel-describe-function
-	   "hv" 'counsel-describe-variable
-	   "hk" 'describe-key)
+	   ;; "h" '(:ignore t :which-key "Help")
+	   )
+	   (general-translate-key 'normal 'global-map (kbd "SPC h") (kbd "C-h"))
 	   (general-define-key
 	   :states '(normal visual)
 	   :prefix "SPC o"
