@@ -430,6 +430,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
    :keymaps 'doc-view-mode-map
   "SPC" nil)
 (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map (kbd "SPC") nil)  
+(general-define-key :states '(normal visual) "C-u" 'evil-scroll-up)
 	  )
 
 	(defun config-reload ()
@@ -843,13 +844,13 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;;   and a licensing stub.
 (setq org-static-blog-page-postamble
 "<div id=\"archive\">
-  <a href=\"https://staticblog.org/archive.html\">Other posts</a>
+  <a href=\"archive.html\">Other posts</a>
 </div> ")
 
 ;; This HTML code is inserted into the index page between the preamble and
 ;;   the blog posts
 (setq org-static-blog-index-front-matter
-"<h3> About | Photo gallery | Home </h3>\n")
+"<h3> <a href=\"index.html\"> Home </a>|<a href=\"about.html\"> About </a>|<a href=\"gallary.html\"> Photo gallery </a>|<a href=\"index.html\"> Blog </a>|<a href=\"rss.xml\"> RSS </a></h3>\n")
   )
    #+end_src
 
