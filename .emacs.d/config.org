@@ -367,6 +367,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   ;; "h" '(:ignore t :which-key "Help")
 	   )
 	   (general-translate-key 'normal 'global-map (kbd "SPC h") (kbd "C-h"))
+           (general-define-key :states 'normal "SPC h" (general-simulate-key "C-h"))
 	   (general-define-key
 	   :states '(normal visual)
 	   :prefix "SPC o"
@@ -746,8 +747,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
   (setq org-log-done "note")
   (org-agenda nil "a")
   (setq org-log-into-drawer "LOGBOOK")
-  (setq org-confirm-babel-evaluate nil)
-  (setq org-edit-src-content-indentation 0)
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	  org-todo-keyword-faces
 	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
@@ -788,9 +787,66 @@ Please do check the following /configs/ as this one was heavily inspired by them
  )
 #+END_SRC
 
-** python session in org-mode
-   #+begin_src emacs-lisp
+** babel setup
+
+*** python session in org-mode
+    #+begin_src emacs-lisp
 (add-to-list 'org-structure-template-alist '("p" . "src python :session (concat \"*Python: \" (file-name-nondirectory (buffer-file-name)) \"*\") :results output :exports both :tangle yes"))
+    #+end_src
+
+*** do not indent org-src-blocks
+    #+begin_src emacs-lisp
+  (setq org-confirm-babel-evaluate nil)
+   (setq org-src-preserve-indentation t)
+   (setq org-edit-src-content-indentation 0)
+    #+end_src
+
+** org static blog
+   #+begin_src emacs-lisp
+(use-package org-static-blog
+  :ensure t
+:commands (org-static-blog-create-new-post org-static-blog-create-new-draft org-static-blog-publish)
+:config
+(setq org-static-blog-publish-title "Tech Adventurer")
+(setq org-static-blog-publish-url "https://yousufinternet.github.io/")
+(setq org-static-blog-publish-directory "~/Documents/orgblog/")
+(setq org-static-blog-posts-directory "~/Documents/orgblog/posts/")
+(setq org-static-blog-drafts-directory "~/Documents/orgblog/drafts/")
+(setq org-static-blog-enable-tags t)
+(setq org-export-with-toc t)
+(setq org-export-with-section-numbers nil)
+
+;; This header is inserted into the <head> section of every page:
+;;   (you will need to create the style sheet at
+;;    ~/projects/blog/static/style.css
+;;    and the favicon at
+;;    ~/projects/blog/static/favicon.ico)
+(setq org-static-blog-page-header
+"<meta name=\"author\" content=\"Yusuf Mohammad\">
+<meta name=\"referrer\" content=\"no-referrer\">
+<link href= \"static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
+<link rel=\"icon\" href=\"static/favicon.ico\">")
+
+;; This preamble is inserted at the beginning of the <body> of every page:
+;;   This particular HTML creates a <div> with a simple linked headline
+(setq org-static-blog-page-preamble
+"<div class=\"header\">
+  <a href=\"https://yousufinternet.github.io\">Tech Adventurer</a>
+</div>")
+
+;; This postamble is inserted at the end of the <body> of every page:
+;;   This particular HTML creates a <div> with a link to the archive page
+;;   and a licensing stub.
+(setq org-static-blog-page-postamble
+"<div id=\"archive\">
+  <a href=\"https://staticblog.org/archive.html\">Other posts</a>
+</div> ")
+
+;; This HTML code is inserted into the index page between the preamble and
+;;   the blog posts
+(setq org-static-blog-index-front-matter
+"<h3> About | Photo gallery | Home </h3>\n")
+  )
    #+end_src
 
 * Dired
