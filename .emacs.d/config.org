@@ -354,6 +354,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   "oa" 'org-agenda-list
 	   "oc" 'org-capture
 	   "ol" 'org-store-link
+	   "os" '(:ignore t :which-key "org static blog")
+	   "osc" 'org-static-blog-create-new-post
+	   "osd" 'org-static-blog-create-new-draft
+	   "oss" 'org-static-blog-publish
 	   "s" '(:ignore t :which-key "Spell check")
 	   "sc" 'flyspell-correct-at-point
 	   "ss" 'flyspell-correct-wrapper
