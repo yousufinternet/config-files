@@ -1,7 +1,11 @@
 
-# open the terminal
+# open the terminal with tmux
 super + Return
    $TERMINAL -e tmux -2
+
+# open the terminal
+super + shift + Return
+   $TERMINAL
 
 # all open windows
 super + w
@@ -53,8 +57,8 @@ super + i ; {m,h,n,r,f,p,s}
 	$TERMINAL -w $((23*GDK_SCALE)) -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
-super + g ; {c,f,g,t,q,r,z}
-  {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
+super + g ; {c,d,f,g,t,q,r,z}
+  {calibre, discord, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
 super + shift + g ; {f,d,b,s} 
