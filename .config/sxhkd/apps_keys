@@ -53,12 +53,12 @@ super + i ; {m,h,n,r,f,p,s}
 	$TERMINAL -w $((23*GDK_SCALE)) -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
-super + g ; {c,f,g,t,q,r,z}
-  {calibre, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
+super + g ; {c,d,f,g,t,q,r,z}
+  {calibre, discord, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
 super + shift + g ; {f,d,b,s} 
-  ~/.config/bspwm/scripts/optimus_run.py {firefox,darktable,blender,steam-native}
+  ~/Scripts/optimus_run.py {firefox,darktable,blender,steam-native}
 
 # File manager
 super + ctrl + f
@@ -66,7 +66,7 @@ super + ctrl + f
 
 # Web browser
 super + ctrl + w
-  ~/.config/bspwm/scripts/optimus_run.py qutebrowser
+  ~/Scripts/optimus_run.py qutebrowser
 
 # IDE
 super + ctrl + e
@@ -74,4 +74,4 @@ super + ctrl + e
 
 # Help: opens a rofi menu with all man pages, displays the selected man page in zathura
 super + shift + F1
-  ~/.config/bspwm/scripts/browse_man_pages.py
+  ~/Scripts/browse_man_pages.py
