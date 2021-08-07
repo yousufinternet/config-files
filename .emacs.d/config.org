@@ -459,9 +459,13 @@ Please do check the following /configs/ as this one was heavily inspired by them
     :config
     (evil-mode 1)
     (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
+    (evil-global-set-key 'normal (kbd "C-w C-<left>") 'evil-window-left)
     (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
+    (evil-global-set-key 'normal (kbd "C-w C-<right>") 'evil-window-right)
     (evil-global-set-key 'normal (kbd "C-w <up>") 'evil-window-up)
+    (evil-global-set-key 'normal (kbd "C-w C-<up>") 'evil-window-up)
     (evil-global-set-key 'normal (kbd "C-w <down>") 'evil-window-down)
+    (evil-global-set-key 'normal (kbd "C-w C-<down>") 'evil-window-down)
     (evil-global-set-key 'normal (kbd "<left>") 'left-char)
     (evil-global-set-key 'normal (kbd "<right>") 'right-char)
     (evil-global-set-key 'visual (kbd "<left>") 'left-char)
@@ -687,6 +691,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
 	   "** TODO %?\n SCHEDULED: %^t")
 
+   ("td" "Daily simple tasks" entry
+       (file+olp+datetree "~/Public/Syncthing Global/Notes/capture.org" "Daily Simple Tasks")
+"* TODO %?\n SCHEDULED: %t\n DEADLINE: %t"
+       :jump-to-captured t)
+
 	   ("i" "Interesting thingies")
 	   ("iq" "Interesting Quotes" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Interesting Things" "Interesting Quotes")
 	   "** %?\n %x\n CAPTURED on %u\n")
@@ -829,6 +838,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq org-static-blog-page-header
 "<meta name=\"author\" content=\"Yusuf Mohammad\">
 <meta name=\"referrer\" content=\"no-referrer\">
+<link href=\"static/org-default-styling.css\" rel=\"stylesheet\" type=\"text/css\" />
+<link href=\"static/floating_toc.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href= \"static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link rel=\"icon\" href=\"static/favicon.ico\">")
 
