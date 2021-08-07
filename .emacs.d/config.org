@@ -850,7 +850,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; This HTML code is inserted into the index page between the preamble and
 ;;   the blog posts
 (setq org-static-blog-index-front-matter
-"<h3> <a href=\"index.html\"> Home </a>|<a href=\"about.html\"> About </a>|<a href=\"gallary.html\"> Photo gallery </a>|<a href=\"index.html\"> Blog </a>|<a href=\"rss.xml\"> RSS </a></h3>\n")
+"<h3> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallary.html\"> 🌄 Photo gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h3>\n")
   )
    #+end_src
 
