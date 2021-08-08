@@ -624,6 +624,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; make org source blocks always monospaced
 (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
 )
 
   (use-package unicode-fonts
@@ -821,7 +824,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
   :ensure t
 :commands (org-static-blog-create-new-post org-static-blog-create-new-draft org-static-blog-publish)
 :config
-(setq org-static-blog-publish-title "Tech Adventurer")
+(setq org-static-blog-publish-title "Tech Adventurs")
 (setq org-static-blog-publish-url "https://yousufinternet.github.io/")
 (setq org-static-blog-publish-directory "~/Documents/orgblog/")
 (setq org-static-blog-posts-directory "~/Documents/orgblog/posts/")
@@ -861,7 +864,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; This HTML code is inserted into the index page between the preamble and
 ;;   the blog posts
 (setq org-static-blog-index-front-matter
-"<h3> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallary.html\"> 🌄 Photo gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h3>\n")
+"<center><h2> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallery.html\"> 🌄 gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h2></center>\n")
   )
    #+end_src
 
