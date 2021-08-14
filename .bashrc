@@ -23,11 +23,12 @@ source <(cod init $$ bash)
 
 # for bspwm
 export XDG_CONFIG_HOME="$HOME/.config"
-export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
+# export ROFI_THEME=~/.config/rofi/themes/dracula.rasi
+export ROFI_THEME=sidebar
 export EDITOR=vim
 # export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
 export TERMINAL="konsole"
-export RTV_EDITOR=vim
+export RTV_EDITOR='emacsclient -c -a ""'
 
 # my scripts and flutter executables
 export PATH=$PATH:$HOME/.local/bin
