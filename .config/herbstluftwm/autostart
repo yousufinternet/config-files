@@ -26,6 +26,7 @@ startup_cmds = [
     "redshift",
     "nm-applet",
     "udiskie -t",
+    # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
     'dunst -geometry "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((8+GDK_SCALE))" -corner_radius 25 -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE))',
     "blueman-applet",
     "emacs --daemon",
@@ -117,9 +118,9 @@ hc(f"keybind {MOD}-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner
 hc(f"keybind {MOD}-Shift-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner.py -1'")
 
 # scratchpads
-hc(f"keybind {MOD}-d spawn sh -c '~/.config/herbstluftwm/scratch.py -c scratch_term -w 0.8 -ht 0.65 -y {20*GDK_SCALE} -x 0.1 --termflags --title=Dropdown_terminal --fontsize={20*GDK_SCALE} --fade=50 -e tmux -2'")
+hc(f"keybind {MOD}-d spawn sh -c '~/.config/herbstluftwm/scratch.py -c scratch_term -w 1 -ht 0.8 -y {GDK_SCALE*2} -x 0 --termflags --profile=Default-Black'")
 hc(f"keybind {MOD}-Ctrl-c spawn sh -c '~/.config/herbstluftwm/scratch.py -c dropdown_calc -w 0.3 \
-  -ht 0.3 -x 0.35 -y 0.7 --termflags --title=Calculator_DropDown -e bc'")
+  -ht 0.3 -x 0.35 -y 0.7 --termflags --profile=Default-Black -e bc'")
 
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
    '. cycle_layout +1 , cycle_layout +1')
@@ -187,7 +188,9 @@ hc("rule instance='pinentry-gtk-2' floating=on")
 hc("rule class='Oblogout' fullscreen=on")
 hc(f"rule class='TelegramDesktop' tag='{tags_lst[8]}'")
 hc(f"rule class='transmission' tag='{tags_lst[7]}'")
+hc(f"rule class='discord' tag='{tags_lst[8]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
+hc(f"rule class='firefox' tag='{tags_lst[0]}'")
 hc("rule name='dropdown_terminal' floating=on")
 hc("rule title='Picture-in-Picture' floating=on")
 hc("rule title='Picture-in-Picture' focus=off")
