@@ -1,11 +1,11 @@
 
 # open the terminal with tmux
 super + Return
-   $TERMINAL -e tmux -2
+   $TERMINAL
 
 # open the terminal
 super + shift + Return
-   $TERMINAL
+   $TERMINAL -e tmux -2
 
 # all open windows
 super + w
