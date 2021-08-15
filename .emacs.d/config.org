@@ -141,6 +141,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	("https://www.linux.com/feeds/news/desktop/rss" tech linux)
 	("https://aeon.co/feed.rss" philosophy cool)
 	("https://lukesmith.xyz/rss.xml" cool linux tech)
+("https://itwadi.com/rss.xml" tech linux arabic)
 	))
 
 	(setq-default elfeed-search-filter "@2-days-ago +unread")
@@ -658,7 +659,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'doom-dracula)
+  (setq default-theme 'doom-ir-black)
   (load-theme default-theme t)
 #+END_SRC
 

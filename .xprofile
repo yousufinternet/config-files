@@ -6,6 +6,8 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
 export TERMINAL="konsole"
 export ROFI_THEME=$HOME/.config/rofi/themes/dracula.rasi
+# export ROFI_THEME=$HOME/.config/rofi/themes/dracula.rasi
+export ROFI_THEME=sidebar
 export EDITOR=vim
 export RTV_EDITOR=vim
 
