@@ -227,7 +227,10 @@ repeat_rate 25
 }
 
 # for lenovo laptop
-exec disable_touchpad.sh
+exec ~/.config/sway/disable_touchpad.sh
+exec_always import ~/.config/sway/import_gsetting.sh
+
+# gtk3 themes fix
 default_border pixel 2
 
 include /etc/sway/config.d/*
