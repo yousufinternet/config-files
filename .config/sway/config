@@ -7,6 +7,7 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
+
 set $mod Mod4
 # Home row direction keys, like vim
 set $left h
@@ -15,10 +16,12 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term konsole
+set $emacsclient emacsclient -c -a ""
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu wofi --show run | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -65,27 +68,32 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    # Emacs
-    bindsym $mod+Ctrl+e exec emacsclient -c -a ""
+    # browse man pages
+   bindsym $mod+F1 exec ~/Scripts/browse_man_pages.py
+
+# all open windows
 
     # Kill focused window
-    bindsym $mod+q kill
+    bindsym --to-code $mod+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym --to-code $mod+e exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
+    for_window [title="."] title_format %title - %class,%instance
     floating_modifier $mod normal
+    bindsym --to-code $mod+Shift+s sticky toggle
+    titlebar_border_thickness 2
+    hide_edge_borders smart
+    smart_gaps on
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -168,55 +176,56 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # Sway has a "scratchpad", which is a bag of holding for windows.
     # You can send windows there and get them back later.
 
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
-
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
-#
 # Resizing containers:
 #
-mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindsym --to-code $mod+Ctrl+$left resize shrink width 10px
+    bindsym --to-code $mod+Ctrl+$down resize grow height 10px
+    bindsym --to-code $mod+Ctrl+$up resize shrink height 10px
+    bindsym --to-code $mod+Ctrl+$right resize grow width 10px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    bindsym $mod+Ctrl+Left resize shrink width 10px
+    bindsym $mod+Ctrl+Down resize grow height 10px
+    bindsym $mod+Ctrl+Up resize shrink height 10px
+    bindsym $mod+Ctrl+Right resize grow width 10px
 
     # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
 
 mode "guiapps" {
-     bindsym t exec telegram-desktop
-     bindsym g exec gimp
+     bindsym --to-code t exec telegram-desktop
+     bindsym --to-code g exec gimp
+     bindsym --to-code d exec discord
+     bindsym --to-code q exec transmission-qt
+     bindsym Escape mode "default"
 }
 
-bindsym $mod+g mode guiapps
+bindsym --to-code $mod+g mode guiapps
+bindsym --to-code $mod+Ctrl+w exec qutebrowser
+bindsym --to-code $mod+Shift+w exec firefox
+bindsym --to-code $mod+Ctrl+e exec $emacsclient 
+bindsym --to-code $mod+Ctrl+f exec $term -e ranger 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
+
 bar {
     position top
-    swaybar_command waybar
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-}
+    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
 
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
 
 input "type:keyboard" {
 xkb_layout us,ara
@@ -228,9 +237,22 @@ repeat_rate 25
 
 # for lenovo laptop
 exec ~/.config/sway/disable_touchpad.sh
-exec_always import ~/.config/sway/import_gsetting.sh
 
 # gtk3 themes fix
+exec_always ~/.config/sway/import_gsetting.sh
+
 default_border pixel 2
+gaps inner 10
+gaps outer 5
+
+# startup apps
+exec emacs --daemon
+exec udiskie -t
+exec mpd
 
 include /etc/sway/config.d/*
+
+
+# exec nm-applet
+# exec pasystray
+
