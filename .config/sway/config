@@ -7,6 +7,7 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
+
 set $mod Mod4
 # Home row direction keys, like vim
 set $left h
@@ -18,7 +19,8 @@ set $term konsole
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu wofi --show run | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -65,14 +67,16 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    # Emacs
-    bindsym $mod+Ctrl+e exec emacsclient -c -a ""
+    # browse man pages
+#    bindsym $mod+F1 exec ~/Scripts/browse_man_pages.py
+
+# all open windows
 
     # Kill focused window
-    bindsym $mod+q kill
+    bindsym --to-code $mod+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym --to-code $mod+e exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -177,34 +181,32 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Resizing containers:
 #
-mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindsym --to-code $mod+Ctrl+$left resize shrink width 10px
+    bindsym --to-code $mod+Ctrl+$down resize grow height 10px
+    bindsym --to-code $mod+Ctrl+$up resize shrink height 10px
+    bindsym --to-code $mod+Ctrl+$right resize grow width 10px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    bindsym $mod+Ctrl+Left resize shrink width 10px
+    bindsym $mod+Ctrl+Down resize grow height 10px
+    bindsym $mod+Ctrl+Up resize shrink height 10px
+    bindsym $mod+Ctrl+Right resize grow width 10px
 
     # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
 
 mode "guiapps" {
-     bindsym t exec telegram-desktop
-     bindsym g exec gimp
+     bindsym --to-code t exec telegram-desktop
+     bindsym --to-code g exec gimp
+     bindsym --to-code d exec discord
+     bindsym Escape mode "default"
 }
 
-bindsym $mod+g mode guiapps
+bindsym --to-code $mod+g mode guiapps
+bindsym --to-code $mod+Ctrl+w exec qutebrowser
 #
 # Status Bar:
 #
@@ -227,7 +229,17 @@ repeat_rate 25
 }
 
 # for lenovo laptop
-exec disable_touchpad.sh
+exec ~/.config/sway/disable_touchpad.sh
+exec ~/.config/sway/import_gsettings.sh
 default_border pixel 2
 
+# startup apps
+exec emacs --daemon
+exec udiskie -t
+
 include /etc/sway/config.d/*
+
+
+# exec nm-applet
+# exec pasystray
+
