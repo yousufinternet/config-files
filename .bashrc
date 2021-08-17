@@ -139,12 +139,12 @@ if xset q &>/dev/null; then
   cowsay -f tux $(fortune) | lolcat -p 1
 fi
 
-if [ "$(tty)" = "/dev/tty1" ]; then
-	exec sway --my-next-gpu-wont-be-nvidia
-fi
-
-# if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-#   exec startx
+# if [ "$(tty)" = "/dev/tty1" ]; then
+# 	exec sway --my-next-gpu-wont-be-nvidia
 # fi
+
+if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx
+fi
 
 # source ~/.local/share/blesh/ble.sh

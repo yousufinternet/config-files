@@ -5,7 +5,8 @@ from start_lemonbar import create_powerline, lemonbar_below_xfcepanel, HOSTNAME
 from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
-    CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate
+    CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
+    HerbstluftwmWorkspaces
 
 
 if __name__ == '__main__':
@@ -28,7 +29,7 @@ if __name__ == '__main__':
         ]
     else:
         modules = [
-            HerbstluftwmWorkspacesDots(),
+            HerbstluftwmWorkspaces(),
             CoronaVirus(),
             PacmanUpdates(),
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
@@ -43,9 +44,9 @@ if __name__ == '__main__':
             TimeDate()
         ]
 
-    create_powerline(modules, bgs)
+    # create_powerline(modules, bgs, seps=[' ', ' ', ' ', ' '])
 
-    main_loop = MainLoop(modules, sep='', bg=bgs[0], fg='#F8F8F2')
+    main_loop = MainLoop(modules, sep=' %{F#555555}|%{F-} ', bg='#000000', fg='#F8F8F2')
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()
