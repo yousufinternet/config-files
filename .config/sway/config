@@ -69,7 +69,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     bindsym $mod+Return exec $term
 
     # browse man pages
-   bindsym $mod+F1 exec ~/Scripts/browse_man_pages.py
+    bindsym $mod+F1 exec ~/Scripts/browse_man_pages.py
 
 # all open windows
 
@@ -90,6 +90,8 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     titlebar_border_thickness 2
     hide_edge_borders smart
     smart_gaps on
+    tiling_drag enable
+    workspace_auto_back_and_forth enable
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -196,7 +198,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # Return to default mode
 
 mode "guiapps" {
-     bindsym --to-code t exec telegram-desktop
+     bindsym --to-code t exec telegram-desktop && swaymsg mode "default"
      bindsym --to-code g exec gimp
      bindsym --to-code d exec discord
      bindsym --to-code q exec transmission-qt
@@ -218,7 +220,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    status_command i3blocks -c ~/.config/sway/i3blocks.conf
 
     colors {
         statusline #ffffff
@@ -242,6 +244,7 @@ exec ~/.config/sway/disable_touchpad.sh
 exec_always ~/.config/sway/import_gsetting.sh
 
 default_border pixel 2
+default_floating_border none
 gaps inner 10
 gaps outer 5
 
