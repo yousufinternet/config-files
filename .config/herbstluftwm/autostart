@@ -118,9 +118,14 @@ hc(f"keybind {MOD}-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner
 hc(f"keybind {MOD}-Shift-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_corner.py -1'")
 
 # scratchpads
-hc(f"keybind {MOD}-d spawn sh -c '~/.config/herbstluftwm/scratch.py -c scratch_term -w 1 -ht 0.8 -y {GDK_SCALE*2} -x 0 --termflags --profile=Default-Black'")
-hc(f"keybind {MOD}-Ctrl-c spawn sh -c '~/.config/herbstluftwm/scratch.py -c dropdown_calc -w 0.3 \
-  -ht 0.3 -x 0.35 -y 0.7 --termflags --profile=Default-Black -e bc'")
+scratch_rules = 'rule once class=konsole floating=on floatplacement=none'
+scratch_script = '~/.config/herbstluftwm/scratch.py'
+hc(f"keybind {MOD}-d chain , {scratch_rules} , spawn sh -c"
+   f" '{scratch_script} -c dropdown_term -w 1 -ht 0.8 -y "
+   f"{GDK_SCALE*2} -x 0 --termflags --profile=Default-Black'")
+hc(f"keybind {MOD}-Ctrl-c chain , {scratch_rules} , spawn sh -c "
+   f"'{scratch_script} -c dropdown_calc -w 0.3 -ht 0.3 -x 0.35 -y 0.7"
+   "--termflags --profile=Black-BigFont -e bc'")
 
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
    '. cycle_layout +1 , cycle_layout +1')
@@ -191,8 +196,8 @@ hc(f"rule class='transmission' tag='{tags_lst[7]}'")
 hc(f"rule class='discord' tag='{tags_lst[8]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
 hc(f"rule class='firefox' tag='{tags_lst[0]}'")
-hc("rule name='dropdown_terminal' floating=on")
-hc("rule instance='scratch_term' floating=on floatplacement=none")
+hc("rule name='dropdown_term' floating=on float_placement=none hook=make_sticky")
+hc("rule name='dropdown_calc' floating=on float_placement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatfloatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
 

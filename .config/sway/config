@@ -38,10 +38,10 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -100,6 +100,9 @@ bindsym XF86AudioRaiseVolume exec volume_ctl.sh +5
 bindsym XF86AudioLowerVolume exec volume_ctl.sh -5
 bindsym $mod+minus exec volume_ctl.sh -5
 bindsym $mod+equal exec volume_ctl.sh +5
+bindsym $mod+Shift+minus exec brightness_ctl.sh -5
+bindsym $mod+Shift+equal exec brightness_ctl.sh +5
+bindsym --to-code $mod+Shift+B exec toggle_brightness.py
 
 #
 # Moving around:
@@ -225,13 +228,14 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command i3blocks -c ~/.config/sway/i3blocks.conf
+    # status_command i3blocks -c ~/.config/sway/i3blocks.conf
+    swaybar_command waybar
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
 }
 
 input "type:keyboard" {
@@ -254,9 +258,13 @@ gaps inner 10
 gaps outer 5
 
 # startup apps
-exec emacs --daemon
+exec ~/.config/sway/layoutPerWindow.py
 exec udiskie -t
+exec dunst -geometry 250x4-15+26 -padding 8 -frame-width 2 -font "Dejavu Sans Mono 9" -corner_radius 10 -min_icon_size 32 -max_icon_size 32
 exec mpd
+exec nm-applet
+exec emacs --daemon
+exec blueman-applet
 
 include /etc/sway/config.d/*
 
