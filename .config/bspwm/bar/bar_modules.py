@@ -9,7 +9,7 @@ import threading
 import subprocess
 from bs4 import BeautifulSoup
 
-from colors import dracula as cdict
+from colors import linux as cdict
 
 from lemonbar_script import GDKSCALE
 
@@ -464,7 +464,7 @@ class QtileWorkspaces():
 
 class HerbstluftwmWorkspaces():
     def __init__(self):
-        P = subprocess.Popen('herbstclient --idle tag_changed', text=True, shell=True,
+        P = subprocess.Popen('herbstclient --idle', text=True, shell=True,
                              stdout=subprocess.PIPE, encoding='UTF-8')
         self.updater = P.stdout
         self.wait_time = 60
