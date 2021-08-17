@@ -59,7 +59,7 @@ function report_status() {
 # PS1='[\u@\h \W]\$ '
 export _PS1="\e[0;35m[\e[0m \e[2;36m\u\e[0m:\e[1;32m\W\e[0m \e[0;35m]\e[0m "
 PS2=">>"
-export PROMPT_COMMAND='_status=$(report_status);export PS1="${_PS1} $(_git_prompt)${_status} \e[1;31m\$\e[0m :-\n  ";unset _status;'
+export PROMPT_COMMAND='_status=$(report_status);export PS1="${_PS1} $(_git_prompt)${_status} \e[1;31m\$\e[0m :-\n>>";unset _status;'
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
@@ -141,6 +141,7 @@ fi
 
 if [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway --my-next-gpu-wont-be-nvidia
+#	exec qtile
 fi
 
 # if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
