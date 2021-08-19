@@ -140,6 +140,7 @@ def repair_geometry(wid, gmt):
 
 def start_terminal(termclass, termargs):
     P = sp.Popen('herbstclient --idle focus_changed', text=True, shell=True, stdout=sp.PIPE)
+    print(termargs)
     sp.Popen('konsole '+(' '.join(termargs) if termargs else ''),
              shell=True, text=True)
     wid = P.stdout.readline().strip().split()[1]
@@ -156,15 +157,15 @@ def toggle_hide(wid):
         hc(f'set_attr clients.{wid}.minimized true')
 
 
-def reapply_rules(term_class):
+def reapply_rules(term_class, geometry):
+    dropdown_rules = 'floating=on floatplacement=none hook=make_sticky '
+    dropdown_rules += f'floating_geometry={geometry}'
+    rules_reg = r'\s*'.join(dropdown_rules.split())
+    full_reg = r'.*class='+term_class+rules_reg+r'.*'
     rules = hc('list_rules')[0].split('\n')
-    float_rules = [rule for rule in rules if re.match(r'.*class='+term_class+r'\s*floating=on.*', rule)]
-    sticky_rules = [rule for rule in rules if re.match(r'.*class='+term_class+r'\s*hook=make_sticky.*', rule)]
-    print(sticky_rules)
-    if not float_rules:
-        hc(f'rule class={term_class} floating=on')
-    if not sticky_rules:
-        hc(f'rule class={term_class} hook=make_sticky')
+    drop_rules = [rule for rule in rules if re.match(full_reg, rule)]
+    if not drop_rules:
+        hc(f'rule class={term_class} {dropdown_rules}')
 
 
 def main():
@@ -172,7 +173,7 @@ def main():
     geometry = create_geometry_str(args.x, args.y, args.width, args.height)
     wid = win_exists(args.termclass)
     if not wid:
-        reapply_rules(args.termclass)
+        reapply_rules(args.termclass, geometry)
         start_terminal(args.termclass, args.termflags)
     else:
         toggle_hide(wid)

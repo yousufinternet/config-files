@@ -7,6 +7,10 @@ super + Return
 super + shift + Return
    $TERMINAL -e tmux -2
 
+# konsole with ipython
+super + ctrl + Return
+   $TERMINAL --profile=ipython
+
 # all open windows
 super + w
      rofi -show window -terminal $TERMINAL -dpi 0 -theme $ROFI_THEME -modi window,windowcd

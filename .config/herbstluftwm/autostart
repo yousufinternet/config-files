@@ -120,11 +120,11 @@ hc(f"keybind {MOD}-Shift-v spawn sh -c '~/.config/herbstluftwm/move_floating_to_
 # scratchpads
 scratch_rules = 'rule once class=konsole floating=on floatplacement=none'
 scratch_script = '~/.config/herbstluftwm/scratch.py'
-hc(f"keybind {MOD}-d chain , {scratch_rules} , spawn sh -c"
+hc(f"keybind {MOD}-d spawn sh -c"
    f" '{scratch_script} -c dropdown_term -w 1 -ht 0.8 -y "
    f"{GDK_SCALE*2} -x 0 --termflags --profile=Default-Black'")
-hc(f"keybind {MOD}-Ctrl-c chain , {scratch_rules} , spawn sh -c "
-   f"'{scratch_script} -c dropdown_calc -w 0.3 -ht 0.3 -x 0.35 -y 0.7"
+hc(f"keybind {MOD}-Ctrl-c spawn sh -c "
+   f"'{scratch_script} -c dropdown_calc -w 0.3 -ht 0.3 -x 0.35 -y 0.7 "
    "--termflags --profile=Black-BigFont -e bc'")
 
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
@@ -180,7 +180,9 @@ hc("set focus_follows_mouse on")
 hc("set tree_style '╾│ ├└╼─┐'")
 hc("detect_monitors")
 
-# rules
+#########
+# rules #
+#########
 hc('unrule -F')
 hc('rule focus=on')
 hc('rule floatplacement=smart')
@@ -196,9 +198,11 @@ hc(f"rule class='transmission' tag='{tags_lst[7]}'")
 hc(f"rule class='discord' tag='{tags_lst[8]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
 hc(f"rule class='firefox' tag='{tags_lst[0]}'")
+hc("rule class='dropdown_.*' floating=on float_placement=none hook=make_sticky")
+hc("rule instance='dropdown_.*' floating=on float_placement=none hook=make_sticky")
 hc("rule name='dropdown_term' floating=on float_placement=none hook=make_sticky")
 hc("rule name='dropdown_calc' floating=on float_placement=none hook=make_sticky")
-hc("rule title='Picture-in-Picture' floating=on floatfloatplacement=none focus=off hook='make_sticky'")
+hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
 
 hc("unlock")
