@@ -648,7 +648,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (use-package autothemer :ensure t)
 
     ;; modus-vivendi-theme
-  (setq themes-list '(gotham-theme zerodark-theme spacemacs-theme ample-theme doom-themes modus-vivendi-theme))
+  (setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-vivendi-theme))
 
   ; fetch the list of packages available 
   (unless package-archive-contents
