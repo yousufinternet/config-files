@@ -359,6 +359,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   "osc" 'org-static-blog-create-new-post
 	   "osd" 'org-static-blog-create-new-draft
 	   "oss" 'org-static-blog-publish
+           "osf" (lambda () (interactive) (org-static-blog-publish-file buffer-file-name))
 	   "s" '(:ignore t :which-key "Spell check")
 	   "sc" 'flyspell-correct-at-point
 	   "ss" 'flyspell-correct-wrapper
@@ -831,6 +832,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq org-static-blog-posts-directory "~/Documents/orgblog/posts/")
 (setq org-static-blog-drafts-directory "~/Documents/orgblog/drafts/")
 (setq org-static-blog-enable-tags t)
+(setq org-static-blog-use-preview t)
 (setq org-export-with-toc t)
 (setq org-export-with-section-numbers nil)
 
@@ -842,6 +844,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq org-static-blog-page-header
 "<meta name=\"author\" content=\"Yusuf Mohammad\">
 <meta name=\"referrer\" content=\"no-referrer\">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href=\"static/org-default-styling.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href=\"static/floating_toc.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href= \"static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
@@ -865,7 +868,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; This HTML code is inserted into the index page between the preamble and
 ;;   the blog posts
 (setq org-static-blog-index-front-matter
-"<center><h2> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallery.html\"> 🌄 gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h2></center>\n")
+"<center><h2> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallery.html\"> 🌄 gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"archive.html\"> 📚 Archive </a>|<a href=\"tags.html\"> 🔖 Tags </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h2></center>\n")
   )
    #+end_src
 
@@ -948,8 +951,8 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 ;; (use-package dired-single
 ;;   :commands (dired dired-jump))
 
-;; (use-package all-the-icons-dired
-;;   :hook (dired-mode . all-the-icons-dired-mode))
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; (use-package dired-open
 ;;   :commands (dired dired-jump)

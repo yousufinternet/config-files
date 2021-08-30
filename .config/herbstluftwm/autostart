@@ -36,7 +36,10 @@ startup_cmds = [
     "~/.config/bspwm/scripts/set_wallpaper.py",
     "~/.config/bspwm/bar/start_bar_herbst.py",
     "xfce4-panel -d",
-    "~/.config/herbstluftwm/auto_move_sticky.py"]
+    "~/.config/herbstluftwm/auto_move_sticky.py",
+    "~/.config/herbstluftwm/monitor_sticky_rules.py",
+    "syncthing-gtk -m",
+]
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
@@ -122,7 +125,7 @@ scratch_rules = 'rule once class=konsole floating=on floatplacement=none'
 scratch_script = '~/.config/herbstluftwm/scratch.py'
 hc(f"keybind {MOD}-d spawn sh -c"
    f" '{scratch_script} -c dropdown_term -w 1 -ht 0.8 -y "
-   f"{GDK_SCALE*2} -x 0 --termflags --profile=Default-Black'")
+   f"{GDK_SCALE*20} -x 0 --termflags --profile=Default-Black'")
 hc(f"keybind {MOD}-Ctrl-c spawn sh -c "
    f"'{scratch_script} -c dropdown_calc -w 0.3 -ht 0.3 -x 0.35 -y 0.7 "
    "--termflags --profile=Black-BigFont -e bc'")
