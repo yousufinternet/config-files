@@ -379,6 +379,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	   :prefix "SPC o"
 	   :non-normal-prefix "C-SPC o"
 	    :keymaps 'org-mode-map
+	    "/" 'org-sparse-tree
 	    "d" '(:ignore t :which-key "Dates")
 	    "dd" 'org-deadline
 	    "ds" 'org-schedule
@@ -392,6 +393,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	    "o" '(:ignore t :which-key "open")
 	    "oo" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
+	    "tt" 'org-todo
 	    "ti" 'org-toggle-inline-images
 	    "tl" 'org-toggle-link-display
 	    "tc" 'org-toggle-checkbox
@@ -674,6 +676,47 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	(load-theme default-theme t))
     #+END_SRC
 * ORG mode
+** General customization
+#+BEGIN_SRC emacs-lisp
+  (require 'org-tempo)
+  (require 'org-protocol)
+
+(org-babel-do-load-languages 'org-babel-load-languages
+  '((shell . t) (python . t) (emacs-lisp . t) (ledger . t) (latex . t)))
+
+  (use-package org-bullets
+  :ensure t
+  :after org-mode)
+  ;; :commands org-bullets-mode)
+  ;; :hook (org-mode . (lambda () (org-bullets-mode 1))))
+  ;; :hook (org-mode . org-bullets-mode))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+  (setq org-imenu-depth 3)
+
+  ;; experimental
+  (setq org-log-done 'note)
+  (org-agenda nil "a")
+  (setq org-log-into-drawer "LOGBOOK")
+  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
+	  org-todo-keyword-faces
+	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
+	    ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
+	  org-agenda-span 7
+	  org-agenda-skip-scheduled-if-done t
+	  org-agenda-skip-deadline-if-done t
+	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+
+  (setq org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
+
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
+    (python . t)))
+#+END_SRC
+
 ** bidi support in org
    #+BEGIN_SRC emacs-lisp
   (defun set-bidi-env ()
@@ -742,47 +785,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
       
    #+END_SRC
    
-** General customization
-#+BEGIN_SRC emacs-lisp
-  (require 'org-tempo)
-  (require 'org-protocol)
-
-(org-babel-do-load-languages 'org-babel-load-languages
-  '((shell . t) (python . t) (emacs-lisp . t) (ledger . t) (latex . t)))
-
-  (use-package org-bullets
-  :ensure t
-  :after org-mode)
-  ;; :commands org-bullets-mode)
-  ;; :hook (org-mode . (lambda () (org-bullets-mode 1))))
-  ;; :hook (org-mode . org-bullets-mode))
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
-
-  (setq org-imenu-depth 3)
-
-  ;; experimental
-  (setq org-log-done "note")
-  (org-agenda nil "a")
-  (setq org-log-into-drawer "LOGBOOK")
-  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
-	  org-todo-keyword-faces
-	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
-	    ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
-	  org-agenda-span 7
-	  org-agenda-skip-scheduled-if-done t
-	  org-agenda-skip-deadline-if-done t
-	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
-
-  (setq org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
-
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
-#+END_SRC
-
 ** Markup enhancements
    #+begin_src emacs-lisp
 (setq org-latex-listings 'minted
@@ -793,17 +795,27 @@ Please do check the following /configs/ as this one was heavily inspired by them
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
    #+end_src
 
-** org-alert
+** ORG notifications
 
 #+BEGIN_SRC emacs-lisp
+(use-package alert :ensure t :commands alert :config (setq alert-default-style 'libnotify))
+
  (use-package org-notifications
+ :after alert
  :ensure t
  :commands org-notification-start
  :config
      (setq org-notifications-non-agenda-file
 	   '("~/Public/Syncthing Global/Notes/capture.org"
 	     "~/Public/Syncthing Global/Notes/TODO.org"))
+     (org-notifications-start)
  )
+
+;; (use-package org-alert
+;;  :ensure t
+;;  :after alert
+;; :config (org-alert-enable)
+;;  )
 #+END_SRC
 
 ** babel setup
@@ -1283,3 +1295,10 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode :ensure t)
 #+END_SRC
+
+
+* Alert on startup finish
+
+  #+begin_src emacs-lisp
+(alert "daemon loaded successfully")
+  #+end_src
