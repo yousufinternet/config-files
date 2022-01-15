@@ -106,6 +106,7 @@ alias hcat="highlight -O ansi --force"
 alias gamescrcpy="prime-run scrcpy --max-fps 20 -w -S --disable-screensaver"
 alias eclrun='WINEPREFIX=~/.wine32 WINEARCH=win32 wine ~/.wine32/drive_c/ecl/macros/eclrun.exe'
 alias adb_input="adb shell input keyevent"
+alias youtube-pip='mpv --slang=en --force-window=immediate --no-terminal --geometry=25%x25%-0-0 --autofit=1280x720 --ytdl-format="bestvideo[height<=?720][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
 
 # vi mode in bash
 set -o vi
