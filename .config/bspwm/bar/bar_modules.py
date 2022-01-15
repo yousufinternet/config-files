@@ -22,6 +22,35 @@ def cmd_output(cmd, **kwargs):
     return out
 
 
+class MPC():
+    def __init__(self, wait_time=30):
+        self.wait_time = wait_time
+        P = subprocess.Popen('mpc idleloop', text=True, shell=True,
+                             stdout=subprocess.PIPE)
+        self.updater = P.stdout
+        self.icons_dict = {'stop': '\uf04d', 'playing': '\uf04b', 'paused': '\uf04c'}
+
+    def output(self):
+        try:
+            song = subprocess.check_output('mpc current', text=True, shell=True).splitlines()[0]
+            mpc_state = subprocess.check_output('mpc', text=True, shell=True).splitlines()
+            if len(mpc_state) == 1:
+                state = 'stop'
+            else:
+                state = mpc_state[1].split()[0][1:-1]
+            if len(song) > 40:
+                song = song[:39]+'…'
+        except (subprocess.CalledProcessError, IndexError):
+            state = 'stop'
+            song = ''
+        icon = '%{F'+cdict['l_yellow']+'}%{T2}'+self.icons_dict[state]+'%{T-}%{F-}%{O-'+f'{5*GDKSCALE}}}'+' '
+        return icon+'%{A4:next:}%{A5:prev:}%{A:toggle:}%{A3:stop:}'+song+'%{A3}%{A}%{A5}%{A4}'
+
+    def command(self, event):
+        subprocess.run(f'mpc {event}', text=True, shell=True)
+        return True
+
+
 class CoronaVirus():
     'display corona virus cases in iraq'
     def __init__(self):
@@ -180,8 +209,8 @@ class NetworkTraffic():
              d['stats64']['tx']['bytes']/1000)
             for d in json.loads(iface)
             if not any(x in d['ifname'].lower() for x in self.exclude)
-            and d['operstate'] == 'UP' or (d['operstate'] == 'UNKNOWN'
-                                           and 'UP' in d['flags'])]
+            and (d['operstate'] == 'UP' or (d['operstate'] == 'UNKNOWN'
+                                           and 'UP' in d['flags']))]
         return ifaces
 
     def output(self):

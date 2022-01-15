@@ -21,13 +21,16 @@ clients = [wid.rstrip('.') for wid in
 
 sticky_clts = [
     wid for wid in clients
-    if hc(f'get_attr clients.{wid}.my_sticky')[0].rstrip() == 'true']
+    if hc(f'get_attr clients.{wid}.my_sticky')[0].rstrip() == 'true' and
+    not hc(f'get_attr clients.{wid}.title')[0].rstrip().lower().startswith('dropdown')
+]
 
 cur_tag = hc('attr', 'tags.focus.name')[0].strip()
 tag_clients = [
     wid for wid in clients if hc('attr', f'clients.{wid}.tag')[0].strip() == cur_tag
     and wid not in sticky_clts and hc('attr', f'clients.{wid}.visible')[0].strip() == 'true']
 print(tag_clients)
+print('\n'.join(hc('attr', f'clients.{wid}')[0] for wid in tag_clients))
 
 for wid in sticky_clts:
     was_min = eval(hc(f'attr clients.{wid}.minimized')[0].title())

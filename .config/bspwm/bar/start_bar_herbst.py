@@ -6,7 +6,7 @@ from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
-    HerbstluftwmWorkspaces
+    HerbstluftwmWorkspaces, MPC
 
 
 if __name__ == '__main__':
@@ -35,6 +35,7 @@ if __name__ == '__main__':
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
             PingTimeOut(),
             NetworkTraffic(['lo', 'vboxne']), '%{r}',
+            MPC(),
             SARCPUUsage(),
             CPUTemp(),
             RamUsage(percent=True),

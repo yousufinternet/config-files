@@ -56,7 +56,6 @@ if hc('new_attr bool my_not_first_autostart')[1]:
     elif HOSTNAME == 'yusuf-dell':
         subprocess.Popen('autorandr', shell=True, text=True)
 
-
 # this is a simple config for herbstluftwm
 hc('emit_hook', 'reload')
 
@@ -93,8 +92,8 @@ hc(f"keybind {MOD}-Control-space split explode")
 hc("set default_frame_layout 2")
 hc("set_layout max")
 
-tags = {'I': '1', 'II': '2', 'III': '3', 'IV': '4', 'V': '5', 'VI': '6',
-        'VII': '7', 'VIII': '8', 'IX': '9', 'X': '0'}
+tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'GIMP': '4', 'V': '5', 'VI': '6',
+        'VII': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
 tags_lst = list(tags.keys())
 
 sticky_script = os.path.expanduser('~/.config/herbstluftwm/switch_tag.py')

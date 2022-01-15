@@ -136,3 +136,10 @@ config.set('colors.webpage.darkmode.policy.images', 'smart')
 
 # ad-blocking
 config.set('content.blocking.method', 'both')
+
+# Autosave session
+config.set('auto_save.session', True)
+
+# disable vidoe autoplay
+config.set('content.autoplay', False)
+config.set('content.prefers_reduced_motion', True)
