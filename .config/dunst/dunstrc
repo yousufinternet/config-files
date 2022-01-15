@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "500x5-30+52"
+    geometry = "250x4-15+26"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -54,14 +54,14 @@
     separator_height = 4
 
     # Padding between text and separator.
-    padding = 16
+    padding = 10
 
     # Horizontal padding.
-    horizontal_padding = 20
+    horizontal_padding = 10
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 2
 
     # Defines color of the frame around the notification window.
     frame_color = "#ff79c6"
@@ -165,7 +165,7 @@
     icon_position = right
 
     # Scale larger icons down to this size, set to 0 to disable
-    min_icon_size = 64
+    min_icon_size = 32
     max_icon_size = 64
 
     # Paths to default icons.
