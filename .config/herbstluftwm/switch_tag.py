@@ -39,9 +39,9 @@ for wid in sticky_clts:
 # focus = hc('attr', 'clients.focus.winid')
 # focus_floating = hc('try attr', 'clients.focus.floating')[0].strip().title()
 # if (focus_floating=='True' or focus in sticky_clts) and tag_clients:
-if tag_clients and sticky_clts:
-    # sp.Popen(f'notify-send {tag_clients}', text=True, shell=True)
-    hc('jumpto', tag_clients[0])
-    hc('raise', tag_clients[0])
+# if tag_clients and sticky_clts:
+#     # sp.Popen(f'notify-send {tag_clients}', text=True, shell=True)
+#     hc('jumpto', tag_clients[0])
+#     hc('raise', tag_clients[0])
 
 hc('unlock')
