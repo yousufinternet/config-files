@@ -220,7 +220,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
-(setq initial-scratch-message "Welcome to Yusuf's Emacs") ; print a default message in the empty scratch buffer opened at startup
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -551,10 +550,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
 
-  (use-package doom-modeline
-    :ensure t
-    :custom (setq doom-modeline-height 15)
-    :init (doom-modeline-mode 1))
+  ;; (use-package doom-modeline
+  ;;   :ensure t
+  ;;   :custom (setq doom-modeline-height 10)
+  ;;   :init (doom-modeline-mode 1))
     
     (show-paren-mode)
 
@@ -586,6 +585,48 @@ Please do check the following /configs/ as this one was heavily inspired by them
      (diminish 'flyspell-mode)
      (diminish 'which-key-mode))
 #+END_SRC
+** Custom mode-line
+   Parts have been copied from https://occasionallycogent.com/custom_emacs_modeline/index.html
+   see https://www.emacswiki.org/emacs/ModeLineConfiguration for more useful info
+#+begin_src emacs-lisp
+
+(setq-default mode-line-format
+(list
+"  " mode-line-front-space mode-line-modified " "
+
+'(:eval (when-let (vc vc-mode)
+          (list " "
+                (propertize (substring vc 5)
+                            'face 'font-lock-constant-face)
+                " ")))
+
+ mode-line-buffer-identification
+ (propertize " %m " 'face 'font-lock-string-face)
+ 
+;; mode-line-misc-info
+;; Started by writing this statement:
+;; (if (member "which-function-mode" minor-mode-list) which-func-format "")
+;; this turned out to not work unless the mode is loaded before modeline!
+;; below is the correct way to do it
+'(:eval (when-let (which-function-mode) which-func-format))
+'(:eval (when-let (pyenv-mode) pyenv-mode-mode-line-format))
+'(:eval (when-let (flycheck-mode) flycheck-mode-line))
+
+  ;; spaces to align right
+'(:eval (propertize
+         " " 'display
+         `((space :align-to (- (+ right right-fringe right-margin)
+                                              ,(+ 6 (string-width (concat evil-mode-line-tag "00% (0000,0000)" (format-time-string "%H:%M %d/%a-%m/%b")))))))))
+
+mode-line-mule-info
+evil-mode-line-tag
+" "
+mode-line-position
+'(:eval (format-time-string "  %H:%M %d/%a-%m/%b  "))
+)
+)
+#+end_src
+
 ** Emojis and ligatures
    #+BEGIN_SRC emacs-lisp
 	  (use-package company-emoji
@@ -662,7 +703,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'doom-ir-black)
+  (setq default-theme 'doom-tomorrow-night)
   (load-theme default-theme t)
 #+END_SRC
 
@@ -800,16 +841,16 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+BEGIN_SRC emacs-lisp
 (use-package alert :ensure t :commands alert :config (setq alert-default-style 'libnotify))
 
- (use-package org-notifications
- :after alert
- :ensure t
- :commands org-notification-start
- :config
-     (setq org-notifications-non-agenda-file
-	   '("~/Public/Syncthing Global/Notes/capture.org"
-	     "~/Public/Syncthing Global/Notes/TODO.org"))
-     (org-notifications-start)
- )
+ ;; (use-package org-notifications
+ ;; :after alert
+ ;; :ensure t
+ ;; :commands org-notification-start
+ ;; :config
+ ;;     (setq org-notifications-non-agenda-file
+ ;; 	   '("~/Public/Syncthing Global/Notes/capture.org"
+ ;; 	     "~/Public/Syncthing Global/Notes/TODO.org"))
+ ;;     (org-notifications-start)
+ ;; )
 
 ;; (use-package org-alert
 ;;  :ensure t
@@ -1135,7 +1176,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
  #+BEGIN_SRC emacs-lisp
     ;; pyvenv pytest pyenv-mode py-isort
     (use-package pyvenv :ensure t)
-    (use-package pyenv-mode :ensure t)
+    (use-package pyenv-mode :ensure t :commands pyenv-mode-mode-line-format)
    ;;  (use-package elpy
    ;;  :ensure t
    ;;  :commands elpy-enable
@@ -1156,10 +1197,11 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
  #+END_SRC
 *** Code Folding and Snippets Hooks
     #+BEGIN_SRC emacs-lisp
-  (add-hook 'python-mode-hook 'evil-close-folds)
-  (add-hook 'python-mode-hook 'hs-minor-mode)
-  (add-hook 'python-mode-hook 'yas-minor-mode)
-  (add-hook 'python-mode-hook 'which-function-mode)
+(use-package which-function-mode :commands which-func-format)
+(add-hook 'python-mode-hook 'evil-close-folds)
+(add-hook 'python-mode-hook 'hs-minor-mode)
+(add-hook 'python-mode-hook 'yas-minor-mode)
+(add-hook 'python-mode-hook 'which-function-mode)
     #+END_SRC
 *** iPython
     #+BEGIN_SRC emacs-lisp
@@ -1243,7 +1285,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 ** Version Control
     
 #+BEGIN_SRC emacs-lisp
-(use-package magit :ensure t)
+(use-package magit :ensure t :commands magit-get-current-branch)
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -1300,5 +1342,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 * Alert on startup finish
 
   #+begin_src emacs-lisp
+(setq initial-scratch-message (concat "Welcome to Yusuf's Emacs\n\n" (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n") "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
 (alert "daemon loaded successfully")
   #+end_src
