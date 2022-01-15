@@ -58,15 +58,15 @@ super + shift + e
 
 # terminal apps
 super + i ; {m,h,n,r,f,p,s}
-	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
+	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,btop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
 super + g ; {c,d,f,g,t,q,r,z}
   {calibre, discord, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
-super + shift + g ; {f,d,b,s} 
-  ~/Scripts/optimus_run.py {firefox,darktable,blender,steam-native}
+super + shift + g ; {f,d,b,s,k} 
+  ~/Scripts/optimus_run.py {firefox,darktable,blender,steam-native,kodi}
 
 # File manager
 super + ctrl + f
@@ -74,7 +74,7 @@ super + ctrl + f
 
 # Web browser
 super + ctrl + w
-  ~/Scripts/optimus_run.py qutebrowser
+  ~/Scripts/optimus_run.py qutebrowser --qt-flag ignore-gpu-blocklist --qt-flag enable-gpu-rasterization
 
 # IDE
 super + ctrl + e
