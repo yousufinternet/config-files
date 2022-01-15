@@ -18,7 +18,7 @@ HOSTNAME = subprocess.check_output('echo "$HOSTNAME"', text=True, shell=True).st
 # bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
 bgs = ['#282A36', '#000000']
 
-seps = [
+DEFAULT_SEPS = [
     f'%{{T2}}\uE0B0%{{O-{13.5*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
     f'%{{T2}}\uE0B2%{{O-{14*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
 ]
@@ -50,7 +50,7 @@ def new_pair(perms, fg=None, bg=None):
     return random.choice([b for b in perms if b[1] == fg])
 
 
-def create_powerline(modules, bgs):
+def create_powerline(modules, bgs, seps=DEFAULT_SEPS):
     bgs_perm = list(permutations(bgs, 2))
     last_bgs = new_pair(bgs_perm, fg=bgs[0])
     modules_len = len(modules)
@@ -136,9 +136,9 @@ if __name__ == '__main__':
             TimeDate()
         ]
 
-    create_powerline(modules, bgs)
+    # create_powerline(modules, bgs)
 
-    main_loop = MainLoop(modules, sep='', bg=bgs[0], fg='#F8F8F2')
+    main_loop = MainLoop(modules, sep=' | ', bg=bgs[0], fg='#F8F8F2')
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()
