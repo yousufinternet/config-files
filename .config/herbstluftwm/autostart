@@ -53,6 +53,8 @@ if hc('new_attr bool my_not_first_autostart')[1]:
                 shell=True, text=True)
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
+    elif HOSTNAME == 'yusuf-dell':
+        subprocess.Popen('autorandr', shell=True, text=True)
 
 
 # this is a simple config for herbstluftwm
@@ -65,7 +67,7 @@ MOD = 'Mod4'
 
 hc(f'keybind {MOD}-Control-Shift-q quit')
 hc(f'keybind {MOD}-Control-Shift-r reload')
-hc(f'keybind {MOD}-q close_and_remove')
+hc(f'keybind {MOD}-q close_or_remove')
 
 # focusing, moving and resizing clients
 RESIZE_STEP = 0.05
