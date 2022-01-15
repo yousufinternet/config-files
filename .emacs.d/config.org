@@ -78,7 +78,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	:ensure t
   :init (pdf-tools-install) 
 :commands 'pdf-view-mode
-:config 
+:config (pdf-tools-install-noverify)
 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
 #+END_SRC
 *** elfeed
@@ -617,12 +617,12 @@ Please do check the following /configs/ as this one was heavily inspired by them
     (set-face-attribute 'default nil
 			:family "Fira Code"
 			:height 135
-			:weight 'light
+			:weight 'normal
 			:width 'normal)
-;; proportional font
-    (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
 ;; Monospaced font with arabic support
   (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; proportional font
+    (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
 ;; display colored emojis in emacs
   (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
 ;; make org source blocks always monospaced
@@ -716,6 +716,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
   '((emacs-lisp . t)
     (python . t)))
 #+END_SRC
+** Agenda
+   #+begin_src emacs-lisp
+(setq org-agenda-window-setup "only-window")
+   #+end_src
 
 ** bidi support in org
    #+BEGIN_SRC emacs-lisp
@@ -734,10 +738,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 	 '(
 	   ("t" "Work/Personal Tasks")
 	   ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
-	   "** TODO %?\n SCHEDULED: %^t  DEADLINE: %^t")
+	   "** TODO %?:work:%^G\n SCHEDULED: %^T  DEADLINE: %^t" :empty-lines 1)
 
 	   ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
-	   "** TODO %?\n SCHEDULED: %^t")
+	   "** TODO %? :personal:\n SCHEDULED: %^t" :empty-lines 1)
 
    ("td" "Daily simple tasks" entry
        (file+olp+datetree "~/Public/Syncthing Global/Notes/capture.org" "Daily Simple Tasks")
@@ -800,22 +804,16 @@ Please do check the following /configs/ as this one was heavily inspired by them
 #+BEGIN_SRC emacs-lisp
 (use-package alert :ensure t :commands alert :config (setq alert-default-style 'libnotify))
 
- (use-package org-notifications
- :after alert
- :ensure t
- :commands org-notification-start
- :config
-     (setq org-notifications-non-agenda-file
-	   '("~/Public/Syncthing Global/Notes/capture.org"
-	     "~/Public/Syncthing Global/Notes/TODO.org"))
-     (org-notifications-start)
- )
-
-;; (use-package org-alert
-;;  :ensure t
-;;  :after alert
-;; :config (org-alert-enable)
-;;  )
+ ;; (use-package org-notifications
+ ;; :after alert
+ ;; :ensure t
+ ;; :commands org-notification-start
+ ;; :config
+ ;;     (setq org-notifications-non-agenda-file
+ ;; 	   '("~/Public/Syncthing Global/Notes/capture.org"
+ ;; 	     "~/Public/Syncthing Global/Notes/TODO.org"))
+ ;;     (org-notifications-start)
+ ;; )
 #+END_SRC
 
 ** babel setup
