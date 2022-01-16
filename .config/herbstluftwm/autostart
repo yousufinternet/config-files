@@ -111,7 +111,9 @@ hc(f'keybind {MOD}-comma  use_index -1 --skip-visible')
 
 # window states
 hc(f'keybind {MOD}-m set_attr clients.focus.minimized on')
-hc(f"keybind {MOD}-Ctrl-m spawn sh -c '~/.config/herbstluftwm/restore_minimized.py'")
+hc(f'keybind {MOD}-Ctrl-m jumpto longest-minimized')
+hc(f'keybind {MOD}-Shift-m jumpto last-minimized')
+# hc(f"keybind {MOD}-Ctrl-m spawn sh -c '~/.config/herbstluftwm/restore_minimized.py'")
 hc(f'keybind {MOD}-f fullscreen toggle')
 hc(f'keybind {MOD}-Shift-f set_attr clients.focus.floating toggle')
 hc(f'keybind {MOD}-Shift-s chain .-. new_attr bool clients.focus.my_sticky'
