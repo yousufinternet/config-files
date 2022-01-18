@@ -74,7 +74,7 @@ super + ctrl + f
 
 # Web browser
 super + ctrl + w
-  ~/Scripts/optimus_run.py qutebrowser --qt-flag ignore-gpu-blocklist --qt-flag enable-gpu-rasterization
+  ~/Scripts/optimus_run.py qutebrowser
 
 # IDE
 super + ctrl + e

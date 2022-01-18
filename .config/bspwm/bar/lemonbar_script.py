@@ -59,7 +59,7 @@ class MainLoop():
              f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
-             f' -a 100 -g x{22*GDKSCALE}'),
+             f' -a 1000 -g x{22*GDKSCALE}'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')
         logging.debug(
