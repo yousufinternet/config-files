@@ -140,9 +140,21 @@ config.set('content.blocking.method', 'both')
 # Autosave session
 config.set('auto_save.session', True)
 
-# disable video autoplay
+config.set('content.javascript.can_access_clipboard', True)
+# settings for better performance
 config.set('content.autoplay', False)
 config.set('content.prefers_reduced_motion', True)
+config.set('qt.args', ['ignore-gpu-blocklist', 'enable-gpu-rasterization', 'enable-accelerated-video-decode', 'enable-quic'])
+config.set('session.lazy_restore', True)
+# Irrelevant to QtWebEngine
+# config.set('content.cache.maximum_pages', 6) # see https://webkit.org/blog/427/webkit-page-cache-i-the-basics/
 
-# javascript can access clipboard
-config.set('content.javascript.can_access_clipboard', True)
+# remove hints on reload
+config.set('hints.leave_on_load', True)
+
+# Use ranger as file picker
+config.set("fileselect.handler", "external")
+config.set("fileselect.single_file.command",
+           ['konsole', '-e', 'ranger', '--choosefile', '{}'])
+config.set("fileselect.multiple_files.command",
+           ['konsole', '-e', 'ranger', '--choosefiles', '{}'])

@@ -702,6 +702,8 @@ class TimeDate():
         self.wait_time = 60
         self.updater = None
         self.timeformat = timeformat
+        self.month_year = (datetime.date.today().year,
+                            datetime.date.today().month)
 
     def output(self):
         clock_faces = {(0, 0): "🕛", (1, 0): "🕐", (2, 0): "🕑",
@@ -718,12 +720,33 @@ class TimeDate():
         now = datetime.datetime.now()
         current_face = now.hour if now.hour < 12 else now.hour-12
         # 0 if now.minute < 30 else 30)
-        date_time = datetime.datetime.strftime(
-            now, '%{T2}%{F'+cdict['l_yellow']+'}\uf073 %{F-}%{T1}'+f'%{{O-{7.5*GDKSCALE}}}%a %d-%b,%y %H:%M')
+        date_time = ('%{A:currentcal:}%{A4:nextcal:}%{A5:prevcal:}%{T2}%{F'
+                  + cdict['l_yellow']+'}\uf073 %{F-}%{A5}%{A4}%{A}%{T1}' +
+                  f'%{{O-{7.5*GDKSCALE}}}'+datetime.datetime.strftime(
+                      now, '%a %d-%b,%y %H:%M'))
         return date_time+'%{T2} '+clock_faces[current_face]+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'
 
     def command(self, event):
-        print(event)
+        if event == 'currentcal':
+            self.month_year = (datetime.date.today().year,
+                               datetime.date.today().month)
+        elif event == 'nextcal':
+            if self.month_year[1] == 12:
+                self.month_year = (self.month_year[0]+1, 1)
+            else:
+                self.month_year = (self.month_year[0], self.month_year[1]+1)
+        elif event == 'prevcal':
+            if self.month_year[1] == 1:
+                self.month_year = (self.month_year[0]-1, 12)
+            else:
+                self.month_year = (self.month_year[0], self.month_year[1]-1)
+        if event in ['currentcal', 'nextcal', 'prevcal']:
+            date = datetime.date(self.month_year[0], self.month_year[1], 1)
+            subprocess.Popen(
+                (f'dunstify "{date:%B - %Y}" "`cal -s {self.month_year[1]}'
+                    f' {self.month_year[0]}`" -r 000010 -h'
+                    ' "string:desktop-entry:calendar_popup"'),
+                shell=True, text=True)
 
 
 class RandomNum():
