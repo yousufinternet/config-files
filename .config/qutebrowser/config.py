@@ -140,6 +140,9 @@ config.set('content.blocking.method', 'both')
 # Autosave session
 config.set('auto_save.session', True)
 
-# disable vidoe autoplay
+# disable video autoplay
 config.set('content.autoplay', False)
 config.set('content.prefers_reduced_motion', True)
+
+# javascript can access clipboard
+config.set('content.javascript.can_access_clipboard', True)
