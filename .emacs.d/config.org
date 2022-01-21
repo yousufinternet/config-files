@@ -609,6 +609,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; this turned out to not work unless the mode is loaded before modeline!
 ;; below is the correct way to do it
 '(:eval (when-let (which-function-mode) which-func-format))
+mode-line-position
 '(:eval (when-let (pyenv-mode) pyenv-mode-mode-line-format))
 '(:eval (when-let (flycheck-mode) flycheck-mode-line))
 
@@ -621,7 +622,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
 mode-line-mule-info
 evil-mode-line-tag
 " "
-mode-line-position
 '(:eval (format-time-string "  %H:%M %d/%a-%m/%b  "))
 )
 )
