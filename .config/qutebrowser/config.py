@@ -143,6 +143,7 @@ config.set('content.blocking.method', 'both')
 # Autosave session
 config.set('auto_save.session', True)
 
+config.set('content.javascript.can_access_clipboard', True)
 # settings for better performance
 config.set('content.autoplay', False)
 config.set('content.prefers_reduced_motion', True)
