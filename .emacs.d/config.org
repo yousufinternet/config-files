@@ -663,7 +663,10 @@ mode-line-position
 ;; Monospaced font with arabic support
   (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
 ;; proportional font
-    (set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'light :height 135)
+(create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
+(set-fontset-font "fontset-proportional" nil (font-spec :family "Roboto" :weight 'light :height 135))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Noto Sans Arabic" :height 135))
+    (set-face-attribute 'variable-pitch nil :font "fontset-proportional")
 ;; display colored emojis in emacs
   (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
 ;; make org source blocks always monospaced
@@ -682,10 +685,6 @@ mode-line-position
     (reapply-font)
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
-
-#+RESULTS:
-| (lambda (frame) (let ((old-frame (selected-frame)) (old-buffer (current-buffer))) (unwind-protect (progn (select-frame frame 'norecord) (load-theme default-theme t)) (if (frame-live-p old-frame) (progn (select-frame old-frame 'norecord))) (if (buffer-live-p old-buffer) (progn (set-buffer old-buffer)))))) | reapply-font | doom-modeline-refresh-font-width-cache | doom-modeline-set-selected-window | doom-modeline-set-char-widths | evil-init-esc | x-dnd-init-frame |
-
 ** Themes
     
 #+BEGIN_SRC emacs-lisp

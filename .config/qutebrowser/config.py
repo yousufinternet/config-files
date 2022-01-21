@@ -27,7 +27,7 @@ config.set('content.javascript.enabled', True)
 # config.set('content.javascript.enabled', True, 'chrome://*/*')
 # config.set('content.javascript.enabled', True, 'qute://*/*')
 
-c.spellcheck.languages = ['en-US']
+c.spellcheck.languages = ['en-US', 'ar-IQ']
 
 c.fonts.default_family = ["DejaVu Sans Mono"]
 # c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
@@ -80,6 +80,7 @@ config.bind(',or', 'spawn --userscript qute-capture read -H "Interesting Resourc
 
 # it turns out per-domain settings for content.user-stylesheets is not supported
 # config.set('content.user_stylesheets', os.path.join(path, 'gruvbox-all-sites.css'), '*://github.com/*|*://*.stackexchange.com/*|*://stackoverflow.com/*')
+
 # prevent gmail from sending protocol handler confirmation dialogs
 config.set('content.register_protocol_handler', True, '*://gmail.com/*')
 config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
@@ -87,6 +88,8 @@ config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
 config.set('content.tls.certificate_errors', 'block')
 config.set('content.tls.certificate_errors', 'load-insecurely', '*://mail.westqurna2.com')
 config.set('content.notifications.enabled', False)
+for url in ['gmail.com', 'mail.westqurna2.com', 'reddit.com', 'mail.zoho.com']:
+    config.set('content.notifications.enabled', True, url)
 
 # Default zoom level
 scale_factor = int(os.environ.get('GDK_SCALE', 1))
@@ -157,3 +160,5 @@ config.set("fileselect.single_file.command",
            ['konsole', '-e', 'ranger', '--choosefile', '{}'])
 config.set("fileselect.multiple_files.command",
            ['konsole', '-e', 'ranger', '--choosefiles', '{}'])
+
+c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
