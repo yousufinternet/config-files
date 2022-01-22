@@ -611,7 +611,7 @@ Please do check the following /configs/ as this one was heavily inspired by them
 '(:eval (when-let (which-function-mode) which-func-format))
 mode-line-position
 '(:eval (when-let (pyenv-mode) pyenv-mode-mode-line-format))
-'(:eval (when-let (flycheck-mode) flycheck-mode-line))
+;; '(:eval (when-let (flycheck-mode) flycheck-mode-line))
 
   ;; spaces to align right
 '(:eval (propertize
@@ -660,15 +660,23 @@ evil-mode-line-tag
 			:height 135
 			:weight 'normal
 			:width 'normal)
+
 ;; Monospaced font with arabic support
-  (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+
+;; Arabic fallback font (search if non existant)
+(set-fontset-font t 'arabic "Dejavu Sans Mono")
+(set-fontset-font t 'arabic (font-spec :script 'arabic) nil 'append)
+
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" nil (font-spec :family "Roboto" :weight 'light :height 135))
+(set-fontset-font "fontset-proportional" nil (font-spec :family "Noto Sans" :height 135))
 (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Noto Sans Arabic" :height 135))
-    (set-face-attribute 'variable-pitch nil :font "fontset-proportional")
+(set-face-attribute 'variable-pitch nil :font "fontset-proportional" :fontset "fontset-proportional")
+
 ;; display colored emojis in emacs
-  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+(set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+
 ;; make org source blocks always monospaced
 (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
@@ -677,15 +685,16 @@ evil-mode-line-tag
 (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
 )
 
-  (use-package unicode-fonts
-     :ensure t
-     :config
+(use-package unicode-fonts
+   :ensure t
+   :config
       (unicode-fonts-setup))
 
     (reapply-font)
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
-** Themes
+
+** Themes عربي 
     
 #+BEGIN_SRC emacs-lisp
     (use-package autothemer :ensure t)
@@ -1154,6 +1163,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
      (use-package flycheck 
      :ensure t
      :init (global-flycheck-mode)
+:commands flycheck-mode
   :config (setq flycheck-idle-change-delay 1
   flycheck-display-errors-delay 1
   flycheck-idle-switch-buffer-delay 1))
