@@ -12,6 +12,8 @@ config = config  # noqa: F821 pylint: disable=E0602,C0103
 
 config.load_autoconfig(False)
 
+scale_factor = int(os.environ.get('GDK_SCALE', 1))
+
 c.bindings.key_mappings = {
     'ه': 'i',
     'خ': 'o',
@@ -34,6 +36,8 @@ c.fonts.default_family = ["DejaVu Sans Mono"]
 
 # rofi-pass
 config.bind('pi', 'spawn --userscript qute-pass')
+config.bind('j', 'scroll-px 0 20')
+config.bind('k', 'scroll-px 0 -20')
 
 # Firefox as a user_agent
 # Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0
@@ -92,7 +96,6 @@ for url in ['gmail.com', 'mail.westqurna2.com', 'reddit.com', 'mail.zoho.com']:
     config.set('content.notifications.enabled', True, url)
 
 # Default zoom level
-scale_factor = int(os.environ.get('GDK_SCALE', 1))
 config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
