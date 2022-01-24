@@ -360,6 +360,8 @@ News and tech
 	   "oa" 'org-agenda-list
 	   "oc" 'org-capture
 	   "ol" 'org-store-link
+           "ogcc" (lambda () (interactive) (org-clock-jump-to-current-clock))
+	   "ogcx" 'org-clock-cancel
 	   "os" '(:ignore t :which-key "org static blog")
 	   "osc" 'org-static-blog-create-new-post
 	   "osd" 'org-static-blog-create-new-draft
@@ -699,8 +701,7 @@ evil-mode-line-tag
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
-** Themes عربي 
-    Noto sans might look ok when in regular weight, but it looks horrible when in bold weight
+** Themes 
 #+BEGIN_SRC emacs-lisp
     (use-package autothemer :ensure t)
 
