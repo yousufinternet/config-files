@@ -777,7 +777,13 @@ evil-mode-line-tag
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
+(setq org-agenda-category-icon-alist nil)
+(add-to-list 'org-agenda-category-icon-alist '("WORK" ("💼") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("SETUP" ("🐧") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("EMAIL" ("✉️") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("HOME" ("🏠") nil nil :width (16.) :ascent center))
 (setq org-agenda-window-setup "only-window")
+(setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s"))
    #+end_src
 
 ** bidi support in org
