@@ -12,7 +12,6 @@ import shlex
 import sys
 import argparse
 import re
-import time
 import tempfile
 
 ORG_FILE = "~/Public/Syncthing Global/Notes/capture.org"
@@ -64,7 +63,7 @@ def resolve_heading(org, headings):
     def subheading(org, heading):
         """return the node for heading immediately below org"""
         for c in org.content:
-            if c.heading == heading:
+            if hasattr(c, 'heading') and c.heading == heading:
                 return c
         return None
 
@@ -77,6 +76,7 @@ def resolve_heading(org, headings):
             node.append_clean(nnode)
             node = nnode
     return node
+
 
 def node_select_dmenu(org, rexp):
     """Return a node under org selected with dmenu"""
@@ -155,19 +155,8 @@ def main(args):
         subprocess.Popen(
             f'emacsclient -a "" -c "{org_url}"',
             text=True, shell=True)
-        # newnode = new_node(title, node.level + 1)
-        # newnode.append_clean(url + '\n')
-        # newnode.append_clean(time.strftime(TIME_FORMAT) + '\n')
-        # if content:
-        #     newnode.append_clean(content + '\n')
-        # we append a final newline to ensure each element is space separated
-        # this may be personal preference
-        # newnode.append_clean('\n')
-        # if args.edit:
-        #     newnode = edit_node(newnode, args.edit)
-        # node.append_clean(newnode)
-        # org.save_to_file(orgfile)
         qute_command("message-info \"captured " + title + "\"")
+
 
     elif args.mode == "read":
         selection = node_select_dmenu(node, args.re)
@@ -182,6 +171,7 @@ def main(args):
             qute_command("message-info \"removed: " + selection.heading + "\"")
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main(argparser.parse_args()))

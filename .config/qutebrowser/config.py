@@ -79,9 +79,10 @@ config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webp
 config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
 # config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
 config.bind(',r', 'spawn --userscript readability-js')
+config.bind('cc', 'download-clear')
 template_keys = ['ia', 'ir', 'im', 'd']
 for k in template_keys:
-    config.bind(f',c{k}', f'spawn --userscript qute-capture write -k {k}')
+    config.bind(f'c{k}', f'spawn --userscript qute-capture write -k {k}')
 config.bind(',or', 'spawn --userscript qute-capture read -H "Interesting Resources"')
 
 # it turns out per-domain settings for content.user-stylesheets is not supported
