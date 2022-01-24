@@ -1,5 +1,6 @@
 #+TITLE: Emacs org init
 #+AUTHOR: Yusuf Mohammad
+#+STARTUP: overview
 
 * References
 Please do check the following /configs/ as this one was heavily inspired by them.
@@ -61,7 +62,10 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ** Applications
 *** ranger and pdf-tools
 #+BEGIN_SRC emacs-lisp
-      (use-package ranger :ensure t)
+      (use-package ranger :ensure t :init (ranger-override-dired-mode t) :config (setq ranger-width-preview 0.40
+       ranger-show-literal nil
+       ranger-max-preview-size 10
+))
 
       (use-package pandoc-mode
        :ensure t
@@ -81,8 +85,9 @@ Please do check the following /configs/ as this one was heavily inspired by them
 :config (pdf-tools-install-noverify)
 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
 #+END_SRC
-*** elfeed
 
+*** elfeed
+News and tech
     #+begin_src emacs-lisp
 	(use-package elfeed
 	  :ensure t
@@ -261,7 +266,8 @@ Please do check the following /configs/ as this one was heavily inspired by them
 
 ** Scroll conservatively 
 #+BEGIN_SRC emacs-lisp
-(setq scroll-conservatively 100)
+(setq scroll-step 1
+      scroll-conservatively 10000)
 #+END_SRC
 
 ** Change yes-or-no questions into y-or-n questions
@@ -650,7 +656,7 @@ evil-mode-line-tag
    #+END_SRC
    
 ** Default font (Arabic and emoji fonts)
-   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
+   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
@@ -665,14 +671,14 @@ evil-mode-line-tag
 (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
 
 ;; Arabic fallback font (search if non existant)
-(set-fontset-font t 'arabic "Dejavu Sans Mono")
+;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
 (set-fontset-font t 'arabic (font-spec :script 'arabic) nil 'append)
 
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" nil (font-spec :family "Noto Sans" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Noto Sans Arabic" :height 135))
-(set-face-attribute 'variable-pitch nil :font "fontset-proportional" :fontset "fontset-proportional")
+(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Noto Sans Arabic" :height 105))
+(set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
 (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
@@ -683,6 +689,7 @@ evil-mode-line-tag
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :weight 'bold :foreground "#b5bd68")
 )
 
 (use-package unicode-fonts
@@ -694,7 +701,7 @@ evil-mode-line-tag
 #+END_SRC
 
 ** Themes عربي 
-    
+    Noto sans might look ok when in regular weight, but it looks horrible when in bold weight
 #+BEGIN_SRC emacs-lisp
     (use-package autothemer :ensure t)
 
