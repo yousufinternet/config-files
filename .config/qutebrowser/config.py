@@ -21,7 +21,7 @@ c.bindings.key_mappings = {
 c.editor.command = ['emacsclient', '-a', '""', '-c', '{file}']
 
 # Enable JavaScript.
-config.set('content.javascript.enabled', True)
+c.content.javascript.enabled = True
 
 # config.set('content.javascript.enabled', True, 'file://*')
 # config.set('content.javascript.enabled', True, 'chrome://*/*')
@@ -43,7 +43,13 @@ c.content.headers.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 # view youtube vidoes with mpv
 # tsp is a task spooler that adds tasks to a queue 
 screen_dims = screen_dim()
-mpv_command = 'mpv --slang=en --force-window=immediate --no-terminal --geometry={} --autofit=1280x720 --ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
+mpv_command = (
+    'mpv --slang=en --force-window=immediate --no-terminal'
+    ' --geometry={} --autofit=1280x720 '
+    '--ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best"'
+    ' --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched='
+    ',cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,'
+    'write-sub=,write-auto-sub=')
 mpv_720 = mpv_command.format(
     f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '720')
@@ -125,8 +131,13 @@ config.set('tabs.show', 'multiple')
 
 # allow the last tab to be closed and thus closing the window
 c.tabs.last_close = 'close'
+c.tabs.show = 'switching'
+c.tabs.show_switching_delay = 5000
 
 c.completion.height = '30%'
+
+c.confirm_quit = ['downloads']
+c.downloads.location.prompt = False
 
 # Dark Mode
 config.set('colors.webpage.preferred_color_scheme', 'dark')
