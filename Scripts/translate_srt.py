@@ -20,7 +20,8 @@ def translate_srt(file_path):
                 trans_ok = True
                 trans = translator.translate(sub.text, src='en', dest='ar')
                 trans_ok = False
-            except Exception:
+            except Exception as e:
+                print(e)
                 print('FAILED!\nwaiting on server')
                 time.sleep(120)
         sub.text = trans.text

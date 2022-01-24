@@ -320,6 +320,10 @@ News and tech
    #+BEGIN_SRC emacs-lisp
    (setq initial-major-mode 'org-mode)
    #+END_SRC
+** Arabic as the default input method for multilingual input
+   #+begin_src emacs-lisp
+(setq default-input-method "arabic")
+   #+end_src
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
