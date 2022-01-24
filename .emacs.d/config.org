@@ -320,6 +320,10 @@ News and tech
    #+BEGIN_SRC emacs-lisp
    (setq initial-major-mode 'org-mode)
    #+END_SRC
+** Arabic as the default input method for multilingual input
+   #+begin_src emacs-lisp
+(setq default-input-method "arabic")
+   #+end_src
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
@@ -360,6 +364,8 @@ News and tech
 	   "oa" 'org-agenda-list
 	   "oc" 'org-capture
 	   "ol" 'org-store-link
+           "ogcc" (lambda () (interactive) (org-clock-jump-to-current-clock))
+	   "ogcx" 'org-clock-cancel
 	   "os" '(:ignore t :which-key "org static blog")
 	   "osc" 'org-static-blog-create-new-post
 	   "osd" 'org-static-blog-create-new-draft
@@ -689,7 +695,7 @@ evil-mode-line-tag
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :weight 'bold :foreground "#b5bd68")
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
 )
 
 (use-package unicode-fonts
@@ -700,8 +706,7 @@ evil-mode-line-tag
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
-** Themes عربي 
-    Noto sans might look ok when in regular weight, but it looks horrible when in bold weight
+** Themes 
 #+BEGIN_SRC emacs-lisp
     (use-package autothemer :ensure t)
 
@@ -763,6 +768,13 @@ evil-mode-line-tag
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
+(setq org-agenda-category-icon-alist nil)
+(add-to-list 'org-agenda-category-icon-alist '("WORK" ("💼") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("SETUP" ("🐧") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("EMAIL" ("✉️") nil nil :width (16.) :ascent center))
+(add-to-list 'org-agenda-category-icon-alist '("HOME" ("🏠") nil nil :width (16.) :ascent center))
+
+(setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s"))
    #+end_src
 
 ** bidi support in org
