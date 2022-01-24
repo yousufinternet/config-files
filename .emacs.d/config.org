@@ -690,7 +690,6 @@ evil-mode-line-tag
    :config
       (unicode-fonts-setup))
 
-    (reapply-font)
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
@@ -736,38 +735,27 @@ evil-mode-line-tag
   (use-package org-bullets
   :ensure t
   :after org-mode)
-  ;; :commands org-bullets-mode)
-  ;; :hook (org-mode . (lambda () (org-bullets-mode 1))))
-  ;; :hook (org-mode . org-bullets-mode))
+
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-  (setq org-imenu-depth 3)
-
-  ;; experimental
-  (setq org-log-done 'note)
-  (org-agenda nil "a")
-  (setq org-log-into-drawer "LOGBOOK")
+  ;; Default todo states
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
-	  org-todo-keyword-faces
-	  '(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
-	    ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
-	  org-agenda-span 7
-	  org-agenda-skip-scheduled-if-done t
-	  org-agenda-skip-deadline-if-done t
-	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
-
-  (setq org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
-
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
+	org-todo-keyword-faces
+	'(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
+	  ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
+	org-log-done 'note
+	org-imenu-depth 3
+	remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
-(setq org-agenda-window-setup "only-window")
+(setq org-agenda-window-setup "only-window"
+      org-agenda-span 7
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
    #+end_src
 
 ** bidi support in org
@@ -1355,6 +1343,8 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 * Alert on startup finish
 
   #+begin_src emacs-lisp
-(setq initial-scratch-message (concat "Welcome to Yusuf's Emacs\n\n" (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n") "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
-(alert "daemon loaded successfully")
+    (setq initial-scratch-message (concat "Welcome to Yusuf's Emacs\n\n" (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n") "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
+(reapply-font)
+(org-agenda nil "a")
+    (alert "daemon loaded successfully")
   #+end_src
