@@ -768,13 +768,17 @@ evil-mode-line-tag
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
-(setq org-agenda-category-icon-alist nil)
-(add-to-list 'org-agenda-category-icon-alist '("WORK" ("💼") nil nil :width (16.) :ascent center))
-(add-to-list 'org-agenda-category-icon-alist '("SETUP" ("🐧") nil nil :width (16.) :ascent center))
-(add-to-list 'org-agenda-category-icon-alist '("EMAIL" ("✉️") nil nil :width (16.) :ascent center))
-(add-to-list 'org-agenda-category-icon-alist '("HOME" ("🏠") nil nil :width (16.) :ascent center))
 
-(setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s"))
+;;Setup agenda icons
+(setq org-agenda-category-icon-alist nil)
+
+(setq agenda-categories-alist '(("WORK" "💼") ("SOFTWARE" "💻") ("SETUP" "🐧") ("EMAIL" "✉️") ("HOME" "🏠") ("WOOD" "🪵") ("FAMILY" "👪") ("REPORTS" "📚") ("INCOME" "💰")))
+
+(dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
+
+(defun format-agenda-prefix () (interactive) (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s")))
+
+(add-hook 'org-agenda-mode-hook 'format-agenda-prefix)
    #+end_src
 
 ** bidi support in org
@@ -790,18 +794,20 @@ evil-mode-line-tag
    #+BEGIN_SRC emacs-lisp
 	 (setq org-directory "~/Public/Syncthing Global/Notes/")
 	 (setq org-default-notes-file (concat org-directory "capture.org"))
+(setq agenda-catcomp (mapconcat (lambda (x) (car x)) agenda-categories-alist "|"))
+
 	 (setq org-capture-templates
-	 '(
+	 `(
 	   ("t" "Work/Personal Tasks")
 	   ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
-	   "** TODO %?:work:%^G\n SCHEDULED: %^T  DEADLINE: %^t" :empty-lines 1)
+	   ,(concat "** TODO %?:work:%^G\n:PROPERTIES:\n:CATEGORY: %^{prompt|" agenda-catcomp "}\n:END:\n SCHEDULED: %^T  DEADLINE: %^t") :empty-lines 1)
 
 	   ("tp" "Personal Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Personal Tasks")
-	   "** TODO %? :personal:\n SCHEDULED: %^t" :empty-lines 1)
+	   ,(concat "** TODO %? :personal:\n:PROPERTIES:\n:CATEGORY: %^{prompt|" agenda-catcomp "}\n:END:\n SCHEDULED: %^t") :empty-lines 1)
 
    ("td" "Daily simple tasks" entry
        (file+olp+datetree "~/Public/Syncthing Global/Notes/capture.org" "Daily Simple Tasks")
-"* TODO %?\n SCHEDULED: %t\n DEADLINE: %t"
+,(concat "* TODO %?\n:PROPERTIES:\n:CATEGORY: %^{prompt|" agenda-catcomp "}\n:END:\n SCHEDULED: %t\n DEADLINE: %t")
        :jump-to-captured t)
 
 	   ("i" "Interesting thingies")

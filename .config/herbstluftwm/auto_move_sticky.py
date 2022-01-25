@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# on tag_changed events move sticky windows also
 import os
 import subprocess as sp
 

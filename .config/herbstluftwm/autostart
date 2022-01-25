@@ -55,7 +55,7 @@ if hc('new_attr bool my_not_first_autostart')[1]:
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
     elif HOSTNAME == 'yusuf-dell':
-        subprocess.Popen('autorandr', shell=True, text=True)
+        subprocess.Popen('autorandr --cycle', shell=True, text=True)
 
 # this is a simple config for herbstluftwm
 hc('emit_hook', 'reload')
@@ -99,13 +99,12 @@ tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'GIMP': '4', 'V': '5', 'VI': '6',
         'VII': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
 tags_lst = list(tags.keys())
 
-sticky_script = os.path.expanduser('~/.config/herbstluftwm/switch_tag.py')
 hc(f'rename default {list(tags.keys())[0]}')
 for tag, key in tags.items():
     hc(f'add {tag}')
     # use previous focused tag if the selected tag is currently focused
     hc(f'keybind {MOD}-{key} or , and . chain .-. compare '
-       f'tags.focus.name != {tag} . use {tag} , use_previous ')
+       f'tags.focus.name != {tag} . use {tag} , use_previous')
     hc('keybind', f'{MOD}-Shift-{key}', 'move', tag)
 
 # cycle through tags

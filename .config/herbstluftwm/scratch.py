@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Scratchpads for herbstluftwm
 
 import re
 import argparse

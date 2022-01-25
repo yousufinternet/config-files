@@ -7,12 +7,8 @@ from scratch import hc, repair_geometry, win_geometry, screen_dim, create_geomet
 
 
 def get_floating_id():
-    clients = hc('attr clients')[0].splitlines()
-    clients = [c.strip().rstrip('.') for c in clients if c.strip().startswith('0x')]
-    cur_tag = hc('attr tags.focus.name')[0].strip()
-    clients = [c for c in clients if hc(f'attr clients.{c}.tag')[0].strip() == cur_tag]
+    clients = hc('list_clients --floating')
     clients = [c for c in clients if hc(f'attr clients.{c}.visible')[0].strip() == 'true']
-    clients = [c for c in clients if hc(f'attr clients.{c}.floating')[0].strip() == 'true']
     if clients:
         return clients[0]
     return None
@@ -25,6 +21,7 @@ def main():
     if not wid:
         return
     screen_dims = screen_dim()
+    print(screen_dims)
     win_gmt = win_geometry(wid)
     print(win_gmt)
     max_x = screen_dims['width'] - win_gmt['width']
