@@ -22,6 +22,13 @@ def cmd_output(cmd, **kwargs):
     return out
 
 
+def ficon(icon, color=None, beforepad=0, afterpad=5):
+    beforepad *= GDKSCALE
+    afterpad *= GDKSCALE
+    return (('%{O'+f'{beforepad}'+'}%{F'+color+'}' if color else '')+'%{T2}'
+            + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+f'{afterpad}'+'}')
+
+
 class MPC():
     def __init__(self, wait_time=30):
         self.wait_time = wait_time
@@ -43,12 +50,13 @@ class MPC():
         except (subprocess.CalledProcessError, IndexError):
             state = 'stop'
             song = ''
-        icon = '%{F'+cdict['l_yellow']+'}%{T2}'+self.icons_dict[state]+'%{T-}%{F-}%{O-'+f'{5*GDKSCALE}}}'+' '
-        return icon+'%{A4:next:}%{A5:prev:}%{A:toggle:}%{A3:stop:}'+song+'%{A3}%{A}%{A5}%{A4}'
+        icon = ficon(self.icons_dict[state], cdict['l_yellow'])
+        return '%{A4:mpcnext:}%{A5:mpcprev:}%{A:mpctoggle:}%{A3:mpcstop:}'+icon+song+'%{A3}%{A}%{A5}%{A4}'
 
     def command(self, event):
-        subprocess.run(f'mpc {event}', text=True, shell=True)
-        return True
+        if event.startswith('mpc'):
+            subprocess.run(f'mpc {event[3:]}', text=True, shell=True)
+            return True
 
 
 class CoronaVirus():
@@ -79,14 +87,72 @@ class CoronaVirus():
     def output(self):
         T = threading.Thread(target=self.worldometer_thread)
         T.start()
-        return ('%{A:CORONA:}%{F'+cdict['green']+'}%{T2}\ue214%'
-                '{T-}%{F-}'+f'%{{O-{5*GDKSCALE}}}'+self.cache+'%{A}')
+        return ('%{A:CORONA:}'+ficon('\ue076', cdict['green'])+self.cache+'%{A}')
 
     def command(self, event):
         if event.startswith('CORONA'):
             subprocess.Popen(
                 'xdg-open https://www.worldometers.info/coronavirus/country/iraq/',
                 text=True, shell=True)
+            return True
+
+
+class OpenWeather():
+    'display corona virus cases in iraq'
+    def __init__(self, apikey, lat=30.5349, lon=47.7888):
+        self.wait_time = 600  # first time only
+        self.updater = None
+        self.lat, self.lon = lat, lon
+        self.APIkey = apikey
+        self.cache = 'N/A'
+        self.icons = {
+            'DEFAULT': '\uf185', '01d': '\uf185', '01n': '\uf186', '02d': '\uf6c4',
+            '02n': '\uf6c3', '03d': '\uf0c2', '03n': '\uf0c2', '04d': '\uf0c2',
+            '04n': '\uf0c2', '09d': '\uf740', '09n': '\uf740', '10d': '\uf743',
+            '10n': '\uf73c', '11d': '\uf0e7', '11n': '\uf0e7', '12d': '\uf2dc',
+            '12n': '\uf2dc', '50d': '\uf72e', '50n': '\uf72e'}
+
+    def openweather_thread(self):
+        try:
+            req_link = f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&exclude=minutely,hourly,alerts&appid={self.APIkey}&units=metric"
+            # req_link = f'http://api.openweathermap.org/data/2.5/weather?q={self.city_name}&units=metric&appid={self.APIkey}'
+            response = requests.get(req_link)
+            if response:
+                self.cache = response.json()
+            if self.wait_time == 600:
+                self.wait_time = 1
+                time.sleep(4)
+                self.wait_time = 600
+        except Exception:
+            return
+
+    def output(self):
+        if self.APIkey:
+            T = threading.Thread(target=self.openweather_thread)
+            T.start()
+        if isinstance(self.cache, dict):
+            icon = self.icons.get(self.cache['current']['weather'][0]['icon'],
+                                  self.icons['DEFAULT'])
+            temp = f'{self.cache["current"]["temp"]:0.0f} ℃'
+            return ("%{A:OPENWEATHER:}"+ficon(icon, cdict['l_yellow'])+temp+"%{A}")
+        return '%{A:OPENWEATHER:}'+ficon(self.icons['DEFAULT'], cdict['l_yellow'])+self.cache+'%{A}'
+
+    def format_notification(self):
+        temp_keys = ["min", "max", "morn", "eve", "night"]
+        if isinstance(self.cache, dict):
+            return (
+                "DATE    | MIN | MAX | MOR | EVE | NGT |\n" + "\n".join(
+                    datetime.datetime.fromtimestamp(dfr["dt"]).strftime("%d-%m %a")
+                    + " ".join(f'{dfr["temp"][k]: ^5.0f}' for k in temp_keys)
+                    for dfr in self.cache["daily"]))
+        return "SERVICE NOT AVAILABLE"
+
+    def command(self, event):
+        if event.startswith('OPENWEATHER'):
+            content = self.format_notification()
+            subprocess.Popen(
+                ('dunstify -i "noicon" -a " " -t 60000'
+                 f' "Weather Forecast" "{content}"'), shell=True, text=True)
             return True
 
 
@@ -99,7 +165,7 @@ class KeyboardLayout():
 
     def output(self):
         layout = cmd_output('xkb-switch').upper()
-        return '%{A:KEYBOARD:}%{T2}\uf80b%{T-}'+layout[0:2]+'%{A}'
+        return '%{A:KEYBOARD:}'+ficon('\uf11c')+layout[0:2]+'%{A}'
 
     def command(self, event):
         if event == 'KEYBOARD':
@@ -125,8 +191,8 @@ class PacmanUpdates():
     def output(self):
         T = threading.Thread(target=self.pacman_thread)
         T.start()
-        return ('%{A:PACMAN:}%{F'+cdict['l_yellow']+'}%{T2}\uf8d6%'
-                '{T-}%{F-}'+f'%{{O-{7.5*GDKSCALE}}}'+f'{self.cache}%{{A}}')
+        return ('%{A:PACMAN:}'+ficon('\uf466', cdict['l_yellow']) +
+                f'{self.cache}%{{A}}')
 
     def command(self, event):
         if event.startswith('PACMAN'):
@@ -146,7 +212,7 @@ class DiskUsage():
             used_mnt = [line for line in df_out.split('\n')
                         if line.endswith(self.mount_point)]
             if used_mnt:
-                icon = f'%{{T2}}{self.icon}%{{T-}}' if self.icon else ''
+                icon = ficon(self.icon)
                 return icon + used_mnt[0].split()[-2]
         return 'N/A'
 
@@ -161,7 +227,7 @@ class SARCPUUsage():
         sar_thread.start()
         self.updater = None
         self.cache = ""
-        self.icon = '\uf0e4'
+        self.icon = '\uf2db'
 
     def output(self):
         cpu = self.cache
@@ -172,10 +238,10 @@ class SARCPUUsage():
         else:
             cpu_usage = sum(map(float, cpu.split()[3:6]))
             if cpu_usage >= 85:
-                return ('%{F'+cdict['red']+'}%{T2}'+self.icon+'%{T-}%{F-}'
+                return (ficon(self.icon, cdict['red']) +
                         f'{cpu_usage:0.0f}%')
             else:
-                return '%{T2}'+self.icon+'%{T-}'+f'{cpu_usage:0.0f}%'
+                return ficon(self.icon)+f'{cpu_usage:0.0f}%'
 
     def sar_thread(self):
         sar_process = subprocess.Popen(
@@ -230,10 +296,11 @@ class NetworkTraffic():
             speeds = [
                 (ifaces[i][0][:iftxt_len],
                  0, 0) for i in range(len(ifaces))]
+        dwnicn = ficon('\uf103', cdict['orange'], beforepad=5, afterpad=5)
+        upicn = ficon('\uf102', cdict['green'], beforepad=5, afterpad=2)
         formated_speeds = '/ '.join(
             (f'%{{F{cdict["teal"]}}}{x[0].upper()}%{{F-}} '
-             f'{x[2]} %{{F{cdict["orange"]}}}%{{T2}}\uf55c%{{T-}}%{{F-}}%{{O-{5*GDKSCALE}}}'
-             f'{x[1]} %{{F{cdict["green"]}}}%{{T2}}\uf544%{{T-}}%{{F-}}%{{O-{7.5*GDKSCALE}}}')
+             f'{x[2]}'+dwnicn+f'{x[1]}'+upicn)
             for x in speeds)
         self.cache = self.get_ip_out()
         return formated_speeds
@@ -256,7 +323,7 @@ class PingTimeOut():
         ping_time = self.ping_cache if not self.ping_cache == self.previous_ping else ""
         self.previous_ping = self.ping_cache
         try:
-            return ('%{F'+cdict['green']+'}%{T2}\uf0ac%{T-}%{F-}'
+            return (ficon('\uf0ac', cdict['green']) +
                     f'{ping_time.split()[-2].split("=")[1]} ms')
         except IndexError:
             return '%{F'+cdict['red']+'}%{T2}\uf0ac%{T-}%{F-}'
@@ -291,9 +358,9 @@ class CPUTemp():
         avg_temp = sum(temps)/len(temps)
         icon = [v for k, v in self.icons_dict.items() if k >= avg_temp or k == 90][0]
         if avg_temp > 80:
-            return '%{F'+cdict['red']+'}%{T2}'+icon+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'+str(round(avg_temp))+'%{F-}'
+            return '%{F'+cdict['red']+'}'+ficon('\uf769')+str(round(avg_temp))+'%{F-}'
         else:
-            return '%{T2}'+icon+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'+str(round(avg_temp))
+            return ficon('\uf76b')+str(round(avg_temp))
 
     def command(self, event):
         pass
@@ -309,11 +376,10 @@ class CPUUsage():
         cpu_usage = sum(float(i) for i in cmd_output(
             'mpstat -P ALL').split('\n')[3].split()[3:6])
         if cpu_usage >= 85:
-            return ('%{F'+cdict['red']+'}%{T2}'+self.icon+'%{T-}'
+            return ('%{F'+cdict['red']+'}'+ficon(self.icon)+
                     f'{cpu_usage:0.1f}%{{F-}}')
         else:
-            return ('%{T2}'+self.icon+'%{T-}'
-                    f'{cpu_usage:0.1f}%')
+            return (ficon(self.icon)+f'{cpu_usage:0.1f}%')
 
     def command(self, event):
         pass
@@ -323,7 +389,7 @@ class RamUsage():
     def __init__(self, percent=False):
         self.wait_time = 30
         self.updater = None
-        self.icon = '\ue266'
+        self.icon = '\uf538'
         self.percent = percent
 
     def output(self):
@@ -332,10 +398,9 @@ class RamUsage():
         total = int(ram[0].strip().split()[0])/(1024**2)
         percent = f'{used/total:0>3.0%}'
         if self.percent and used/total > 0.85:
-            return ('%{F'+cdict['red']+'}%{T2}'
-                    f'{self.icon}%{{T-}}{percent}'+'%{F-}')
+            return ('%{F'+cdict['red']+'}'+ficon(self.icon)+f'{percent}'+'%{F-}')
         elif self.percent:
-            return f'%{{F{cdict["green"]}}}%{{T2}}{self.icon}%{{T-}}%{{F-}}{percent}'
+            return ficon(self.icon, cdict['green'])+f'{percent}'
         elif not self.percent and used/total > 0.85:
             return ('%{F'+cdict['red']+'}%{T2}'
                     f'{self.icon}%{{T-}}{used:0.1f}G/{total:0.1f}G'+'%{F-}')
@@ -413,15 +478,16 @@ class Battery():
             charging = 'Charging' in battery
             battery = battery.split(': ')[1].split(', ')[1]
             bat_vlu = int(battery.rstrip('%'))
+            battery += '%'
             icon = [v for k, v in self.icons.items() if k >= bat_vlu][0]
             if bat_vlu <= 5:
-                return f'%{{B{cdict["red"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{B-}'
+                return '%{F'+cdict['red']+'}'+ficon(icon)+battery+'%{F-}'
             elif bat_vlu == 100:
-                return f'%{{F{cdict["green"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{F-}'
+                return '%{F'+cdict["green"]+'}'+ficon(icon)+battery+'%{F-}'
             elif charging:
-                return f'%{{F{cdict["l_yellow"]}}}%{{T2}}{icon} %{{T-}}'+battery+'%{F-}'
+                return '%{F'+cdict["l_yellow"]+'}'+ficon(icon)+battery+'%{F-}'
             else:
-                return f'%{{T2}}{icon} %{{T-}}'+battery
+                return ficon(icon)+battery
 
     def command(self, event):
         pass
@@ -493,8 +559,9 @@ class QtileWorkspaces():
 
 class HerbstluftwmWorkspaces():
     def __init__(self):
-        P = subprocess.Popen('herbstclient --idle', text=True, shell=True,
-                             stdout=subprocess.PIPE, encoding='UTF-8')
+        P = subprocess.Popen(
+            "herbstclient --idle 'tag_changed|tag_flags'",
+            text=True, shell=True, stdout=subprocess.PIPE, encoding='UTF-8')
         self.updater = P.stdout
         self.wait_time = 60
 
@@ -677,23 +744,29 @@ class Volume():
         self.wait_time = 30
         self.updater = None
         self.icons = {0: '\uf466', 25: '\uf027', 100: '\uf028'}
+        self.actions = {
+            'max': 'pactl set-sink-volume @DEFAULT_SINK@ 100%',
+            'mute': 'pactl set-sink-volume @DEFAULT_SINK@ 0',
+            'increase': 'pactl set-sink-volume @DEFAULT_SINK@ +2%',
+            'decrease': 'pactl set-sink-volume @DEFAULT_SINK@ -2%'
+        }
 
     def output(self):
         vol = cmd_output('pamixer --get-volume')
         vol = vol if vol != '' else '0'
-        prefix = ('%{A3:pactl set-sink-volume @DEFAULT_SINK@ 100%:}%{A:pactl'
-                  ' set-sink-volume @DEFAULT_SINK@ 0:}%{A4:pactl set'
-                  '-sink-volume @DEFAULT_SINK@ +2%:}%{A5:pactl set-sink-volume'
-                  ' @DEFAULT_SINK@ -2%:}')
+        prefix = ('%{A3:pactlmax:}%{A:pactlmute:}%{A4:pactlincrease:}'
+                  '%{A5:pactldecrease:}')
 
         icon = [v for k, v in self.icons.items()
                 if k >= int(vol) or k == 100][0]
         suffix = '%{A5}%{A4}%{A}%{A3}'
-        return prefix+f'%{{T2}}{icon}%{{T-}}{int(vol):02d}%'+suffix
+        return prefix+ficon(icon)+f'{int(vol):02d}%%'+suffix
 
     def command(self, event):
+        
         if event.startswith('pactl'):
-            subprocess.Popen(event, text=True, shell=True)
+            action = self.actions[event.lstrip('pactl')]
+            subprocess.Popen(action, text=True, shell=True)
         return True
 
 
@@ -720,11 +793,10 @@ class TimeDate():
         now = datetime.datetime.now()
         current_face = now.hour if now.hour < 12 else now.hour-12
         # 0 if now.minute < 30 else 30)
-        date_time = ('%{A:currentcal:}%{A4:nextcal:}%{A5:prevcal:}%{T2}%{F'
-                  + cdict['l_yellow']+'}\uf073 %{F-}%{A5}%{A4}%{A}%{T1}' +
-                  f'%{{O-{7.5*GDKSCALE}}}'+datetime.datetime.strftime(
-                      now, '%a %d-%b,%y %H:%M'))
-        return date_time+'%{T2} '+clock_faces[current_face]+'%{T-}'+f'%{{O-{7.5*GDKSCALE}}}'
+        date_time = ('%{A:currentcal:}%{A4:nextcal:}%{A5:prevcal:}' +
+                     ficon('\uf073', cdict['orange'])+'%{A5}%{A4}%{A}' +
+                     datetime.datetime.strftime(now, '%a %d-%b,%y %H:%M'))
+        return date_time+ficon(' \uf017')
 
     def command(self, event):
         if event == 'currentcal':

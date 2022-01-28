@@ -6,12 +6,19 @@ from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
-    HerbstluftwmWorkspaces, MPC
+    HerbstluftwmWorkspaces, MPC, OpenWeather
+
+
+def read_open_weather_api_key():
+    with open('OPENWEATHER_APIKEY', 'r') as f: 
+        return f.read().strip()
 
 
 if __name__ == '__main__':
 
     bgs = ['#282A36', '#000000']
+
+    apikey = read_open_weather_api_key()
 
     if HOSTNAME == 'yusuf-dell':
         modules = [
@@ -31,6 +38,7 @@ if __name__ == '__main__':
         modules = [
             HerbstluftwmWorkspaces(),
             CoronaVirus(),
+            OpenWeather(apikey),
             PacmanUpdates(),
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
             PingTimeOut(),
