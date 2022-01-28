@@ -772,13 +772,16 @@ evil-mode-line-tag
 ;;Setup agenda icons
 (setq org-agenda-category-icon-alist nil)
 
-(setq agenda-categories-alist '(("WORK" "💼") ("SOFTWARE" "💻") ("SETUP" "🐧") ("EMAIL" "✉️") ("HOME" "🏠") ("WOOD" "🪵") ("FAMILY" "👪") ("REPORTS" "📚") ("INCOME" "💰")))
+(setq agenda-categories-alist '(("WORK" "💼") ("SOFTWARE" "💻") ("SETUP" "🐧") ("EMAIL" "✉️") ("HOME" "🏠") ("WOOD" "🪵") ("FAMILY" "👪") ("REPORTS" "📊") ("INCOME" "💰") ("HABITS" "🥊") ("FRIENDS" "🤦") ("PERSONAL" "👤") ("BOOKS" "📚")))
 
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
-(defun format-agenda-prefix () (interactive) (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s")))
+(defun format-sort-agenda () (interactive)
+ (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s"))
+(setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
+)
 
-(add-hook 'org-agenda-mode-hook 'format-agenda-prefix)
+(add-hook 'org-agenda-mode-hook 'format-sort-agenda)
    #+end_src
 
 ** bidi support in org
