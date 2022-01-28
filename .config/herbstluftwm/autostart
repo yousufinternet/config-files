@@ -27,7 +27,7 @@ startup_cmds = [
     "nm-applet",
     "udiskie -t",
     # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
-    f'dunst -width "({150*GDK_SCALE}, {250*GDK_SCALE})" -height {GDK_SCALE*250} -offset 0x{20*GDK_SCALE} -padding {10*GDK_SCALE} -frame_width {GDK_SCALE} -font "Dejavu Sans Mono {8+GDK_SCALE}" -min_icon_size {32*GDK_SCALE} -max_icon_size {32*GDK_SCALE}'
+    f'dunst -width "({150*GDK_SCALE}, {350*GDK_SCALE})" -height {GDK_SCALE*250} -offset 0x{20*GDK_SCALE} -padding {10*GDK_SCALE} -frame_width {GDK_SCALE} -font "Dejavu Sans Mono {8+GDK_SCALE}" -min_icon_size {32*GDK_SCALE} -max_icon_size {32*GDK_SCALE}'
     # 'dunst -width "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((8+GDK_SCALE))" -corner_radius 25 -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE))',
     "blueman-applet",
     "emacs --daemon",
