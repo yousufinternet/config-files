@@ -324,6 +324,11 @@ News and tech
    #+begin_src emacs-lisp
 (setq default-input-method "arabic")
    #+end_src
+** Don't show warnings buffer at startup
+   #+begin_src emacs-lisp
+(setq delayed-warnings-hook nil)
+(org-agenda-list)
+   #+end_src
 * Key bindings
 ** General Binding
 #+BEGIN_SRC emacs-lisp
@@ -357,6 +362,8 @@ News and tech
 	   "fl" 'counsel-locate
 	   "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
 	   "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
+	   "fch" (lambda () (interactive) (find-file "~/.config/herbstluftwm/autostart"))
+	   "fcx" (lambda () (interactive) (find-file "~/.config/sxhkd/app_keys"))
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
@@ -683,13 +690,15 @@ evil-mode-line-tag
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
 (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Noto Sans Arabic" :height 105))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic"))
 (set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
 (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
 
 ;; make org source blocks always monospaced
+(set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
+(set-face-attribute 'org-level-2 nil :height 145)
 (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
@@ -767,7 +776,7 @@ evil-mode-line-tag
       org-agenda-span 7
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
-      org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "\\.org$"))
+      org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "^[A-Za-z_]\\w*\\.org$"))
 
 ;;Setup agenda icons
 (setq org-agenda-category-icon-alist nil)
@@ -777,7 +786,7 @@ evil-mode-line-tag
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
 (defun format-sort-agenda () (interactive)
- (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-12t% s"))
+ (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-6 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 )
 
@@ -1371,8 +1380,10 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 * Alert on startup finish
 
   #+begin_src emacs-lisp
-    (setq initial-scratch-message (concat "Welcome to Yusuf's Emacs\n\n" (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n") "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
+(setq initial-scratch-message
+ (concat "Welcome to Yusuf's Emacs\n\n"
+ (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n")
+ "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
 (reapply-font)
-(org-agenda nil "a")
-    (alert "daemon loaded successfully")
+(alert "daemon loaded successfully")
   #+end_src

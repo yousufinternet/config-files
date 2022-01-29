@@ -20,6 +20,11 @@ if __name__ == '__main__':
 
     apikey = read_open_weather_api_key()
 
+    tags_icns = {
+        'WEB': '\uf0ac', 'DEV': '\uf5fc', 'TERM': '\uf120', 'DOCS': '\uf02d',
+        'GIMP': '\uf1fc', 'READ': '\uf518', 'AGENDA': '\uf274',
+        'DOWN': '\uf019', 'CHAT': '\uf086', 'GAME': '\uf11b'}
+
     if HOSTNAME == 'yusuf-dell':
         modules = [
             HerbstluftwmWorkspacesDots(),
@@ -36,7 +41,7 @@ if __name__ == '__main__':
         ]
     else:
         modules = [
-            HerbstluftwmWorkspaces(),
+            HerbstluftwmWorkspaces(tags_icns),
             CoronaVirus(),
             OpenWeather(apikey),
             PacmanUpdates(),

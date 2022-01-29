@@ -42,8 +42,8 @@ def setup_scheduler():
 
 
 def set_single_wallpaper(path):
-    # cmd_run(f'feh --bg-scale "{path}"')
-    cmd_run(f'wal -s -i "{path}"')
+    cmd_run(f'feh --bg-fill "{path}"')
+    # cmd_run(f'wal -s -i "{path}"')
 
 
 def set_wal(path):

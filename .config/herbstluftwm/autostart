@@ -40,6 +40,8 @@ startup_cmds = [
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing-gtk -m",
+    'telegram-desktop',
+    "emacs --name 'EmacsAgenda' --eval '(org-agenda-list)' --eval '(setq mode-line-format nil)' --eval '(delete-other-windows)'"
 ]
 
 if hc('new_attr bool my_not_first_autostart')[1]:
@@ -95,8 +97,8 @@ hc(f"keybind {MOD}-Control-space split explode")
 hc("set default_frame_layout 2")
 hc("set_layout max")
 
-tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'GIMP': '4', 'V': '5', 'VI': '6',
-        'VII': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
+tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'DOCS': '4', 'GIMP': '5',
+        'READ': '6', 'AGENDA': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
 tags_lst = list(tags.keys())
 
 hc(f'rename default {list(tags.keys())[0]}')
@@ -213,5 +215,6 @@ hc("rule name='dropdown_term' floating=on float_placement=none hook=make_sticky"
 hc("rule name='dropdown_calc' floating=on float_placement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
+hc('rule title="EmacsAgenda" tag=AGENDA')
 
 hc("unlock")

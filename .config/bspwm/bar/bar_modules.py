@@ -25,7 +25,7 @@ def cmd_output(cmd, **kwargs):
 def ficon(icon, color=None, beforepad=0, afterpad=5):
     beforepad *= GDKSCALE
     afterpad *= GDKSCALE
-    return (('%{O'+f'{beforepad}'+'}%{F'+color+'}' if color else '')+'%{T2}'
+    return ('%{O'+f'{beforepad}'+'}'+('%{F'+color+'}' if color else '')+'%{T2}'
             + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+f'{afterpad}'+'}')
 
 
@@ -558,12 +558,13 @@ class QtileWorkspaces():
 
 
 class HerbstluftwmWorkspaces():
-    def __init__(self):
+    def __init__(self, icons_dict=None):
         P = subprocess.Popen(
             "herbstclient --idle 'tag_changed|tag_flags'",
             text=True, shell=True, stdout=subprocess.PIPE, encoding='UTF-8')
         self.updater = P.stdout
         self.wait_time = 60
+        self.icns = icons_dict
 
     def output(self):
         wor_count = int(cmd_output('herbstclient attr tags.count'))
@@ -590,6 +591,8 @@ class HerbstluftwmWorkspaces():
         formatted_ws = []
         for w in all_workspaces:
             wor = f' {w} '
+            if self.icns:
+                wor = ficon(self.icns.get(w, ''), beforepad=5, afterpad=5)
             # wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
             # wor = w
             if w == current:

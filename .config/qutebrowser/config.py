@@ -29,7 +29,7 @@ c.content.javascript.enabled = True
 # config.set('content.javascript.enabled', True, 'chrome://*/*')
 # config.set('content.javascript.enabled', True, 'qute://*/*')
 
-c.spellcheck.languages = ['en-US', 'ar-IQ']
+c.spellcheck.languages = ['en-US']
 
 c.fonts.default_family = ["DejaVu Sans Mono"]
 # c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
