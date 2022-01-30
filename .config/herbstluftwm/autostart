@@ -27,8 +27,7 @@ startup_cmds = [
     "nm-applet",
     "udiskie -t",
     # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
-    f'dunst -width "({150*GDK_SCALE}, {350*GDK_SCALE})" -height {GDK_SCALE*250} -offset 0x{20*GDK_SCALE} -padding {10*GDK_SCALE} -frame_width {GDK_SCALE} -font "Dejavu Sans Mono {8+GDK_SCALE}" -min_icon_size {32*GDK_SCALE} -max_icon_size {32*GDK_SCALE}'
-    # 'dunst -width "$((250*GDK_SCALE))x4-$((15*GDK_SCALE))+$((26*GDK_SCALE))" -padding $((8*GDK_SCALE)) -horizontal_padding $((10*GDK_SCALE)) -frame_width $((2*GDK_SCALE)) -font "Dejavu Sans Mono $((8+GDK_SCALE))" -corner_radius 25 -min_icon_size $((32*GDK_SCALE)) -max_icon_size $((32*GDK_SCALE))',
+    f'dunst -scale {GDK_SCALE}'
     "blueman-applet",
     "emacs --daemon",
     "pasystray",
@@ -41,7 +40,7 @@ startup_cmds = [
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing-gtk -m",
     'telegram-desktop',
-    "emacs --name 'EmacsAgenda' --eval '(org-agenda-list)' --eval '(setq mode-line-format nil)' --eval '(delete-other-windows)'"
+    '~/.config/herbstluftwm/start_agenda.py'
 ]
 
 if hc('new_attr bool my_not_first_autostart')[1]:
@@ -209,12 +208,9 @@ hc(f"rule class='transmission' tag='{tags_lst[7]}'")
 hc(f"rule class='discord' tag='{tags_lst[8]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
 hc(f"rule class='firefox' tag='{tags_lst[0]}'")
-hc("rule class='dropdown_.*' floating=on float_placement=none hook=make_sticky")
-hc("rule instance='dropdown_.*' floating=on float_placement=none hook=make_sticky")
-hc("rule name='dropdown_term' floating=on float_placement=none hook=make_sticky")
-hc("rule name='dropdown_calc' floating=on float_placement=none hook=make_sticky")
+hc("rule class='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
+hc("rule instance='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
-hc('rule title="EmacsAgenda" tag=AGENDA')
 
 hc("unlock")

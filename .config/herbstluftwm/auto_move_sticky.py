@@ -15,6 +15,7 @@ def execute(cmd):
         raise sp.CalledProcessError(return_code, cmd)
 
 
-for line in execute('herbstclient --idle tag_changed'):
-    sp.Popen(os.path.expanduser('~/.config/herbstluftwm/switch_tag.py'),
-             shell=True)
+if __name__ == '__main__':
+    for line in execute('herbstclient --idle tag_changed'):
+        sp.Popen(os.path.expanduser('~/.config/herbstluftwm/switch_tag.py'),
+                shell=True)
