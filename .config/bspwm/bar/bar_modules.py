@@ -3,6 +3,7 @@ import time
 import json
 import random
 import socket
+import calendar
 import datetime
 import requests
 import threading
@@ -780,6 +781,7 @@ class TimeDate():
         self.timeformat = timeformat
         self.month_year = (datetime.date.today().year,
                             datetime.date.today().month)
+        self.txt_cal = calendar.TextCalendar()
 
     def output(self):
         clock_faces = {(0, 0): "🕛", (1, 0): "🕐", (2, 0): "🕑",
@@ -816,11 +818,12 @@ class TimeDate():
             else:
                 self.month_year = (self.month_year[0], self.month_year[1]-1)
         if event in ['currentcal', 'nextcal', 'prevcal']:
-            date = datetime.date(self.month_year[0], self.month_year[1], 1)
+            cal = self.txt_cal.formatmonth(*self.month_year)
+            cal_hdr = cal.splitlines()[0]
+            cal_body = '\n'.join(cal.splitlines()[1:])
             subprocess.Popen(
-                (f'dunstify "{date:%B - %Y}" "`cal -s {self.month_year[1]}'
-                    f' {self.month_year[0]}`" -r 000010 -h'
-                    ' "string:desktop-entry:calendar_popup"'),
+                (f'dunstify -i office-calendar "{cal_hdr}" "{cal_body}" '
+                 '-r 000010 -h "string:desktop-entry:calendar_popup"'),
                 shell=True, text=True)
 
 
