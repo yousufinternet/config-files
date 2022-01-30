@@ -90,7 +90,7 @@ export NODE_PATH=$NODE_PATH:$(npm root -g)
 
 alias radiogolha='cvlc mms://www.radiogolha.net/RadioGolha'
 alias ar5="aria2c -c -V -s 5 --max-connection-per-server=5 --on-download-complete=ding.sh"
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --hyperlink=always'
 alias resrvserv='mosh yusuf@10.127.188.92'
 alias mediacenter='mosh yusuf@192.168.1.110'
 alias worklaptop='mosh archie-work@192.168.1.6'

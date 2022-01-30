@@ -890,11 +890,11 @@ evil-mode-line-tag
  ;;     (org-notifications-start)
  ;; )
 
-;; (use-package org-alert
-;;  :ensure t
-;;  :after alert
-;; :config (org-alert-enable)
-;;  )
+(use-package org-alert
+ :ensure t
+ :after alert
+:config (org-alert-enable) (setq org-alert-interval 1800)
+ )
 #+END_SRC
 
 ** babel setup

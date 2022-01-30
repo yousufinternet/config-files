@@ -297,11 +297,11 @@ class NetworkTraffic():
             speeds = [
                 (ifaces[i][0][:iftxt_len],
                  0, 0) for i in range(len(ifaces))]
-        dwnicn = ficon('\uf103', cdict['orange'], beforepad=5, afterpad=5)
-        upicn = ficon('\uf102', cdict['green'], beforepad=5, afterpad=2)
+        dwnicn = ficon('\uf103', cdict['green'], beforepad=5, afterpad=5)
+        upicn = ficon('\uf102', cdict['orange'], beforepad=5, afterpad=2)
         formated_speeds = '/ '.join(
             (f'%{{F{cdict["teal"]}}}{x[0].upper()}%{{F-}} '
-             f'{x[2]}'+dwnicn+f'{x[1]}'+upicn)
+             f'{x[2]}'+upicn+f'{x[1]}'+dwnicn)
             for x in speeds)
         self.cache = self.get_ip_out()
         return formated_speeds

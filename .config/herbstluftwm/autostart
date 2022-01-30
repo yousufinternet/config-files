@@ -43,21 +43,6 @@ startup_cmds = [
     '~/.config/herbstluftwm/start_agenda.py'
 ]
 
-if hc('new_attr bool my_not_first_autostart')[1]:
-    for cmd in startup_cmds:
-        subprocess.Popen(cmd, text=True, shell=True)
-    if HOSTNAME == 'yusufs-lenovo':
-        xinput_list = subprocess.check_output('xinput list --name-only',
-                                              shell=True, text=True)
-        if 'Logitech USB Optical Mouse' in xinput_list.splitlines():
-            subprocess.Popen(
-                'xinput set-prop "Logitech USB Optical Mouse" "libinput Accel Speed" 1',
-                shell=True, text=True)
-        subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
-        subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
-    elif HOSTNAME == 'yusuf-dell':
-        subprocess.Popen('autorandr --cycle', shell=True, text=True)
-
 # this is a simple config for herbstluftwm
 hc('emit_hook', 'reload')
 
@@ -212,5 +197,20 @@ hc("rule class='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule instance='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
+
+if hc('new_attr bool my_not_first_autostart')[1]:
+    for cmd in startup_cmds:
+        subprocess.Popen(cmd, text=True, shell=True)
+    if HOSTNAME == 'yusufs-lenovo':
+        xinput_list = subprocess.check_output('xinput list --name-only',
+                                              shell=True, text=True)
+        if 'Logitech USB Optical Mouse' in xinput_list.splitlines():
+            subprocess.Popen(
+                'xinput set-prop "Logitech USB Optical Mouse" "libinput Accel Speed" 1',
+                shell=True, text=True)
+        subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
+        subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
+    elif HOSTNAME == 'yusuf-dell':
+        subprocess.Popen('autorandr --cycle', shell=True, text=True)
 
 hc("unlock")
