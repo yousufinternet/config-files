@@ -142,7 +142,7 @@ class OpenWeather():
         if isinstance(self.cache, dict):
             return (
                 "DATE    | MIN | MAX | MOR | EVE | NGT |\n" + "\n".join(
-                    datetime.datetime.fromtimestamp(dfr["dt"]).strftime("%d-%m %a")
+                    datetime.datetime.fromtimestamp(dfr["dt"]).strftime("%d-%m %a ")
                     + " ".join(f'{dfr["temp"][k]: ^5.0f}' for k in temp_keys)
                     for dfr in self.cache["daily"]))
         return "SERVICE NOT AVAILABLE"
