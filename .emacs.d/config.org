@@ -363,6 +363,7 @@ News and tech
 	   "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
 	   "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
 	   "fch" (lambda () (interactive) (find-file "~/.config/herbstluftwm/autostart"))
+	   "fcd" (lambda () (interactive) (find-file "~/.config/dunst/dunstrc"))
 	   "fcx" (lambda () (interactive) (find-file "~/.config/sxhkd/app_keys"))
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
