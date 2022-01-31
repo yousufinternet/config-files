@@ -568,46 +568,47 @@ class HerbstluftwmWorkspaces():
         self.icns = icons_dict
 
     def output(self):
-        wor_count = int(cmd_output('herbstclient attr tags.count'))
-        all_workspaces = [cmd_output(f'herbstclient attr tags.{i}.name')
-                          for i in range(wor_count)]
-        just_len = len(max(all_workspaces, key=len))
-        empty_workspaces = []
-        for desk in all_workspaces:
-            wins_count = cmd_output(f"herbstclient attr tags.by-name.{desk}.client_count")
-            if int(wins_count) == 0:
-                empty_workspaces.append(desk)
-        current = cmd_output('herbstclient attr tags.focus.name').strip()
-        clients_list = [wid.strip().rstrip('.') for wid in
-                        cmd_output("herbstclient attr clients").split('\n')
-                        if wid.strip().startswith('0x')]
-        urgent_tags = [
-            cmd_output(f'herbstclient attr clients.{wid}.tag')
-            for wid in clients_list
-            if cmd_output(f'herbstclient attr clients.{wid}.urgent') == 'true']
+        # wor_count = int(cmd_output('herbstclient attr tags.count'))
+        # all_workspaces = [cmd_output(f'herbstclient attr tags.{i}.name')
+        #                   for i in range(wor_count)]
+        # just_len = len(max(all_workspaces, key=len))
+        # empty_workspaces = []
+        # for desk in all_workspaces:
+        #     wins_count = cmd_output(f"herbstclient attr tags.by-name.{desk}.client_count")
+        #     if int(wins_count) == 0:
+        #         empty_workspaces.append(desk)
+        # current = cmd_output('herbstclient attr tags.focus.name').strip()
+        # clients_list = [wid.strip().rstrip('.') for wid in
+        #                 cmd_output("herbstclient attr clients").split('\n')
+        #                 if wid.strip().startswith('0x')]
+        # urgent_tags = [
+        #     cmd_output(f'herbstclient attr clients.{wid}.tag')
+        #     for wid in clients_list
+        #     if cmd_output(f'herbstclient attr clients.{wid}.urgent') == 'true']
 
+        tags_status = cmd_output('herbstclient tag_status')
         pre1 = '%{A:HERBST_WIDGETdesk'
         pre2 = '%{A4:HERBST_WIDGETnext:}'
         pre3 = '%{A5:HERBST_WIDGETprev:}'
+        sfx = '%{-o}%{U-}%{A}'
+        format_dict = {':': None, '-': 'orange', '.': 'cyan',
+                       '!': 'red', '#': 'current'}
         formatted_ws = []
-        for w in all_workspaces:
-            wor = f' {w} '
+        for w in tags_status.split('\t'):
+            wor = f' {w[1:]} '
             if self.icns:
-                wor = ficon(self.icns.get(w, ''), beforepad=5, afterpad=5)
-            # wor = '%{T3}'+w.center(just_len+2)+'%{T1}'
-            # wor = w
-            if w == current:
-                formatted_ws.append('%{R}'+wor+'%{R}')
-            elif w in urgent_tags:
+                wor = ficon(self.icns.get(w[1:], ''), beforepad=5, afterpad=5)
+            clr = format_dict.get(w[0], None)
+            if clr:
+                if clr == 'current':
+                    formatted_ws.append('%{R}'+wor+'%{R}')
+                    continue
                 formatted_ws.append(
-                    pre1+w+':}'+'%{U'+cdict['red']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
-            elif w in empty_workspaces:
-                formatted_ws.append(
-                    pre1+w+':}'+'%{U'+cdict['cyan']+'}%{+o}'+wor+'%{-o}%{U-}%{A}')
+                    pre1+w[1:]+':}'+(('%{U'+cdict[clr]+'}') if clr else '')+
+                    '%{+o}'+wor+sfx)
             else:
-                formatted_ws.append(
-                    pre1+w+':}'+wor+'%{A}')
-
+                formatted_ws.append(pre1+w[1:]+':}'+wor+'%{A}')
+                
         return pre2+pre3+''.join(formatted_ws)+'%{A5}%{A4}'
 
     def command(self, event):
