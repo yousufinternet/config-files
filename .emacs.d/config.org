@@ -342,7 +342,7 @@ News and tech
 	   ":" 'counsel-M-x
 	   "a" '(:ignore t :which-key "Applications")
 	   "ar" 'ranger
-	   "ad" '(dired ".")
+	   "ad" (lambda () (interactive) (dired "~"))
 	   "af" 'elfeed
 	   "b" '(:ignore t :which-key "Buffers")
 	   "bb" 'ivy-switch-buffer
@@ -659,7 +659,8 @@ evil-mode-line-tag
 		 :commands (global-pretty-mode)
 		 :config (global-pretty-mode t))
 
-     ;;      (use-package all-the-icons)
+          (use-package all-the-icons :ensure t)
+          (use-package all-the-icons-dired :ensure t)
 
      ;; (defun custom-modeline-mode-icon ()
      ;;   (format " %s"
