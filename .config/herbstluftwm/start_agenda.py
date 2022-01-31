@@ -6,7 +6,7 @@ from auto_move_sticky import execute
 LISP_ARGS = ['(setq frame-title-format "EmacsAgenda")', '(org-agenda nil "a")',
              '(delete-other-windows)', '(setq mode-line-format nil)']
 LISP_ARGS = '-e '+'-e '.join(f"'{a}'" for a in LISP_ARGS)
-AGENDA_CMD = f"emacsclient -c --no-wait -q -a '' {LISP_ARGS}"
+AGENDA_CMD = f"emacsclient -c -q -a '' {LISP_ARGS}"
 
 print(AGENDA_CMD)
 sp.Popen(AGENDA_CMD, shell=True, text=True)
