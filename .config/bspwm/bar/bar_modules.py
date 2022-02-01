@@ -748,7 +748,7 @@ class Volume():
     def __init__(self):
         self.wait_time = 30
         self.updater = None
-        self.icons = {0: '\uf466', 25: '\uf027', 100: '\uf028'}
+        self.icons = {0: '\uf026', 25: '\uf027', 100: '\uf028'}
         self.actions = {
             'max': 'pactl set-sink-volume @DEFAULT_SINK@ 100%',
             'mute': 'pactl set-sink-volume @DEFAULT_SINK@ 0',
@@ -773,6 +773,23 @@ class Volume():
             action = self.actions[event.lstrip('pactl')]
             subprocess.Popen(action, text=True, shell=True)
         return True
+
+
+class UdiskieMenu():
+    def __init__(self):
+        self.wait_time = 0
+        self.updater = None
+        self.icon = '\uf0a0'
+        self.icons = {0: '\uf026', 25: '\uf027', 100: '\uf028'}
+
+    def output(self):
+        return '%{A:udiskie_menu:}'+ficon(self.icon)+'%{A}'
+
+    def command(self, event):
+        if event == 'udiskie_menu':
+            subprocess.Popen(
+                'rofi -show udiskie -modi udiskie:~/Scripts/udiskie-menu.py',
+                shell=True, text=True)
 
 
 class TimeDate():
@@ -842,3 +859,4 @@ class RandomNum():
     def command(self, event):
         if event == 'Update Num':
             return True
+
