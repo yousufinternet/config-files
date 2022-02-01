@@ -4,9 +4,11 @@
  * Original Author: Primetoxinz
  */
 * {
+    foreground:			 #f4e6ff;
+    background:			 #0e0019;
     text-color:                  #f4e6ff;
     background-color:            #0e0019;
-    lightbg:                     #19002d;
+    lightbg:                     #21003c;
     red:                         #d34328;
     orange:                      #FFCC00; 
     blue:                        #4b0082; 
@@ -38,8 +40,6 @@
     border-radius: 5px;
 
     scrollbar: true;
-    dpi: 0;
-    window-thumbnail: true;
 }
 
 window {
@@ -54,6 +54,7 @@ window {
     anchor: north;
     width: 30%;
     y-offset: 1.1em;
+    transperancy: "real";
 }
 
 mainbox {
@@ -90,6 +91,8 @@ listview {
     padding:      2px 0px 0px ;
     text-color: @separatorcolor;
     scrollbar: true;
+    lines: 8;
+    cycle: true;
 }
 element {
     border: 0;
@@ -151,7 +154,12 @@ button normal {
 }
 
 inputbar {
+padding: 10px;
     children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+entry {
+background-color: @lightbg;
 }
 
 textbox-prompt-colon {
@@ -163,9 +171,10 @@ textbox-prompt-colon {
 
 element-icon{
 enabled: true;
+background-color: rgba ( 0, 0, 0, 0 % );
+size: 1em;
 }
 
-
-icon{
+mode-switcher {
 enabled: true;
 }
