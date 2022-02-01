@@ -4,7 +4,7 @@ import subprocess as sp
 from auto_move_sticky import execute
 
 LISP_ARGS = ['(setq frame-title-format "EmacsAgenda")', '(org-agenda nil "a")',
-             '(delete-other-windows)', '(setq mode-line-format nil)']
+             '(delete-other-windows)']
 LISP_ARGS = '-e '+'-e '.join(f"'{a}'" for a in LISP_ARGS)
 AGENDA_CMD = f"emacsclient -c -q -a '' {LISP_ARGS}"
 

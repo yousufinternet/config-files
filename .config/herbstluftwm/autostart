@@ -25,7 +25,7 @@ startup_cmds = [
     "picom",
     "redshift",
     "nm-applet",
-    "udiskie -t",
+    "udiskie -T",
     # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
     f'dunst -scale {GDK_SCALE}'
     "blueman-applet",
@@ -117,10 +117,6 @@ scratch_script = '~/.config/herbstluftwm/scratch.py'
 hc(f"keybind {MOD}-d spawn sh -c"
    f" '{scratch_script} -c dropdown_term -w 1 -ht 0.8 -y "
    f"{GDK_SCALE*20} -x 0 --termflags --profile=Default-Black'")
-hc(f"keybind {MOD}-Ctrl-c spawn sh -c "
-   f"'{scratch_script} -c dropdown_calc -w 0.3 -ht 0.3 -x 0.35 -y 0.7 "
-   "--termflags --profile=Black-BigFont -e bc'")
-
 hc(f'keybind {MOD}-Tab or , and . compare tags.focus.curframe_wcount = 2 '
    '. cycle_layout +1 , cycle_layout +1')
 

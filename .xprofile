@@ -5,11 +5,9 @@ export TERM=xterm-256color
 export QT_QPA_PLATFORMTHEME=qt5ct
 # export TERMINAL="mlterm --fontsize=$((GDK_SCALE*15))"
 export TERMINAL="konsole"
-export ROFI_THEME=$HOME/.config/rofi/themes/dracula.rasi
 # export ROFI_THEME=$HOME/.config/rofi/themes/dracula.rasi
-export ROFI_THEME=sidebar
-export EDITOR=vim
-export RTV_EDITOR=vim
+export EDITOR='emacsclient -a "" -c'
+export RTV_EDITOR='emacsclient -a "" -c'
 
 # my scripts and flutter executables
 export PATH=$PATH:$HOME/.local/bin

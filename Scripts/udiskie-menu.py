@@ -47,7 +47,7 @@ def perform_action(action):
     elif action == 'Unpower':
         cmdrun(f'udiskie-umount -d {drive_info["dev_path"]}')
     elif action == 'Info':
-        print('\n'.join(f'{k}: {v}' for k, v in drive_info.items()))
+        print('\n'.join(f'<b>{k}</b>: {v}' for k, v in drive_info.items()))
     elif action == 'Cancel':
         return
 
@@ -56,6 +56,7 @@ def main(rofi_arg=None):
     dev_info = get_devices()
     # Don't allow entering custom items, only listed items can be selected
     print('\0no-custom\x1ftrue\n')
+    print('\0markup-rows\x1ftrue\n')
 
     # if no external devices were found
     if len(dev_info) < 1:
