@@ -13,11 +13,11 @@ super + ctrl + Return
 
 # all open windows
 super + w
-     rofi -show window -terminal $TERMINAL -dpi 0 -theme $ROFI_THEME -modi window,windowcd
+     rofi -show window -terminal $TERMINAL -modi window,windowcd
 
 # start an application
 super + e
-     rofi -show-icons -terminal $TERMINAL -show run -dpi 0 -theme $ROFI_THEME -modi run,drun,ssh
+     rofi -terminal $TERMINAL -show run -modi run,drun,ssh
 
 # Raise/Lower Brightness/Volume
 XF86Audio{Raise,Lower}Volume
@@ -61,8 +61,8 @@ super + i ; {m,h,n,r,f,p,s}
 	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,btop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
-super + g ; {c,d,f,g,t,q,r,z}
-  {calibre, discord, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
+super + g ; {c,d,e,f,g,t,q,r,z}
+  {calibre, discord, rofimoji, foliate, gimp, telegram-desktop, transmission-qt, remmina, zeal}
 
 # GUI apps that require graphics card assistance (via optirun)
 super + shift + g ; {f,d,b,s,k} 
@@ -83,3 +83,7 @@ super + ctrl + e
 # Help: opens a rofi menu with all man pages, displays the selected man page in zathura
 super + shift + F1
   ~/Scripts/browse_man_pages.py
+
+# rofi calculator
+super + ctrl + c
+  rofi -show calc -modi calc -no-show-match -no-sort
