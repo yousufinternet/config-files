@@ -28,17 +28,17 @@ startup_cmds = [
     "udiskie -T",
     # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
     f'dunst -scale {GDK_SCALE}'
-    "blueman-applet",
+    # "blueman-applet",
     "emacs --daemon",
-    "pasystray",
-    "parcellite",
+    # "pasystray",
+    # "parcellite",
     "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
     "~/.config/bspwm/bar/start_bar_herbst.py",
     "xfce4-panel -d",
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
-    "syncthing-gtk -m",
+    "syncthing serve",
     'telegram-desktop',
     '~/.config/herbstluftwm/start_agenda.py'
 ]
