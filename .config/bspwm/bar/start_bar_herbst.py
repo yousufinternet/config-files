@@ -6,7 +6,7 @@ from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
-    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu
+    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator
 
 
 def read_open_weather_api_key():
@@ -31,7 +31,8 @@ if __name__ == '__main__':
             CoronaVirus(),
             OpenWeather(apikey),
             PacmanUpdates(),
-            NetworkTraffic(['lo', 'vboxne']), '%{r}',
+            NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
+            SyncthingIndicator(), '%{r}',
             SARCPUUsage(),
             CPUTemp(),
             RamUsage(percent=True),
@@ -62,7 +63,7 @@ if __name__ == '__main__':
 
     # create_powerline(modules, bgs, seps=[' ', ' ', ' ', ' '])
 
-    main_loop = MainLoop(modules, sep=' %{F#555555}|%{F-} ', bg='#000000', fg='#F8F8F2')
+    main_loop = MainLoop(modules, sep='%{F#555555}|%{F-}%{O2}', bg='#000000', fg='#F8F8F2')
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()

@@ -7,7 +7,9 @@ linux = {
         'teal': '#4ab0b9',
         'orange': '#d39710',
         'green': '#00c415',
-        'cyan': '#00b4e0'}
+        'cyan': '#00b4e0',
+        'dimmed': '#383838'
+}
 
 # gruvbox colorscheme
 gruvbox = {

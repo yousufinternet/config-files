@@ -8,6 +8,7 @@ import datetime
 import requests
 import threading
 import subprocess
+from io import StringIO
 from bs4 import BeautifulSoup
 
 from colors import linux as cdict
@@ -240,9 +241,9 @@ class SARCPUUsage():
             cpu_usage = sum(map(float, cpu.split()[3:6]))
             if cpu_usage >= 85:
                 return (ficon(self.icon, cdict['red']) +
-                        f'{cpu_usage:0.0f}%')
+                        f'{cpu_usage:0.0f}%%')
             else:
-                return ficon(self.icon)+f'{cpu_usage:0.0f}%'
+                return ficon(self.icon)+f'{cpu_usage:0.0f}%%'
 
     def sar_thread(self):
         sar_process = subprocess.Popen(
@@ -397,7 +398,7 @@ class RamUsage():
         ram = cmd_output('vmstat -s').split('\n')
         used = int(ram[1].strip().split()[0])/(1024**2)
         total = int(ram[0].strip().split()[0])/(1024**2)
-        percent = f'{used/total:0>3.0%}'
+        percent = f'{used/total:0>3.0%}%'
         if self.percent and used/total > 0.85:
             return ('%{F'+cdict['red']+'}'+ficon(self.icon)+f'{percent}'+'%{F-}')
         elif self.percent:
@@ -479,6 +480,7 @@ class Battery():
             charging = 'Charging' in battery
             battery = battery.split(': ')[1].split(', ')[1]
             bat_vlu = int(battery.rstrip('%'))
+            # literal % should be passed as %% to lemonbar
             battery += '%'
             icon = [v for k, v in self.icons.items() if k >= bat_vlu][0]
             if bat_vlu <= 5:
@@ -780,15 +782,40 @@ class UdiskieMenu():
         self.wait_time = 0
         self.updater = None
         self.icon = '\uf0a0'
-        self.icons = {0: '\uf026', 25: '\uf027', 100: '\uf028'}
 
     def output(self):
-        return '%{A:udiskie_menu:}'+ficon(self.icon)+'%{A}'
+        return '%{A:udiskie_menu:}'+ficon(self.icon, beforepad=2, afterpad=2)+'%{A}'
 
     def command(self, event):
         if event == 'udiskie_menu':
             subprocess.Popen(
                 'rofi -show udiskie -modi udiskie:~/Scripts/udiskie-menu.py',
+                shell=True, text=True)
+
+
+class SyncthingIndicator():
+    def __init__(self):
+        self.wait_time = 600
+        self.updater = None
+        self.icon = '\uf021'
+        self.text = '0/0'
+
+    def output(self):
+        syncthing_json = cmd_output('syncthing cli show connections')
+        color = cdict['dimmed']
+        if syncthing_json:
+            sync_conn = json.load(StringIO(syncthing_json))
+            connected = len([v for v in sync_conn['connections'].values()
+                            if v['connected']])
+            self.text = f'{connected}/{len(sync_conn["connections"])}'
+            color = cdict['dimmed'] if connected == 0 else cdict['green']
+        
+        return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
+
+    def command(self, event):
+        if event == 'syncthing':
+            subprocess.Popen(
+                'xdg-open localhost:8080',
                 shell=True, text=True)
 
 
