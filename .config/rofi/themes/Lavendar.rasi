@@ -35,19 +35,19 @@
     selected-active-background:  @blue;
     active-background:           @orange;
 
-    padding: 2px;
-    margin: 2px;
-    border-radius: 5px;
+    padding: 0.1em;
+    margin: 0.1em;
+    border-radius: 0.2em;
 
     scrollbar: true;
 }
 
 window {
     font: "Fira Code 12";
-    border-radius:     0px 0px 20px 20px;
+    border-radius:     0px 0px 0.5em 0.5em;
     text-color: @foreground;
     background-color: rgba ( 0, 0, 0, 0 % );
-    padding:    10;
+    padding:    0.5em;
     text-color: @bordercolor;
     background-color: @background;
     location: north;
@@ -60,13 +60,13 @@ window {
 mainbox {
     border:  0;
     padding: 0;
-    margin: 20px;
+    margin: 1.2em;
 }
 
 message {
-    border:     1px dash 0px 0px ;
+    border:     0.1em dash 0px 0px ;
     text-color: @separatorcolor;
-    padding:    5px ;
+    padding:    0.2em ;
 }
 
 textbox {
@@ -87,8 +87,8 @@ handle-color: @foreground;
 listview {
     fixed-height: false;
     dynamic: true;
-    border:       2px 0px 0px ;
-    padding:      2px 0px 0px ;
+    border:       0.1em 0px 0px ;
+    padding:      0.1em 0px 0px ;
     text-color: @separatorcolor;
     scrollbar: true;
     lines: 8;
@@ -154,7 +154,7 @@ button normal {
 }
 
 inputbar {
-padding: 10px;
+padding: 0.5em;
     children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
 }
 
