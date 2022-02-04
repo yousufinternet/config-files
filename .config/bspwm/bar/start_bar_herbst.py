@@ -6,7 +6,7 @@ from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
-    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator
+    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator, NMInfo
 
 
 def read_open_weather_api_key():
@@ -49,7 +49,8 @@ if __name__ == '__main__':
             PacmanUpdates(),
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
             PingTimeOut(),
-            NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
+            NetworkTraffic(['lo', 'vboxne']), '%{c}',
+            UdiskieMenu(), SyncthingIndicator(), NMInfo(),
             '%{r}',
             MPC(),
             SARCPUUsage(),

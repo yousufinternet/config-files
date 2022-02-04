@@ -31,6 +31,26 @@ def ficon(icon, color=None, beforepad=0, afterpad=5):
             + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+f'{afterpad}'+'}')
 
 
+def read_fwf(text_table):
+    """
+    only works when the first row is columns with a single word
+    """
+    cols_row = text_table.splitlines()[0]
+    columns = cols_row.split()
+    cols_idxs = []
+    for i, (col, colnxt) in enumerate(zip(columns, columns[1:])):
+        cols_idxs.append((0 if i == 0 else cols_row.index(f' {col}')+1,
+                     cols_row.index(f' {colnxt}')+1))
+    # cols_widths = [(cols_row.index(c), cols_row.index(cnxt)) for c, cnxt in zip(columns, columns[1:])]
+    cols_idxs.append((cols_row.index(f' {columns[-1]}')+1, -1))
+    final_dict = {
+        col: [l[col_idx[0] : col_idx[1]].strip() for l in
+              text_table.splitlines()[1:]]
+        for col, col_idx in zip(columns, cols_idxs)
+    }
+    return final_dict
+
+
 class MPC():
     def __init__(self, wait_time=30):
         self.wait_time = wait_time
@@ -172,6 +192,68 @@ class KeyboardLayout():
     def command(self, event):
         if event == 'KEYBOARD':
             subprocess.Popen('xkb-switch -n', shell=True, text=True)
+
+
+class NMInfo():
+    def __init__(self):
+        P = subprocess.Popen('nmcli monitor', text=True, shell=True,
+                             stdout=subprocess.PIPE)
+        self.updater = P.stdout
+        self.wait_time = 600
+
+    def get_devices_status(self):
+        devices_table = cmd_output('nmcli device')
+        return read_fwf(devices_table)
+
+    def get_wifi_networks(self, ifname):
+        cmd = f'nmcli dev wifi list --rescan auto ifname {ifname}'
+        wifi_aps = cmd_output(cmd)
+        return read_fwf(wifi_aps)
+
+    def output(self):
+        devs = self.get_devices_status()
+        output = '%{A:NM_MENU:}'
+        for dev_name, dev_type, dev_state, dev_con in zip(
+                devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
+            if dev_name == 'lo':
+                continue
+            output += '%{A3:NMIFINFO_'+dev_name+':}'
+            if dev_type == 'wifi' and dev_state == 'connected':
+                # wifi_nets = self.get_wifi_networks(dev_name)
+                # bars = wifi_nets['BARS'][wifi_nets['SSID'].index(dev_con)]
+                output += '%{A2:WIFIQR_'+dev_name+':}'
+                output += ficon('\uf1eb', cdict['green'])
+                output += '%{A2}'
+                # output += bars
+            elif dev_type == 'wifi' and dev_state == 'disconnected':
+                output += ficon('\uf1eb', cdict['orange'])
+            elif dev_type == 'wifi' and dev_state in ['disabled', 'unavailable']:
+                output += ficon('\uf1eb', cdict['red'])
+            elif dev_type == 'wifi' and dev_state == 'unmanaged':
+                output += ficon('\uf1eb', cdict['dimmed'])
+            elif dev_type == 'ethernet' and dev_state == 'connected':
+                output += ficon('\uf796', cdict['green'])
+            elif dev_type == 'ethernet' and dev_state in ['unavailable', 'disconnected']:
+                output += ficon('\uf796', cdict['orange'])
+            elif dev_type == 'ethernet' and dev_state == 'unmanaged':
+                output += ficon('\uf796', cdict['dimmed'])
+            output += '%{A3}'
+        return output + '%{A}'
+
+    def command(self, event):
+        if event == 'NM_MENU':
+            subprocess.Popen(
+                'rofi -show nmcli -modi nmcli:~/Scripts/nmcli-menu.py',
+                shell=True, text=True)
+        elif event.startswith('WIFIQR'):
+            ifname = event.split("_")[-1]
+            subprocess.Popen(f'kitty --hold --name "nmcli_pass_win" nmcli dev wifi show ifname {ifname}', shell=True, text=True)
+        elif event.startswith('NMIFINFO'):
+            ifname = event.split("_")[-1]
+            dev_info = cmd_output(f'nmcli dev show {ifname}')
+            subprocess.Popen(f'dunstify -a "NetworkManager" "{ifname.upper()} INFO" "{dev_info}"',
+                             shell=True, text=True)
+
 
 
 class PacmanUpdates():

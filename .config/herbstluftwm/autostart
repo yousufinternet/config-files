@@ -24,7 +24,7 @@ startup_cmds = [
     "sxhkd -c ~/.config/sxhkd/apps_keys",
     "picom",
     "redshift",
-    "nm-applet",
+    "nm-applet --indicator", # for notifications
     "udiskie -T",
     # dunst settings are set using arguments to add support for HiDPI screens through the GDK_SCALE variable
     f'dunst -scale {GDK_SCALE}'
@@ -35,10 +35,10 @@ startup_cmds = [
     "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
     "~/.config/bspwm/bar/start_bar_herbst.py",
-    "xfce4-panel -d",
+    # "xfce4-panel -d",
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
-    "syncthing serve",
+    "syncthing serve --no-browser",
     'telegram-desktop',
     '~/.config/herbstluftwm/start_agenda.py'
 ]
@@ -193,6 +193,7 @@ hc("rule class='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule instance='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
+hc(f"rule instance='nmcli_pass_win' floating=on floatplacement=none floating_geometry='{GDK_SCALE*400}x{GDKSCALE*500}+0+0'")
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:

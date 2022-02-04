@@ -34,7 +34,7 @@ configuration {
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
 /*	combi-modi: "window,run";*/
-/*	matching: "normal";*/
+	matching: "regex";
 /*	tokenize: true;*/
 /*	m: "-5";*/
 /*	filter: ;*/
