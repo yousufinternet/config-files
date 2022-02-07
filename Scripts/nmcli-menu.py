@@ -168,6 +168,7 @@ def main(rofi_arg=None):
                 if devices['DEVICE'][i] == 'lo':
                     continue
                 if devices['TYPE'][i] == 'wifi' and devices['STATE'][i] == 'connected':
+                    print(f'\0message\x1fWIFI connected to: <b>{devices["CONNECTION"][i]}</b>')
                     print(f'[{devices["DEVICE"][i]}] Disconnect WIFI\0icon\x1f'
                           'network-wireless-disconnected-symbolic')
                     print(f'[{devices["DEVICE"][i]}] Activate another'
