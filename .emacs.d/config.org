@@ -693,7 +693,7 @@ evil-mode-line-tag
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
 (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic"))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic" :weight 'light))
 (set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs

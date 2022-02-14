@@ -32,7 +32,7 @@ if __name__ == '__main__':
             OpenWeather(apikey),
             PacmanUpdates(),
             NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
-            SyncthingIndicator(), '%{r}',
+            SyncthingIndicator(), NMInfo(), '%{r}',
             SARCPUUsage(),
             CPUTemp(),
             RamUsage(percent=True),

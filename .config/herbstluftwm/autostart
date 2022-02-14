@@ -193,7 +193,7 @@ hc("rule class='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule instance='dropdown_.*' floating=on floatplacement=none hook=make_sticky")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
-hc(f"rule instance='nmcli_pass_win' floating=on floatplacement=none floating_geometry='{GDK_SCALE*400}x{GDKSCALE*500}+0+0'")
+hc(f"rule instance='nmcli_pass_win' floating=on floatplacement=none floating_geometry='{GDK_SCALE*400}x{GDK_SCALE*500}+0+0'")
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:

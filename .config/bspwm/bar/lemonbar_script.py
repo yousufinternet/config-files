@@ -58,7 +58,7 @@ class MainLoop():
              ' -f "Iosevka-10"'
              # ' -f "FontAwesome-12"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
-             " -f 'Font Awesome 5 Free Solid-12'"
+             " -f 'Font Awesome 6 Free Solid-11'"
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
              f' -a 1000 -g x{22*GDKSCALE}'),

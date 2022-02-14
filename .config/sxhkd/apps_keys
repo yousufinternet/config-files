@@ -41,7 +41,7 @@ super + ctrl + shift + x
 
 # shutdown menu
 super + shift + e
-   oblogout
+   rofi -show powermenu -modi powermenu:~/Scripts/powermenu.py -theme Lavendar_icons
 
 # fullscreen screenshot
 @Print
