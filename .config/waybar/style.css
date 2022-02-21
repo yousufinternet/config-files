@@ -1,15 +1,18 @@
 * {
     border: none;
-    border-radius: 0;
+    border-radius: 5 5 0 0;
+    padding: 0px;
+    margin: 0px;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Fira Code", Roboto, Helvetica, Arial, sans-serif;
+    font-family: Roboto, "Fira Code", Helvetica, Arial, sans-serif;
     font-size: 13px;
     min-height: 0;
 }
 
 window#waybar {
-    background-color: rgba(43, 48, 59, 0.9);
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    border-radius: 0 0 5 5;
+    background-color: rgba(15, 16, 20, 0.9);
+    /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
@@ -38,7 +41,7 @@ window#waybar.chromium {
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0 4px;
     background-color: transparent;
     color: #ffffff;
     /* Use box-shadow instead of border so the text isn't offset */
@@ -52,7 +55,7 @@ window#waybar.chromium {
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
+    background-color:#22272b;
     box-shadow: inset 0 -3px #ffffff;
 }
 
@@ -86,7 +89,7 @@ window#waybar.chromium {
 
 #window,
 #workspaces {
-    margin: 0 4px;
+    margin: 0 2px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -148,7 +151,7 @@ label:focus {
 }
 
 #backlight {
-    background-color: #90b1b1;
+    background-color: #000000;
 }
 
 #network {

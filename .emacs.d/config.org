@@ -410,8 +410,8 @@ News and tech
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
-	    "o" '(:ignore t :which-key "open")
-	    "oo" 'org-open-at-point
+	    ;; "o" '(:ignore t :which-key "open")
+	    "o" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
 	    "tt" 'org-todo
 	    "ti" 'org-toggle-inline-images
@@ -754,7 +754,7 @@ evil-mode-line-tag
   (require 'org-protocol)
 
 (org-babel-do-load-languages 'org-babel-load-languages
-  '((shell . t) (python . t) (emacs-lisp . t) (ledger . t) (latex . t)))
+  '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
 
   (use-package org-bullets
   :ensure t
@@ -937,7 +937,7 @@ evil-mode-line-tag
 (setq org-static-blog-page-header
 "<meta name=\"author\" content=\"Yusuf Mohammad\">
 <meta name=\"referrer\" content=\"no-referrer\">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 <link href=\"static/org-default-styling.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href=\"static/floating_toc.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href= \"static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
