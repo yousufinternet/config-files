@@ -15,13 +15,12 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term konsole
+set $term alacritty
 set $emacsclient emacsclient -c -a ""
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu wofi --show run | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -34,6 +33,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+font pango:Roboto 10
 ### Idle configuration
 #
 # Example configuration:
@@ -47,28 +47,15 @@ exec swayidle -w \
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-
 ### Key bindings
 #
 # Basics:
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    bindsym $mod+Ctrl+Return exec $term -e ipython
 
-    # browse man pages
+    # Browse man pages
     bindsym $mod+F1 exec ~/Scripts/browse_man_pages.py
 
 # all open windows
@@ -76,15 +63,21 @@ exec swayidle -w \
     # Kill focused window
     bindsym --to-code $mod+q kill
 
-    # Start your launcher
-    # bindsym --to-code $mod+e exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
-    for_window [title="."] title_format %title - %class,%instance
+    for_window [title=".*"] title_format "%title - %class : %instance"
+    for_window [title=".*"] border pixel 4
+    for_window [floating] border 2
+    for_window [title="Picture-in-Picture"] sticky enable
+    for_window [title="Picture-in-Picture"] move position 0ppt 0ppt
+
+    assign [class='firefox'] workspace 1
+    assign [class='qutebrowser'] workspace 1
+
     floating_modifier $mod normal
     bindsym --to-code $mod+Shift+s sticky toggle
     titlebar_border_thickness 2
@@ -92,6 +85,7 @@ exec swayidle -w \
     smart_gaps on
     tiling_drag enable
     workspace_auto_back_and_forth enable
+    workspace_layout tabbed
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -165,9 +159,13 @@ bindsym --to-code $mod+Shift+B exec toggle_brightness.py
     bindsym --to-code $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym --to-code $mod+s layout stacking
-    bindsym --to-code $mod+w layout tabbed
-    bindsym --to-code $mod+e layout toggle split
+    bindsym --to-code $mod+s layout toggle split
+    bindsym --to-code $mod+t layout tabbed
+    bindsym --to-code $mod+w exec "rofi -show window -modi window,windowcd"
+    bindsym --to-code $mod+e exec "rofi -show run -modi run,drun"
+    bindsym --to-code $mod+Shift+e exec "rofi -show powermenu -modi powermenu:~/Scripts/powermenu.py -theme Lavendar_icons"
+    bindsym --to-code $mod+r exec "rofi -show nmcli -modi nmcli:~/Scripts/nmcli-menu.py"
+    bindsym --to-code $mod+Ctrl+c exec "rofi -show calc -modi calc -no-show-match -no-sort"
 
     # Make the current focus fullscreen
     bindsym --to-code $mod+f fullscreen
@@ -210,14 +208,18 @@ mode "guiapps" {
      bindsym --to-code g exec gimp
      bindsym --to-code d exec discord
      bindsym --to-code q exec transmission-qt
+     bindsym --to-code s exec prime-run steam-native
+     bindsym --to-code z exec zeal
      bindsym Escape mode "default"
 }
 
 bindsym --to-code $mod+g mode guiapps
-bindsym --to-code $mod+Ctrl+w exec qutebrowser
-bindsym --to-code $mod+Shift+w exec firefox
+bindsym --to-code $mod+Shift+w exec qutebrowser
+bindsym --to-code $mod+Ctrl+w exec env -u WAYLAND_DISPLAY prime-run qutebrowser
 bindsym --to-code $mod+Ctrl+e exec $emacsclient 
-bindsym --to-code $mod+Ctrl+f exec $term -e ranger 
+bindsym --to-code $mod+Ctrl+f exec $term -e bicon.bin ranger 
+bindsym --to-code --release Print exec grim
+bindsym --to-code --release Shift+Print exec ~/Scripts/slurp_grim.sh
 #
 # Status Bar:
 #
@@ -226,16 +228,7 @@ bindsym --to-code $mod+Ctrl+f exec $term -e ranger
 bar {
     position top
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    # status_command i3blocks -c ~/.config/sway/i3blocks.conf
     swaybar_command waybar
-
-    # colors {
-    #     statusline #ffffff
-    #     background #323232
-    #     inactive_workspace #32323200 #32323200 #5c5c5c
-    # }
 }
 
 input "type:keyboard" {
@@ -247,13 +240,13 @@ repeat_rate 25
 }
 
 # for lenovo laptop
-exec ~/.config/sway/disable_touchpad.sh
+exec_always ~/.config/sway/disable_touchpad.sh
 
 # gtk3 themes fix
 exec_always ~/.config/sway/import_gsetting.sh
 
-default_border pixel 2
-default_floating_border none
+default_border pixel 4
+default_floating_border pixel 2
 gaps inner 10
 gaps outer 5
 
@@ -267,6 +260,14 @@ exec emacs --daemon
 exec blueman-applet
 
 include /etc/sway/config.d/*
+
+client.focused #4b0082 #4b0082 #f4e6ff
+client.focused_inactive #4b0082 #0e0019 #8e50d5
+client.unfocused #0e0019 #0e0019 #4b0082
+client.focused_tab_title #4b0082 #0e0019 #f4e6ff
+client.urgent #d34328 #d34328 #f4e6ff
+ 
+ 
 
 
 # exec nm-applet
