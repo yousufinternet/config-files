@@ -1,3 +1,4 @@
+export MOZ_ENABLE_WAYLAND=1
 export XDG_CONFIG_HOME="$HOME/.config"
 export QT_QPA_PLATFORMTHEME=qt5ct
 export EDITOR='emacsclient -c -a ""'
