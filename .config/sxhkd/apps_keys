@@ -37,7 +37,7 @@ super + shift + b
 
 # Lock screen
 super + ctrl + shift + x
-   i3lock -e -B --force-clock --keylayout 0 --insidecolor 1e58a46a --indicator
+   i3lock -e -B --force-clock --keylayout 0 --indicator
 
 # shutdown menu
 super + shift + e
@@ -45,11 +45,11 @@ super + shift + e
 
 # fullscreen screenshot
 @Print
-	flameshot full -p ~/Pictures/
+	flameshot full -p ~/Pictures/ -c
 
 # Select region for screenshot
 @shift+Print
-	flameshot gui -p ~/Pictures/
+	flameshot gui -p ~/Pictures/ -c
 
 #   /_\  _ __ _ __| (_)__ __ _| |_(_)___ _ _  ___
 #  / _ \| '_ \ '_ \ | / _/ _` |  _| / _ \ ' \(_-<
