@@ -327,7 +327,7 @@ News and tech
 ** Don't show warnings buffer at startup
    #+begin_src emacs-lisp
 (setq delayed-warnings-hook nil)
-(org-agenda-list)
+;; (org-agenda-list)
    #+end_src
 * Key bindings
 ** General Binding
@@ -763,15 +763,32 @@ evil-mode-line-tag
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
+  (add-hook 'org-mode-hook 'svg-tag-mode)
 
   ;; Default todo states
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	org-todo-keyword-faces
-	'(("CANCELLED"  :foreground "#ff5555" :weight bold :underline t)
-	  ("DELEGATED"  :foreground "#d75fd7" :weight bold :underline t))
+	'(("CANCELLED"  :foreground "#ff5555" :weight bold)
+	  ("DELEGATED"  :foreground "#d75fd7" :weight bold))
 	org-log-done 'note
 	org-imenu-depth 3
 	remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+
+(append org-modules '(habits))
+
+(use-package svg-tag-mode :config (setq svg-tag-tags
+      '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+ '(:margin 2 :padding 2 :background "#f95" :foreground "#000" :radius 5 :font-weight "bold" :end -1)))))
+(" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+ '(:margin 2 :padding 2 :background "#955" :foregorund "#f55" :radius 5 :end -1)))))
+(" INPROGRESS " . ((lambda (tag) (svg-lib-tag "PROG"
+ '(:margin 2 :padding 2 :background "#09f" :foregorund "#fff" :radius 5 :end -1)))))
+(" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+ '(:margin 2 :padding 2 :background "#080" :foregorund "#030" :radius 5 :end -1)))))
+(" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+ '(:margin 2 :padding 2 :background "#922" :foregorund "#fcc" :radius 5 :end -1)))))
+))
+)
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -784,13 +801,15 @@ evil-mode-line-tag
 ;;Setup agenda icons
 (setq org-agenda-category-icon-alist nil)
 
-(setq agenda-categories-alist '(("WORK" "💼") ("SOFTWARE" "💻") ("SETUP" "🐧") ("EMAIL" "✉️") ("HOME" "🏠") ("WOOD" "🪵") ("FAMILY" "👪") ("REPORTS" "📊") ("INCOME" "💰") ("HABITS" "🥊") ("FRIENDS" "🤦") ("PERSONAL" "👤") ("BOOKS" "📚")))
+(setq agenda-categories-alist '(("WORK" "💼") ("SOFTWARE" "💻") ("SETUP" "🐧") ("EMAIL" "✉️") ("HOME" "🏠") ("WOOD" "🪵") ("FAMILY" "👪") ("REPORTS" "📊") ("INCOME" "💰") ("HABITS" "🥊") ("FRIENDS" "🤦") ("PERSONAL" "👤") ("BOOKS" "📚") ("PHONE" "☎️")))
 
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
 (defun format-sort-agenda () (interactive)
  (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-6 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
+(setq line-spacing 10)
+(svg-tag-mode)
 )
 
 (add-hook 'org-agenda-mode-hook 'format-sort-agenda)
