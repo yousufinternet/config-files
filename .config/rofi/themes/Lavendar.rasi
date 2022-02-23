@@ -53,7 +53,7 @@ window {
     location: north;
     anchor: north;
     width: 30%;
-    y-offset: 1.1em;
+    y-offset: 0.9em;
     transperancy: "real";
 }
 
