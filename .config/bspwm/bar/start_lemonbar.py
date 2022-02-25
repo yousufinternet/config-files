@@ -10,7 +10,7 @@ from itertools import permutations
 from lemonbar_script import MainLoop
 from bar_modules import BspwmWorkspaces, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
-    CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate
+    CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate, ficon
 
 
 GDKSCALE = int(os.getenv("GDK_SCALE"))
@@ -18,10 +18,12 @@ HOSTNAME = subprocess.check_output('echo "$HOSTNAME"', text=True, shell=True).st
 # bgs = ['#282828', '#504945', '#1d2021', '#3c3836']
 bgs = ['#282A36', '#000000']
 
-DEFAULT_SEPS = [
-    f'%{{T2}}\uE0B0%{{O-{13.5*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
-    f'%{{T2}}\uE0B2%{{O-{14*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
-]
+# DEFAULT_SEPS = [
+#     f'%{{T2}}\uE0B0%{{O-{13.5*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B1%{T-}%{F-}',
+#     f'%{{T2}}\uE0B2%{{O-{14*GDKSCALE}}}%{{T-}}', '%{F#F8F8F2}%{T2} \uE0B3%{T-}%{F-}'
+# ]
+DEFAULT_SEPS = [ficon("\ue0b0"), ficon("\ue0b1"), ficon("\ue0b2"),
+                ficon("\ue0b3")]
 
 # seps = [' %{O-5}',]*4
 # seps = [
@@ -38,8 +40,8 @@ def generate_powerline(bgs, sep, flipped):
     # integrate them with the main code
     bg, fg = bgs
     if flipped:
-        return f'%{{O10}}%{{F{bg}}}%{{B{fg}}}' f'{sep}%{{F-}}%{{B{bg}}} '
-    return f'%{{O10}}%{{F{fg}}}%{{B{bg}}}' f'{sep}%{{O10}}%{{F-}}'
+        return f'%{{F{bg}}}%{{B{fg}}}' f'{sep}%{{F-}}%{{B{bg}}} '
+    return f'%{{F{fg}}}%{{B{bg}}}' f'{sep}%{{F-}}'
 
 
 def new_pair(perms, fg=None, bg=None):
@@ -62,23 +64,24 @@ def create_powerline(modules, bgs, seps=DEFAULT_SEPS):
         if i >= len(modules):
             break
         mod = modules[i]
+        # hacky way to always get the i+1 item or latest item form list
         next_mod = (modules[i+1:i+2] or (modules[-1],))[0]
         print(mod, next_mod)
-        if mod == '%{r}':
-            modules[i] = '%{F-}%{B-}%{r}'
+        if mod in ['%{r}', '%{c}']:
+            modules[i] = '%{F-}%{B-}'+mod
             flipped_flag = True
             sep, silent_sep = seps[2], seps[3]
-        if (idx+1) % 3 == 0 and '%{r}' not in [mod, next_mod]:
-            modules.insert(i, silent_sep)
-            continue
+        # if (idx+1) % 3 == 0 and '%{r}' not in [mod, next_mod]:
+        #     modules.insert(i, silent_sep)
+        #     continue
         modules.insert(i, powerline)
         # when specifying colors for the next module see if the one after it is
         # %{r} and choose a one with the default background if so
-        if next_mod == '%{r}':
+        if next_mod in ['%{r}', '%{c}']:
             if bgs[0] == last_bgs[0]:
-                powerline = seps[1]
+                powerline = seps[1] if next_mod == '%{c}' else seps[3]
                 continue
-            last_bgs = new_pair(bgs_perm, bg=bgs[0], fg=last_bgs[0])
+            # last_bgs = new_pair(bgs_perm, bg=bgs[0], fg=last_bgs[0])
             last_bgs = ('-', last_bgs[1])
         else:
             last_bgs = new_pair(

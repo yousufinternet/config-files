@@ -6,17 +6,17 @@ from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
-    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator, NMInfo
+    HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator, NMInfo, ficon
 
 
 def read_open_weather_api_key():
-    with open('OPENWEATHER_APIKEY', 'r') as f: 
-        return f.read().strip()
+    with open('OPENWEATHER_APIKEY', 'r') as f_obj:
+        return f_obj.read().strip()
 
 
 if __name__ == '__main__':
 
-    bgs = ['#282A36', '#000000']
+    bgs = ['#282A36', '#000000', '#373844', '#1E2029', '#6272a4']
 
     apikey = read_open_weather_api_key()
 
@@ -62,9 +62,14 @@ if __name__ == '__main__':
             TimeDate()
         ]
 
-    # create_powerline(modules, bgs, seps=[' ', ' ', ' ', ' '])
+    # seps = [ficon('\ue0b0'), ficon('\ue0b1', beforepad=5), ficon('\ue0b2', afterpad=-0.5),
+    #         ficon('\ue0b3', beforepad=5)]
+    # seps = [' ', ficon('\ue0b1', beforepad=5), ' ', ficon('\ue0b3', beforepad=5)]
+    # create_powerline(modules, bgs, seps=seps)
 
-    main_loop = MainLoop(modules, sep='%{F#555555}|%{F-}%{O2}', bg='#000000', fg='#F8F8F2')
+    print(modules)
+    # main_loop = MainLoop(modules, sep='', bg='#282a36', fg='#F8F8F2')
+    main_loop = MainLoop(modules, sep='%{O5}%{F#ccccc7}/%{F-}%{O5}', bg='#282a36', fg='#F8F8F2')
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()

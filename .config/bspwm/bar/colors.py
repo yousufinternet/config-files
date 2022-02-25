@@ -28,5 +28,7 @@ dracula = {
         'teal': '#8BE9FD',
         'orange': '#FF79C6',
         'green': '#5AF78E',
-        'cyan': '#BD93F9'}
+        'cyan': '#BD93F9',
+        'dimmed': '#6272a4'
+}
 

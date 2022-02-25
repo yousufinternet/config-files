@@ -159,7 +159,7 @@ def toggle_hide(wid):
 
 
 def reapply_rules(term_class, geometry):
-    dropdown_rules = 'floating=on floatplacement=none hook=make_sticky '
+    dropdown_rules = 'floating=on floatplacement=none '
     dropdown_rules += f'floating_geometry={geometry}'
     rules_reg = r'\s*'.join(dropdown_rules.split())
     full_reg = r'.*class='+term_class+rules_reg+r'.*'

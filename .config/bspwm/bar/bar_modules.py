@@ -11,7 +11,7 @@ import subprocess
 from io import StringIO
 from bs4 import BeautifulSoup
 
-from colors import linux as cdict
+from colors import dracula as cdict
 
 from lemonbar_script import GDKSCALE
 
@@ -253,7 +253,6 @@ class NMInfo():
             dev_info = cmd_output(f'nmcli dev show {ifname}')
             subprocess.Popen(f'dunstify -a "NetworkManager" "{ifname.upper()} INFO" "{dev_info}"',
                              shell=True, text=True)
-
 
 
 class PacmanUpdates():

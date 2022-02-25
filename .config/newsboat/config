@@ -1,4 +1,4 @@
-browser "~/.config/newsboat/display_article.py"
+browser "qutebrowser --target window"
 # urls-source "oldreader"
 # oldreader-login "yousufinternet@gmail.com"
 # oldreader-passwordeval "pass show theoldreader.com/yousufinternet@gmail.com"

@@ -1,0 +1,119 @@
+# Global configuration section
+#   Values here are used as defaults for any following Channel section that
+#   doesn't specify them.
+Expunge None
+Create Both
+
+MaildirStore local
+Path ~/Mail/
+SubFolders Verbatim
+Inbox ~/Mail/work/Inbox
+Trash Trash
+
+
+IMAPStore work
+Host localhost
+User ymohammad
+PassCmd "pass show exchange-script"
+SSLType None
+AuthMechs LOGIN
+Port 1143
+Timeout 180
+# Fetch password from gnome-keyring:
+#PassCmd "gnome-keyring-query get mail_pw"
+# Fetch password from .netrc:
+#PassCmd "sed -n -e 's,^machine work\\.host\\.com login tehuser password \\(.*\\),\\1,p' < $HOME/.netrc"
+# Fetch password from a gpg-encrypted file:
+#PassCmd "gpg --quiet --for-your-eyes-only --decrypt $HOME/imappassword.gpg"
+# Fetch password from pwmd (http://pwmd.sourceforge.net/):
+#PassCmd "echo -ne 'GET myIsp\\tpassword' | pwmc datafile"
+
+Channel work
+Far :work:
+Near :local:work
+Expunge Both
+Create Both
+Sync PullNew Push
+
+# MaildirStore local
+# Path ~/Mail/petroleum_unit
+# SubFolders Verbatim
+# Inbox ~/Mail/petroleum_unit/Inbox
+# Trash Trash
+
+
+# IMAPStore petroleum_unit
+# Host localhost
+# User petroleum.unit
+# PassCmd "pass show exchange-script"
+# SSLType None
+# AuthMechs LOGIN
+# Port 1143
+# Timeout 180
+
+# IMAPStore personal
+# Host host.play.com
+# Port 6789
+# RequireSSL no
+
+# Channel personal
+# Far :personal:
+# Near :local:personal
+# Expunge Both
+# MaxMessages 150
+# MaxSize 200k
+
+# IMAPStore remote
+# Tunnel "ssh -q host.remote.com /usr/sbin/imapd"
+
+# Channel remote
+# Far :remote:
+# Near :local:remote
+
+
+# Group boxes
+# Channels work personal remote
+
+
+# IMAPStore st1
+# Host st1.domain.com
+# RequireCRAM yes
+# CertificateFile ~/.st1-certificate.crt
+
+# IMAPStore st2
+# Host imap.another-domain.com
+# Path non-standard/
+# RequireSSL no
+# UseTLSv1 no
+
+# Channel rst
+# Far :st1:somebox
+# Near :st2:
+
+
+# IMAPAccount server
+# Host imaps:foo.bar.com
+# CertificateFile ~/.server-certificate.crt
+
+# IMAPStore server
+# Account server
+# MapInbox inbox
+# Trash ~/trash
+# TrashRemoteNew yes
+
+# MaildirStore mirror
+# Path ~/Maildir/
+# SubFolders Verbatim
+
+# Channel o2o
+# Far :server:
+# Near :mirror:
+# Patterns %
+
+# Group partial o2o:inbox,sent-mail,foobar
+
+# # INBOX => server, INBOX.foo => server.foo, etc.
+# Channel inbox
+# Far :server:INBOX
+# Near :mirror:server
+# Patterns *
