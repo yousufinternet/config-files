@@ -344,6 +344,7 @@ News and tech
 	   "ar" 'ranger
 	   "ad" (lambda () (interactive) (dired "~"))
 	   "af" 'elfeed
+           "am" 'mu4e
            "ac" (lambda () (interactive) (shell-command "kcolorchooser -print") (insert-buffer "*Shell Command Output*"))
 	   "b" '(:ignore t :which-key "Buffers")
 	   "bb" 'ivy-switch-buffer
@@ -370,7 +371,7 @@ News and tech
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 	   "o" '(:ignore t :which-key "Global org-mode")
-	   "oa" 'org-agenda-list
+	   "oa" 'org-agenda
 	   "oc" 'org-capture
 	   "ol" 'org-store-link
            "ogcc" (lambda () (interactive) (org-clock-jump-to-current-clock))
@@ -693,7 +694,7 @@ evil-mode-line-tag
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
 (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic" :weight 'light))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic Regular"))
 (set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
@@ -734,7 +735,7 @@ evil-mode-line-tag
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'doom-tomorrow-night)
+  (setq default-theme 'doom-dracula)
   (load-theme default-theme t)
 #+END_SRC
 
@@ -763,30 +764,39 @@ evil-mode-line-tag
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
-  (add-hook 'org-mode-hook 'svg-tag-mode)
+  ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
   ;; Default todo states
   (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
 	org-todo-keyword-faces
-	'(("CANCELLED"  :foreground "#ff5555" :weight bold)
-	  ("DELEGATED"  :foreground "#d75fd7" :weight bold))
+	'(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
+	  ("INPROGRESS"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
+	  ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
+	  ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
+          ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono")
+	  ("DELEGATED"  :background "#939" :weight light :slant italic :family "Dejavu Sans Mono"))
 	org-log-done 'note
 	org-imenu-depth 3
 	remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
 
 (append org-modules '(habits))
 
-(use-package svg-tag-mode :config (setq svg-tag-tags
-      '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
- '(:margin 2 :padding 2 :background "#f95" :foreground "#000" :radius 5 :font-weight "bold" :end -1)))))
+(use-package svg-tag-mode :ensure t :commands svg-tag-mode :after svg-lib
+ :config (setq svg-tag-tags
+'((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+ '(:margin 0 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
 (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
- '(:margin 2 :padding 2 :background "#955" :foregorund "#f55" :radius 5 :end -1)))))
-(" INPROGRESS " . ((lambda (tag) (svg-lib-tag "PROG"
- '(:margin 2 :padding 2 :background "#09f" :foregorund "#fff" :radius 5 :end -1)))))
+ '(:margin 0 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+(" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+ '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+(" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+ '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+(" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+ '(:margin 0 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
 (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
- '(:margin 2 :padding 2 :background "#080" :foregorund "#030" :radius 5 :end -1)))))
+ '(:margin 0 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
 (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
- '(:margin 2 :padding 2 :background "#922" :foregorund "#fcc" :radius 5 :end -1)))))
+ :background "#a11" :foreground "#f99" :radius 5 ))))
 ))
 )
 #+END_SRC
@@ -794,6 +804,7 @@ evil-mode-line-tag
    #+begin_src emacs-lisp
 (setq org-agenda-window-setup "only-window"
       org-agenda-span 7
+      org-agenda-start-on-weekday 1
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "^[A-Za-z_]\\w*\\.org$"))
@@ -806,10 +817,10 @@ evil-mode-line-tag
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
 (defun format-sort-agenda () (interactive)
- (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-6 t%s"))
+ (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 (setq line-spacing 10)
-(svg-tag-mode)
+;; (svg-tag-mode)
 )
 
 (add-hook 'org-agenda-mode-hook 'format-sort-agenda)
@@ -983,6 +994,34 @@ evil-mode-line-tag
 "<center><h2> <a href=\"index.html\"> 🏠 Home </a>|<a href=\"about.html\"> 💀 About </a>|<a href=\"gallery.html\"> 🌄 gallery </a>|<a href=\"index.html\"> 📔 Blog </a>|<a href=\"archive.html\"> 📚 Archive </a>|<a href=\"tags.html\"> 🔖 Tags </a>|<a href=\"rss.xml\"> 📢 RSS </a>|<a href=\"mailto:yusuf.mohammad@zoho.com\"> 📧 E-mail</a></h2></center>\n")
   )
    #+end_src
+
+* Mail
+** Load mu4e
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "/usr/share/emacs/site-lisp/mu4e"))
+(use-package mu4e
+ :config (setq
+mu4e-maildir "~/Mail"
+mu4e-sent-folder "/Sent Items"
+mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
+)
+;; m for month messages s for section management
+(setq mu4e-bookmarks
+'(
+(:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key 117)
+ (:name "Today's messages" :query "date:today..now" :key 116)
+ (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key 119)
+ (:name "Messages with images" :query "mime:image/*" :key 112)
+(:name "Last month" :query "date:1m.." :key 58)
+ (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key 39)))
+(set-face-attribute 'mu4e-header-face nil :inherit 'fixed-pitch :family "Dejavu Sans Mono")
+
+(add-hook 'mu4e-main-mode-hook (lambda () (text-scale-set 2)))
+(add-hook 'mu4e-header-mode-hook (lambda () (text-scale-set 2)))
+)
+
+;; (require 'mu4e)
+#+end_src
 
 * Dired
 
