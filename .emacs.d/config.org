@@ -411,6 +411,7 @@ News and tech
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
+	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "#+HTML:</center>" "#+HTML: </span>") "\n")))
 	    ;; "o" '(:ignore t :which-key "open")
 	    "o" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
@@ -456,7 +457,7 @@ News and tech
   "SPC" nil)
 (general-define-key :states '(normal visual insert emacs) :keymaps 'pdf-view-mode-map (kbd "SPC") nil)  
 (general-define-key :states '(normal visual) "C-u" 'evil-scroll-up)
-	  )
+  )
 
 	(defun config-reload ()
 	  "Reloads ~/.emacs.d/config.org at runtime"
@@ -694,7 +695,7 @@ evil-mode-line-tag
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
 (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Greta Arabic Regular"))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Amiri"))
 (set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
@@ -751,54 +752,54 @@ evil-mode-line-tag
 * ORG mode
 ** General customization
 #+BEGIN_SRC emacs-lisp
-  (require 'org-tempo)
-  (require 'org-protocol)
+    (require 'org-tempo)
+    (require 'org-protocol)
 
-(org-babel-do-load-languages 'org-babel-load-languages
-  '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
+  (org-babel-do-load-languages 'org-babel-load-languages
+    '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
 
-  (use-package org-bullets
-  :ensure t
-  :after org-mode)
+    (use-package org-bullets
+    :ensure t
+    :after org-mode)
 
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
-  ;; (add-hook 'org-mode-hook 'svg-tag-mode)
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (add-hook 'org-mode-hook 'variable-pitch-mode)
+    ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
-  ;; Default todo states
-  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
-	org-todo-keyword-faces
-	'(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
-	  ("INPROGRESS"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
-	  ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
-	  ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
-          ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono")
-	  ("DELEGATED"  :background "#939" :weight light :slant italic :family "Dejavu Sans Mono"))
-	org-log-done 'note
-	org-imenu-depth 3
-	remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+    ;; Default todo states
+    (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
+	  org-todo-keyword-faces
+	  '(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
+	    ("INPROGRESS"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
+	    ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
+	    ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
+	    ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono")
+	    ("DELEGATED"  :background "#939" :weight light :slant italic :family "Dejavu Sans Mono"))
+	  org-log-done 'note
+	  org-imenu-depth 3
+	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
 
-(append org-modules '(habits))
+  (append org-modules '(habits))
 
-(use-package svg-tag-mode :ensure t :commands svg-tag-mode :after svg-lib
- :config (setq svg-tag-tags
-'((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
- '(:margin 0 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
- '(:margin 0 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
- '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
- '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
- '(:margin 0 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
- '(:margin 0 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
-(" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
- :background "#a11" :foreground "#f99" :radius 5 ))))
-))
-)
+  ;; (use-package svg-tag-mode :ensure t :commands svg-tag-mode :after svg-lib
+  ;;  :config (setq svg-tag-tags
+  ;; '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+  ;;  '(:margin 0 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+  ;;  '(:margin 0 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+  ;;  '(:margin 0 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+  ;;  '(:margin 0 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;; (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+  ;;  :background "#a11" :foreground "#f99" :radius 5 ))))
+  ;; ))
+  ;; )
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -843,6 +844,11 @@ evil-mode-line-tag
 
 	 (setq org-capture-templates
 	 `(
+	   ("m" "Mail Tasks")
+	   ("mf" "Follow up" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Mail Tasks")
+	   "** TODO Follow up %:fromname %a :email:\n%?" :empty-lines 1)
+	   ("mr" "Read Later" entry (file+olp "~/Public/Syncthing Global/Notes/capture.org" "Mail Tasks")
+	   "** TODO Read %:subject %a :email:\n%?" :empty-lines 1)
 	   ("t" "Work/Personal Tasks")
 	   ("tw" "Work Task" entry (file+headline "~/Public/Syncthing Global/Notes/capture.org" "Work Tasks")
 	   ,(concat "** TODO %?:work:%^G\n:PROPERTIES:\n:CATEGORY: %^{prompt|" agenda-catcomp "}\n:END:\n SCHEDULED: %^T  DEADLINE: %^t") :empty-lines 1)
@@ -995,15 +1001,68 @@ evil-mode-line-tag
   )
    #+end_src
 
+** Org mime
+#+begin_src emacs-lisp
+(use-package org-mime :ensure t)
+
+#+end_src
+
 * Mail
-** Load mu4e
+** Load mu4e and default config
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "/usr/share/emacs/site-lisp/mu4e"))
 (use-package mu4e
- :config (setq
+ :config
+ (setq mu4e-contexts
+       (list
+	;; Work Exchange
+	(make-mu4e-context
+	 :name "WorkYusuf"
+	 :match-func (lambda (msg) (when msg (string-prefix-p "/WorkYusuf" (mu4e-message-field msg :maildir))))
+	 :vars '(
+		 (mu4e-sent-folder . "/WorkYusufSent")
+		 (mu4e-drafts-folder . "/WorkYusufDrafts")
+		 (mu4e-trash-folder . "/WorkYusufDeleted")
+		 (smtpmail-smtp-server . "localhost")
+		 (smtpmail-smtp-service . 1025)
+		 (smtpmail-smtp-user . "soc.wq2.local\ymohammad")
+		 (user-mail-address . "yusuf.mohammad@westqurna2.com")
+		 (user-full-name . "Yusuf Mohammad Al-Jumuaa")
+		 )
+	 )
+
+	;; PETROLEUM UNIT EMAIL
+	(make-mu4e-context
+	 :name "PetroleumUnit"
+	 :match-func (lambda (msg) (when msg (string-prefix-p "/PetroleumUnit" (mu4e-message-field msg :maildir))))
+	 :vars '(
+		 (mu4e-sent-folder . "/PetroleumUnitSent")
+		 (mu4e-drafts-folder . "/PetroleumUnitDrafts")
+		 (mu4e-trash-folder . "/PetroleumUnitDeleted")
+		 (smtpmail-smtp-server . "localhost")
+		 (smtpmail-smtp-service . 1025)
+		 (smtpmail-smtp-user . "soc.wq2.local\petroleum.unit")
+		 (user-full-name . "Petroleum Engineering Unit")
+		 (user-mail-address . "petroleum.unit@westqurna2.com")
+		 )
+	 )
+	))
+
+(setq
 mu4e-maildir "~/Mail"
-mu4e-sent-folder "/Sent Items"
+;; mu4e-sent-folder "/WorkYusufSent"
+;; mu4e-drafts-folder "/WorkYusufDrafts"
+;; mu4e-trash-folder "/WorkYusufDeleted"
+mu4e-confirm-quit nil
 mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
+mu4e-headers-show-threads nil
+mu4e-split-view 'horizontal
+mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
+;; user-full-name "Yusuf Mohammad Al-Jumuaa"
+;; user-mail-address "yusuf.mohammad@westqurna2.com"
+mu4e-change-filenames-when-moving t
+mu4e-update-interval (* 5 60)
+mu4e-compose-format-flowed t
 )
 ;; m for month messages s for section management
 (setq mu4e-bookmarks
@@ -1011,18 +1070,51 @@ mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
 (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key 117)
  (:name "Today's messages" :query "date:today..now" :key 116)
  (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key 119)
- (:name "Messages with images" :query "mime:image/*" :key 112)
-(:name "Last month" :query "date:1m.." :key 58)
- (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key 39)))
-(set-face-attribute 'mu4e-header-face nil :inherit 'fixed-pitch :family "Dejavu Sans Mono")
+ (:name "Messages with pdfs" :query "mime:application/pdf" :key ?P)
+(:name "Last month" :query "date:1m.." :key ?m)
+ (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key ?S)
+ (:name "Large Emails" :query "size:5m.." :key ?L)
+))
+(set-face-attribute 'mu4e-header-face nil :font "fontset-default")
 
 (add-hook 'mu4e-main-mode-hook (lambda () (text-scale-set 2)))
-(add-hook 'mu4e-header-mode-hook (lambda () (text-scale-set 2)))
+(add-hook 'mu4e-headers-mode-hook (lambda () (text-scale-set 1.5)))
+(add-hook 'mu4e-view-mode-hook (lambda () (text-scale-set 2)))
+(add-hook 'mu4e-main-mode-hook 'mu4e-marker-icons-mode)
+;; (add-hook 'mu4e-headers-mode-hook 'mu4e-marker-icons-mode)
+;; (add-hook 'mu4e-header-mode-hook 'mu4e-marker-icons-mode)
 )
 
 ;; (require 'mu4e)
 #+end_src
 
+
+** Icons
+#+begin_src emacs-lisp
+(defun reapply-marker-icons () 
+(setq mu4e-headers-unread-mark    '("u" . "📩 ")
+mu4e-headers-draft-mark     '("D" . "🚧 ")
+mu4e-headers-flagged-mark   '("F" . "🚩 ")
+mu4e-headers-new-mark       '("N" . "✨ ")
+mu4e-headers-passed-mark    '("P" . "↪ ")
+mu4e-headers-replied-mark   '("R" . "↩ ")
+mu4e-headers-seen-mark      '("S" . "👁️ ")
+mu4e-headers-trashed-mark   '("T" . "🗑️")
+mu4e-headers-attach-mark    '("a" . "📎 ")
+mu4e-headers-encrypted-mark '("x" . "🔑 ")
+mu4e-headers-signed-mark    '("s" . "🖊 ")
+))
+
+(add-hook 'mu4e-header-mode-hook 'reapply-marker-icons)
+(add-hook 'mu4e-main-mode-hook 'reapply-marker-icons)
+(add-hook 'mu4e-headers-mode-hook 'reapply-marker-icons)
+#+end_src
+
+** Edit mail with org-mode
+#+begin_src emacs-lisp
+(add-hook 'mu4e-compose-mode-hook 'org-mime-edit-mail-in-org-mode)
+(setq org-mime-export-options '(:with-latex dvipng title nil :toc nil))
+#+end_src
 * Dired
 
 Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
