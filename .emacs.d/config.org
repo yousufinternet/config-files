@@ -1020,12 +1020,12 @@ evil-mode-line-tag
        (list
 	;; Work Exchange
 	(make-mu4e-context
-	 :name "WorkYusuf"
-	 :match-func (lambda (msg) (when msg (string-prefix-p "/WorkYusuf" (mu4e-message-field msg :maildir))))
+	 :name "YusufExchange"
+	 :match-func (lambda (msg) (when msg (string-prefix-p "/YusufExchange" (mu4e-message-field msg :maildir))))
 	 :vars '(
-		 (mu4e-sent-folder . "/WorkYusufSent")
-		 (mu4e-drafts-folder . "/WorkYusufDrafts")
-		 (mu4e-trash-folder . "/WorkYusufDeleted")
+		 (mu4e-sent-folder . "/YusufExchange/Sent")
+		 (mu4e-drafts-folder . "/YusufExchange/Drafts")
+		 (mu4e-trash-folder . "/YusufExchange/Trash")
 		 (smtpmail-smtp-server . "localhost")
 		 (smtpmail-smtp-service . 1025)
 		 (smtpmail-smtp-user . "soc.wq2.local\ymohammad")
@@ -1034,24 +1034,52 @@ evil-mode-line-tag
 		 )
 	 )
 
+	;; Work Exchange
+	(make-mu4e-context
+	 :name "ReservoirsSections"
+	 :match-func (lambda (msg) (when msg (string-prefix-p "/ReservoirsSections" (mu4e-message-field msg :maildir))))
+	 :vars '(
+		 (mu4e-sent-folder . "/ReservoirsSections/Sent")
+		 (mu4e-drafts-folder . "/ReservoirsSections/Drafts")
+		 (mu4e-trash-folder . "/ReservoirsSections/Trash")
+		 (smtpmail-smtp-server . "localhost")
+		 (smtpmail-smtp-service . 1025)
+		 (smtpmail-smtp-user . "soc.wq2.local\reservoirs.sections")
+		 (user-mail-address . "reservoirs@westqurna2.com")
+		 (user-full-name . "Reservoirs and Petroleum Engineering Section")
+		 )
+	 )
 	;; PETROLEUM UNIT EMAIL
 	(make-mu4e-context
 	 :name "PetroleumUnit"
 	 :match-func (lambda (msg) (when msg (string-prefix-p "/PetroleumUnit" (mu4e-message-field msg :maildir))))
 	 :vars '(
-		 (mu4e-sent-folder . "/PetroleumUnitSent")
-		 (mu4e-drafts-folder . "/PetroleumUnitDrafts")
-		 (mu4e-trash-folder . "/PetroleumUnitDeleted")
+		 (mu4e-sent-folder . "/PetroleumUnit/Sent")
+		 (mu4e-drafts-folder . "/PetroleumUnit/Drafts")
+		 (mu4e-trash-folder . "/PetroleumUnit/Deleted")
 		 (smtpmail-smtp-server . "localhost")
 		 (smtpmail-smtp-service . 1025)
 		 (smtpmail-smtp-user . "soc.wq2.local\petroleum.unit")
 		 (user-full-name . "Petroleum Engineering Unit")
 		 (user-mail-address . "petroleum.unit@westqurna2.com")
+		 (mu4e-compose-signature . (string-join
+					    ("Petroleum Engineering Unit"
+					     "Reservoirs and Petroleum Engineering Section" "West Qurna\2 Field Development Department" "Ext. 6678 | Tel. +9647827656402") "\n"))
 		 )
 	 )
 	))
 
+;; the maildirs you use frequently; access them with 'j' ('jump')
+(setq   mu4e-maildir-shortcuts
+    '((:maildir "/YusufExchange/Inbox" :key ?i)
+      (:maildir "/PetroleumUnit/Inbox"   :key ?p)
+      (:maildir "/PetroleumUnit/Sent"    :key ?u)
+      (:maildir "/YusufExchange/Sent"    :key ?s)))
+
 (setq
+;; use mu4e for e-mail in emacs
+mail-user-agent 'mu4e-user-agent
+message-send-mail-function 'smtpmail-send-it
 mu4e-maildir "~/Mail"
 ;; mu4e-sent-folder "/WorkYusufSent"
 ;; mu4e-drafts-folder "/WorkYusufDrafts"
@@ -1065,19 +1093,27 @@ mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
 ;; user-mail-address "yusuf.mohammad@westqurna2.com"
 mu4e-change-filenames-when-moving t
 mu4e-update-interval (* 5 60)
+mu4e-use-fancy-chars t
+mu4e-attachment-dir "~/Downloads/MailDownloads"
+mu4e-view-show-images t
+mu4e-view-show-addresses t
 mu4e-compose-format-flowed t
+message-kill-buffer-on-exit t
+mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:thread-subject))
 )
-;; m for month messages s for section management
+
 (setq mu4e-bookmarks
 '(
 (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key 117)
  (:name "Today's messages" :query "date:today..now" :key 116)
  (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key 119)
+ (:name "Last month" :query "date:1m.." :key ?m)
  (:name "Messages with pdfs" :query "mime:application/pdf" :key ?P)
-(:name "Last month" :query "date:1m.." :key ?m)
+ (:name "Messages with xlsx" :query "mime:application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :key ?x)
  (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key ?S)
  (:name "Large Emails" :query "size:5m.." :key ?L)
 ))
+
 (set-face-attribute 'mu4e-header-face nil :font "fontset-default")
 
 (add-hook 'mu4e-main-mode-hook (lambda () (text-scale-set 2)))
@@ -1117,6 +1153,11 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 #+begin_src emacs-lisp
 (add-hook 'mu4e-compose-mode-hook 'org-mime-edit-mail-in-org-mode)
 (setq org-mime-export-options '(:with-latex dvipng title nil :toc nil))
+#+end_src
+
+** mu4e alerts
+#+begin_src emacs-lisp
+(use-package mu4e-alert :after mu4e)
 #+end_src
 * Dired
 
