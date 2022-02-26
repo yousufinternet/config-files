@@ -8,7 +8,7 @@ MaildirStore local
 Path ~/Mail/
 SubFolders Verbatim
 Inbox ~/Mail/work/Inbox
-Trash Trash
+Trash ~/Mail/WorkDeleted
 
 
 IMAPStore work
@@ -30,26 +30,39 @@ Timeout 180
 
 Channel work
 Far :work:
-Near :local:work
+Near :local:WorkYusuf
 Expunge Both
-Create Both
+Create Near
 Sync PullNew Push
-
-# MaildirStore local
-# Path ~/Mail/petroleum_unit
-# SubFolders Verbatim
-# Inbox ~/Mail/petroleum_unit/Inbox
-# Trash Trash
+Pattern Inbox* Sent* Draft* Deleted*
+CopyArrivalDate yes
 
 
-# IMAPStore petroleum_unit
-# Host localhost
-# User petroleum.unit
-# PassCmd "pass show exchange-script"
-# SSLType None
-# AuthMechs LOGIN
-# Port 1143
-# Timeout 180
+MaildirStore PetroleumUnit
+Path ~/Mail/PetroleumUnit
+SubFolders Verbatim
+Inbox ~/Mail/PetroleumUnit/Inbox
+Trash ~/Mail/PetroleumUnit/Deleted
+MaxSize 1m
+
+
+IMAPStore petroleum_unit
+Host localhost
+User petroleum.unit
+PassCmd "pass show mbsync/petroleum.unit"
+SSLType None
+AuthMechs LOGIN
+Port 1143
+Timeout 180
+
+Channel PetroleumUnit
+Far :petroleum_unit:
+Near :PetroleumUnit:
+Expunge Both
+Create Near
+Sync PullNew Push
+Pattern Inbox* Sent* Draft* Deleted*
+CopyArrivalDate yes
 
 # IMAPStore personal
 # Host host.play.com
