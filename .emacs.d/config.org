@@ -915,7 +915,10 @@ evil-mode-line-tag
 ** ORG notifications
 
 #+BEGIN_SRC emacs-lisp
-(use-package alert :ensure t :commands alert :config (setq alert-default-style 'libnotify))
+(use-package alert :ensure t :commands alert
+ :config (setq alert-default-style 'libnotify
+	       alert-fade-time 30
+))
 
  ;; (use-package org-notifications
  ;; :after alert
