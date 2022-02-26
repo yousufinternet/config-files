@@ -1127,7 +1127,6 @@ mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:threa
 ;; (require 'mu4e)
 #+end_src
 
-
 ** Icons
 #+begin_src emacs-lisp
 (defun reapply-marker-icons () 
@@ -1572,7 +1571,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode :ensure t)
 #+END_SRC
-
 
 * Alert on startup finish
 
