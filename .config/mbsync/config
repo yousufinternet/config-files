@@ -4,14 +4,14 @@
 Expunge None
 Create Both
 
-MaildirStore local
-Path ~/Mail/
+MaildirStore YusufExchange-local
+Path ~/Mail/YusufExchange/
+Inbox ~/Mail/YusufExchange/Inbox/
+Trash Trash/
 SubFolders Verbatim
-Inbox ~/Mail/work/Inbox
-Trash ~/Mail/WorkDeleted
 
 
-IMAPStore work
+IMAPStore YusufExchange-remote
 Host localhost
 User ymohammad
 PassCmd "pass show exchange-script"
@@ -19,34 +19,26 @@ SSLType None
 AuthMechs LOGIN
 Port 1143
 Timeout 180
-# Fetch password from gnome-keyring:
-#PassCmd "gnome-keyring-query get mail_pw"
-# Fetch password from .netrc:
-#PassCmd "sed -n -e 's,^machine work\\.host\\.com login tehuser password \\(.*\\),\\1,p' < $HOME/.netrc"
-# Fetch password from a gpg-encrypted file:
-#PassCmd "gpg --quiet --for-your-eyes-only --decrypt $HOME/imappassword.gpg"
-# Fetch password from pwmd (http://pwmd.sourceforge.net/):
-#PassCmd "echo -ne 'GET myIsp\\tpassword' | pwmc datafile"
 
-Channel work
-Far :work:
-Near :local:WorkYusuf
+Channel YusufExchange
+Far :YusufExchange-remote:
+Near :YusufExchange-local:
 Expunge Both
-Create Near
-Sync PullNew Push
-Pattern Inbox* Sent* Draft* Deleted*
+MaxSize 5m
+MaxMessages 90
+Sync PullNew Flags Delete
+Pattern Sent* Draft* Deleted*
 CopyArrivalDate yes
 
 
-MaildirStore PetroleumUnit
-Path ~/Mail/PetroleumUnit
+MaildirStore PetroleumUnit-local
+Path ~/Mail/PetroleumUnit/
 SubFolders Verbatim
 Inbox ~/Mail/PetroleumUnit/Inbox
-Trash ~/Mail/PetroleumUnit/Deleted
-MaxSize 1m
+Trash Deleted
 
 
-IMAPStore petroleum_unit
+IMAPStore PetroleumUnit-remote
 Host localhost
 User petroleum.unit
 PassCmd "pass show mbsync/petroleum.unit"
@@ -56,12 +48,40 @@ Port 1143
 Timeout 180
 
 Channel PetroleumUnit
-Far :petroleum_unit:
-Near :PetroleumUnit:
+Far :PetroleumUnit-remote:
+Near :PetroleumUnit-local:
 Expunge Both
-Create Near
-Sync PullNew Push
-Pattern Inbox* Sent* Draft* Deleted*
+MaxSize 1m
+MaxMessages 90
+Sync PullNew Flags Delete
+Pattern Sent* Draft* Deleted*
+CopyArrivalDate yes
+
+
+MaildirStore ReservoirsSections-local
+Path ~/Mail/ReservoirsSections/
+SubFolders Verbatim
+Inbox ~/Mail/ReservoirsSections/Inbox
+Trash Deleted
+
+
+IMAPStore ReservoirsSections-remote
+Host localhost
+User ReservoirsSections
+PassCmd "pass show mbsync/reservoirs.sections"
+SSLType None
+AuthMechs LOGIN
+Port 1143
+Timeout 180
+
+Channel ReservoirsSections
+Far :ReservoirsSections-remote:
+Near :ReservoirsSections-local:
+Expunge Both
+MaxSize 1m
+MaxMessages 90
+Sync PullNew Flags Delete
+Pattern Sent* Draft* Deleted*
 CopyArrivalDate yes
 
 # IMAPStore personal
