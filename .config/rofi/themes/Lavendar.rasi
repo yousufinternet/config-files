@@ -44,15 +44,15 @@
 
 window {
     font: "Fira Code 12";
-    border-radius:     0px 0px 0.5em 0.5em;
+    border-radius:     0px 0px 0.1em 0.1em;
     text-color: @foreground;
     background-color: rgba ( 0, 0, 0, 0 % );
-    padding:    0.5em;
+    padding:    0.1em;
     text-color: @bordercolor;
     background-color: @background;
     location: north;
     anchor: north;
-    width: 30%;
+    width: 40%;
     y-offset: 0.9em;
     transperancy: "real";
 }
@@ -96,7 +96,7 @@ listview {
 }
 element {
     border: 0;
-    padding: 0.4em;
+    padding: 0.1em;
 }
 element-text {
     background-color: inherit;
