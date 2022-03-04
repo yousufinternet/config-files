@@ -151,7 +151,7 @@ def perform_sec_action(action):
     elif action.startswith('/AP/'):
         ifname = action.split()[1].lstrip('[').rstrip(']')
         apname = ' '.join(action.split()[2:])
-        cmdrun('kitty --name="nmcli_pass_win" nmcli --ask device wifi connect'
+        cmdrun('konsole -e nmcli --ask device wifi connect'
                f' {apname} ifname {ifname}')
 
 

@@ -41,6 +41,7 @@ startup_cmds = [
     "syncthing serve --no-browser",
     'telegram-desktop',
     '~/.config/herbstluftwm/start_agenda.py'
+    'davmail ~/.config/davmail/davmail.properties'
 ]
 
 # this is a simple config for herbstluftwm

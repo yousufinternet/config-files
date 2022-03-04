@@ -37,7 +37,7 @@ super + shift + b
 
 # Lock screen
 super + ctrl + shift + x
-   i3lock -e -B --force-clock --keylayout 0 --indicator
+   i3lock -e -c 000000
 
 # shutdown menu
 super + shift + e

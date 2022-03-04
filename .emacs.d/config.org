@@ -11,52 +11,56 @@ Please do check the following /configs/ as this one was heavily inspired by them
 * Backbones
 ** Main Packages
 #+BEGIN_SRC emacs-lisp
-(use-package ivy :ensure t :config (ivy-mode 1))
+  (use-package ivy :ensure t :config (ivy-mode 1))
 
-(use-package avy
- :ensure t
- :init
- (setq ivy-use-virtual-buffers t
-            ivy-count-format "%d/%d ")
- :commands 
-	    (avy-goto-word-0
-	    ivy-switch-buffers))
+  (use-package avy
+   :ensure t
+   :init
+   (setq ivy-use-virtual-buffers t
+	      ivy-count-format "%d/%d ")
+   :commands 
+	      (avy-goto-word-0
+	      ivy-switch-buffers))
 
-(use-package ivy-rich
-  :after ivy
-  :init
-  (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :ensure t
+    :after ivy
+    :init
+    (ivy-rich-mode 1))
 
-(use-package counsel :ensure t :config (counsel-mode 1))
+  (use-package counsel :ensure t :config (counsel-mode 1))
 
-(use-package ivy-prescient
-  :after counsel
-  :custom
-  (ivy-prescient-enable-filtering nil)
-  :config
-  ;; Uncomment the following line to have sorting remembered across sessions!
-  (prescient-persist-mode 1)
-  (ivy-prescient-mode 1))
-  
-(use-package swiper
- :ensure t
- :bind ("C-s" . swiper))
+  (use-package ivy-prescient
+    :ensure t
+    :after counsel
+    :custom
+    (ivy-prescient-enable-filtering nil)
+    :config
+    ;; Uncomment the following line to have sorting remembered across sessions!
+    (prescient-persist-mode 1)
+    (ivy-prescient-mode 1))
 
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
+  (use-package swiper
+   :ensure t
+   :bind ("C-s" . swiper))
 
-(use-package async
-  :ensure t
-  :init (dired-async-mode 1))
+  (use-package which-key
+    :ensure t
+    :config (which-key-mode))
+
+  (use-package async
+    :ensure t
+    :init (dired-async-mode 1))
 #+END_SRC
 
 ** Small Packages
     
 #+BEGIN_SRC emacs-lisp
-(use-package highlight :ensure t)
-(use-package iedit :ensure t)
-(use-package anzu :ensure t)
+  (use-package highlight :ensure t)
+  (use-package iedit :ensure t)
+  (use-package anzu :ensure t)
+  (use-package undo-tree :ensure t)
+  (use-package company-box :ensure t)
 #+END_SRC
 
 ** Applications
@@ -209,6 +213,17 @@ News and tech
     )
 
     #+end_src
+
+** Languagetool
+   #+begin_src emacs-lisp
+(use-package flycheck-languagetool
+  :ensure t
+  :hook (text-mode . flycheck-languagetool-setup)
+  :init
+  (setq flycheck-languagetool-server-jar "/usr/share/java/languagetool/languagetool-server.jar"
+	flycheck-languagetool-server-args "--port 8852"
+	flycheck-languagetool-server-port 8852))
+   #+end_src
 
 * Emacs tweaks
 ** Minor tweaks
@@ -411,7 +426,7 @@ News and tech
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
-	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "#+HTML:</center>" "#+HTML: </span>") "\n")))
+	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "...مع التقدير" "#+HTML:</center>" "#+HTML: </span>") "\n")))
 	    ;; "o" '(:ignore t :which-key "open")
 	    "o" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
@@ -674,19 +689,26 @@ evil-mode-line-tag
    #+END_SRC
    
 ** Default font (Arabic and emoji fonts)
-   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
+   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
+   
+   ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
+   
+   هذه تجربة لمظهر النص العربي باستعمال خط أميري-ثابت العرض والذي يمكن استعماله ضمن النصوص البرمجية والجداول النصيّة دون مشاكل
+   
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
     (set-face-attribute 'default nil
-			:family "Fira Code"
+			:family "IBM Plex mono"
 			:height 135
 			:weight 'normal
 			:width 'normal)
 
 ;; Monospaced font with arabic support
-(set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Amiri Typewriter"))
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
 
 ;; Arabic fallback font (search if non existant)
 ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
@@ -694,9 +716,9 @@ evil-mode-line-tag
 
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Amiri"))
-(set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
+(set-fontset-font "fontset-proportional" 'latin (font-spec :family "IBM Plex Sans" :height 135))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
+(set-face-attribute 'variable-pitch nil :font "IBM Plex Sans" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
 (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
@@ -782,24 +804,24 @@ evil-mode-line-tag
 
   (append org-modules '(habits))
 
-  ;; (use-package svg-tag-mode :ensure t :commands svg-tag-mode :after svg-lib
-  ;;  :config (setq svg-tag-tags
-  ;; '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
-  ;;  '(:margin 0 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
-  ;;  '(:margin 0 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
-  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
-  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
-  ;;  '(:margin 0 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
-  ;;  '(:margin 0 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
-  ;;  :background "#a11" :foreground "#f99" :radius 5 ))))
-  ;; ))
-  ;; )
+  (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
+   :config (setq svg-tag-tags
+  '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+   '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+   '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+   '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+   '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+   :background "#a11" :foreground "#f99" :radius 5 ))))
+  ))
+  )
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -818,9 +840,10 @@ evil-mode-line-tag
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
 (defun format-sort-agenda () (interactive)
- (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
+(setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 (setq line-spacing 10)
+(setq org-agenda-starts-on-weekday 0)
 ;; (svg-tag-mode)
 )
 
@@ -934,7 +957,8 @@ evil-mode-line-tag
 (use-package org-alert
  :ensure t
  :after alert
-:config (org-alert-enable) (setq org-alert-interval 1800)
+ :config
+    (setq org-alert-interval (* 1800 5)) (org-alert-enable)
  )
 #+END_SRC
 
@@ -1029,7 +1053,7 @@ evil-mode-line-tag
 		 (mu4e-trash-folder . "/YusufExchange/Trash")
 		 (smtpmail-smtp-server . "localhost")
 		 (smtpmail-smtp-service . 1025)
-		 (smtpmail-smtp-user . "soc.wq2.local\ymohammad")
+		 (smtpmail-smtp-user . "ymohammad")
 		 (user-mail-address . "yusuf.mohammad@westqurna2.com")
 		 (user-full-name . "Yusuf Mohammad Al-Jumuaa")
 		 )
@@ -1045,7 +1069,7 @@ evil-mode-line-tag
 		 (mu4e-trash-folder . "/ReservoirsSections/Trash")
 		 (smtpmail-smtp-server . "localhost")
 		 (smtpmail-smtp-service . 1025)
-		 (smtpmail-smtp-user . "soc.wq2.local\reservoirs.sections")
+		 (smtpmail-smtp-user . "soc.wq2.local\\reservoirs.sections")
 		 (user-mail-address . "reservoirs@westqurna2.com")
 		 (user-full-name . "Reservoirs and Petroleum Engineering Section")
 		 )
@@ -1060,7 +1084,7 @@ evil-mode-line-tag
 		 (mu4e-trash-folder . "/PetroleumUnit/Deleted")
 		 (smtpmail-smtp-server . "localhost")
 		 (smtpmail-smtp-service . 1025)
-		 (smtpmail-smtp-user . "soc.wq2.local\petroleum.unit")
+		 (smtpmail-smtp-user . "soc.wq2.local\\petroleum.unit")
 		 (user-full-name . "Petroleum Engineering Unit")
 		 (user-mail-address . "petroleum.unit@westqurna2.com")
 		 (mu4e-compose-signature . (string-join
@@ -1075,7 +1099,10 @@ evil-mode-line-tag
     '((:maildir "/YusufExchange/Inbox" :key ?i)
       (:maildir "/PetroleumUnit/Inbox"   :key ?p)
       (:maildir "/PetroleumUnit/Sent"    :key ?u)
-      (:maildir "/YusufExchange/Sent"    :key ?s)))
+      (:maildir "/YusufExchange/Sent"    :key ?s)
+      (:maildir "/YusufExchange/Drafts"    :key ?d)
+      (:maildir "/Reservoirssections/Inbox"    :key ?r)
+))
 
 (add-to-list 'mu4e-header-info-custom
              '(:empty . (:name "Empty"
@@ -1087,25 +1114,20 @@ evil-mode-line-tag
 mail-user-agent 'mu4e-user-agent
 message-send-mail-function 'smtpmail-send-it
 mu4e-maildir "~/Mail"
-;; mu4e-sent-folder "/WorkYusufSent"
-;; mu4e-drafts-folder "/WorkYusufDrafts"
-;; mu4e-trash-folder "/WorkYusufDeleted"
 mu4e-confirm-quit nil
 mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
 mu4e-headers-show-threads nil
 mu4e-split-view 'horizontal
 mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
-;; user-full-name "Yusuf Mohammad Al-Jumuaa"
-;; user-mail-address "yusuf.mohammad@westqurna2.com"
 mu4e-change-filenames-when-moving t
 mu4e-update-interval (* 5 60)
 mu4e-use-fancy-chars t
-mu4e-attachment-dir "~/Downloads/MailDownloads"
+mu4e-attachment-dir "~/Downloads/"
 mu4e-view-show-images t
 mu4e-view-show-addresses t
 mu4e-compose-format-flowed t
 message-kill-buffer-on-exit t
-mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 20) (:thread-subject))
+mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subject))
 )
 
 (setq mu4e-bookmarks
@@ -1114,8 +1136,9 @@ mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 
  (:name "Today's messages" :query "date:today..now" :key 116)
  (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key 119)
  (:name "Last month" :query "date:1m.." :key ?m)
- (:name "Messages with pdfs" :query "mime:application/pdf" :key ?P)
- (:name "Messages with xlsx" :query "mime:application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :key ?x)
+(:name "Dialy Activity" :query "subject:activity to:petroleum" :key ?a)
+ (:name "Pdfs last week" :query "mime:application/pdf date:7d.." :key ?P)
+ (:name "Excels last week" :query "file:/.*\(xlsx\|xls\)/" :key ?x)
  (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key ?S)
  (:name "Large Emails" :query "size:5m.." :key ?L)
 ))
@@ -1133,8 +1156,9 @@ mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 
 ;; (require 'mu4e)
 #+end_src
 
-** Icons
-#+begin_src emacs-lisp
+** Eye Candy
+*** Icons
+ #+begin_src emacs-lisp
 (defun reapply-marker-icons () 
 (setq mu4e-headers-unread-mark    '("u" . "📩 ")
 mu4e-headers-draft-mark     '("D" . "🚧 ")
@@ -1152,7 +1176,13 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 (add-hook 'mu4e-header-mode-hook 'reapply-marker-icons)
 (add-hook 'mu4e-main-mode-hook 'reapply-marker-icons)
 (add-hook 'mu4e-headers-mode-hook 'reapply-marker-icons)
-#+end_src
+ #+end_src
+*** color columns
+    #+begin_src emacs-lisp
+(use-package mu4e-column-faces
+  :after mu4e
+  :config (mu4e-column-faces-mode))
+    #+end_src
 
 ** Edit mail with org-mode
 #+begin_src emacs-lisp
@@ -1162,8 +1192,27 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 
 ** mu4e alerts
 #+begin_src emacs-lisp
-(use-package mu4e-alert :after mu4e)
+(use-package mu4e-alert
+  :after mu4e
+  :init (mu4e-alert-enable-notifications)
+  :config (mu4e-alert-set-default-style 'libnotify))
 #+end_src
+
+** Attach multiple files
+   #+begin_src emacs-lisp
+(defun compose-attach-marked-files ()
+  "Compose mail and attach all the marked files from a dired buffer."
+  (interactive)
+  (let ((files (dired-get-marked-files)))
+    (mu4e~compose-mail nil nil nil t)
+    (dolist (file files)
+          (if (file-regular-p file)
+              (mml-attach-file file
+                               (mm-default-file-encoding file)
+                               nil "attachment")
+            (message "skipping non-regular file %s" file)))))
+   #+end_src
+
 * Dired
 
 Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
@@ -1537,7 +1586,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
       :ensure t)
     (yas-reload-all))
 #+END_SRC
-** Modes
+** Additional Modes
     
 #+BEGIN_SRC emacs-lisp
 (use-package csv-mode :ensure t)
@@ -1548,7 +1597,9 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
  :ensure t
  :commands highlight-numbers-mode
  :hook (prog-mode . highlight-numbers-mode))
- 
+
+(use-package hldeger-mode) 
+
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
          ("\\.css\\'"   . web-mode)

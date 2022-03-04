@@ -1,7 +1,7 @@
 # Type: Bool
 import os
 import sys
-import dracula.draw
+# import dracula.draw
 
 sys.path.append(os.path.expanduser('~/.config/bspwm/scripts/'))
 
@@ -122,7 +122,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 config.set('downloads.position', 'bottom')
 config.set('downloads.remove_finished', 90)
 
-dracula.draw.blood(c)
+# dracula.draw.blood(c)
 
 # tabs positioning
 config.set('tabs.position', 'left')

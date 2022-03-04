@@ -578,9 +578,16 @@ class Battery():
 
 
 class QtileWorkspaces():
-    from libqtile.command_client import InteractiveCommandClient as ICC
-    from libqtile.ipc import IPCError
+    try:
+        from libqtile.command_client import InteractiveCommandClient as ICC
+        from libqtile.ipc import IPCError
+        IMPORTED = True
+    except ImportError:
+        IMPORTED = False
     def __init__(self):
+        if not IMPORTED:
+            self.ouput = lambda: ""
+            return
         P = subprocess.Popen(
             os.path.expanduser('~/.config/bspwm/bar/qtile_signal_handler.py'),
             text=True, stdout=subprocess.PIPE, encoding='UTF-8')
@@ -642,33 +649,16 @@ class QtileWorkspaces():
 
 
 class HerbstluftwmWorkspaces():
-    def __init__(self, icons_dict=None):
+    def __init__(self, icons_dict=None, numbers=False):
         P = subprocess.Popen(
             "herbstclient --idle 'tag_changed|tag_flags'",
             text=True, shell=True, stdout=subprocess.PIPE, encoding='UTF-8')
         self.updater = P.stdout
         self.wait_time = 60
         self.icns = icons_dict
+        self.numbers = numbers
 
     def output(self):
-        # wor_count = int(cmd_output('herbstclient attr tags.count'))
-        # all_workspaces = [cmd_output(f'herbstclient attr tags.{i}.name')
-        #                   for i in range(wor_count)]
-        # just_len = len(max(all_workspaces, key=len))
-        # empty_workspaces = []
-        # for desk in all_workspaces:
-        #     wins_count = cmd_output(f"herbstclient attr tags.by-name.{desk}.client_count")
-        #     if int(wins_count) == 0:
-        #         empty_workspaces.append(desk)
-        # current = cmd_output('herbstclient attr tags.focus.name').strip()
-        # clients_list = [wid.strip().rstrip('.') for wid in
-        #                 cmd_output("herbstclient attr clients").split('\n')
-        #                 if wid.strip().startswith('0x')]
-        # urgent_tags = [
-        #     cmd_output(f'herbstclient attr clients.{wid}.tag')
-        #     for wid in clients_list
-        #     if cmd_output(f'herbstclient attr clients.{wid}.urgent') == 'true']
-
         tags_status = cmd_output('herbstclient tag_status')
         pre1 = '%{A:HERBST_WIDGETdesk'
         pre2 = '%{A4:HERBST_WIDGETnext:}'
@@ -677,10 +667,12 @@ class HerbstluftwmWorkspaces():
         format_dict = {':': None, '-': 'orange', '.': 'cyan',
                        '!': 'red', '#': 'current'}
         formatted_ws = []
-        for w in tags_status.split('\t'):
+        for i, w in enumerate(tags_status.split('\t')):
             wor = f' {w[1:]} '
-            if self.icns:
+            if self.icns and not self.numbers:
                 wor = ficon(self.icns.get(w[1:], ''), beforepad=5, afterpad=5)
+            elif self.numbers:
+                wor = f' {i} ' 
             clr = format_dict.get(w[0], None)
             if clr:
                 if clr == 'current':

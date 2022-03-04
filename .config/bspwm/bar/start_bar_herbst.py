@@ -25,7 +25,7 @@ if __name__ == '__main__':
         'GIMP': '\uf1fc', 'READ': '\uf518', 'AGENDA': '\uf274',
         'DOWN': '\uf019', 'CHAT': '\uf086', 'GAME': '\uf11b'}
 
-    if HOSTNAME == 'yusuf-dell':
+    if HOSTNAME == 'yusufs-dell':
         modules = [
             HerbstluftwmWorkspaces(tags_icns),
             CoronaVirus(),
