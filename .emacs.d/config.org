@@ -689,19 +689,26 @@ evil-mode-line-tag
    #+END_SRC
    
 ** Default font (Arabic and emoji fonts)
-   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
+   also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
+   
+   ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
+   
+   هذه تجربة لمظهر النص العربي باستعمال خط أميري-ثابت العرض والذي يمكن استعماله ضمن النصوص البرمجية والجداول النصيّة دون مشاكل
+   
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
     (set-face-attribute 'default nil
-			:family "Fira Code"
+			:family "IBM Plex mono"
 			:height 135
 			:weight 'normal
 			:width 'normal)
 
 ;; Monospaced font with arabic support
-(set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Amiri Typewriter"))
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
 
 ;; Arabic fallback font (search if non existant)
 ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
@@ -709,9 +716,9 @@ evil-mode-line-tag
 
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto" :height 135))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "Amiri"))
-(set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
+(set-fontset-font "fontset-proportional" 'latin (font-spec :family "IBM Plex Sans" :height 135))
+(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
+(set-face-attribute 'variable-pitch nil :font "IBM Plex Sans" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
 (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
@@ -797,24 +804,24 @@ evil-mode-line-tag
 
   (append org-modules '(habits))
 
-  ;; (use-package svg-tag-mode :ensure t :commands svg-tag-mode :after svg-lib
-  ;;  :config (setq svg-tag-tags
-  ;; '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
-  ;;  '(:margin 0 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
-  ;;  '(:margin 0 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
-  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
-  ;;  '(:margin 0 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
-  ;;  '(:margin 0 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
-  ;;  '(:margin 0 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
-  ;; (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
-  ;;  :background "#a11" :foreground "#f99" :radius 5 ))))
-  ;; ))
-  ;; )
+  (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
+   :config (setq svg-tag-tags
+  '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+   '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+   '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+   '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+   '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
+  (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+   :background "#a11" :foreground "#f99" :radius 5 ))))
+  ))
+  )
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -833,9 +840,10 @@ evil-mode-line-tag
 (dolist (icon agenda-categories-alist) (add-to-list 'org-agenda-category-icon-alist `(,(car icon) ,(cdr icon) nil nil :width (16.) :ascent center)))
 
 (defun format-sort-agenda () (interactive)
- (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
+(setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 (setq line-spacing 10)
+(setq org-agenda-starts-on-weekday 0)
 ;; (svg-tag-mode)
 )
 
@@ -949,7 +957,8 @@ evil-mode-line-tag
 (use-package org-alert
  :ensure t
  :after alert
-:config (org-alert-enable) (setq org-alert-interval 1800)
+ :config
+    (setq org-alert-interval (* 1800 5)) (org-alert-enable)
  )
 #+END_SRC
 
