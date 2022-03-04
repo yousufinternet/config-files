@@ -214,6 +214,17 @@ News and tech
 
     #+end_src
 
+** Languagetool
+   #+begin_src emacs-lisp
+(use-package flycheck-languagetool
+  :ensure t
+  :hook (text-mode . flycheck-languagetool-setup)
+  :init
+  (setq flycheck-languagetool-server-jar "/usr/share/java/languagetool/languagetool-server.jar"
+	flycheck-languagetool-server-args "--port 8852"
+	flycheck-languagetool-server-port 8852))
+   #+end_src
+
 * Emacs tweaks
 ** Minor tweaks
 #+BEGIN_SRC emacs-lisp
@@ -415,7 +426,7 @@ News and tech
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
-	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "#+HTML:</center>" "#+HTML: </span>") "\n")))
+	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "...مع التقدير" "#+HTML:</center>" "#+HTML: </span>") "\n")))
 	    ;; "o" '(:ignore t :which-key "open")
 	    "o" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
