@@ -61,7 +61,8 @@ class MainLoop():
              " -f 'Font Awesome 6 Free Solid-11'"
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
-             f' -a 1000 -g x{22*GDKSCALE}'),
+             f' -a 1000 -g x{22*GDKSCALE}'
+             ' eDP-1'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')
         logging.debug(
