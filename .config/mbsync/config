@@ -14,7 +14,7 @@ SubFolders Verbatim
 IMAPStore YusufExchange-remote
 Host localhost
 User ymohammad
-PassCmd "pass show exchange-script"
+PassCmd "pass show mail.westqurna2.com/ymohammad"
 SSLType None
 AuthMechs LOGIN
 Port 1143
@@ -24,10 +24,10 @@ Channel YusufExchange
 Far :YusufExchange-remote:
 Near :YusufExchange-local:
 Expunge Both
-MaxSize 5m
-MaxMessages 90
-Sync PullNew Flags Delete
-Pattern Sent* Draft* Deleted*
+# MaxSize 5m
+# MaxMessages 90
+Sync Pull Push
+Pattern * !Mail*
 CopyArrivalDate yes
 
 
@@ -41,7 +41,7 @@ Trash Deleted
 IMAPStore PetroleumUnit-remote
 Host localhost
 User petroleum.unit
-PassCmd "pass show mbsync/petroleum.unit"
+PassCmd "pass show mail.westqurna2.com/petroleum.unit"
 SSLType None
 AuthMechs LOGIN
 Port 1143
@@ -51,10 +51,10 @@ Channel PetroleumUnit
 Far :PetroleumUnit-remote:
 Near :PetroleumUnit-local:
 Expunge Both
-MaxSize 1m
+# MaxSize 5m
 MaxMessages 90
-Sync PullNew Flags Delete
-Pattern Sent* Draft* Deleted*
+Sync Pull
+Pattern * !Mail*
 CopyArrivalDate yes
 
 
@@ -67,8 +67,8 @@ Trash Deleted
 
 IMAPStore ReservoirsSections-remote
 Host localhost
-User ReservoirsSections
-PassCmd "pass show mbsync/reservoirs.sections"
+User reservoirs.sections
+PassCmd "pass show mail.westqurna2.com/reservoirs.sections"
 SSLType None
 AuthMechs LOGIN
 Port 1143
@@ -78,10 +78,10 @@ Channel ReservoirsSections
 Far :ReservoirsSections-remote:
 Near :ReservoirsSections-local:
 Expunge Both
-MaxSize 1m
-MaxMessages 90
+# MaxSize 1m
+# MaxMessages 90
 Sync PullNew Flags Delete
-Pattern Sent* Draft* Deleted*
+Pattern * !Mail*
 CopyArrivalDate yes
 
 # IMAPStore personal
