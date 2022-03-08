@@ -124,7 +124,7 @@ def perform_action(action, status, devices):
         cmdrun(f'nmcli radio wifi on ifname {ifname}')
     elif action.endswith('Disconnect WIFI') or action.endswith('Disconnect'):
         cmdrun(f'nmcli device down {ifname}')
-    elif action.endswith('Autoconnect WIFI'):
+    elif action.endswith('Autoconnect WIFI') or action.endswith('Autoconnect'):
         cmdrun(f'nmcli device up {ifname}')
     elif any(action.endswith(act) for act in ['Activate a connection', 'Activate another connection']):
         connections = get_saved_connections()
@@ -152,7 +152,7 @@ def perform_sec_action(action):
         ifname = action.split()[1].lstrip('[').rstrip(']')
         apname = ' '.join(action.split()[2:])
         cmdrun('konsole -e nmcli --ask device wifi connect'
-               f' {apname} ifname {ifname}')
+               f' "{apname}" ifname {ifname}')
 
 
 def main(rofi_arg=None):
@@ -167,7 +167,7 @@ def main(rofi_arg=None):
                 # ignore loopback
                 if devices['DEVICE'][i] == 'lo':
                     continue
-                if devices['TYPE'][i] == 'wifi' and devices['STATE'][i] == 'connected':
+                if devices['TYPE'][i] == 'wifi' and devices['STATE'][i] in ('connecting', 'connected'):
                     print(f'\0message\x1fWIFI connected to: <b>{devices["CONNECTION"][i]}</b>')
                     print(f'[{devices["DEVICE"][i]}] Disconnect WIFI\0icon\x1f'
                           'network-wireless-disconnected-symbolic')
@@ -196,9 +196,9 @@ def main(rofi_arg=None):
                         'unavailable', 'disconnected']):
                     print(f'[{devices["DEVICE"][i]}] Activate a connection'
                           '\0icon\x1fnetwork-wired-symbolic')
-                    print(f'[{devices["DEVICE"][i]}] Auto connect\0icon\x1f'
+                    print(f'[{devices["DEVICE"][i]}] Autoconnect\0icon\x1f'
                           'network-wired-acquiring-symbolic')
-                if devices['TYPE'][i] == 'ethernet' and devices['STATE'][i] == 'connected':
+                if devices['TYPE'][i] == 'ethernet' and devices['STATE'][i] in ('connected', 'connecting'):
                     print(f'[{devices["DEVICE"][i]}] Disconnect\0icon\x1f'
                           'network-wired-offline-symbolic')
             print('Edit connections\0icon\x1fnetwork-workgroup')
