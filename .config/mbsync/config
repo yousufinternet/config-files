@@ -58,31 +58,31 @@ Pattern * !Mail*
 CopyArrivalDate yes
 
 
-MaildirStore ReservoirsSections-local
-Path ~/Mail/ReservoirsSections/
-SubFolders Verbatim
-Inbox ~/Mail/ReservoirsSections/Inbox
-Trash Deleted
+# MaildirStore ReservoirsSections-local
+# Path ~/Mail/ReservoirsSections/
+# SubFolders Verbatim
+# Inbox ~/Mail/ReservoirsSections/Inbox
+# Trash Deleted
 
 
-IMAPStore ReservoirsSections-remote
-Host localhost
-User reservoirs.sections
-PassCmd "pass show mail.westqurna2.com/reservoirs.sections"
-SSLType None
-AuthMechs LOGIN
-Port 1143
-Timeout 180
+# IMAPStore ReservoirsSections-remote
+# Host localhost
+# User reservoirs.sections
+# PassCmd "pass show mail.westqurna2.com/reservoirs.sections"
+# SSLType None
+# AuthMechs LOGIN
+# Port 1143
+# Timeout 180
 
-Channel ReservoirsSections
-Far :ReservoirsSections-remote:
-Near :ReservoirsSections-local:
-Expunge Both
-# MaxSize 1m
-# MaxMessages 90
-Sync PullNew Flags Delete
-Pattern * !Mail*
-CopyArrivalDate yes
+# Channel ReservoirsSections
+# Far :ReservoirsSections-remote:
+# Near :ReservoirsSections-local:
+# Expunge Both
+# # MaxSize 1m
+# # MaxMessages 90
+# Sync PullNew Flags Delete
+# Pattern * !Mail*
+# CopyArrivalDate yes
 
 # IMAPStore personal
 # Host host.play.com

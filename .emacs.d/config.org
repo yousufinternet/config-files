@@ -423,10 +423,18 @@ News and tech
 	    "ee" 'org-export-dispatch
 	    "ep" 'org-latex-export-to-pdf
 	    "eb" 'org-beamer-export-to-pdf
+	    "eh" 'org-mime-htmlize
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
 	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "...مع التقدير" "#+HTML:</center>" "#+HTML: </span>") "\n")))
+	    "ne" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"ltr\">" "#+HTML: </span>") "\n")))
+	    "ns" (lambda () (interactive)
+		   (insert (string-join
+			    '("-----"
+			      "Yusuf Mohammad - Head of Petroleum Engineering Unit"
+			      "BOC - WQ2 Department - Petroleum Engineering and Reservoir Section"
+			      "Tel.: 07827656402  Ext. ") "\n")))
 	    ;; "o" '(:ignore t :which-key "open")
 	    "o" 'org-open-at-point
 	    "t" '(:ignore t :which-key "Org Toggle Funcs")
@@ -758,7 +766,7 @@ evil-mode-line-tag
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'doom-dracula)
+  (setq default-theme 'modus-vivendi)
   (load-theme default-theme t)
 #+END_SRC
 
@@ -1104,11 +1112,6 @@ evil-mode-line-tag
       (:maildir "/Reservoirssections/Inbox"    :key ?r)
 ))
 
-(add-to-list 'mu4e-header-info-custom
-             '(:empty . (:name "Empty"
-                         :shortname ""
-                         :function (lambda (msg) "  "))))
-
 (setq
 ;; use mu4e for e-mail in emacs
 mail-user-agent 'mu4e-user-agent
@@ -1127,7 +1130,7 @@ mu4e-view-show-images t
 mu4e-view-show-addresses t
 mu4e-compose-format-flowed t
 message-kill-buffer-on-exit t
-mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subject))
+mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subject))
 )
 
 (setq mu4e-bookmarks
@@ -1138,7 +1141,7 @@ mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 
  (:name "Last month" :query "date:1m.." :key ?m)
 (:name "Dialy Activity" :query "subject:activity to:petroleum" :key ?a)
  (:name "Pdfs last week" :query "mime:application/pdf date:7d.." :key ?P)
- (:name "Excels last week" :query "file:/.*\(xlsx\|xls\)/" :key ?x)
+ (:name "Excels last week" :query "file:/.*\.\(xlsx\|xls\)/ date:7d.." :key ?x)
  (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key ?S)
  (:name "Large Emails" :query "size:5m.." :key ?L)
 ))
@@ -1148,7 +1151,7 @@ mu4e-headers-fields '((:empty 2) (:human-date . 12) (:flags . 6) (:from-or-to . 
 (add-hook 'mu4e-main-mode-hook (lambda () (text-scale-set 2)))
 (add-hook 'mu4e-headers-mode-hook (lambda () (text-scale-set 1.5)))
 (add-hook 'mu4e-view-mode-hook (lambda () (text-scale-set 2)))
-(add-hook 'mu4e-main-mode-hook 'mu4e-marker-icons-mode)
+;; (add-hook 'mu4e-main-mode-hook 'mu4e-marker-icons-mode)
 ;; (add-hook 'mu4e-headers-mode-hook 'mu4e-marker-icons-mode)
 ;; (add-hook 'mu4e-header-mode-hook 'mu4e-marker-icons-mode)
 )
@@ -1188,6 +1191,7 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 #+begin_src emacs-lisp
 (add-hook 'mu4e-compose-mode-hook 'org-mime-edit-mail-in-org-mode)
 (setq org-mime-export-options '(:with-latex dvipng title nil :toc nil))
+(add-hook 'message-send-hook 'org-mime-confirm-when-no-multipart)
 #+end_src
 
 ** mu4e alerts
@@ -1544,7 +1548,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 	      company-echo-delay 0.1
 	      company-show-numbers t
 	      company-tooltip-limit 5
-	  ) ;; default is 0.2
+	  )
 	      :hook (
 	      (prog-mode . company-mode)
 	      (org-mode . company-mode)))

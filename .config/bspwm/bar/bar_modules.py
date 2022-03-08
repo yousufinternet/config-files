@@ -233,6 +233,8 @@ class NMInfo():
                 output += ficon('\uf1eb', cdict['dimmed'])
             elif dev_type == 'ethernet' and dev_state == 'connected':
                 output += ficon('\uf796', cdict['green'])
+            elif dev_type == 'ethernet' and dev_state == 'connecting':
+                output += ficon('\uf796', cdict['light_yellow'])
             elif dev_type == 'ethernet' and dev_state in ['unavailable', 'disconnected']:
                 output += ficon('\uf796', cdict['orange'])
             elif dev_type == 'ethernet' and dev_state == 'unmanaged':
@@ -883,6 +885,32 @@ class SyncthingIndicator():
             self.text = f'{connected}/{len(sync_conn["connections"])}'
             color = cdict['dimmed'] if connected == 0 else cdict['green']
         
+        return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
+
+    def command(self, event):
+        if event == 'syncthing':
+            subprocess.Popen(
+                'xdg-open localhost:8080',
+                shell=True, text=True)
+
+
+class SafeEyes():
+    def __init__(self):
+        self.wait_time = 600
+        self.updater = None
+        self.icon = '\uf06e'
+        self.text = '∞ mins'
+
+    def output(self):
+        status = cmd_output('safeeyes --status')
+        if 'not running' in status:
+            color = cdict['dimmed']
+            icon = ficon(self.icon, color)
+            return '%{A:safeeyesEnable:}'+f'{icon}{self.text}'+'%{A}'
+        else:
+            color = None
+            next_break = status.split('at ')[1].strip()
+
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
     def command(self, event):
