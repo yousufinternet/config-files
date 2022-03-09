@@ -890,10 +890,15 @@ class SyncthingIndicator():
         
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
+    def get_guiaddress(self):
+        return json.load(cmd_output(
+            'syncthing cli show system'))['guiAddressUsed']
+        
     def command(self, event):
         if event == 'syncthing':
+            address = self.get_guiaddress()
             subprocess.Popen(
-                'xdg-open localhost:8080',
+                f'xdg-open {address}',
                 shell=True, text=True)
 
 
