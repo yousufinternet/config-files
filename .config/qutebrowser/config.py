@@ -137,6 +137,7 @@ config.set('tabs.show', 'multiple')
 c.tabs.last_close = 'close'
 c.tabs.show = 'switching'
 c.tabs.show_switching_delay = 5000
+c.tabs.select_on_remove = 'last-used'
 
 c.completion.height = '30%'
 

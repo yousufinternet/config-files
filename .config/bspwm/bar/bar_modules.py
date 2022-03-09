@@ -211,7 +211,10 @@ class NMInfo():
         return read_fwf(wifi_aps)
 
     def output(self):
-        devs = self.get_devices_status()
+        try:
+            devs = self.get_devices_status()
+        except IndexError:
+            return '...'
         output = '%{A:NM_MENU:}'
         for dev_name, dev_type, dev_state, dev_con in zip(
                 devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
@@ -887,10 +890,15 @@ class SyncthingIndicator():
         
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
+    def get_guiaddress(self):
+        return json.load(cmd_output(
+            'syncthing cli show system'))['guiAddressUsed']
+        
     def command(self, event):
         if event == 'syncthing':
+            address = self.get_guiaddress()
             subprocess.Popen(
-                'xdg-open localhost:8080',
+                f'xdg-open {address}',
                 shell=True, text=True)
 
 
