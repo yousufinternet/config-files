@@ -52,8 +52,8 @@ fi
 if [ "$GDK_SCALE" -eq 2 ]; then
   xrandr --dpi 200
 fi
-# exec herbstluftwm --locked
-exec bspwm
+herbstluftwm --locked
+# exec bspwm
 # exec openbox --startup "steam-native --big-picture"
 # exec spectrwm
 #i3
