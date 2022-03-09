@@ -1,0 +1,8 @@
+{
+  "mode.normal.focus_search_bar": "",
+  "mode.normal.scroll_half_page_down": "<C-d>",
+  "mode.normal.scroll_half_page_up": "<C-u>",
+  "mode.normal.tab_new_after_current": "O",
+  "mode.normal.tab_close": "d",
+  "mode.normal.tab_restore": "u"
+}
