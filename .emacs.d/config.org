@@ -218,7 +218,7 @@ News and tech
    #+begin_src emacs-lisp
 (use-package flycheck-languagetool
   :ensure t
-  :hook (text-mode . flycheck-languagetool-setup)
+  ;; :hook (text-mode . flycheck-languagetool-setup)
   :init
   (setq flycheck-languagetool-server-jar "/usr/share/java/languagetool/languagetool-server.jar"
 	flycheck-languagetool-server-args "--port 8852"
