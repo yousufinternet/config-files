@@ -211,7 +211,10 @@ class NMInfo():
         return read_fwf(wifi_aps)
 
     def output(self):
-        devs = self.get_devices_status()
+        try:
+            devs = self.get_devices_status()
+        except IndexError:
+            return '...'
         output = '%{A:NM_MENU:}'
         for dev_name, dev_type, dev_state, dev_con in zip(
                 devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
