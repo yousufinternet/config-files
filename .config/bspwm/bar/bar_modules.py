@@ -891,14 +891,14 @@ class SyncthingIndicator():
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
     def get_guiaddress(self):
-        return json.load(cmd_output(
-            'syncthing cli show system'))['guiAddressUsed']
+        return json.load(StringIO(cmd_output(
+            'syncthing cli show system')))['guiAddressUsed']
         
     def command(self, event):
         if event == 'syncthing':
             address = self.get_guiaddress()
             subprocess.Popen(
-                f'xdg-open {address}',
+                f'xdg-open http://{address}',
                 shell=True, text=True)
 
 

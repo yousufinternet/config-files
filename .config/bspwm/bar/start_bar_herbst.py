@@ -28,7 +28,6 @@ if __name__ == '__main__':
     if HOSTNAME == 'yusufs-dell':
         modules = [
             HerbstluftwmWorkspaces(tags_icns),
-            CoronaVirus(),
             OpenWeather(apikey),
             PacmanUpdates(),
             NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
