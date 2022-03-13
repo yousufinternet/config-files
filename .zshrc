@@ -135,4 +135,21 @@ function command_not_found_handler {
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# https://feldspaten.org/2018/11/20/zsh-and-home-end-delete-buttons/
+# ctrl-left and ctrl-right
+bindkey "\e[1;5D" backward-word
+bindkey "\e[1;5C" forward-word
+# ctrl-bs and ctrl-del
+bindkey "\e[3;5~" kill-word
+bindkey "\C-_"    backward-kill-word
+# del, home and end
+bindkey "\e[3~" delete-char
+bindkey "\e[H"  beginning-of-line
+bindkey "\e[F"  end-of-line
+# alt-bs
+bindkey "\e\d"  undo
+# Reverse search
+bindkey '^R' history-incremental-search-backward
+
+
 fortune | cowsay -f tux | lolcat -p 3
