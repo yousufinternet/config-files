@@ -15,18 +15,21 @@ def hc(*args):
 
 hc('lock')
 
-clients = [wid.rstrip('.') for wid in
-           hc('attr clients')[0].split() if wid.startswith('0x')]
+try:
+    clients = [wid.rstrip('.') for wid in
+            hc('attr clients')[0].split() if wid.startswith('0x')]
 
-sticky_clts = [
-    wid for wid in clients
-    if hc(f'get_attr clients.{wid}.my_sticky')[0].rstrip() == 'true'
-]
+    sticky_clts = [
+        wid for wid in clients
+        if hc(f'get_attr clients.{wid}.my_sticky')[0].rstrip() == 'true'
+    ]
 
-for wid in sticky_clts:
-    was_min = eval(hc(f'attr clients.{wid}.minimized')[0].title())
-    hc(f'bring {wid}')
-    if was_min:
-        hc(f'set_attr clients.{wid}.minimized on')
+    for wid in sticky_clts:
+        was_min = eval(hc(f'attr clients.{wid}.minimized')[0].title())
+        hc(f'bring {wid}')
+        if was_min:
+            hc(f'set_attr clients.{wid}.minimized on')
+except Exception:
+    pass
 
 hc('unlock')
