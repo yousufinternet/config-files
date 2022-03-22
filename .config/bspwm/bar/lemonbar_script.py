@@ -59,6 +59,7 @@ class MainLoop():
              # ' -f "FontAwesome-12"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
              " -f 'Font Awesome 6 Free Solid-11'"
+             " -f 'Font Awesome 6 Brands-11'"
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
              f' -a 1000 -g x{22*GDKSCALE}'
@@ -103,10 +104,13 @@ class MainLoop():
                      if not isinstance(mod, str) and mod.updater))
         self.outputs = [module.output() if not isinstance(module, str)
                         else module for module in self.modules]
-        self.lemonbar_P.stdin.write(' '.join(self.outputs))
+        # self.lemonbar_P.stdin.write('\n')
+        # self.lemonbar_P.stdin.flush()
+        self.lemonbar_P.stdin.write(self.sep.join(self.outputs))
+        # self.lemonbar_P.stdin.write('Initializing...')
         logging.info(f"First outputs to bar: {', '.join(self.outputs)}")
 
-        self.last_loop = 0
+        self.last_loop = 60
         self.end_time = time.time()
         self.ready_updaters = []
         self.set_last_update(self.end_time)
@@ -123,7 +127,7 @@ class MainLoop():
         self.ready_updaters = [i[0] for i in self.ready_updaters]
         self.ready_updaters = [upd for upd in self.updaters
                                if upd.fileno() in self.ready_updaters]
-        logging.info(f'Waited for {time.time()-start:0.2} Secs')
+        logging.info(f'Waited for {time.time()-start:0.2f} Secs')
         logging.info(f'got these ready_updaters: {self.ready_updaters}')
 
     def _cal_wait(self):
