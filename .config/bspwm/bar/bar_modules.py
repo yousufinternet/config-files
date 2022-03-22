@@ -24,11 +24,15 @@ def cmd_output(cmd, **kwargs):
     return out
 
 
-def ficon(icon, color=None, beforepad=0, afterpad=5):
+def ficon(icon, color=None, beforepad=0, afterpad=5, idx=2):
+    '''
+    idx: index of font to be used
+    '''
     beforepad *= GDKSCALE
     afterpad *= GDKSCALE
-    return ('%{O'+f'{beforepad}'+'}'+('%{F'+color+'}' if color else '')+'%{T2}'
-            + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+f'{afterpad}'+'}')
+    return ('%{O'+f'{beforepad}'+'}'+('%{F'+color+'}' if color else '')+'%{T'+
+            f'{idx}'+'}' + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+
+            f'{afterpad}'+'}')
 
 
 def read_fwf(text_table):
@@ -891,15 +895,43 @@ class SyncthingIndicator():
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
     def get_guiaddress(self):
-        return json.load(cmd_output(
-            'syncthing cli show system'))['guiAddressUsed']
+        return json.load(StringIO(cmd_output(
+            'syncthing cli show system')))['guiAddressUsed']
         
     def command(self, event):
         if event == 'syncthing':
             address = self.get_guiaddress()
             subprocess.Popen(
-                f'xdg-open {address}',
+                f'xdg-open http://{address}',
                 shell=True, text=True)
+
+
+class PodsBuddy():
+    def __init__(self, pods_mac='88:D0:39:ED:EA:64'):
+        self.wait_time = 30
+        self.updater = None
+        self.bt_icon = '\uf294'
+        self.icon = '\uf025'
+        self.pods_mac = pods_mac
+
+    def output(self):
+        self.powered = 'Powered: yes' in cmd_output('bluetoothctl show')
+        bt_icon = ficon(self.bt_icon, idx=3, color=cdict['green']
+                             if self.powered else cdict['dimmed'])
+        self.connected = 'Connected: yes' in cmd_output('bluetoothctl info')
+        icon = ficon(self.icon, cdict['green']
+                          if self.connected else cdict['dimmed'])
+        return '%{A:BLUETOOTH:}'+bt_icon+'%{A}%{A:POD:}'+icon+'%{A}'
+
+    def command(self, event):
+        if event == 'BLUETOOTH':
+            P = subprocess.Popen(f'bluetoothctl power {"off" if self.powered else "on"}'.split())
+            P.wait()
+            return True
+        elif event == 'POD':
+            P = subprocess.Popen(f'bluetoothctl {"disconnect" if self.connected else "connect"} {self.pods_mac}'.split())
+            P.wait()
+            return True
 
 
 class SafeEyes():

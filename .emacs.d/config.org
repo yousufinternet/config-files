@@ -384,6 +384,7 @@ News and tech
 	   "fcx" (lambda () (interactive) (find-file "~/.config/sxhkd/apps_keys"))
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
+	   "fl" (lambda () (interactive) (find-file "~/Public/Syncthing Global/private/home.journal"))
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 	   "o" '(:ignore t :which-key "Global org-mode")
 	   "oa" 'org-agenda
@@ -798,38 +799,36 @@ evil-mode-line-tag
     ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
     ;; Default todo states
-    (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED"))
+    (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)"))
 	  org-todo-keyword-faces
 	  '(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
-	    ("INPROGRESS"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
 	    ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
 	    ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
-	    ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono")
-	    ("DELEGATED"  :background "#939" :weight light :slant italic :family "Dejavu Sans Mono"))
+	    ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
 	  org-log-done 'note
 	  org-imenu-depth 3
 	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
 
   (append org-modules '(habits))
-
-  (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
-   :config (setq svg-tag-tags
-  '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
-   '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
-   '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
-   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
-   '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
-   '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
-   '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
-  (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
-   :background "#a11" :foreground "#f99" :radius 5 ))))
-  ))
-  )
+;; (use-package svg-lib)
+;;   (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
+;;    :config (setq svg-tag-tags
+;;   '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+;;    '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+;;    '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+;;    '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+;;    '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
+;;   (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+;;    :background "#a11" :foreground "#f99" :radius 5 ))))
+;;   ))
+;;   )
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -1120,6 +1119,7 @@ mu4e-maildir "~/Mail"
 mu4e-confirm-quit nil
 mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
 mu4e-headers-show-threads nil
+mu4e-headers-include-related nil
 mu4e-split-view 'horizontal
 mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
 mu4e-change-filenames-when-moving t
@@ -1135,15 +1135,15 @@ mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subje
 
 (setq mu4e-bookmarks
 '(
-(:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key 117)
- (:name "Today's messages" :query "date:today..now" :key 116)
- (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key 119)
+(:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
+ (:name "Today's messages" :query "date:today..now" :key ?t)
+ (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
  (:name "Last month" :query "date:1m.." :key ?m)
 (:name "Dialy Activity" :query "subject:activity to:petroleum" :key ?a)
- (:name "Pdfs last week" :query "mime:application/pdf date:7d.." :key ?P)
- (:name "Excels last week" :query "file:/.*\.\(xlsx\|xls\)/ date:7d.." :key ?x)
- (:name "Section Management" :query "from:dhiaa OR from:hassan OR from:reservoirs" :key ?S)
- (:name "Large Emails" :query "size:5m.." :key ?L)
+ (:name "Pdfs last week" :query "mime:application/pdf date:7d.. not subject:daily" :key ?p)
+ (:name "Excels last week" :query "file:/.*\.xlsx/ date:7d.. not subject:daily" :key ?x)
+ (:name "Section Management" :query "(from:dhiaa OR from:hassan OR from:reservoirs) and not subject:/.*daily.*/" :key ?s)
+ (:name "Large Emails" :query "size:5m.." :key ?l)
 ))
 
 (set-face-attribute 'mu4e-header-face nil :font "fontset-default")
