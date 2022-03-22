@@ -31,12 +31,21 @@ prompt clint
 
 # Environment
 export EDITOR='emacsclient -c -a ""'
-export PAGER='more'
+export PAGER='less'  # used to use more for colors, but the bindings are messed up in more
 export TERMINAL="konsole"
 export RTV_EDITOR='emacsclient -c -a ""'
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.config/bspwm/scripts/:$PATH
 export NODE_PATH=$NODE_PATH:$(npm root -g)
+
+# Colors for less
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # Aliases
 alias radiogolha='cvlc mms://www.radiogolha.net/RadioGolha'
