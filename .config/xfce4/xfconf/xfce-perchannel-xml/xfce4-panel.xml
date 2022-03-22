@@ -5,15 +5,20 @@
   <property name="panels" type="array">
     <value type="int" value="2"/>
     <property name="panel-2" type="empty">
-      <property name="position" type="string" value="p=5;x=11;y=333"/>
+      <property name="position" type="string" value="p=4;x=1909;y=546"/>
       <property name="size" type="uint" value="20"/>
       <property name="length-adjust" type="bool" value="true"/>
-      <property name="length" type="uint" value="1"/>
+      <property name="length" type="uint" value="97"/>
       <property name="autohide-behavior" type="uint" value="2"/>
-      <property name="position-locked" type="bool" value="false"/>
+      <property name="position-locked" type="bool" value="true"/>
       <property name="enter-opacity" type="uint" value="100"/>
-      <property name="leave-opacity" type="uint" value="12"/>
+      <property name="leave-opacity" type="uint" value="26"/>
       <property name="plugin-ids" type="array">
+        <value type="int" value="2"/>
+        <value type="int" value="3"/>
+        <value type="int" value="5"/>
+        <value type="int" value="1"/>
+        <value type="int" value="4"/>
         <value type="int" value="12"/>
       </property>
       <property name="mode" type="uint" value="1"/>
@@ -29,7 +34,6 @@
     <property name="dark-mode" type="bool" value="true"/>
   </property>
   <property name="plugins" type="empty">
-    <property name="plugin-1" type="string" value="battery"/>
     <property name="plugin-12" type="string" value="systray">
       <property name="names-ordered" type="array">
         <value type="string" value="thunar"/>
@@ -59,6 +63,7 @@
       <property name="show-frame" type="bool" value="false"/>
       <property name="size-max" type="uint" value="22"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="zeal"/>
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="network"/>
       </property>
@@ -90,5 +95,17 @@
     </property>
     <property name="plugin-24" type="string" value="netload"/>
     <property name="plugin-14" type="string" value="genmon"/>
+    <property name="plugin-1" type="string" value="directorymenu">
+      <property name="base-directory" type="string" value="/home/yusuf"/>
+    </property>
+    <property name="plugin-2" type="string" value="applicationsmenu"/>
+    <property name="plugin-3" type="string" value="tasklist"/>
+    <property name="plugin-4" type="string" value="separator">
+      <property name="style" type="uint" value="3"/>
+    </property>
+    <property name="plugin-5" type="string" value="separator">
+      <property name="expand" type="bool" value="true"/>
+      <property name="style" type="uint" value="0"/>
+    </property>
   </property>
 </channel>
