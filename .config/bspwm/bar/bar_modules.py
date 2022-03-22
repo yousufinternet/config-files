@@ -906,6 +906,32 @@ class SyncthingIndicator():
                 shell=True, text=True)
 
 
+class XAutoLocker():
+    def __init__(self):
+        self.wait_time = 6000
+        self.updater = None
+        self.coffee = '\uf0f4'
+        self.lock = '\uf023'
+        self.enabled = False
+
+    def output(self):
+        coffee = ficon(self.coffee, cdict['green'] if self.enabled else cdict['dimmed'])
+        lock = ficon(self.lock, cdict['l_yellow'])
+        return '%{A:XAUTOLOCK:}'+coffee+'%{A}%{A:XAUTOLOCKNOW:}'+lock+'%{A}'
+
+    def command(self, event):
+        if event == 'XAUTOLOCK':
+            # used enable and disable instead of toggle, just incase state has
+            # been toggled outside of the bar process, xautolock has no way of
+            # querying its current state
+            subprocess.Popen(f'xautolock -{"enable" if self.enabled else "disable"}'.split())
+            self.enabled = not self.enabled
+            return True
+        elif event == 'XAUTOLOCKNOW':
+            subpbrocess.Popen('xautolock -locknow'.split())
+        
+
+
 class PodsBuddy():
     def __init__(self, pods_mac='88:D0:39:ED:EA:64'):
         self.wait_time = 30
