@@ -709,10 +709,11 @@ evil-mode-line-tag
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
     (set-face-attribute 'default nil
-			:family "IBM Plex mono"
+			:family "Iosevka"
 			:height 135
-			:weight 'normal
-			:width 'normal)
+			:weight 'light)
+
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 135 :weight 'light)
 
 ;; Monospaced font with arabic support
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
@@ -1042,8 +1043,9 @@ evil-mode-line-tag
 #+end_src
 
 * Mail
-** Load mu4e and default config
-#+begin_src emacs-lisp
+** MU4E  
+*** Load mu4e and default config
+ #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "/usr/share/emacs/site-lisp/mu4e"))
 (use-package mu4e
  :defer 20
@@ -1157,11 +1159,11 @@ mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subje
 )
 
 ;; (require 'mu4e)
-#+end_src
+ #+end_src
 
-** Eye Candy
-*** Icons
- #+begin_src emacs-lisp
+*** Eye Candy
+**** Icons
+  #+begin_src emacs-lisp
 (defun reapply-marker-icons () 
 (setq mu4e-headers-unread-mark    '("u" . "📩 ")
 mu4e-headers-draft-mark     '("D" . "🚧 ")
@@ -1179,31 +1181,31 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 (add-hook 'mu4e-header-mode-hook 'reapply-marker-icons)
 (add-hook 'mu4e-main-mode-hook 'reapply-marker-icons)
 (add-hook 'mu4e-headers-mode-hook 'reapply-marker-icons)
- #+end_src
-*** color columns
-    #+begin_src emacs-lisp
+  #+end_src
+**** color columns
+     #+begin_src emacs-lisp
 (use-package mu4e-column-faces
   :after mu4e
   :config (mu4e-column-faces-mode))
-    #+end_src
+     #+end_src
 
-** Edit mail with org-mode
-#+begin_src emacs-lisp
+*** Edit mail with org-mode
+ #+begin_src emacs-lisp
 (add-hook 'mu4e-compose-mode-hook 'org-mime-edit-mail-in-org-mode)
 (setq org-mime-export-options '(:with-latex dvipng title nil :toc nil))
 (add-hook 'message-send-hook 'org-mime-confirm-when-no-multipart)
-#+end_src
+ #+end_src
 
-** mu4e alerts
-#+begin_src emacs-lisp
+*** mu4e alerts
+ #+begin_src emacs-lisp
 (use-package mu4e-alert
   :after mu4e
   :init (mu4e-alert-enable-notifications)
   :config (mu4e-alert-set-default-style 'libnotify))
-#+end_src
+ #+end_src
 
-** Attach multiple files
-   #+begin_src emacs-lisp
+*** Attach multiple files
+    #+begin_src emacs-lisp
 (defun compose-attach-marked-files ()
   "Compose mail and attach all the marked files from a dired buffer."
   (interactive)
@@ -1215,6 +1217,11 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
                                (mm-default-file-encoding file)
                                nil "attachment")
             (message "skipping non-regular file %s" file)))))
+    #+end_src
+** NOTMUCH
+   #+begin_src emacs-lisp
+(use-package notmuch
+:config (setq notmuch-show-logo nil))
    #+end_src
 
 * Dired
