@@ -28,11 +28,13 @@ if __name__ == '__main__':
 
     if HOSTNAME == 'yusufs-dell':
         modules = [
+            '%{Sl}',
             HerbstluftwmWorkspaces(tags_icns),
             OpenWeather(apikey),
             PacmanUpdates(),
             NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
-            SyncthingIndicator(), NMInfo(), PodsBuddy(), '%{r}',
+            SyncthingIndicator(), NMInfo(), PodsBuddy(), XAutoLocker(),
+            '%{r}',
             SARCPUUsage(),
             CPUTemp(),
             RamUsage(percent=True),

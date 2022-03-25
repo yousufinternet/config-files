@@ -63,7 +63,7 @@ class MainLoop():
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
              f' -a 1000 -g x{22*GDKSCALE}'
-             ' eDP-1'),
+             ' -o HDMI-1'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')
         logging.debug(
@@ -176,9 +176,11 @@ class MainLoop():
                 logging.debug(
                         f'{module} output:{self.outputs[i]} to slot:{i}')
                 module.last_update = time.time()
-            self.write_to_lemonbar()
             self.end_time = time.time()
             self.last_loop = self.end_time - self.start_time
+            wait_time = self._cal_wait()
+            if wait_time > 0.1 or self.ready_updaters:
+                self.write_to_lemonbar()
 
     def write_to_lemonbar(self):
         self.lemonbar_P.stdin.write('\n')

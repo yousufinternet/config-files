@@ -895,8 +895,12 @@ class SyncthingIndicator():
         return '%{A:syncthing:}'+ficon(self.icon, color)+self.text+'%{A}'
 
     def get_guiaddress(self):
-        return json.load(StringIO(cmd_output(
-            'syncthing cli show system')))['guiAddressUsed']
+        try:
+            address = json.load(StringIO(cmd_output(
+                'syncthing cli show system')))['guiAddressUsed']
+        except json.decoder.JSONDecodeError:
+            address = 'localhost'
+        return address
         
     def command(self, event):
         if event == 'syncthing':
@@ -928,9 +932,8 @@ class XAutoLocker():
             self.enabled = not self.enabled
             return True
         elif event == 'XAUTOLOCKNOW':
-            subpbrocess.Popen('xautolock -locknow'.split())
+            subprocess.Popen('xautolock -locknow'.split())
         
-
 
 class PodsBuddy():
     def __init__(self, pods_mac='88:D0:39:ED:EA:64'):
