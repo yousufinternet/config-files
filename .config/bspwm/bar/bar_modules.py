@@ -11,7 +11,7 @@ import subprocess
 from io import StringIO
 from bs4 import BeautifulSoup
 
-from colors import dracula as cdict
+from colors import modus_vivendi as cdict
 
 from lemonbar_script import GDKSCALE
 

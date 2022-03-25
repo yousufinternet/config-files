@@ -32,3 +32,14 @@ dracula = {
         'dimmed': '#6272a4'
 }
 
+modus_vivendi = {
+    'red': '#ff8059',
+    'l_yellow': '#d2b580',
+    'teal': '#00d3d0',
+    'orange': '#fba849',
+    'green': '#44bc44',
+    'cyan': '#00d8b4',
+    'dimmed': '#93959b',
+    'background': '#000000',
+    'foreground': '#ffffff'
+}

@@ -2,6 +2,7 @@
 
 from start_lemonbar import create_powerline, lemonbar_below_xfcepanel, HOSTNAME
 
+from colors import modus_vivendi as cdict
 from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
@@ -70,9 +71,12 @@ if __name__ == '__main__':
     # seps = [' ', ficon('\ue0b1', beforepad=5), ' ', ficon('\ue0b3', beforepad=5)]
     # create_powerline(modules, bgs, seps=seps)
 
-    print(modules)
     # main_loop = MainLoop(modules, sep='', bg='#282a36', fg='#F8F8F2')
-    main_loop = MainLoop(modules, sep='%{O5}%{F#ccccc7}/%{F-}%{O5}', bg='#282a36', fg='#F8F8F2')
+    main_loop = MainLoop(
+        modules,
+        sep='%{O5}%{F'+cdict['dimmed']+'}/%{F-}%{O5}',
+        bg=cdict['background'],
+        fg=cdict['foreground'])
     main_loop.start_lemonbar()
     lemonbar_below_xfcepanel()
     main_loop.start_loop()
