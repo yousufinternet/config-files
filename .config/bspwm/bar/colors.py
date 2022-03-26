@@ -39,7 +39,7 @@ modus_vivendi = {
     'orange': '#fba849',
     'green': '#44bc44',
     'cyan': '#00d8b4',
-    'dimmed': '#93959b',
+    'dimmed': '#4d4e51',
     'background': '#000000',
     'foreground': '#ffffff'
 }
