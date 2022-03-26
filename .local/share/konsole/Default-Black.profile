@@ -1,6 +1,6 @@
 [Appearance]
 BoldIntense=true
-ColorScheme=Dracula
+ColorScheme=Modus-Vivendi
 DimmValue=54
 Font=Iosevka Nerd Font Mono,11,-1,5,50,0,0,0,0,0
 TabColor=255,255,255,0
