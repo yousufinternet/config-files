@@ -57,10 +57,16 @@ hc(f'keybind {MOD}-q close_or_remove')
 RESIZE_STEP = 0.05
 DIR = {'left': 'h', 'right': 'l', 'up': 'k', 'down': 'j'}
 for dire, key in DIR.items():
-    hc(f'keybind {MOD}-{dire.title()} focus {dire}')
-    hc(f'keybind {MOD}-{key} focus {dire}')
+    # Move in direction across tabs too
+    hc(f'keybind {MOD}-{dire.title()} focus --level=tabs {dire}')
+    hc(f'keybind {MOD}-{key} focus --level=tabs {dire}')
+    # Jump between frames
+    hc(f'keybind {MOD}-Control-Shift-{dire.title()} focus {dire}')
+    hc(f'keybind {MOD}-Control-Shift-{key} focus {dire}')
+    # Move windows between frames
     hc(f'keybind {MOD}-Shift-{dire.title()} shift {dire}')
     hc(f'keybind {MOD}-Shift-{key} shift {dire}')
+    # Resize frames
     hc(f'keybind {MOD}-Control-{dire.title()} resize {dire} +{RESIZE_STEP}')
     hc(f'keybind {MOD}-Control-{key} resize {dire} +{RESIZE_STEP}')
 
