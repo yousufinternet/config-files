@@ -1120,8 +1120,8 @@ message-send-mail-function 'smtpmail-send-it
 mu4e-maildir "~/Mail"
 mu4e-confirm-quit nil
 mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"
-mu4e-headers-show-threads nil
-mu4e-headers-include-related nil
+;; mu4e-headers-show-threads nil
+;; mu4e-headers-include-related nil
 mu4e-split-view 'horizontal
 mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
 mu4e-change-filenames-when-moving t
@@ -1223,8 +1223,8 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 (define-key mu4e-headers-mode-map (kbd "<S-left>")  'mu4e-headers-fold-all)
 (define-key mu4e-headers-mode-map (kbd "<right>")   'mu4e-headers-unfold-at-point)
 (define-key mu4e-headers-mode-map (kbd "<S-right>") 'mu4e-headers-unfold-all)
+(add-hook 'mu4e-headers-mode-hook 'mu4e-thread-folding-mode)
 )
-
     #+end_src
 
 *** Attach multiple files
