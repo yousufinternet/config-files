@@ -25,7 +25,7 @@ Far :YusufExchange-remote:
 Near :YusufExchange-local:
 Expunge Both
 # MaxSize 5m
-# MaxMessages 90
+MaxMessages 30
 Sync Pull Push
 Pattern * !Mail*
 CopyArrivalDate yes
@@ -52,7 +52,7 @@ Far :PetroleumUnit-remote:
 Near :PetroleumUnit-local:
 Expunge Both
 # MaxSize 5m
-MaxMessages 90
+MaxMessages 30
 Sync Pull
 Pattern * !Mail*
 CopyArrivalDate yes
