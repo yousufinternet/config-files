@@ -1,0 +1,35 @@
+@theme "Lavendar"
+
+*{
+scrollbar: false;
+}
+
+
+inputbar{
+ enabled: false;
+}
+
+window { width: 24em;}
+// window { width: 40%;}
+
+listview {
+    fixed-height: true;
+    dynamic: true;
+    scrollbar: false;
+    lines: 1;
+    columns: 4;
+    cycle: true;
+}
+
+element{
+horizontal-align: 0.5;
+vertical-align: 0.5;
+orientation: vertical;
+children: [element-icon];
+}
+
+element-icon{
+size: 4em;
+horizontal-align: 0.5;
+vertical-align: 0.5;
+}
