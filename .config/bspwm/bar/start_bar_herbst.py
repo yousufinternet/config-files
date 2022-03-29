@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 from start_lemonbar import create_powerline, lemonbar_below_xfcepanel, HOSTNAME
 
 from colors import modus_vivendi as cdict
@@ -29,7 +30,7 @@ if __name__ == '__main__':
 
     if HOSTNAME == 'yusufs-dell':
         modules = [
-            '%{Sl}',
+            '%{Sl}' if len(sys.argv) < 2 else '%{S'+sys.argv[1]+'}',
             HerbstluftwmWorkspaces(tags_icns),
             OpenWeather(apikey),
             PacmanUpdates(),
