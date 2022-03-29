@@ -43,6 +43,10 @@ super + ctrl + shift + x
 super + shift + e
    rofi -show powermenu -modi powermenu:~/Scripts/powermenu.py -theme Lavendar_icons
 
+# herbstclient commands
+super + ctrl + z
+   rofi -show herbstmenu -modi herbstmenu:~/Scripts/herbstmenu.py
+
 # fullscreen screenshot
 @Print
 	flameshot full -p ~/Pictures/ -c
