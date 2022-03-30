@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=BlackOnWhite
-Font=Iosevka Nerd Font Mono,14,-1,5,50,0,0,0,0,0
+Font=Fira Code Light,13,-1,5,25,0,0,0,0,0,Regular
 
 [General]
 Name=Default-Light

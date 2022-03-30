@@ -700,8 +700,7 @@ evil-mode-line-tag
 ** Default font (Arabic and emoji fonts)
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
    
-   ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط نوتو سانس 
-   
+   ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط آي بي أم بليكس
    هذه تجربة لمظهر النص العربي باستعمال خط أميري-ثابت العرض والذي يمكن استعماله ضمن النصوص البرمجية والجداول النصيّة دون مشاكل
    
 #+BEGIN_SRC emacs-lisp
@@ -709,16 +708,16 @@ evil-mode-line-tag
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
     (set-face-attribute 'default nil
-			:family "Iosevka"
+			:family "Fira Code"
 			:height 135
 			:weight 'light)
 
-(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 135 :weight 'light)
 
 ;; Monospaced font with arabic support
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
-;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Amiri Typewriter"))
-(set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "Amiri Typewriter"))
+;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
+(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height 135 :weight 'light :fontset "fontset-default")
 
 ;; Arabic fallback font (search if non existant)
 ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
@@ -726,12 +725,12 @@ evil-mode-line-tag
 
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Roboto Light" :height 135))
+(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height 135))
 (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
 (set-face-attribute 'variable-pitch nil :font "Roboto Light" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
-(set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+(set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
 
 ;; make org source blocks always monospaced
 (set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
@@ -757,7 +756,7 @@ evil-mode-line-tag
     (use-package autothemer :ensure t)
 
     ;; modus-vivendi-theme
-  (setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-vivendi-theme))
+  (setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-themes))
 
   ; fetch the list of packages available 
   (unless package-archive-contents
@@ -769,6 +768,7 @@ evil-mode-line-tag
       (package-install theme)))
 
   (setq default-theme 'modus-vivendi)
+(add-hook 'modus-themes-after-load-theme-hook 'reapply-font)
   (load-theme default-theme t)
 #+END_SRC
 
@@ -1244,7 +1244,9 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 ** NOTMUCH
    #+begin_src emacs-lisp
 (use-package notmuch
-:config (setq notmuch-show-logo nil))
+:config (setq notmuch-show-logo nil
+	      notmuch-draft-folder "YusufExchange/Drafts"
+))
    #+end_src
 
 * Dired

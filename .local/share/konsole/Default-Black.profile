@@ -2,7 +2,7 @@
 BoldIntense=true
 ColorScheme=Modus-Vivendi
 DimmValue=54
-Font=Iosevka Nerd Font Mono,11,-1,5,50,0,0,0,0,0
+Font=Fira Code,11,-1,5,25,0,0,0,0,0,Light
 TabColor=255,255,255,0
 UseFontLineChararacters=true
 
