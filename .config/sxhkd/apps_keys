@@ -41,11 +41,11 @@ super + ctrl + shift + x
 
 # shutdown menu
 super + shift + e
-   rofi -show powermenu -modi powermenu:~/Scripts/powermenu.py -theme Lavendar_icons
+   rofi -show powermenu -modi powermenu:~/Scripts/RofiMenus/powermenu.py -theme Lavendar_icons
 
 # herbstclient commands
 super + ctrl + z
-   rofi -show herbstmenu -modi herbstmenu:~/Scripts/herbstmenu.py
+   rofi -show herbstmenu -modi herbstmenu:~/Scripts/RofiMenus/herbstmenu.py
 
 # fullscreen screenshot
 @Print
@@ -86,7 +86,7 @@ super + ctrl + e
 
 # Help: opens a rofi menu with all man pages, displays the selected man page in zathura
 super + shift + F1
-  ~/Scripts/browse_man_pages.py
+  ~/Scripts/RofiMenus/browse_man_pages.py
 
 # rofi calculator
 super + ctrl + c

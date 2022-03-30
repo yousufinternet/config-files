@@ -252,11 +252,11 @@ class NMInfo():
     def command(self, event):
         if event == 'NM_MENU':
             subprocess.Popen(
-                'rofi -show nmcli -modi nmcli:~/Scripts/nmcli-menu.py',
+                'rofi -show nmcli -modi nmcli:~/Scripts/RofiMenus/nmcli-menu.py',
                 shell=True, text=True)
         elif event.startswith('WIFIQR'):
             ifname = event.split("_")[-1]
-            subprocess.Popen(f'kitty --hold --name "nmcli_pass_win" nmcli dev wifi show ifname {ifname}', shell=True, text=True)
+            subprocess.Popen(f'konsole --hold -e nmcli dev wifi show ifname {ifname}', shell=True, text=True)
         elif event.startswith('NMIFINFO'):
             ifname = event.split("_")[-1]
             dev_info = cmd_output(f'nmcli dev show {ifname}')
@@ -871,7 +871,7 @@ class UdiskieMenu():
     def command(self, event):
         if event == 'udiskie_menu':
             subprocess.Popen(
-                'rofi -show udiskie -modi udiskie:~/Scripts/udiskie-menu.py',
+                'rofi -show udiskie -modi udiskie:~/Scripts/RofiMenus/udiskie-menu.py',
                 shell=True, text=True)
 
 

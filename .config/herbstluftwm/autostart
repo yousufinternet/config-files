@@ -30,7 +30,7 @@ startup_cmds = [
     "emacs --daemon",
     "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
-    "~/.config/bspwm/bar/start_bar_herbst.py",
+    "~/Scripts/LemonBar/start_bar_herbst.py",
     "xfce4-panel -d --sm-client-disable",
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
