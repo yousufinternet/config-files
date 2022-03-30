@@ -302,7 +302,7 @@ handle_mime() {
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'
             fi
-            env COLORTERM=8bit bat --color=always  \
+            env COLORTERM=8bit bat --color=always --wrap --terminal-width="${PV_WIDTH}" \
                 -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
                 -- "${FILE_PATH}" && exit 5
