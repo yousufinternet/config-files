@@ -24,14 +24,15 @@ def cmd_output(cmd, **kwargs):
     return out
 
 
-def ficon(icon, color=None, beforepad=0, afterpad=5, idx=2):
+def ficon(icon, color=None, beforepad=0, afterpad=5, idx=2, swap=False):
     '''
     idx: index of font to be used
     '''
     beforepad *= GDKSCALE
     afterpad *= GDKSCALE
-    return ('%{O'+f'{beforepad}'+'}'+('%{F'+color+'}' if color else '')+'%{T'+
-            f'{idx}'+'}' + icon+'%{T-}'+('%{F-}' if color else '')+'%{O'+
+    return ('%{O'+f'{beforepad}'+'}'+('%{F'+color+'}' if color else '')+
+            ('%{R}' if swap else '')+'%{T'+
+            f'{idx}'+'}' + icon+'%{T-}'+('%{R}' if swap else '')+('%{F-}' if color else '')+'%{O'+
             f'{afterpad}'+'}')
 
 
@@ -323,10 +324,8 @@ class SARCPUUsage():
 
     def output(self):
         cpu = self.cache
-        if cpu.startswith('Linux'):
-            return ' '
-        elif len(cpu.split('\n')) > 1:
-            return ' '
+        if cpu.startswith('Linux') or len(cpu.split('\n')) > 1:
+            return ficon(self.icon)+' '
         else:
             cpu_usage = sum(map(float, cpu.split()[3:6]))
             if cpu_usage >= 85:
@@ -959,6 +958,31 @@ class PodsBuddy():
             return True
         elif event == 'POD':
             P = subprocess.Popen(f'bluetoothctl {"disconnect" if self.connected else "connect"} {self.pods_mac}'.split())
+            P.wait()
+            return True
+
+
+class DarkLightSwitcher():
+    def __init__(self):
+        self.wait_time = 120
+        self.updater = None
+        self.light_icon = '\uf185'
+        self.dark_icon = '\uf186'
+        self.mode_path = os.path.expanduser('~/.config/THEME_VARIANT')
+
+    def output(self):
+        if os.path.exists(self.mode_path):
+            with open(self.mode_path) as f:
+                current_mode = f.read()
+        else:
+            current_mode = 'dark'
+        out = (ficon(self.light_icon, swap=current_mode != 'dark')+
+               ficon(self.dark_icon, swap=current_mode == 'dark'))
+        return '%{A:DARKMODE_SWITCH:}'+out+'%{A}'
+
+    def command(self, event):
+        if event == 'DARKMODE_SWITCH':
+            P = subprocess.Popen(os.path.expanduser('~/Scripts/switch_dark_light.py'))
             P.wait()
             return True
 
