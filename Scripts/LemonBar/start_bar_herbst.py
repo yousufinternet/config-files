@@ -9,7 +9,7 @@ from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
     CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
     HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator,\
-    NMInfo, ficon, PodsBuddy, XAutoLocker
+    NMInfo, ficon, PodsBuddy, XAutoLocker, DarkLightSwitcher
 
 
 def read_open_weather_api_key():
@@ -38,10 +38,9 @@ if __name__ == '__main__':
             SyncthingIndicator(), NMInfo(), PodsBuddy(), XAutoLocker(),
             '%{r}',
             SARCPUUsage(),
-            CPUTemp(),
-            RamUsage(percent=True),
             Volume(),
             Battery(),
+            DarkLightSwitcher(),
             KeyboardLayout(),
             TimeDate()
         ]
@@ -58,8 +57,7 @@ if __name__ == '__main__':
             PodsBuddy(), XAutoLocker(),
             MPC(),
             '%{r}',
-            SARCPUUsage(),
-            CPUTemp(),
+            SARCPUUsage(), CPUTemp(),
             RamUsage(percent=True),
             Volume(),
             Battery(),
