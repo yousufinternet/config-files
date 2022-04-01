@@ -179,3 +179,5 @@ config.set("fileselect.multiple_files.command",
            ['konsole', '-e', 'ranger', '--choosefiles', '{}'])
 
 c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
+
+c.hints.selectors |= {'paragraph': ['p']}
