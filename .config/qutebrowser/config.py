@@ -109,9 +109,10 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'i': 'https://imdb.com/find?q={}',
                        'r': 'https://reddit.com/r/{}',
                        'g': 'https://google.com/search?q={}',
-                       'gt': 'https://github.com/search?q={}',
+                       'gh': 'https://github.com/search?q={}',
                        'y': 'https://youtube.com/results?search_query={}',
                        'w': 'https://wiki.archlinux.org/index.php?search={}',
+                       'man': 'https://man.archlinux.org/search?q={}',
                        'tv': 'http://tv.shabakaty.com/?ch=channel{}',
                        'l': 'http://libgen.is/search.php?req={}'}
 
@@ -145,13 +146,16 @@ c.confirm_quit = ['downloads']
 c.downloads.location.prompt = False
 
 # Dark Mode
-config.set('colors.webpage.preferred_color_scheme', 'dark')
-config.set('colors.webpage.bg', 'black')
-config.set('colors.webpage.darkmode.enabled', True)
-config.set('colors.webpage.darkmode.policy.images', 'smart')
-# Load existing settings made via :set
+is_darkmode = True
+if os.path.exists(os.path.expanduser('~/.config/THEME_VARIANT')):
+    with open(os.path.expanduser('~/.config/THEME_VARIANT'), 'r') as f:
+        is_darkmode = f.read() == "dark"
 
-# config.source('nord.py')
+if is_darkmode:
+    config.set('colors.webpage.preferred_color_scheme', 'dark')
+    config.set('colors.webpage.bg', 'black')
+    config.set('colors.webpage.darkmode.enabled', True)
+    config.set('colors.webpage.darkmode.policy.images', 'smart')
 
 # ad-blocking
 config.set('content.blocking.method', 'both')
@@ -180,4 +184,6 @@ config.set("fileselect.multiple_files.command",
 
 c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
 
-c.hints.selectors |= {'paragraph': ['p']}
+c.hints.selectors |= {'paragraph': ['p', 'blockquote']}
+
+config.bind(',R', 'hint --rapid paragraph userscript read-paragraph.py')
