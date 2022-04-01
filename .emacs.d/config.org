@@ -767,9 +767,15 @@ evil-mode-line-tag
     (unless (package-installed-p theme)
       (package-install theme)))
 
-  (setq default-theme 'modus-vivendi)
-(add-hook 'modus-themes-after-load-theme-hook 'reapply-font)
-  (load-theme default-theme t)
+;; couldn't find hooks when changing themes
+(defun my-load-theme (theme-name)
+(load-theme theme-name t)
+(reapply-font)
+  )
+  (setq default-dark-theme 'modus-vivendi)
+  (setq default-light-theme 'modus-operandi)
+
+  (my-load-theme default-dark-theme)
 #+END_SRC
 
 *** Workaround for theme not applied to emacsclient frames
