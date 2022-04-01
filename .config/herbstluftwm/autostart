@@ -194,6 +194,7 @@ hc(f"rule class='discord' tag='{tags_lst[8]}'")
 hc(f"rule class='qutebrowser' tag='{tags_lst[0]}'")
 hc(f"rule class='firefox' tag='{tags_lst[0]}'")
 hc("rule class='dropdown_.*' floating=on floatplacement=none")
+hc("rule class='gcr-prompter' floating=on floatplacement=none")
 hc("rule instance='dropdown_.*' floating=on floatplacement=none")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
@@ -211,7 +212,8 @@ if hc('new_attr bool my_not_first_autostart')[1]:
                 shell=True, text=True)
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
-    elif HOSTNAME == 'yusuf-dell':
-        subprocess.Popen('autorandr --cycle', shell=True, text=True)
+    elif HOSTNAME == 'yusufs-dell':
+        subprocess.Popen('autorandr --cycle'.split())
+        subprocess.Popen('touchegg')
 
 hc("unlock")
