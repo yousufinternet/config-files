@@ -37,7 +37,7 @@ super + shift + b
 
 # Lock screen
 super + ctrl + shift + x
-   i3lock -e -c 000000
+   dunstctl set-paused true;i3lock -e -c 000000;dunstctl set-paused false
 
 # shutdown menu
 super + shift + e
