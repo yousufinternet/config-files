@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import shlex
 import subprocess as sp
 
 configs_path = os.path.expanduser('~/.config')
@@ -47,12 +48,16 @@ icon_gtk2_themes = {'dark': '"Papirus-Dark"', 'light': '"Papirus-Light"'}
 icon_themes = {'dark': 'Papirus-Dark', 'light': 'Papirus-Light'}
 emacs_themes = {'dark': 'modus-vivendi', 'light': 'modus-operandi'}
 konsole_profiles = {'dark': 'Default-Black.profile', 'light': 'Default-Light.profile'}
+wallpapers = {'dark': '/usr/share/backgrounds/archlinux/geolanes.png',
+              'light': '/usr/share/backgrounds/archlinux/wireparts.png'}
 
 # modify qt5ct
 modify_conf(os.path.join(configs_path, 'qt5ct/qt5ct.conf'),
             qt5ct_style, 'style=')
 modify_conf(os.path.join(configs_path, 'Kvantum/kvantum.kvconfig'),
             kvantum_themes, "theme=")
+modify_conf(os.path.join(configs_path, 'qt5ct/qt5ct.conf'),
+            icon_themes, 'icon_theme=')
 
 # modify konsolerc
 modify_conf(os.path.join(configs_path, 'konsolerc'),
@@ -70,3 +75,6 @@ modify_conf(os.path.join(configs_path, 'gtk-3.0/settings.ini', ),
 
 # change theme in emacs
 sp.Popen(f'emacsclient -e "(my-load-theme \'{emacs_themes[switch_theme]})"', shell=True)
+
+# update wallpaper
+sp.Popen(['feh', '--bg-fill', shlex.quote(wallpapers[switch_theme])])
