@@ -47,21 +47,15 @@ if __name__ == '__main__':
     else:
         modules = [
             HerbstluftwmWorkspaces(tags_icns),
-            CoronaVirus(),
-            OpenWeather(apikey),
-            PacmanUpdates(),
+            CoronaVirus(), OpenWeather(apikey), PacmanUpdates(),
             ServerStatus('192.168.1.110', 'MC', 22, 'yusuf'),
-            PingTimeOut(),
-            NetworkTraffic(['lo', 'vboxne']), '%{c}',
+            PingTimeOut(), NetworkTraffic(['lo', 'vboxne']), '%{c}',
             UdiskieMenu(), SyncthingIndicator(), NMInfo(),
             PodsBuddy(), XAutoLocker(),
             MPC(),
             '%{r}',
-            SARCPUUsage(), CPUTemp(),
-            RamUsage(percent=True),
-            Volume(),
-            Battery(),
-            KeyboardLayout(),
+            SARCPUUsage(), CPUTemp(), RamUsage(percent=True),
+            Volume(), Battery(), DarkLightSwitcher(), KeyboardLayout(),
             TimeDate()
         ]
 
