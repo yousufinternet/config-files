@@ -34,12 +34,24 @@ def create_tts_sound(text):
     return
 
 
+def read_festival(text):
+    tmp = tempfile.NamedTemporaryFile()
+    with tmp:
+        tmp.write(text)
+    tmpfn = tmp.name
+    sp.Popen(f'tsp festival --tts {shlex.quote(tmpfn)}'.split(), shell=True)
+    sp.Popen(f'tsp rm {tmpfn}', shell=True)
+
+
 def main():
     text = get_text()
-    tmpfn = create_tts_sound(text)
-    if tmpfn:
-        sp.Popen(['tsp', 'play', tmpfn])
-        sp.Popen(['tsp', 'rm', tmpfn])
+    if len(sys.argv) == 1 or sys.argv[1] == 'pico':
+        tmpfn = create_tts_sound(text)
+        if tmpfn:
+            sp.Popen(['tsp', 'play', tmpfn])
+            sp.Popen(['tsp', 'rm', tmpfn])
+    elif sys.argv[1] == 'festival':
+        read_festival(text)
 
 
 if __name__ == '__main__':
