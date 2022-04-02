@@ -216,6 +216,10 @@ News and tech
 
 ** Languagetool
    #+begin_src emacs-lisp
+(use-package flyspell-correct-ivy
+  :ensure t
+  :commands 'flyspell-correct-at-point)
+
 (use-package flycheck-languagetool
   :ensure t
   ;; :hook (text-mode . flycheck-languagetool-setup)
@@ -305,6 +309,7 @@ News and tech
 ** Enable Recent Files
 #+BEGIN_SRC emacs-lisp
 (recentf-mode 1)
+(setq recentf-exclude (org-agenda-files))
 (setq recentf-max-menu-items 25)
 (setq recentf-max-saved-items 25)
 ;; update recent files list every 5 mins
@@ -753,40 +758,56 @@ evil-mode-line-tag
 
 ** Themes 
 #+BEGIN_SRC emacs-lisp
-    (use-package autothemer :ensure t)
+(use-package autothemer :ensure t)
 
-    ;; modus-vivendi-theme
-  (setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-themes))
+;; modus-vivendi-theme
+(setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-themes))
 
-  ; fetch the list of packages available 
-  (unless package-archive-contents
-    (package-refresh-contents))
+; fetch the list of packages available 
+(unless package-archive-contents
+(package-refresh-contents))
 
-  ; install the missing packages
-  (dolist (theme themes-list)
-    (unless (package-installed-p theme)
-      (package-install theme)))
+; install the missing packages
+(dolist (theme themes-list)
+(unless (package-installed-p theme)
+(package-install theme)))
+(setq default-dark-theme 'modus-vivendi)
+(setq default-light-theme 'modus-operandi)
 
-;; couldn't find hooks when changing themes
-(defun my-load-theme (theme-name)
-(load-theme theme-name t)
-(reapply-font)
-  )
-  (setq default-dark-theme 'modus-vivendi)
-  (setq default-light-theme 'modus-operandi)
+(defun is-it-day-or-night (&optional frame)
+"should we use a dark or light theme"
+(with-temp-buffer
+  (insert-file-contents (expand-file-name "~/.config/THEME_VARIANT"))
+  (if (string= (buffer-string) "dark")
+(setq default-theme default-dark-theme)
+(setq default-theme default-light-theme)
+)))
 
-  (my-load-theme default-dark-theme)
+(defun my-load-theme (theme)
+"reapply font configuration no matter the theme"
+(interactive)
+(load-theme theme t)
+(if (and (daemonp) (equal "initial_terminal" (terminal-name))) (message "") (reapply-font))
+)
+
+(if (daemonp)
+(add-hook 'after-make-frame-functions 'is-it-day-or-night -100)
+(is-it-day-or-night))
+
+(is-it-day-or-night)
+(my-load-theme default-theme)
 #+END_SRC
 
 *** Workaround for theme not applied to emacsclient frames
     #+BEGIN_SRC emacs-lisp
     (if (daemonp)
-	(add-hook 'after-make-frame-functions
-	    (lambda (frame)
-		(with-selected-frame frame
-		    (load-theme default-theme t))))
-	(load-theme default-theme t))
+        (add-hook 'after-make-frame-functions
+            (lambda (frame)
+                (with-selected-frame frame
+                    (my-load-theme default-theme))))
+        (my-load-theme default-theme))
     #+END_SRC
+
 * ORG mode
 ** General customization
 #+BEGIN_SRC emacs-lisp
@@ -1676,7 +1697,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
   #+begin_src emacs-lisp
 (setq initial-scratch-message
  (concat "Welcome to Yusuf's Emacs\n\n"
- (mapconcat  (lambda (x) (format "[[%s]]" x)) recentf-list "\n")
+ (mapconcat  (lambda (x) (format "[[%s][%s]]" x (url-file-nondirectory x))) recentf-list "\n")
  "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
 (reapply-font)
 (alert "daemon loaded successfully")
