@@ -12,7 +12,7 @@ def get_text():
     text = 'No text found'
     if current_mode == 'hints':
         text = os.getenv('QUTE_SELECTED_TEXT')
-    elif current_mode == 'commands':
+    elif current_mode == 'command':
         text_path = os.getenv('QUTE_TEXT')
         if text_path and os.path.exists(text_path):
             with open(text_path, 'r') as f:
@@ -38,8 +38,8 @@ def main():
     text = get_text()
     tmpfn = create_tts_sound(text)
     if tmpfn:
-        P = sp.Popen(['tsp', 'play', tmpfn])
-        P.wait()
+        sp.Popen(['tsp', 'play', tmpfn])
+        sp.Popen(['tsp', 'rm', tmpfn])
 
 
 if __name__ == '__main__':
