@@ -9,6 +9,7 @@ import subprocess as sp
 
 def get_text():
     current_mode = os.getenv('QUTE_MODE')
+    print(current_mode)
     text = 'No text found'
     if current_mode == 'hints':
         text = os.getenv('QUTE_SELECTED_TEXT')
@@ -36,10 +37,12 @@ def create_tts_sound(text):
 
 def read_festival(text):
     tmp = tempfile.NamedTemporaryFile()
-    with tmp:
-        tmp.write(text)
     tmpfn = tmp.name
-    sp.Popen(f'tsp festival --tts {shlex.quote(tmpfn)}'.split(), shell=True)
+    tmp.close()
+    with open(tmpfn, 'w+') as f:
+        f.write(text)
+    print(tmpfn)
+    sp.Popen(f'tsp festival --tts {shlex.quote(tmpfn)}', shell=True, text=True)
     sp.Popen(f'tsp rm {tmpfn}', shell=True)
 
 
@@ -51,6 +54,7 @@ def main():
             sp.Popen(['tsp', 'play', tmpfn])
             sp.Popen(['tsp', 'rm', tmpfn])
     elif sys.argv[1] == 'festival':
+        print('will use festival')
         read_festival(text)
 
 

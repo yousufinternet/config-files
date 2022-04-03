@@ -91,3 +91,7 @@ super + shift + F1
 # rofi calculator
 super + ctrl + c
   rofi -show calc -modi calc -no-show-match -no-sort
+
+# nerd-dictation
+super + s 
+  ~/.local/bin/nerd-dictation/nerd-dictation begin --timeout 5 --idle-time 0.5 --numbers-as-digits --numbers-use-separator --full-sentence --punctuate-from-previous-timeout 2

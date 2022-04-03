@@ -186,4 +186,5 @@ c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
 
 c.hints.selectors |= {'paragraph': ['p', 'blockquote']}
 
-config.bind(',R', 'hint --rapid paragraph userscript read-paragraph.py')
+config.bind(',R', 'hint --rapid paragraph userscript read-paragraph')
+config.bind(',s', 'spawn --userscript read-paragraph festival')
