@@ -1154,11 +1154,12 @@ mu4e-compose-reply-to-address "Yusuf Mohammad <yusuf.mohammad@westqurna2.com>"
 mu4e-change-filenames-when-moving t
 mu4e-update-interval (* 5 60)
 mu4e-use-fancy-chars t
-mu4e-attachment-dir "~/Downloads/"
+mu4e-attachment-dir "~/Downloads/MailAttachments"
 mu4e-view-show-images t
 mu4e-view-show-addresses t
 mu4e-compose-format-flowed t
 message-kill-buffer-on-exit t
+mu4e-index-lazy-check t
 ;; mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subject))
 )
 
