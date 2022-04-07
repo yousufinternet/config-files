@@ -1102,21 +1102,6 @@ evil-mode-line-tag
 		 )
 	 )
 
-	;; Work Exchange
-	(make-mu4e-context
-	 :name "ReservoirsSections"
-	 :match-func (lambda (msg) (when msg (string-prefix-p "/ReservoirsSections" (mu4e-message-field msg :maildir))))
-	 :vars '(
-		 (mu4e-sent-folder . "/ReservoirsSections/Sent")
-		 (mu4e-drafts-folder . "/ReservoirsSections/Drafts")
-		 (mu4e-trash-folder . "/ReservoirsSections/Trash")
-		 (smtpmail-smtp-server . "localhost")
-		 (smtpmail-smtp-service . 1025)
-		 (smtpmail-smtp-user . "soc.wq2.local\\reservoirs.sections")
-		 (user-mail-address . "reservoirs@westqurna2.com")
-		 (user-full-name . "Reservoirs and Petroleum Engineering Section")
-		 )
-	 )
 	;; PETROLEUM UNIT EMAIL
 	(make-mu4e-context
 	 :name "PetroleumUnit"
@@ -1167,6 +1152,7 @@ mu4e-view-show-addresses t
 mu4e-compose-format-flowed t
 message-kill-buffer-on-exit t
 mu4e-index-lazy-check t
+mu4e-context-policy 'pick-first
 ;; mu4e-headers-fields '((:human-date . 12) (:flags . 6) (:from-or-to . 20) (:subject))
 )
 
@@ -1259,6 +1245,7 @@ mu4e-headers-signed-mark    '("s" . "🖊 ")
 (define-key mu4e-headers-mode-map (kbd "<right>")   'mu4e-headers-unfold-at-point)
 (define-key mu4e-headers-mode-map (kbd "<S-right>") 'mu4e-headers-unfold-all)
 (add-hook 'mu4e-headers-mode-hook 'mu4e-thread-folding-mode)
+(add-hook 'mu4e-headers-mode-hook 'mu4e-headers-fold-all)
 )
     #+end_src
 
