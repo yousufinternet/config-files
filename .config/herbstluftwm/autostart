@@ -36,8 +36,8 @@ startup_cmds = [
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing serve --no-browser",
     'telegram-desktop',
-    'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
-    'davmail ~/.config/davmail/davmail.properties',
+    # 'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
+    # 'davmail ~/.config/davmail/davmail.properties',
     'xautolock -locker \'dunstctl set-paused true;i3lock -e -c 000000;dunstctl set-paused false\' -notify 30 -notifier "notify-send xautolocker \'locking desktop in 30 secs\'" -detectsleep'
 ]
 
