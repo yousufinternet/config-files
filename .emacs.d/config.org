@@ -371,6 +371,10 @@ News and tech
 	   "bd" 'evil-delete-buffer
 	   "bn" 'evil-next-buffer
 	   "bp" 'evil-prev-buffer
+	   "bx" '(:ignore t :which-key "Emacs Buffer Commands")
+	   "bxr" 'rename-buffer
+	   "bxn" 'clone-buffer
+	   "bxi" 'insert-buffer
 	   "i" '(:ignore t :which-key "imenu and ivy")
 	   "ii" 'imenu-list
 	   "ic" 'counsel-imenu
@@ -706,12 +710,13 @@ evil-mode-line-tag
    also fix font not being applied in =emacsclient=, and set =Dejavu Sans Mono= as the default font for Arabic text
    
    ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط آي بي أم بليكس
-   هذه تجربة لمظهر النص العربي باستعمال خط أميري-ثابت العرض والذي يمكن استعماله ضمن النصوص البرمجية والجداول النصيّة دون مشاكل
+   هذه تجربة لمظهر النص العربي باستعمال =خط أميري-ثابت العرض= والذي يمكن استعماله ضمن =النصوص البرمجية والجداول النصيّة= دون مشاكل
    
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
+(interactive)
     (set-face-attribute 'default nil
 			:family "Fira Code"
 			:height 135
@@ -720,7 +725,7 @@ evil-mode-line-tag
 
 ;; Monospaced font with arabic support
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
-(set-fontset-font "fontset-default" 'arabic (font-spec :family "Amiri Typewriter"))
+(set-fontset-font t 'arabic (font-spec :family "Amiri Typewriter"))
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
 (set-face-attribute 'fixed-pitch nil :family "Fira Code" :height 135 :weight 'light :fontset "fontset-default")
 
@@ -735,7 +740,9 @@ evil-mode-line-tag
 (set-face-attribute 'variable-pitch nil :font "Roboto Light" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
-(set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
+(set-fontset-font t 'emoji
+		    '("JoyPixels" . "iso10646-1") nil 'prepend)
+;; (set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
 
 ;; make org source blocks always monospaced
 (set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
@@ -748,10 +755,11 @@ evil-mode-line-tag
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
 )
 
-(use-package unicode-fonts
-   :ensure t
-   :config
-      (unicode-fonts-setup))
+;; removed after updating to emacs 28.1
+;; (use-package unicode-fonts
+;;    :ensure t
+;;    :config
+;;       (unicode-fonts-setup))
 
     (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
@@ -834,8 +842,7 @@ evil-mode-line-tag
 	    ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
 	    ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
 	  org-log-done 'note
-	  org-imenu-depth 3
-	  remember-data-file (quote ("~/Public/Syncthing Global/Notes/remember.org")))
+	  org-imenu-depth 3)
 
   (append org-modules '(habits))
 ;; (use-package svg-lib)
@@ -1169,7 +1176,7 @@ mu4e-index-lazy-check t
  (:name "Today's messages" :query "date:today..now" :key ?t)
  (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
  (:name "Last month" :query "date:1m.." :key ?m)
-(:name "Dialy Activity" :query "subject:activity to:petroleum" :key ?a)
+(:name "Daily Activity" :query "subject:activity to:petroleum" :key ?a)
  (:name "Pdfs last week" :query "mime:application/pdf date:7d.. not subject:daily" :key ?p)
  (:name "Excels last week" :query "file:/.*\.xlsx/ date:7d.. not subject:daily" :key ?x)
  (:name "Section Management" :query "(from:dhiaa OR from:hassan OR from:reservoirs) and not subject:/.*daily.*/" :key ?s)

@@ -184,7 +184,7 @@ config.set("fileselect.multiple_files.command",
 
 c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
 
-c.hints.selectors |= {'paragraph': ['p', 'blockquote']}
+c.hints.selectors |= {'paragraph': ['p', 'blockquote', 'code', 'quote']}
 
 config.bind(',R', 'hint --rapid paragraph userscript read-paragraph')
 config.bind(',s', 'spawn --userscript read-paragraph festival')
