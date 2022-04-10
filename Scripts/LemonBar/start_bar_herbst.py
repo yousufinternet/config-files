@@ -35,7 +35,7 @@ if __name__ == '__main__':
             OpenWeather(apikey),
             PacmanUpdates(),
             NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
-            SyncthingIndicator(), NMInfo(), PodsBuddy(), XAutoLocker(),
+            SyncthingIndicator(), NMInfo(['vnet4', 'vnet5']), PodsBuddy(), XAutoLocker(),
             '%{r}',
             SARCPUUsage(),
             Volume(),

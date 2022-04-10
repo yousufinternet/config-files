@@ -200,10 +200,11 @@ class KeyboardLayout():
 
 
 class NMInfo():
-    def __init__(self):
+    def __init__(self, exclude=[]):
         P = subprocess.Popen('nmcli monitor', text=True, shell=True,
                              stdout=subprocess.PIPE)
         self.updater = P.stdout
+        self.exclude = exclude
         self.wait_time = 600
 
     def get_devices_status(self):
@@ -223,7 +224,7 @@ class NMInfo():
         output = '%{A:NM_MENU:}'
         for dev_name, dev_type, dev_state, dev_con in zip(
                 devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
-            if dev_name == 'lo':
+            if dev_name == 'lo' or dev_name in self.exclude:
                 continue
             output += '%{A3:NMIFINFO_'+dev_name+':}'
             if dev_type == 'wifi' and dev_state == 'connected':
