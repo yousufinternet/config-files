@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+import os
+import sys
+import time
+import datetime
+import subprocess as sp
+
+ZATHURA_HIST = os.path.expanduser('~/.local/share/zathura/history')
+
+
+def read_zathura_history():
+    with open(ZATHURA_HIST, 'r') as f:
+        zathura_hist = f.read().split('\n\n')
+    return {entry.splitlines()[0][1:-1]:{
+        l.split('=')[0]:l.split('=')[1]
+        for l in entry.splitlines()[1:]} for entry in zathura_hist}
+
+before_details = read_zathura_history().get(sys.argv[1], {'time': time.time(), 'page': 1})
+
+P = sp.Popen(f'zathura -l none "{sys.argv[1]}"', shell=True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
+P.wait()
+
+
+details = read_zathura_history()[sys.argv[1]]
+progress=f'Progress: {details["page"]}/{sys.argv[2]}'
+
+print(" - Progress recorded on",
+      datetime.datetime.fromtimestamp(int(details['time'])).strftime('[%Y-%m-%d %a %H:%M]'))
+print("  ", progress)
+pages_read = int(details['page']) - int(before_details['page'])
+time_reading = round((int(details['time']) - int(before_details['time']))/60)
+print(f"   Read {pages_read} pages in {time_reading} mins\n")

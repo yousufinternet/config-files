@@ -9,4 +9,10 @@ try:
         sp.Popen(f'prime-run {" ".join(sys.argv[1:])}', shell=True, text=True)
         exit()
 except sp.CalledProcessError:
-    sp.Popen(f'{" ".join(sys.argv[1:])}', shell=True, text=True)
+    try:
+        if int(sp.check_output('xrandr --listproviders', shell=True, text=True).splitlines()[0].split()[-1]) == 2:
+            sp.Popen('notify-send "nvidia card is utilized"', text=True, shell=True)
+            sp.Popen(f'DRI_PRIME=1 {" ".join(sys.argv[1:])}', shell=True, text=True)
+            exit()
+    except sp.CalledProcessError:
+        sp.Popen(f'{" ".join(sys.argv[1:])}', shell=True, text=True)

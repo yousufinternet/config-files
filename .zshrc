@@ -118,10 +118,16 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
-#startx
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  exec startx
+# startx
+ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+   exec startx
 fi
+
+
+# if [ "$(tty)" = "/dev/tty1" ]; then
+	# exec sway --my-next-gpu-wont-be-nvidia
+#	exec qtile start --backend wayland
+# fi
 
 # zoxide
 eval "$(zoxide init zsh)"
@@ -175,85 +181,6 @@ bindkey "\e[F"  end-of-line
 bindkey "\e\d"  undo
 # Reverse search
 bindkey '^R' history-incremental-search-backward
-
-# Copy from Luke Smith's dotfiles
-export LF_ICONS="di=📁:\
-fi=📃:\
-tw=🤝:\
-ow=📂:\
-ln=⛓:\
-or=❌:\
-ex=🎯:\
-*.txt=✍:\
-*.mom=✍:\
-*.me=✍:\
-*.ms=✍:\
-*.png=🖼:\
-*.webp=🖼:\
-*.ico=🖼:\
-*.jpg=📸:\
-*.jpe=📸:\
-*.jpeg=📸:\
-*.gif=🖼:\
-*.svg=🗺:\
-*.tif=🖼:\
-*.tiff=🖼:\
-*.xcf=🖌:\
-*.html=🌎:\
-*.xml=📰:\
-*.gpg=🔒:\
-*.css=🎨:\
-*.pdf=📚:\
-*.djvu=📚:\
-*.epub=📚:\
-*.csv=📓:\
-*.xlsx=📓:\
-*.tex=📜:\
-*.md=📘:\
-*.r=📊:\
-*.R=📊:\
-*.rmd=📊:\
-*.Rmd=📊:\
-*.m=📊:\
-*.mp3=🎵:\
-*.opus=🎵:\
-*.ogg=🎵:\
-*.m4a=🎵:\
-*.flac=🎼:\
-*.wav=🎼:\
-*.mkv=🎥:\
-*.mp4=🎥:\
-*.webm=🎥:\
-*.mpeg=🎥:\
-*.avi=🎥:\
-*.mov=🎥:\
-*.mpg=🎥:\
-*.wmv=🎥:\
-*.m4b=🎥:\
-*.flv=🎥:\
-*.zip=📦:\
-*.rar=📦:\
-*.7z=📦:\
-*.tar.gz=📦:\
-*.z64=🎮:\
-*.v64=🎮:\
-*.n64=🎮:\
-*.gba=🎮:\
-*.nes=🎮:\
-*.gdi=🎮:\
-*.1=ℹ:\
-*.nfo=ℹ:\
-*.info=ℹ:\
-*.log=📙:\
-*.iso=📀:\
-*.img=📀:\
-*.bib=🎓:\
-*.ged=👪:\
-*.part=💔:\
-*.torrent=🔽:\
-*.jar=♨:\
-*.java=♨:\
-"
 
 fortune | cowsay -f tux | lolcat -p 3
 

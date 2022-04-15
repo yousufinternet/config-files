@@ -1076,6 +1076,17 @@ evil-mode-line-tag
 
 #+end_src
 
+** Book reading tracking
+#+begin_src elisp
+(defun read-book-and-track (path page)
+(shell-command (concat "~/Scripts/readbook \"" (expand-file-name path) "\"" page))
+(evil-org-open-below 1)
+(insert-buffer "*Shell Command Output*")
+(evil-force-normal-state)
+)
+
+#+end_src
+
 * Mail
 ** MU4E  
 *** Load mu4e and default config
