@@ -1,7 +1,6 @@
 # Type: Bool
 import os
 import sys
-# import dracula.draw
 
 sys.path.append(os.path.expanduser('~/.config/bspwm/scripts/'))
 

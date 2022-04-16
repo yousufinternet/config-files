@@ -14,5 +14,8 @@ except sp.CalledProcessError:
             sp.Popen('notify-send "nvidia card is utilized"', text=True, shell=True)
             sp.Popen(f'DRI_PRIME=1 {" ".join(sys.argv[1:])}', shell=True, text=True)
             exit()
+        else:
+            pass
     except sp.CalledProcessError:
-        sp.Popen(f'{" ".join(sys.argv[1:])}', shell=True, text=True)
+        pass
+sp.Popen(f'{" ".join(sys.argv[1:])}', shell=True, text=True)

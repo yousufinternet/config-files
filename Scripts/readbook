@@ -15,7 +15,9 @@ def read_zathura_history():
         l.split('=')[0]:l.split('=')[1]
         for l in entry.splitlines()[1:]} for entry in zathura_hist}
 
+
 before_details = read_zathura_history().get(sys.argv[1], {'time': time.time(), 'page': 1})
+start_time = time.tiem()
 
 P = sp.Popen(f'zathura -l none "{sys.argv[1]}"', shell=True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
 P.wait()
@@ -28,5 +30,7 @@ print(" - Progress recorded on",
       datetime.datetime.fromtimestamp(int(details['time'])).strftime('[%Y-%m-%d %a %H:%M]'))
 print("  ", progress)
 pages_read = int(details['page']) - int(before_details['page'])
-time_reading = round((int(details['time']) - int(before_details['time']))/60)
+time_reading = round((int(details['time']) - start_time)/60)
+no_reading_period = 
 print(f"   Read {pages_read} pages in {time_reading} mins\n")
+print()
