@@ -1,0 +1,40 @@
+@theme "Lavendar"
+
+* {
+    foreground:			 #ffffff;
+    background:			 #000000;
+    text-color:                  @foreground;
+    background-color:            @background;
+    lightbg:                     #191a1b;
+    red:                         #ff8059;
+    orange:                      #fba849; 
+    blue:                        #2fafff; 
+
+    selected-normal-foreground:  @foreground;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @background;
+    selected-urgent-foreground:  @foreground;
+    urgent-foreground:           @foreground;
+    alternate-urgent-background: @background;
+    active-foreground:           @foreground;
+    selected-active-foreground:  @foreground;
+    alternate-normal-foreground: @foreground;
+    alternate-active-background: @blue;
+    bordercolor:                 @foreground;
+    normal-background:           @background;
+    selected-normal-background:  @blue;
+    separatorcolor:              @orange;
+    spacing:                     2;
+    urgent-background:           @red;
+    alternate-urgent-foreground: @foreground;
+    selected-urgent-background:  @red;
+    alternate-active-foreground: @foreground;
+    selected-active-background:  @blue;
+    active-background:           @orange;
+
+    padding: 0.1em;
+    margin: 0.1em;
+    border-radius: 0.2em;
+
+    scrollbar: true;
+}
