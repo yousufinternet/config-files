@@ -26,7 +26,7 @@ startup_cmds = [
     "redshift",
     "nm-applet", # for notifications
     "udiskie -T",
-    f'dunst -scale {GDK_SCALE}'
+    f'dunst -scale {GDK_SCALE}',
     "emacs --daemon",
     "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
