@@ -929,7 +929,7 @@ class XAutoLocker():
             # been toggled outside of the bar process, xautolock has no way of
             # querying its current state
             subprocess.Popen(f'xautolock -{"enable" if self.enabled else "disable"}'.split())
-            subprocess.Popen('xset {"-" if self.enabled else "+"}dpms')
+            subprocess.Popen(f'xset {"-" if self.enabled else "+"}dpms'.split())
             self.enabled = not self.enabled
             return True
         elif event == 'XAUTOLOCKNOW':

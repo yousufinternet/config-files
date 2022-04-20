@@ -2,6 +2,7 @@
 # Heavely inspired by: https://github.com/vimist/lemonbar-manager
 
 import os
+import re
 import time
 import signal
 import select
@@ -62,8 +63,7 @@ class MainLoop():
              " -f 'Font Awesome 6 Brands-11'"
              # ' -f "FontAwesome"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={7.25*GDKSCALE}"'
-             f' -a 1000 -g x{22*GDKSCALE}'
-             ' -o HDMI-1'),
+             f' -a 1000 -g x{22*GDKSCALE}'),
             text=True, shell=True, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, encoding='UTF-8')
         logging.debug(
@@ -89,6 +89,13 @@ class MainLoop():
         for updater in self.updaters:
             self.updaters_poll.register(updater, 1)
 
+    def compile_outputs(self, outputs):
+        return ''.join(
+            [o if re.match(r'^%\{\w{1,2}\}$', o) or i == (len(outputs)-1) or
+             (o_nxt is not None and re.match(r'^%\{\w{1,2}\}$', o_nxt))
+             else o+self.sep for i, (o, o_nxt) in
+             enumerate(zip(outputs, outputs[1:]+[None]))])
+
     def _prerequisites(self):
         self.wait_times = [module.wait_time for module in self.modules
                            if not isinstance(module, str)]
@@ -106,7 +113,9 @@ class MainLoop():
                         else module for module in self.modules]
         # self.lemonbar_P.stdin.write('\n')
         # self.lemonbar_P.stdin.flush()
-        self.lemonbar_P.stdin.write(self.sep.join(self.outputs))
+        # self.lemonbar_P.stdin.write(self.sep.join(self.outputs))
+        self.lemonbar_P.stdin.write(self.compile_outputs(self.outputs))
+
         # self.lemonbar_P.stdin.write('Initializing...')
         logging.info(f"First outputs to bar: {', '.join(self.outputs)}")
 
@@ -185,4 +194,5 @@ class MainLoop():
     def write_to_lemonbar(self):
         self.lemonbar_P.stdin.write('\n')
         self.lemonbar_P.stdin.flush()
-        self.lemonbar_P.stdin.write(self.sep.join(self.outputs))
+        # self.lemonbar_P.stdin.write(self.sep.join(self.outputs))
+        self.lemonbar_P.stdin.write(self.compile_outputs(self.outputs))
