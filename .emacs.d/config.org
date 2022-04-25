@@ -717,9 +717,10 @@ evil-mode-line-tag
 ;; reapply font settings on every new frame. see after-make-frame-functions hook
 (defun reapply-font (&optional frame)
 (interactive)
+(setq default-font-height 120)
     (set-face-attribute 'default nil
 			:family "Fira Code"
-			:height 135
+			:height default-font-height
 			:weight 'light)
 
 
@@ -727,7 +728,7 @@ evil-mode-line-tag
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
 (set-fontset-font t 'arabic (font-spec :family "Amiri Typewriter"))
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
-(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height 135 :weight 'light :fontset "fontset-default")
+(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height default-font-height :weight 'light :fontset "fontset-default")
 
 ;; Arabic fallback font (search if non existant)
 ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
@@ -735,7 +736,7 @@ evil-mode-line-tag
 
 ;; proportional font
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height 135))
+(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height default-font-height))
 (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
 (set-face-attribute 'variable-pitch nil :font "Roboto Light" :fontset "fontset-proportional")
 
