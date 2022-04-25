@@ -56,7 +56,7 @@ class MainLoop():
              f' -n lemonbar_python -B "{self.bg}" -F "{self.fg}"'
              # ' -f "TerminessTTF Nerd Font-12:charwidth=14.5"'
              # ' -f "SF Pro Display-10"'
-             ' -f "Iosevka-10"'
+             ' -f "Fira Code-9"'
              # ' -f "FontAwesome-12"'
              # f' -f "TerminessTTF Nerd Font-12:charwidth={22.5*GDKSCALE}"'
              " -f 'Font Awesome 6 Free Solid-11'"

@@ -89,8 +89,11 @@ Color=168,168,168
 Color=244,244,244
 
 [General]
+Anchor=0.5,0.5
 Blur=false
 ColorRandomization=false
 Description=Modus Vivendi
-Opacity=0.8
+FillStyle=Tile
+Opacity=0.9
 Wallpaper=
+WallpaperOpacity=1
