@@ -140,11 +140,11 @@ hc(f"keybind {MOD}-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
 
 # Theming and general settings
 theme_settings = {
-    "frame_border_active_color": "'#ff79c6'",
-    "frame_border_normal_color": "'#44475a'",
-    "frame_bg_normal_color": "'#565656'",
-    "frame_bg_active_color": "'#345F0C'",
-    "frame_border_width": f"{2*GDK_SCALE}",
+    "frame_border_active_color": "'#fe6060'",
+    "frame_border_normal_color": "'#93959b'",
+    "frame_bg_normal_color": "'#100f10'",
+    "frame_bg_active_color": "'#000000'",
+    "frame_border_width": f"{1*GDK_SCALE}",
     "window_border_width": "0", "always_show_frame": "off",
     "frame_bg_transparent": "on", "frame_transparent_width": "0",
     "frame_gap": f"{4*GDK_SCALE}", "window_gap": "0",
@@ -156,12 +156,12 @@ theme_settings = {
 
 theme_attributes = {
     "tiling.reset": 1, "floating.reset": 1,
-    "active.color": "'#bd93f9'", "normal.color": "'#6272a4'",
-    "urgent.color": "orange", "inner_width": "1",
-    "inner_color": "black", "border_width": "2",
-    "floating.border_width": f"{2*GDK_SCALE}",
-    "floating.outer_width": "0", "floating.outer_color": "'#ff79c6'",
-    "active.inner_color": "'#3E4A00'", "active.outer_color": "'#3E4A00'",
+    "active.color": "'#0e0e0e'", "normal.color": "'#424242'",
+    "title_color": "'#ffffff'", "urgent.color": "'#a4202a'",
+    "inner_width": "1", "inner_color": "black", "border_width": f"{1*GDK_SCALE}",
+    "floating.border_width": f"{1*GDK_SCALE}",
+    "floating.outer_width": "1", "floating.outer_color": "'#dbbe5f'",
+    "active.inner_color": "'#000000'", "active.outer_color": "'#000000'",
     "background_color": "'#141414'", "title_height": f"{15*GDK_SCALE}",
     "title_font": f"Roboto:pixelsize={GDK_SCALE*12}",
     "title_depth": f"{5*GDK_SCALE}", "title_align": "center",
@@ -199,6 +199,7 @@ hc("rule instance='dropdown_.*' floating=on floatplacement=none")
 hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc('rule title=AgendaEmacs tag=AGENDA')
+hc('rule fixedsize floating=on')
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
