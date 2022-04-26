@@ -4,9 +4,11 @@ import sys
 import time
 import datetime
 import subprocess as sp
+from functools import partial
 
 ZATHURA_HIST = os.path.expanduser('~/.local/share/zathura/history')
-
+BOOKS_ORG = os.path.expanduser('~/Public/Syncthing Global/Notes/BooksProgress.org')
+book_path = os.path.expanduser(sys.argv[1])
 
 def read_zathura_history():
     with open(ZATHURA_HIST, 'r') as f:
@@ -16,21 +18,52 @@ def read_zathura_history():
         for l in entry.splitlines()[1:]} for entry in zathura_hist}
 
 
-before_details = read_zathura_history().get(sys.argv[1], {'time': time.time(), 'page': 1})
-start_time = time.tiem()
+def write_to_org(text, book_path):
+    with open(BOOKS_ORG, 'r') as f:
+        books_org = f.read().splitlines()
+    hdr_idx = [i for i, line in enumerate(books_org) if book_path in line][0]
+    print(hdr_idx)
+    books_org.insert(hdr_idx+1, text)
+    with open(BOOKS_ORG, 'w') as f:
+        f.write('\n'.join(books_org))
 
-P = sp.Popen(f'zathura -l none "{sys.argv[1]}"', shell=True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
+write_progress = partial(write_to_org,
+                         book_path=os.path.basename(sys.argv[1]))
+
+# Record details and time before openning the book
+before_details = read_zathura_history().get(book_path, {'time': time.time(), 'page': 1})
+start_time = time.time()
+
+# Open book and supress zathura errors (no builtin option to silence zathura)
+P = sp.Popen(f'zathura "{book_path}"', shell=True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
 P.wait()
 
 
-details = read_zathura_history()[sys.argv[1]]
+# Record details and time after finishing reading 
+details = read_zathura_history()[book_path]
 progress=f'Progress: {details["page"]}/{sys.argv[2]}'
+end_time = time.time()
 
-print(" - Progress recorded on",
-      datetime.datetime.fromtimestamp(int(details['time'])).strftime('[%Y-%m-%d %a %H:%M]'))
-print("  ", progress)
+full_record = []
+full_record.append("")
+full_record.append(" ".join([" - Progress recorded on",
+      datetime.datetime.fromtimestamp(end_time).strftime('[%Y-%m-%d %a %H:%M]')]))
+full_record.append(" ".join(["  ", progress]))
+
+# How many pages in what time
 pages_read = int(details['page']) - int(before_details['page'])
-time_reading = round((int(details['time']) - start_time)/60)
-no_reading_period = 
-print(f"   Read {pages_read} pages in {time_reading} mins\n")
-print()
+time_reading = round((end_time - start_time)/60)
+full_record.append(f"   Read {pages_read} pages in {time_reading} mins")
+
+# Print period that this book was abandoned without reading
+no_reading_period = datetime.datetime.fromtimestamp(end_time) - datetime.datetime.fromtimestamp(int(before_details['time']))
+days = no_reading_period.days
+noreading_str = f"{days} days, " if days else ""
+hrs = no_reading_period.seconds//3600
+noreading_str += f"{hrs} hrs, " if hrs else ""
+mins = (no_reading_period.seconds%3600)//60
+noreading_str += f"{mins} mins and " if mins else ""
+secs = no_reading_period.seconds%60
+noreading_str += f"{secs} seconds"
+full_record.append(f"   Resumed reading after: {noreading_str}")
+write_progress('\n'.join(full_record)+"\n")
