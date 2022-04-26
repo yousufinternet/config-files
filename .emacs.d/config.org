@@ -350,10 +350,120 @@ News and tech
 ;; (org-agenda-list)
    #+end_src
 * Key bindings
+** Evil
+*** Some other evil packages to consider
+- evil-visual-mark-mode
+- evil-snipe
+- evil-mc
+- evil-indent-plus
+*** main config
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-keybinding nil)
+  (use-package evil
+    :ensure t
+    :init
+    (global-undo-tree-mode)
+    (setq evil-want-integration t)
+    (setq-default evil-want-C-u-scroll t)
+    (setq-default evil-want-C-i-jump t)
+    :custom
+    (evil-undo-system 'undo-tree)
+    :config
+    (evil-mode 1)
+    (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
+    (evil-global-set-key 'normal (kbd "C-w C-<left>") 'evil-window-left)
+    (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
+    (evil-global-set-key 'normal (kbd "C-w C-<right>") 'evil-window-right)
+    (evil-global-set-key 'normal (kbd "C-w <up>") 'evil-window-up)
+    (evil-global-set-key 'normal (kbd "C-w C-<up>") 'evil-window-up)
+    (evil-global-set-key 'normal (kbd "C-w <down>") 'evil-window-down)
+    (evil-global-set-key 'normal (kbd "C-w C-<down>") 'evil-window-down)
+    (evil-global-set-key 'normal (kbd "<left>") 'left-char)
+    (evil-global-set-key 'normal (kbd "<right>") 'right-char)
+    (evil-global-set-key 'visual (kbd "<left>") 'left-char)
+    (evil-global-set-key 'visual (kbd "<right>") 'right-char)
+    
+;; allow movement across visual lines
+    (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+    (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+    (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+    (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+    (setq evil-auto-balance-windows nil)
+    )
+#+END_SRC
+*** Escape key acts like C-g
+#+BEGIN_SRC emacs-lisp
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+  ;; for some reason the above is not recommended see
+  ;; https://emacs.stackexchange.com/questions/14755/how-to-remove-bindings-to-the-esc-prefix-key
+  ;; the following is recommended
+  ;; (define-key key-translation-map (kbd "C-<escape>") (kbd "ESC")) 
+#+END_SRC
+*** Additional Packages
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+    
+  (use-package evil-org 
+  :ensure t
+  :hook (org-mode . evil-org-mode)
+  :commands 'evil-org-mode)
+  
+  (use-package evil-numbers :ensure t :config 
+  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+  
+  (use-package evil-matchit :ensure t)
+  
+  (use-package evil-escape :ensure t)
+  
+  (use-package evil-easymotion :ensure t)
+  
+  (use-package evil-collection
+  :ensure t
+  :after evil
+  :init (evil-collection-init))
+  
+  (use-package evil-snipe
+  :ensure t
+  :init 
+  (evil-snipe-mode +1)
+  (evil-snipe-override-mode +1))
+
+  ;; I am yet to see why the evil-leader key is necessary
+  ;; (use-package evil-leader
+  ;;   :ensure t
+  ;;   :config (evil-leader/set-leader "<SPC>"))
+
+  (use-package evil-commentary
+    :ensure t
+    :init (evil-commentary-mode))
+
+  ;; (use-package evil-search-highlight-persist
+  ;;   :ensure t
+  ;;   :init (global-evil-search-highlight-persist t))
+
+  (use-package evil-visualstar :ensure t)
+  (global-evil-visualstar-mode)
+#+END_SRC
+*** Folding
+    #+BEGIN_SRC emacs-lisp
+    (use-package origami 
+    :ensure t
+    :after evil
+    :hook (python-mode . origami-mode))
+    #+END_SRC
 ** General Binding
 #+BEGIN_SRC emacs-lisp
 	(use-package general :ensure t
 	  :config
+	  (general-define-key
+	   :states '(normal visual insert emacs)
+	   :keymaps '(yas-keymap yas-minor-mode-map)
+	   "M-/" 'yas-next-field-or-maybe-expand
+	   )
 	  (general-define-key
 	   :states '(normal visual insert emacs)
 	   :prefix "SPC"
@@ -393,6 +503,7 @@ News and tech
 	   "fcx" (lambda () (interactive) (find-file "~/.config/sxhkd/apps_keys"))
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
+	   "fb" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/BooksProgress.org"))
 	   "fl" (lambda () (interactive) (find-file "~/Public/Syncthing Global/private/home.journal"))
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 	   "o" '(:ignore t :which-key "Global org-mode")
@@ -497,111 +608,6 @@ News and tech
 	  )
 #+END_SRC
 
-** Evil
-*** Some other evil packages to consider
-- evil-visual-mark-mode
-- evil-snipe
-- evil-mc
-- evil-indent-plus
-*** main config
-#+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :ensure t
-    :init
-    (setq evil-want-keybinding nil)
-    (global-undo-tree-mode)
-    (setq evil-want-integration t)
-    (setq-default evil-want-C-u-scroll t)
-    (setq-default evil-want-C-i-jump t)
-    :custom
-    (evil-undo-system 'undo-tree)
-    :config
-    (evil-mode 1)
-    (evil-global-set-key 'normal (kbd "C-w <left>") 'evil-window-left)
-    (evil-global-set-key 'normal (kbd "C-w C-<left>") 'evil-window-left)
-    (evil-global-set-key 'normal (kbd "C-w <right>") 'evil-window-right)
-    (evil-global-set-key 'normal (kbd "C-w C-<right>") 'evil-window-right)
-    (evil-global-set-key 'normal (kbd "C-w <up>") 'evil-window-up)
-    (evil-global-set-key 'normal (kbd "C-w C-<up>") 'evil-window-up)
-    (evil-global-set-key 'normal (kbd "C-w <down>") 'evil-window-down)
-    (evil-global-set-key 'normal (kbd "C-w C-<down>") 'evil-window-down)
-    (evil-global-set-key 'normal (kbd "<left>") 'left-char)
-    (evil-global-set-key 'normal (kbd "<right>") 'right-char)
-    (evil-global-set-key 'visual (kbd "<left>") 'left-char)
-    (evil-global-set-key 'visual (kbd "<right>") 'right-char)
-    
-;; allow movement across visual lines
-    (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-    (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-    (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-    (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-    (setq evil-auto-balance-windows nil)
-    )
-#+END_SRC
-*** Escape key acts like C-g
-#+BEGIN_SRC emacs-lisp
-  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-  ;; for some reason the above is not recommended see
-  ;; https://emacs.stackexchange.com/questions/14755/how-to-remove-bindings-to-the-esc-prefix-key
-  ;; the following is recommended
-  ;; (define-key key-translation-map (kbd "C-<escape>") (kbd "ESC")) 
-#+END_SRC
-*** Additional Packages
-#+BEGIN_SRC emacs-lisp
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode 1))
-    
-  (use-package evil-org 
-  :ensure t
-  :hook (org-mode . evil-org-mode)
-  :commands 'evil-org-mode)
-  
-  (use-package evil-numbers :ensure t :config 
-  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
-  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
-  
-  (use-package evil-matchit :ensure t)
-  
-  (use-package evil-escape :ensure t)
-  
-  (use-package evil-easymotion :ensure t)
-  
-  (use-package evil-collection
-  :ensure t
-  :after evil
-  :init (evil-collection-init))
-  
-  (use-package evil-snipe
-  :ensure t
-  :init 
-  (evil-snipe-mode +1)
-  (evil-snipe-override-mode +1))
-
-  ;; I am yet to see why the evil-leader key is necessary
-  ;; (use-package evil-leader
-  ;;   :ensure t
-  ;;   :config (evil-leader/set-leader "<SPC>"))
-
-  (use-package evil-commentary
-    :ensure t
-    :init (evil-commentary-mode))
-
-  ;; (use-package evil-search-highlight-persist
-  ;;   :ensure t
-  ;;   :init (global-evil-search-highlight-persist t))
-
-  (use-package evil-visualstar :ensure t)
-  (global-evil-visualstar-mode)
-#+END_SRC
-*** Folding
-    #+BEGIN_SRC emacs-lisp
-    (use-package origami 
-    :ensure t
-    :after evil
-    :hook (python-mode . origami-mode))
-    #+END_SRC
 * Eye candy 
 ** Powerline, beacon and rainbows
 #+BEGIN_SRC emacs-lisp
@@ -1080,9 +1086,6 @@ evil-mode-line-tag
 #+begin_src elisp
 (defun read-book-and-track (path page)
 (async-shell-command (concat "~/Scripts/readbook \"" (expand-file-name path) "\"" page))
-(evil-org-open-below 1)
-(insert-buffer "*Async Shell Command*")
-(evil-force-normal-state)
 )
 
 #+end_src
@@ -1682,6 +1685,13 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
   (setq web-mode-code-indent-offset 2)   ; JS/JSX/TS/TSX
   (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
 #+END_SRC
+*** Auto set mode for extensions
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.qss\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
+#+end_src
 ** Tweaks
     
 #+BEGIN_SRC emacs-lisp
