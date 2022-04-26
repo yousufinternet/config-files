@@ -951,7 +951,7 @@ class PodsBuddy():
         self.connected = 'Connected: yes' in cmd_output('bluetoothctl info')
         icon = ficon(self.icon, cdict['green']
                           if self.connected else cdict['dimmed'])
-        return '%{A:BLUETOOTH:}'+bt_icon+'%{A}%{A:POD:}'+icon+'%{A}'
+        return '%{A:BLUETOOTH:}'+bt_icon+'%{A}%{A:POD:}%{A3:HARDPOD:}'+icon+'%{A3}%{A}'
 
     def command(self, event):
         if event == 'BLUETOOTH':
@@ -961,6 +961,21 @@ class PodsBuddy():
         elif event == 'POD':
             P = subprocess.Popen(f'bluetoothctl {"disconnect" if self.connected else "connect"} {self.pods_mac}'.split())
             P.wait()
+            return True
+        elif event == 'HARDPOD':
+            P = subprocess.Popen(';'.join([
+                'rfkill block bluetooth',
+                'bluetoothctl power off',
+                'sleep 1',
+                'rfkill unblock bluetooth',
+                'bluetoothctl power on',
+                'sleep 2',
+                f'bluetoothctl remove {self.pods_mac}',
+                f'bluetoothctl pair {self.pods_mac}',
+                'sleep 2',
+                f'bluetoothctl trust {self.pods_mac}',
+                f'bluetoothctl connect {self.pods_mac}'
+            ]), shell=True)
             return True
 
 
