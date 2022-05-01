@@ -214,6 +214,11 @@ News and tech
 
     #+end_src
 
+*** vterm
+#+begin_src emacs-lisp
+(use-package vterm :ensure t :config (setq vterm-always-compile-module t))
+#+end_src
+
 ** Languagetool
    #+begin_src emacs-lisp
 (use-package flyspell-correct-ivy
@@ -690,19 +695,47 @@ evil-mode-line-tag
 #+end_src
 
 ** Emojis and ligatures
+Funny thing happened here, I had the pretty-mode package installed all this time but I was calling ~global-pretty-mode~ with a =t= argument, it turns out it needs to be called with a ~nil~ argument for it to be enabled, I now have pretty symbols in my code
    #+BEGIN_SRC emacs-lisp
-	  (use-package company-emoji
-		    :ensure t
-		    :after company
-		    :hook (org-mode . company-emoji-init))
+(use-package company-emoji
+	:ensure t
+	:after company
+	:hook (org-mode . company-emoji-init))
 
-	  (use-package pretty-mode
-		 :ensure t
-		 :commands (global-pretty-mode)
-		 :config (global-pretty-mode t))
+(use-package pretty-mode
+ :ensure t
+ :commands (global-pretty-mode)
+ :config (global-pretty-mode nil))
 
-          (use-package all-the-icons :ensure t)
-          (use-package all-the-icons-dired :ensure t)
+;; (add-hook
+;;  'python-mode-hook
+;;  (lambda ()
+;;    (mapc (lambda (pair) (push pair prettify-symbols-alist))
+;;          '(;; Syntax
+;;            ("def" .      #x2131)
+;;            ("not" .      #x2757)
+;;            ("in" .       #x2208)
+;;            ("not in" .   #x2209)
+;;            ("return" .   #x27fc)
+;;            ("yield" .    #x27fb)
+;;            ("for" .      #x2200)
+;;            ;; Base Types
+;;            ("int" .      #x2124)
+;;            ("float" .    #x211d)
+;;            ("str" .      #x1d54a)
+;;            ("True" .     #x1d54b)
+;;            ("False" .    #x1d53d)
+;;            ;; Mypy
+;;            ("Dict" .     #x1d507)
+;;            ("List" .     #x2112)
+;;            ("Tuple" .    #x2a02)
+;;            ("Set" .      #x2126)
+;;            ("Iterable" . #x1d50a)
+;;            ("Any" .      #x2754)
+;;            ("Union" .    #x22c3)))))
+
+(use-package all-the-icons :ensure t)
+(use-package all-the-icons-dired :ensure t)
 
      ;; (defun custom-modeline-mode-icon ()
      ;;   (format " %s"
@@ -748,7 +781,7 @@ evil-mode-line-tag
 
 ;; display colored emojis in emacs
 (set-fontset-font t 'emoji
-		    '("JoyPixels" . "iso10646-1") nil 'prepend)
+		    '("Noto Emoji" . "iso10646-1") nil 'prepend)
 ;; (set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
 
 ;; make org source blocks always monospaced
@@ -760,6 +793,8 @@ evil-mode-line-tag
 (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
+
+(global-prettify-symbols-mode)
 )
 
 ;; removed after updating to emacs 28.1
