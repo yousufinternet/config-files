@@ -1,0 +1,2 @@
+(deflisten test_var "./test.py")
+(defwindow testwin :monitor 0 :stacking "fg" :geometry (geometry :width "50%" :height "50%") :windowtype "normal" (label :style "background-color: black; font-size: 3em":text test_var))

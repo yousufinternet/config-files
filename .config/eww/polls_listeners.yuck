@@ -1,0 +1,14 @@
+(defpoll _time :interval "1s" :initial `date +'%H:%M:%S'` `date +'%H:%M:%S'`)
+(defpoll _date :interval "2m" :initial `date +'%a %d-%b,%y'` `date +'%a %d-%b,%y'`)
+
+(defpoll _cputemp :interval "30s" :initial "" `./scripts/cpu_temp.py`)
+(defpoll _gputemp :interval "30s" :initial "" `./scripts/gpu_temp.py`)
+(defpoll _cpuusage :interval "30s" :initial "" `./scripts/cpu_usage.py`)
+(defpoll _weather :interval "20m" :initial `./scripts/weather.py` `./scripts/weather.py`)
+
+(deflisten workspaces_json :initial "['...']"
+  "./scripts/herbstluftwm_workspaces.py")
+
+(deflisten clockface :initial "test" "./scripts/clock_icon.py")
+
+(deflisten klayout :initial "us" `xkb-switch -W`)
