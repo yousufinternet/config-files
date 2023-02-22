@@ -1,10 +1,11 @@
 (defpoll _time :interval "1s" :initial `date +'%H:%M:%S'` `date +'%H:%M:%S'`)
 (defpoll _date :interval "2m" :initial `date +'%a %d-%b,%y'` `date +'%a %d-%b,%y'`)
 
-(defpoll _cputemp :interval "30s" :initial "" `./scripts/cpu_temp.py`)
-(defpoll _gputemp :interval "30s" :initial "" `./scripts/gpu_temp.py`)
+(defpoll _cputemp :interval "30s" :initial "" :run-while sysstats_exp `./scripts/cpu_temp.py`)
+(defpoll _gputemp :interval "30s" :initial "" :run-while sysstats_exp `./scripts/gpu_temp.py`)
 (defpoll _cpuusage :interval "30s" :initial "" `./scripts/cpu_usage.py`)
 (defpoll _weather :interval "20m" :initial `./scripts/weather.py` `./scripts/weather.py`)
+(defpoll _udiskie :interval "1m" :initial `./scripts/udiskie.py` `./scripts/udiskie.py`)
 
 (deflisten workspaces_json :initial "['...']"
   "./scripts/herbstluftwm_workspaces.py")

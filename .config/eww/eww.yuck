@@ -95,9 +95,13 @@ EWW_BATTERY
 (defwidget _workspace []
   (box :class "icon" (for entry in workspaces_json (button :onclick `herbstclient use_index "${entry.ws_no}"` :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
 
-(defwidget _sysstats [] (eventbox :onclick `eww update sysstats_exp=true` :onhoverlost `eww update sysstats_exp=false` (box :space-evenly false :spacing 5 (literal :content _cpuusage) (revealer :transition "slideleft" :vexpand true :hexpand true :halign "end" :reveal sysstats_exp (box :vexpand true :space-evenly false :spacing 5 (literal :content _cputemp) (literal :content _gputemp))))))
+(defwidget _sysstats [] (eventbox :onclick {sysstats_exp ? `eww update sysstats_exp=false` : `eww update sysstats_exp=true`} (box :space-evenly false :spacing 5 (literal :content _cpuusage) (revealer :transition "slideleft" :vexpand true :hexpand true :halign "end" :reveal sysstats_exp (box :class "subwidget" :vexpand true :space-evenly false :spacing 5 (literal :content _cputemp) (literal :content _gputemp))))))
 
 (defvar weather_revealed false)
+
+(defwidget _ramusage [] (box :space-evenly false :spacing 5 (label :class "green-icon" :text "\\uf538") "${round((EWW_RAM.free_mem / EWW_RAM.total_mem)*100, 0)}%"))
+
+(defwidget _diskusage [] (box :space-evenly false :spacing 5 (label :class "blue-icon" :text "\\uf0a0") "(/) ${round((EWW_DISK["/"].used / EWW_DISK["/"].total)*100, 0)}%") )
 
 (defwidget _weatherwdgt [] (eventbox :onhover `eww update weather_revealed=true` :onhoverlost `eww update weather_revealed=false` (box :space-evenly false :spacing 5 (label :class "blue-icon" :text {_weather["icon"]}) {_weather["temp"]} "℃" (revealer :reveal weather_revealed :transition "slideleft" (label :class "dimmed" :text {_weather["last_updated"]})))))
 
@@ -106,6 +110,7 @@ EWW_BATTERY
 (defwidget left []
  (box :style "border 2px solid white" :orientation "h" :space-evenly false :spacing 10 (_workspace) (_weatherwdgt)))
 
-(defwidget right [] (box :style "border 2px solid white" :orientation "h" :halign "end" :space-evenly false :spacing 10 (_keyboard) (_sysstats) (_datetime)))
+(defwidget right [] (box :style "border 2px solid white" :orientation "h" :halign "end" :space-evenly false :spacing 10 (_ramusage) (_diskusage) (_keyboard) (_sysstats) (_datetime)))
 
-(defwidget center [] (box :orientation "h" :style "border 2px solid white" :space-evenly false :hexpand false (label :text "Work in progress, please be patient")))
+(defvar disks_reveal true)
+(defwidget center [] (box :orientation "h" :style "border 2px solid white" :space-evenly false :hexpand false (literal :content _udiskie)))

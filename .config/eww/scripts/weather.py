@@ -31,5 +31,4 @@ try:
             'last_updated': last_update}
     print(json.dumps(obj))
 except Exception:
-    print(json.dumps({'icon': '\ue137', 'temp': '', 'last_updated': obj["last_updated"]}))
-    sys.exit()
+    print(json.dumps({'icon': '\ue137', 'temp': '00', 'last_updated': obj["last_updated"]}))
