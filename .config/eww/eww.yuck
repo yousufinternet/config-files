@@ -90,7 +90,7 @@ EWW_BATTERY
 
 (defwindow top_bar :monitor 1 :geometry (geometry :width "90%" :height "20px" :y "3px" :anchor "top center") :stacking "bg" :reserve (struts :distance "30px" :side "top") :wmignore false :hexpand false :vexpand true (bar_content))
 
-(defwidget bar_content [] (centerbox :orientation "horizontal" :hexpand false :class "main_container" (left) (center) (right)))
+(defwidget bar_content [] (centerbox :orientation "horizontal" :hexpand false (left) (center) (right)))
 
 (defwidget _workspace []
   (box :class "icon" (for entry in workspaces_json (button :onclick `herbstclient use_index "${entry.ws_no}"` :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
@@ -103,14 +103,38 @@ EWW_BATTERY
 
 (defwidget _diskusage [] (box :space-evenly false :spacing 5 (label :class "blue-icon" :text "\\uf0a0") "(/) ${round((EWW_DISK["/"].used / EWW_DISK["/"].total)*100, 0)}%") )
 
-(defwidget _weatherwdgt [] (eventbox :onhover `eww update weather_revealed=true` :onhoverlost `eww update weather_revealed=false` (box :space-evenly false :spacing 5 (label :class "blue-icon" :text {_weather["icon"]}) {_weather["temp"]} "℃" (revealer :reveal weather_revealed :transition "slideleft" (label :class "dimmed" :text {_weather["last_updated"]})))))
+(defwidget _weatherwdgt [] (eventbox :onhover `eww update weather_revealed=true` :halign "start" :onhoverlost `eww update weather_revealed=false` (box :space-evenly false :spacing 5 (label :class "blue-icon" :text {_weather["icon"]}) {_weather["temp"]} "℃" (revealer :reveal weather_revealed :transition "slideleft" (label :class "dimmed" :text {_weather["last_updated"]})))))
 
 (defwidget _keyboard [] (eventbox :style "min-width: 40px" :onclick `xkb-switch -n` (box :space-evenly false :spacing 5 (label :class "icon" :text "\\uf11c") {captures(klayout, "(\\w+)")[0][0]})))
 
-(defwidget left []
- (box :style "border 2px solid white" :orientation "h" :space-evenly false :spacing 10 (_workspace) (_weatherwdgt)))
+(defvar xautolocker_enabled true)
 
-(defwidget right [] (box :style "border 2px solid white" :orientation "h" :halign "end" :space-evenly false :spacing 10 (_ramusage) (_diskusage) (_keyboard) (_sysstats) (_datetime)))
+(defvar enable_action "xautolock -enable;xset +dpms;eww update xautolocker_enabled=true")
+(defvar disable_action "xautolock -disable;xset -dpms;eww update xautolocker_enabled=false")
+(defwidget coffee_widget []
+  (box :space-evenly false :spacing 5
+       (button :onclick {xautolocker_enabled ? disable_action : enable_action}
+	       :class "${xautolocker_enabled ? 'grey' : 'green'}-icon"
+	       {xautolocker_enabled ? "\\uf0f4" : "\\uf7b6"})
+       (button :onclick `xautolock -locknow` :class "yellow-icon" "\\uf023")))
 
+(deflisten _playerctlstatus `playerctl --follow status`)
+(defpoll _playerctlsong :interval '10s' `playerctl metadata --format "{{artist}} - {{title}}"`)
+(defwidget playerctl [] (box :space-evenly false :spacing 5
+			     (button :onclick `playerctl previous` :class "icon" "\\uf048")
+			     (button :onclick `playerctl play-pause` :class "yellow-icon" {_playerctlstatus == "Playing" ? "\\uf04c" : "\\uf04b"})
+			     (button :onclick `playerctl next` :class "icon" "\\uf051")
+			     (button :onclick `playerctl stop` :class "red-icon" "\\uf04d")
+			     (label :class "dimmed" :text _playerctlsong)
+			     ))
+
+(defvar volume_reveal false)
+
+(defwidget nmliteralstate [] (literal :content _nmliteral))
 (defvar disks_reveal true)
-(defwidget center [] (box :orientation "h" :style "border 2px solid white" :space-evenly false :hexpand false (literal :content _udiskie)))
+(defwidget left []
+ (box :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
+
+(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
+
+(defwidget right [] (box :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10 (literal :content _volume) (_keyboard) (_ramusage) (_diskusage) (_sysstats) (literal :content _battery) (_datetime)))

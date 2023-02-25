@@ -23,4 +23,4 @@ devices_str = ' '.join(('(label :class "icon" :text '+(r'"\\uf8e9"' if v['is_det
 devices_str = devices_str if devices_str else '"No devices connected"'
 final_str = f'(box :space-evenly false :spacing 5 (label :class "icon" :text "\uf052") (revealer :reveal disks_reveal :transition "slideleft" (box :space-evenly false :spacing 5 :class "subwidget" {devices_str})))'
 state = sp.getoutput('eww get disks_reveal')
-print(f'(eventbox :onclick {{disks_reveal ? `eww update disks_reveal=false` : `eww update disks_reveal=true`}} :onrightclick "rofi -show udiskie -modi udiskie:~/Scripts/RofiMenus/udiskie-menu.py" {final_str})')
+print(f'(eventbox :onclick {{disks_reveal ? `eww update disks_reveal=false` : `eww update disks_reveal=true`}} :onrightclick "rofi -show udiskie -modi udiskie:~/Scripts/RofiMenus/udiskie-menu.py &" {final_str})')

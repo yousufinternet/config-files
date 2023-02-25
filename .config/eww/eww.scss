@@ -3,7 +3,6 @@ $surface-fg: #949494;
 $surface-lightgrey: #3d464e;
 $surface-grey: #2b3238;
 $surface-red: #f87070;
-
 * { all: unset}
 
 .main_container {
@@ -15,8 +14,17 @@ $surface-red: #f87070;
     font-family: 'Fira Sans Compressed';
 }
 
+scale trough {all: unset; background-color: grey; min-height: 5px; min-width: 80px; border-radius: 5px}
+
+scale trough highlight {all: unset; background-color: #2eafff; border-radius: 5px}
+
 .icon {
 font-family: 'Font Awesome 6 Free'; 
+}
+
+.yellow-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: yellow
 }
 
 .orange-icon {
@@ -24,14 +32,31 @@ font-family: 'Font Awesome 6 Free';
 color: orange
 }
 
+.red-icon {
+font-family: 'Font Awesome 6 Free'; 
+color:#b84028
+ 
+}
+
 .blue-icon {
 font-family: 'Font Awesome 6 Free'; 
 color: #2eafff
 }
 
+.nerd-green-icon {
+font-family: 'Iosevka Nerd Font Mono'; 
+font-size: 18pt;
+color: #55ff85
+}
+
 .green-icon {
 font-family: 'Font Awesome 6 Free'; 
 color: #55ff85
+}
+
+.grey-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: #4c4c4c
 }
 
 .subwidget {
