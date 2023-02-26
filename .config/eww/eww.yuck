@@ -1,84 +1,3 @@
-(defwindow powermenu
-  :stacking "fg"
-  :windowtype "normal"
-  :wn-ignore true
-  :geometry (geometry :width "100%" :height "100%")
-  (powermenu_layout)
-  )
-
-(defwindow welcome
-  :stacking "fg"
-  :windowtype "normal"
-  :geometry (geometry :width "33%" :height "33%")
-  :anchor "center"
-  (welcome_menu)
-  )
-
-(defwidget welcome_menu []
-  (box :orientation "vertical" :class "bx"
-(button :onclick "notify-send left" :onrightclick "notify-send right" "button1")
-(button :onclick "notify-send left" :onrightclick "notify-send right" "button2")
-EWW_BATTERY
-       )
-  )
-
-(defpoll time :interval "5s"
-  :initial `date +'{"hour":"%H","min":"%M"}'`
-  `date +'{"hour":"%H","min":"%M"}'`)
-(defpoll net :interval "100s"
-  :initial `N/A`
-  `nmcli -t -f SIGNAL,ACTIVE device wifi \
-    | awk -F':' '{if($2=="yes")print$1}'`)
-
-(defwidget _buttons [shutdown shutdown_icon reboot reboot_icon logout logout_icon]
-  (box :class "btns-box" :spacing 5 :vexpand true :hexpand true :valign "end" :halign "end"
-       :spaceevenly false
-       (button :onclick shutdown shutdown_icon)
-       (button :onclick reboot reboot_icon)
-       (button :onclick logout logout_icon)
-       )
-  )
-
-(defwidget _network [strength offline excellent good okay slow]
-  (box :class "net-box" :space-evenly false :spacing 8
-       (label :text {strength == "" ? offline : strength < 26 ? slow : strength < 51 ? okay : strength < 76 ? good : excellent})
-       )
-  )
-
-(defwidget _battery [battery status one two three four five six seven charge]
-  (box :class "bat-box" :space-evenly false :spacing 8
-       (label :text {status == 'Charging' ? charge : battery < 15 ? seven :
-			    battery < 30 ? six :
-			    battery < 45 ? five :
-			    battery < 60 ? four :
-			    battery < 75 ? three :
-			    battery < 95 ? two : one})
-       )
-  )
-
-(defwidget powermenu_layout []
-  (box :class "layout-box" :space-evenly false :orientation "vertical" :style "background-image: url(./wallpaper)"
-       (box :valign "start" :space-evenly false :spacing 25
-	    (_battery :status {EWW_BATTERY.BAT1.status}
-		      :battery {EWW_BATTERY.BAT1.capacity}
-		      :charge "" :one "" :two "" :three "" :four ""
-                      :five "" :six "" :seven ""
-		      )
-  (_network :strength net :offline "" :excellent "" :good ""
-                :okay "" :slow "")
-      (label :text "|" :class "sep")
-      (button :onclick "eww close powermenu" :class "close-btn" ""))
-	    
-(box :space-evenly false :hexpand true :vexpand true
-      (box :spacing 15 :class "tm-box" :space-evenly false
-            :valign "end" :halign "start"
-        (label :text "")
-        (label :text "${time.hour}  ${time.min}"))
-      (_buttons :shutdown "poweroff" :reboot "reboot"
-                :logout "loginctl kill-session self"
-                :shutdown_icon "" :reboot_icon ""
-                :logout_icon ""))))
-       
 (include "polls_listeners.yuck")
 
 (defvar daterevealed false)
@@ -118,23 +37,50 @@ EWW_BATTERY
 	       {xautolocker_enabled ? "\\uf0f4" : "\\uf7b6"})
        (button :onclick `xautolock -locknow` :class "yellow-icon" "\\uf023")))
 
-(deflisten _playerctlstatus `playerctl --follow status`)
-(defpoll _playerctlsong :interval '10s' `playerctl metadata --format "{{artist}} - {{title}}"`)
+(defwidget bluetooth_devices []
+  (box :spacing 5 :space-evenly false
+       (button :onclick "bluetoothctl power ${_bluestatus == 'yes' ? 'off' : 'on'}"
+	       :class {_bluestatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf294")
+       (button :onclick {_podsstatus == 'yes' ? "bluetoothctl disconnect" : "bluetoothctl connect 88:D0:39:ED:EA:64"}
+	       :class {_podsstatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf025")
+       ))
+
+(defvar playerrevealer false)
 (defwidget playerctl [] (box :space-evenly false :spacing 5
 			     (button :onclick `playerctl previous` :class "icon" "\\uf048")
 			     (button :onclick `playerctl play-pause` :class "yellow-icon" {_playerctlstatus == "Playing" ? "\\uf04c" : "\\uf04b"})
 			     (button :onclick `playerctl next` :class "icon" "\\uf051")
 			     (button :onclick `playerctl stop` :class "red-icon" "\\uf04d")
-			     (label :class "dimmed" :text _playerctlsong)
+			     (eventbox :onhover `${EWW_CMD} update playerrevealer=true` :onhoverlost `${EWW_CMD} update playerrevealer=false`
+				       (box :space-evenly false :spacing 5
+					    (label :class "green-icon" :text {_playerctlstatus == "Playing" ? "\\uf001" : ""})
+					    (revealer :reveal playerrevealer :transition "slideleft" _playername)
+					    (label :class "dimmed" :text "${_playerctlartist} - ${_playerctltitle}")))
 			     ))
+(defvar darkreveal {`cat ~/.config/THEME_VARIANT` == "dark"})
+(defvar lightreveal {`cat ~/.config/THEME_VARIANT` == "light"})
+
+(defwidget darklightswitch []
+  (overlay
+   (revealer :reveal darkreveal (button :onclick `${EWW_CMD} update darkreveal=false;${EWW_CMD} update lightreveal=true;~/Scripts/switch_dark_light.py light` :class "icon" "\\uf186"))
+   (revealer :reveal lightreveal (button :onclick `${EWW_CMD} update darkreveal=true;${EWW_CMD} update lightreveal=false;~/Scripts/switch_dark_light.py dark` :class "icon" "\\uf185"))))
 
 (defvar volume_reveal false)
 
 (defwidget nmliteralstate [] (literal :content _nmliteral))
+
 (defvar disks_reveal true)
+
 (defwidget left []
  (box :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
 
-(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
+(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (darklightswitch) (bluetooth_devices) (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
 
-(defwidget right [] (box :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10 (literal :content _volume) (_keyboard) (_ramusage) (_diskusage) (_sysstats) (literal :content _battery) (_datetime)))
+(defwidget right [] (box :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10
+			 (literal :content _volume)
+			 (_keyboard)
+			 (_ramusage)
+			 (_diskusage)
+			 (_sysstats)
+			 (literal :content _battery)
+			 (_datetime)))

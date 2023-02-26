@@ -8,6 +8,13 @@
 (defpoll _udiskie :interval "1m" :initial `./scripts/udiskie.py` `./scripts/udiskie.py`)
 (defpoll _battery :interval "1m" :initial `./scripts/battery_state.py` `./scripts/battery_state.py`)
 (defpoll _volume :interval "1s" :initial `./scripts/volume_control.py` `./scripts/volume_control.py`)
+(defpoll _playername :interval '10s' `playerctl metadata --format "{{playerName}}" | cut -f -4 -d ' '`)
+(defpoll _playerctlartist :interval '10s' `playerctl metadata --format "{{artist}}" | cut -f -6 -d ' '`)
+(defpoll _playerctltitle :interval '10s' `playerctl metadata --format "{{title}}" | cut -f -6 -d ' '`)
+(defpoll _bluestatus :interval '10s' `bluetoothctl show | grep -i powered | cut -f 2 -d ' '`)
+(defpoll _podsstatus :interval '10s' `bluetoothctl info | grep -i connected | cut -f 2 -d ' '`)
+
+(deflisten _playerctlstatus `playerctl --follow status`)
 
 (deflisten workspaces_json :initial "['...']"
   "./scripts/herbstluftwm_workspaces.py")
