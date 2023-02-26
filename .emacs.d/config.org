@@ -84,7 +84,6 @@ Please do check the following /configs/ as this one was heavily inspired by them
 )
        (use-package pdf-tools 
 	:ensure t
-  :init (pdf-tools-install) 
 :commands 'pdf-view-mode
 :config (pdf-tools-install-noverify)
 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
@@ -216,7 +215,7 @@ News and tech
 
 *** vterm
 #+begin_src emacs-lisp
-(use-package vterm :ensure t :config (setq vterm-always-compile-module t))
+(use-package vterm :ensure t :init (setq vterm-always-compile-module t))
 #+end_src
 
 ** Languagetool
@@ -464,6 +463,12 @@ News and tech
 #+BEGIN_SRC emacs-lisp
 	(use-package general :ensure t
 	  :config
+	  (general-define-key :states '(normal visual insert emacs) :keymaps 'prog-mode-map
+	    "M-<up>" 'move-text-up 
+	    "M-<down>" 'move-text-down 
+	    "M-k" 'move-text-up 
+	    "M-k" 'move-text-down 
+	    )
 	  (general-define-key
 	   :states '(normal visual insert emacs)
 	   :keymaps '(yas-keymap yas-minor-mode-map)
@@ -760,14 +765,14 @@ Funny thing happened here, I had the pretty-mode package installed all this time
     (set-face-attribute 'default nil
 			:family "Fira Code"
 			:height default-font-height
-			:weight 'light)
+			:weight 'regular)
 
 
 ;; Monospaced font with arabic support
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
 (set-fontset-font t 'arabic (font-spec :family "Amiri Typewriter"))
 ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
-(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height default-font-height :weight 'light :fontset "fontset-default")
+(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height default-font-height :weight 'regular :fontset "fontset-default")
 
 ;; Arabic fallback font (search if non existant)
 ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
@@ -777,7 +782,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
 (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height default-font-height))
 (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
-(set-face-attribute 'variable-pitch nil :font "Roboto Light" :fontset "fontset-proportional")
+(set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
 
 ;; display colored emojis in emacs
 (set-fontset-font t 'emoji
@@ -811,7 +816,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (use-package autothemer :ensure t)
 
 ;; modus-vivendi-theme
-(setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-themes))
+(setq themes-list '(gotham-theme kaolin-themes zerodark-theme spacemacs-theme ample-theme doom-themes modus-themes ef-themes))
 
 ; fetch the list of packages available 
 (unless package-archive-contents
@@ -821,8 +826,8 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (dolist (theme themes-list)
 (unless (package-installed-p theme)
 (package-install theme)))
-(setq default-dark-theme 'modus-vivendi)
-(setq default-light-theme 'modus-operandi)
+(setq default-dark-theme 'ef-dark)
+(setq default-light-theme 'ef-light)
 
 (defun is-it-day-or-night (&optional frame)
 "should we use a dark or light theme"
@@ -861,51 +866,65 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 * ORG mode
 ** General customization
 #+BEGIN_SRC emacs-lisp
-    (require 'org-tempo)
-    (require 'org-protocol)
+      (require 'org-tempo)
+      (require 'org-protocol)
 
-  (org-babel-do-load-languages 'org-babel-load-languages
-    '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
+    (org-babel-do-load-languages 'org-babel-load-languages
+      '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
 
-    (use-package org-bullets
-    :ensure t
-    :after org-mode)
+      (use-package org-bullets
+      :ensure t
+      :after org-mode)
 
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (add-hook 'org-mode-hook 'flyspell-mode)
-    (add-hook 'org-mode-hook 'variable-pitch-mode)
-    ;; (add-hook 'org-mode-hook 'svg-tag-mode)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+      (add-hook 'org-mode-hook 'flyspell-mode)
+      (add-hook 'org-mode-hook 'variable-pitch-mode)
+      ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
-    ;; Default todo states
-    (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)"))
-	  org-todo-keyword-faces
-	  '(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
-	    ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
-	    ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
-	    ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
-	  org-log-done 'note
-	  org-imenu-depth 3)
+      ;; Default todo states
+      (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)"))
+	    org-todo-keyword-faces
+	    '(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
+	      ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
+	      ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
+	      ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
+	    org-log-done 'note
+	    org-imenu-depth 3)
 
-  (append org-modules '(habits))
-;; (use-package svg-lib)
-;;   (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
-;;    :config (setq svg-tag-tags
-;;   '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
-;;    '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
-;;    '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
-;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
-;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
-;;    '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
-;;    '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
-;;   (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
-;;    :background "#a11" :foreground "#f99" :radius 5 ))))
-;;   ))
-;;   )
+    (append org-modules '(habits))
+
+
+  (use-package ox-latex
+  :after org
+    :config
+  (add-to-list 'org-latex-classes
+      '("myreport" 
+	"\\documentclass[11pt]{report}"
+	;; ("\\part{%s}" . "\\part*{%s}")
+	("\\chapter{%s}" . "\\chapter*{%s}")
+	("\\section{%s}" . "\\section*{%s}")
+	("\\subsection{%s}" . "\\subsection*{%s}")
+	("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+  ;; (use-package svg-lib)
+  ;;   (use-package svg-tag-mode :commands svg-tag-mode :after svg-lib
+  ;;    :config (setq svg-tag-tags
+  ;;   '((" TODO " . ((lambda (tag) (svg-lib-tag "TODO"
+  ;;    '(:margin 1 :background "#fc5" :foreground "#000" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" CANCELLED " . ((lambda (tag) (svg-lib-tag "CANC"
+  ;;    '(:margin 1 :background "#a11" :foreground "#f99" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" INPROGRESS " . ((lambda (tag) (svg-lib-tag "ONGO"
+  ;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" WAITING " . ((lambda (tag) (svg-lib-tag "WAIT"
+  ;;    '(:margin 1 :background "#09f" :foreground "#fff" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" NEXT " . ((lambda (tag) (svg-lib-tag "NEXT"
+  ;;    '(:margin 1 :background "#ff0" :foreground "#f00" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" DONE " . ((lambda (tag) (svg-lib-tag "DONE"
+  ;;    '(:margin 1 :background "#595" :foreground "#454" :font-family "Dejavu Sans Mono" :radius 5)))))
+  ;;   (" DELEGATED " . ((lambda (tag) (svg-lib-tag "DELG"
+  ;;    :background "#a11" :foreground "#f99" :radius 5 ))))
+  ;;   ))
+  ;;   )
 #+END_SRC
 ** Agenda
    #+begin_src emacs-lisp
@@ -1540,7 +1559,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
    #+end_src
 ** eglot
    #+begin_src emacs-lisp
-   (use-package eglot :ensure t :hook (python-mode . eglot-ensure))
+   (use-package eglot :ensure t :hook (python-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server"))))
    #+end_src
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
