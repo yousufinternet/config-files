@@ -16,7 +16,7 @@
 
 (deflisten _playerctlstatus `playerctl --follow status`)
 
-(deflisten workspaces_json :initial "['...']"
+(deflisten workspaces_json :initial '[{"ws_no": 0, "ws_icn": "x", "ws_style": ""}]'
   "./scripts/herbstluftwm_workspaces.py")
 
 (deflisten _nmliteral :initial "(label :class \"dimmed\" :text \"loading..\")" "./scripts/nm_literal.py")

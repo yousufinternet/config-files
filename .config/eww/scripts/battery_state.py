@@ -14,7 +14,7 @@ if battery != '':
     if bat_vlu <= 5:
         print(f'(box :space-evenly false :spacing 5 (label :class "red-icon" :text "{icon}") "{bat_vlu:0.0f}%")')
     elif bat_vlu == 100:
-        print(f'(box :space-evenly false :spacing 5 (label :class "green-icon" :text "{icon}") "{bat_vlu:0.0f}%")')
+        print(f'(label :valign "center" :vexpand true :class "green-icon" :text "{icon}")')
     elif charging:
         print(f'(box :space-evenly false :spacing 5 (label :class "yellow-icon" :text "{icon}") "{bat_vlu:0.0f}%")')
     else:
