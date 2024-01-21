@@ -6,11 +6,12 @@ download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
 save-path "~/.config/.newsboat/saved_articles/"
-# color listfocus white color21
-# color listfocus_unread white color196 bold underline
+color listfocus white color21
+color listfocus_unread white color196 bold underline
 # color info white color18 bold
 refresh-on-startup yes
 auto-reload yes
+reload-threads 10
 reload-only-visible-feeds yes
 notify-always yes
 bind-key "o" open-in-browser-and-mark-read

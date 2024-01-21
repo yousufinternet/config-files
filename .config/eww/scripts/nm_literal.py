@@ -51,11 +51,14 @@ def output_wrapper():
     eww_devs = []
     for dev_name, dev_type, dev_state, dev_con in zip(
             devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
-        if dev_name == 'lo' or dev_name in exclude:
+        if dev_name == 'lo' or dev_name in exclude or dev_name.startswith('veth'):
             continue
         if dev_type == 'wifi' and dev_state == 'connected':
             wifi_nets = get_wifi_networks(dev_name)
-            wifi_signal = int(wifi_nets['SIGNAL'][wifi_nets['SSID'].index(dev_con)])
+            try:
+                wifi_signal = int(wifi_nets['SIGNAL'][wifi_nets['SSID'].index(dev_con)])
+            except ValueError:
+                wifi_signal = 100
 
             # wifi_icon = r'󰤟' if wifi_signal < 25 else r'󰤢' if wifi_signal < 50 else '󰤥' if wifi_signal < 75 else '󰤨'
             eww_devs.append(common_device.format(int_idx=devs['DEVICE'].index(dev_name), color='green', icon='\uf1eb', dev_info=f'"{dev_name}: {wifi_signal}% {dev_con}"'))

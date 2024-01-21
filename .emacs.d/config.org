@@ -78,15 +78,15 @@ Please do check the following /configs/ as this one was heavily inspired by them
        (pandoc-mode . pandoc-load-default-settings))
        )
 
-(defun unbind-spc-in-pdf-view-mode ()
-"adding this line to use-package is not working, had to create a hook"
-(general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
-)
-       (use-package pdf-tools 
-	:ensure t
-:commands 'pdf-view-mode
-:config (pdf-tools-install-noverify)
-	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
+;; (defun unbind-spc-in-pdf-view-mode ()
+;; "adding this line to use-package is not working, had to create a hook"
+;; (general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
+;; )
+;;        (use-package pdf-tools 
+;; 	:ensure t
+;; :commands 'pdf-view-mode
+;; :config (pdf-tools-install-noverify)
+;; 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
 #+END_SRC
 
 *** elfeed
@@ -386,6 +386,10 @@ News and tech
     (evil-global-set-key 'normal (kbd "<right>") 'right-char)
     (evil-global-set-key 'visual (kbd "<left>") 'left-char)
     (evil-global-set-key 'visual (kbd "<right>") 'right-char)
+    (evil-global-set-key 'normal (kbd "h") 'left-char)
+    (evil-global-set-key 'normal (kbd "l") 'right-char)
+    (evil-global-set-key 'visual (kbd "h") 'left-char)
+    (evil-global-set-key 'visual (kbd "l") 'right-char)
     
 ;; allow movement across visual lines
     (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
@@ -467,7 +471,7 @@ News and tech
 	    "M-<up>" 'move-text-up 
 	    "M-<down>" 'move-text-down 
 	    "M-k" 'move-text-up 
-	    "M-k" 'move-text-down 
+	    "M-j" 'move-text-down 
 	    )
 	  (general-define-key
 	   :states '(normal visual insert emacs)
@@ -828,6 +832,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (package-install theme)))
 (setq default-dark-theme 'ef-dark)
 (setq default-light-theme 'ef-light)
+(setq ef-themes-mixed-fonts t)
 
 (defun is-it-day-or-night (&optional frame)
 "should we use a dark or light theme"
@@ -1036,6 +1041,8 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-hide-emphasis-markers t)
    #+end_src
 
 ** ORG notifications
@@ -1143,6 +1150,18 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (async-shell-command (concat "~/Scripts/readbook \"" (expand-file-name path) "\"" page))
 )
 
+#+end_src
+
+** Default app for pdf files
+#+begin_src elisp
+(setq org-file-apps
+'((auto-mode . emacs)
+ (directory . emacs)
+ ("\\.mm\\'" . default)
+ ("\\.x?html?\\'" . default)
+ ("\\.pdf::\\([0-9]+\\)?\\'" . "~/Scripts/zathura-open.py %s %1")
+ ("\\.pdf\\'" . "zathura --synctext-forward :: %s"))
+)
 #+end_src
 
 * Mail

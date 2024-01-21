@@ -16,7 +16,7 @@ def hc(*args):
 
 
 startup_cmds = [
-    "localectl --no-convert set-x11-keymap us,ara pc104 ,qwerty"
+    "localectl --no-convert set-x11-keymap us,ara pc104 qwerty"
     " 'grp:alt_shift_toggle,caps:swapescape'",
     "setxkbmap -option 'caps:escape' -option 'altwin:menu_win'"
     " -option 'terminate:ctrl_alt_bksp'",
@@ -28,13 +28,12 @@ startup_cmds = [
     "udiskie -T",
     f'dunst -scale {GDK_SCALE}',
     "emacs --daemon",
-    "mpd",
     "~/.config/bspwm/scripts/set_wallpaper.py",
-    "~/Scripts/LemonBar/start_bar_herbst.py",
     "xfce4-panel -d --sm-client-disable",
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing serve --no-browser",
+    "seadrive -c ~/.config/seadrive/seadrive.conf -d ~/.config/seadrive/data-directory ~/mnt/seadrive",
     'telegram-desktop',
     # 'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
     # 'davmail ~/.config/davmail/davmail.properties',
@@ -136,7 +135,7 @@ hc(f'keybind {MOD}-Shift-Tab   cycle_all +1')
 hc(f'keybind {MOD}-c cycle')
 hc(f'keybind {MOD}-Shift-c cycle -1')
 hc(f'keybind {MOD}-grave jumpto urgent')
-hc(f"keybind {MOD}-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
+hc(f"keybind {MOD}-Shift-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
 
 # Theming and general settings
 theme_settings = {
@@ -201,6 +200,7 @@ hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off ho
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
+hc('rule class="winword.exe" floatplacement=none')
 
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
@@ -214,6 +214,7 @@ if hc('new_attr bool my_not_first_autostart')[1]:
                 shell=True, text=True)
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
+        subprocess.Popen('autorandr --cycle'.split())
     elif HOSTNAME == 'yusufs-dell':
         subprocess.Popen('autorandr --cycle'.split())
         subprocess.Popen('touchegg')

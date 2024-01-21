@@ -34,7 +34,9 @@ c.fonts.default_family = ["DejaVu Sans Mono"]
 # c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
 
 # rofi-pass
-config.bind('pi', 'spawn --userscript qute-pass')
+config.bind('pi', 'spawn --userscript qute-port-pass')
+config.bind('pu', 'spawn --userscript qute-port-pass -e')
+config.bind('pp', 'spawn --userscript qute-port-pass -w')
 config.bind('j', 'scroll-px 0 20')
 config.bind('k', 'scroll-px 0 -20')
 
@@ -73,7 +75,14 @@ config.bind(',m2', f'spawn tsp {mpv_240} {{url}};; back')
 config.bind(',m3', f'spawn tsp {mpv_360} {{url}};; back')
 config.bind(',m4', f'spawn tsp {mpv_480} {{url}};; back')
 config.bind(',m7', f'spawn tsp {mpv_720} {{url}};; back')
-config.bind(',y', 'spawn mlterm -e youtube-dl --cookies=cookies.txt --all-subs --embed-subs {url};; tab-close')
+config.bind(',y', 'spawn konsole -e yt-dlp --cookies=cookies.txt --all-subs --embed-subs {url};; tab-close')
+config.bind(',p', 'open --private https://mail.westqurna2.com')
+config.bind(',hj', 'open --window http://beelinkserver:8096')
+config.bind(',hh', 'open --window http://beelinkserver:8123')
+config.bind(',hs', 'open --window http://beelinkserver:8081')
+config.bind(',hm', 'open --window http://homeserver:8765')
+config.bind(',hi', 'open --window http://homeserver')
+config.bind(',fj', 'spawn prime-run firefox --new-window http://beelinkserver:8096')
 
 # dark style sheets
 path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
@@ -96,13 +105,15 @@ config.set('content.register_protocol_handler', True, '*://gmail.com/*')
 config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
 
 config.set('content.tls.certificate_errors', 'block')
+config.set('content.tls.certificate_errors', 'ask', '*://homeserver')
 config.set('content.tls.certificate_errors', 'load-insecurely', '*://mail.westqurna2.com')
 config.set('content.notifications.enabled', False)
-for url in ['gmail.com', 'mail.westqurna2.com', 'reddit.com', 'mail.zoho.com']:
+for url in ['gmail.com', 'mail.google.com', 'mail.westqurna2.com', '*.reddit.com', 'mail.zoho.com']:
     config.set('content.notifications.enabled', True, url)
 
 # Default zoom level
-config.set('zoom.default', '125%' if scale_factor==2 else '100%')
+# config.set('zoom.default', '125%' if scale_factor==2 else '100%')
+config.set('zoom.default', '125%')
 
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'i': 'https://imdb.com/find?q={}',
@@ -162,11 +173,13 @@ config.set('content.blocking.method', 'both')
 # Autosave session
 config.set('auto_save.session', True)
 
-config.set('content.javascript.can_access_clipboard', True)
+config.set('content.javascript.clipboard', 'none')
+config.set('content.javascript.clipboard', 'access-paste', 'http://beelinkserver')
+
 # settings for better performance
 config.set('content.autoplay', False)
 config.set('content.prefers_reduced_motion', True)
-config.set('qt.args', ['ignore-gpu-blocklist', 'enable-gpu-rasterization', 'enable-accelerated-video-decode', 'enable-quic'])
+config.set('qt.args', ['ignore-gpu-blocklist', 'enable-gpu-rasterization', 'enable-accelerated-video-decode', 'enable-quic', 'enable-zero-copy'])
 config.set('session.lazy_restore', True)
 # Irrelevant to QtWebEngine
 # config.set('content.cache.maximum_pages', 6) # see https://webkit.org/blog/427/webkit-page-cache-i-the-basics/
@@ -187,3 +200,5 @@ c.hints.selectors |= {'paragraph': ['p', 'blockquote', 'code', 'quote']}
 
 config.bind(',R', 'hint --rapid paragraph userscript read-paragraph')
 config.bind(',s', 'spawn --userscript read-paragraph festival')
+
+config.source('themes/city_lights.py')

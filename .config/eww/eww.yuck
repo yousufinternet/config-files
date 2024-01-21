@@ -57,13 +57,8 @@
 					    (revealer :reveal playerrevealer :transition "slideleft" _playername)
 					    (label :class "dimmed" :text "${_playerctlartist} - ${_playerctltitle}")))
 			     ))
-(defvar darkreveal {`cat ~/.config/THEME_VARIANT` == "dark"})
-(defvar lightreveal {`cat ~/.config/THEME_VARIANT` == "light"})
 
-(defwidget darklightswitch []
-  (overlay
-   (revealer :reveal darkreveal (button :onclick `${EWW_CMD} update darkreveal=false;${EWW_CMD} update lightreveal=true;~/Scripts/switch_dark_light.py light` :class "icon" "\\uf186"))
-   (revealer :reveal lightreveal (button :onclick `${EWW_CMD} update darkreveal=true;${EWW_CMD} update lightreveal=false;~/Scripts/switch_dark_light.py dark` :class "icon" "\\uf185"))))
+
 
 (defvar volume_reveal false)
 
@@ -74,7 +69,7 @@
 (defwidget left []
  (box :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
 
-(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (darklightswitch) (bluetooth_devices) (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
+(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (bluetooth_devices) (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
 
 (defwidget right [] (box :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10
 			 (literal :content _volume)

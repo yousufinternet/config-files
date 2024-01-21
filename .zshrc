@@ -52,6 +52,7 @@ export RTV_EDITOR='emacsclient -c -a ""'
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.config/bspwm/scripts/:$PATH
 export NODE_PATH=$NODE_PATH:$(npm root -g)
+export JDK_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dsun.java2d.opengl=true' 
 
 # Colors for less
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -74,6 +75,10 @@ alias lenovolaptop='mosh yusuf@yusufs-lenovo'
 
 alias ec='emacsclient -a "" -c'
 alias lf='~/.config/lf/lfub'
+alias sysr='sudo systemctl restart'
+alias syse='sudo systemctl enable --now'
+alias sysd='sudo systemctl disable --now'
+alias sysc='sudo systemctl'
 
 alias gst='git status'
 alias gd='git diff'
@@ -83,7 +88,8 @@ alias pacman='sudo pacman --color=always'
 alias hcat="highlight -O ansi --force"
 alias eclrun='WINEPREFIX=~/.wine32 WINEARCH=win32 wine ~/.wine32/drive_c/ecl/macros/eclrun.exe'
 alias adb_input="adb shell input keyevent"
-alias youtube_pip='mpv --slang=en --force-window=immediate --no-terminal --geometry=25%x25%-0-0 --autofit=1280x720 --ytdl-format="bestvideo[height<=?720][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
+alias youtube_pip='prime-run mpv --slang=en --force-window=immediate --no-terminal --geometry=25%x25%-0-0 --autofit=1280x720 --ytdl-format="bestvideo[height<=?720][fps<=?30]+bestaudio/best" --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched=,cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,write-sub=,write-auto-sub='
+alias net_phone='adb connect `ssh root@192.168.1.1 ip r | head -n 1 | cut -f 3 -d " "`;scrcpy -m 720 --max-fps 10 --no-audio -s `ssh root@192.168.1.1 ip r | head -n 1 | cut -f 3 -d " "`'
 
 # always set GDK_SCALE, if not set in global environment variables set it to 1
 if [ -z "$GDK_SCALE" ]; then
@@ -102,7 +108,6 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '*'
 zstyle ':vcs_info:*' stagedstr '+'
 zstyle ':vcs_info:git:*' formats       '%b%u%c'
-
 
 
 # Custom prompt

@@ -29,6 +29,8 @@ def read_fwf(text_table):
 
 def get_devices_status():
     devices_table = sp.getoutput('nmcli device')
+    if devices_table.lower().startswith('warning'):
+        devices_table = '\n'.join(devices_table.splitlines()[1:])
     return read_fwf(devices_table)
 
 def get_wifi_networks(ifname):

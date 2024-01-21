@@ -52,7 +52,10 @@ fi
 if [ "$GDK_SCALE" -eq 2 ]; then
   xrandr --dpi 200
 fi
+
 herbstluftwm --locked
+# dbus-launch --exit-with-session herbstluftwm --locked 2> /tmp/herbstluftwm-dbus.log
+
 # exec bspwm
 # exec openbox --startup "steam-native --big-picture"
 # exec spectrwm

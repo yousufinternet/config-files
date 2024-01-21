@@ -5,6 +5,8 @@ set selection-clipboard clipboard
 set recolor-reverse-video
 set recolor
 set statusbar-home-tilde true
+map y exec 'bash -c ~/Scripts/zathura-link.py'
+set adjust-open width
 
 ### DRACULA THEME ###
 # set notification-error-bg       "#ff5555" # Red
@@ -47,3 +49,5 @@ set statusbar-home-tilde true
 
 # set recolor-lightcolor          "#282a36" # Background
 # set recolor-darkcolor           "#f8f8f2" # Foreground
+
+

@@ -5,31 +5,26 @@
   <property name="panels" type="array">
     <value type="int" value="2"/>
     <property name="panel-2" type="empty">
-      <property name="position" type="string" value="p=4;x=1909;y=546"/>
+      <property name="position" type="string" value="p=11;x=1190;y=10"/>
       <property name="size" type="uint" value="20"/>
       <property name="length-adjust" type="bool" value="true"/>
-      <property name="length" type="uint" value="97"/>
-      <property name="autohide-behavior" type="uint" value="2"/>
-      <property name="position-locked" type="bool" value="true"/>
+      <property name="length" type="uint" value="1"/>
+      <property name="autohide-behavior" type="uint" value="0"/>
+      <property name="position-locked" type="bool" value="false"/>
       <property name="enter-opacity" type="uint" value="100"/>
-      <property name="leave-opacity" type="uint" value="26"/>
+      <property name="leave-opacity" type="uint" value="100"/>
       <property name="plugin-ids" type="array">
-        <value type="int" value="2"/>
-        <value type="int" value="3"/>
-        <value type="int" value="5"/>
-        <value type="int" value="1"/>
-        <value type="int" value="4"/>
         <value type="int" value="12"/>
       </property>
-      <property name="mode" type="uint" value="1"/>
-      <property name="disable-struts" type="bool" value="false"/>
+      <property name="mode" type="uint" value="0"/>
       <property name="background-style" type="uint" value="1"/>
       <property name="background-rgba" type="array">
-        <value type="double" value="0.141176"/>
-        <value type="double" value="0.121569"/>
-        <value type="double" value="0.192157"/>
-        <value type="double" value="1.000000"/>
+        <value type="double" value="0"/>
+        <value type="double" value="0"/>
+        <value type="double" value="0"/>
+        <value type="double" value="1"/>
       </property>
+      <property name="enable-struts" type="bool" value="false"/>
     </property>
     <property name="dark-mode" type="bool" value="true"/>
   </property>
@@ -63,11 +58,109 @@
       <property name="show-frame" type="bool" value="false"/>
       <property name="size-max" type="uint" value="22"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="requesting an ethernet network address for “auto ethernet”…"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034_5g” active: xiaomi_e034_5g (74%)"/>
+        <value type="string" value="ethernet network connection “auto ethernet” active"/>
+        <value type="string" value="wi-fi network connection “al-waha” active: al-waha (77%)"/>
+        <value type="string" value="requesting an ethernet network address for “wired connection 1”…"/>
+        <value type="string" value="networking disabled"/>
+        <value type="string" value="wi-fi network connection “supervisor wlan0” active: xiaomi_e034 (52%)"/>
+        <value type="string" value="requesting a wi-fi network address for “supervisor wlan0”…"/>
+        <value type="string" value="wi-fi network connection “supervisor wlan0” active: xiaomi_e034 (56%)"/>
+        <value type="string" value="wi-fi network connection “supervisor wlan0” active: xiaomi_e034 (55%)"/>
+        <value type="string" value="wi-fi network connection “supervisor wlan0” active: xiaomi_e034 (54%)"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034” active: xiaomi_e034 (53%)"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034” active: xiaomi_e034 (48%)"/>
+        <value type="string" value="requesting a wi-fi network address for “xiaomi_e034”…"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034” active: xiaomi_e034 (55%)"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034” active: xiaomi_e034 (57%)"/>
+        <value type="string" value="wi-fi network connection “xiaomi_e034” active: xiaomi_e034 (54%)"/>
+        <value type="string" value="requesting a wi-fi network address for “nethawk_2ghz”…"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (61%)"/>
+        <value type="string" value="wi-fi network connection “s7_edge” active: s7_edge (53%)"/>
+        <value type="string" value="wi-fi network connection “s7_edge” active: s7_edge (45%)"/>
+        <value type="string" value="wi-fi network connection “s7_edge” active: s7_edge (49%)"/>
+        <value type="string" value="no network connection"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (47%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (48%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (63%)"/>
+        <value type="string" value="caffeine"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (62%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (61%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (57%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (66%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (60%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (73%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (69%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (56%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (52%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (54%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (53%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (46%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (49%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (58%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (51%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (59%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (50%)"/>
+        <value type="string" value="wi-fi network connection “netgear00-5g” active: netgear00-5g (55%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (45%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (53%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (59%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (63%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (67%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (66%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (65%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (56%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (62%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (57%)"/>
+        <value type="string" value="ethernet network connection “wired connection 1” active"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (52%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (50%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (55%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (60%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (70%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (76%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (78%)"/>
+        <value type="string" value="configuring wi-fi network connection “nethawk_5ghz”…"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (68%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (51%)"/>
+        <value type="string" value="ethernet network connection “wired connection 2” active"/>
+        <value type="string" value="wi-fi network connection “nethawk_2ghz” active: nethawk_2ghz (58%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (67%)"/>
+        <value type="string" value="stardict"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (65%)"/>
+        <value type="string" value="javaembeddedframe"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (48%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (53%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (52%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (54%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (58%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (61%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (60%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (62%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (63%)"/>
+        <value type="string" value="telegramdesktop"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (56%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (55%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (57%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_5ghz” active: nethawk_5ghz (59%)"/>
         <value type="string" value="zeal"/>
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="network"/>
       </property>
       <property name="known-items" type="array">
+        <value type="string" value="proton-vpn-app"/>
+        <value type="string" value="qpwgraph"/>
+        <value type="string" value="OpenFreebuds"/>
+        <value type="string" value="transmission"/>
+        <value type="string" value="chrome_status_icon_1"/>
+        <value type="string" value="caffeine"/>
+        <value type="string" value="Proton VPN Tray"/>
+        <value type="string" value="discord1"/>
+        <value type="string" value="KDE Connect Indicator"/>
+        <value type="string" value="steam"/>
+        <value type="string" value="zoom "/>
+        <value type="string" value="gSpeech"/>
         <value type="string" value="Zeal"/>
         <value type="string" value="safeeyes_2"/>
         <value type="string" value="QOpenVPN"/>
@@ -95,17 +188,5 @@
     </property>
     <property name="plugin-24" type="string" value="netload"/>
     <property name="plugin-14" type="string" value="genmon"/>
-    <property name="plugin-1" type="string" value="directorymenu">
-      <property name="base-directory" type="string" value="/home/yusuf"/>
-    </property>
-    <property name="plugin-2" type="string" value="applicationsmenu"/>
-    <property name="plugin-3" type="string" value="tasklist"/>
-    <property name="plugin-4" type="string" value="separator">
-      <property name="style" type="uint" value="3"/>
-    </property>
-    <property name="plugin-5" type="string" value="separator">
-      <property name="expand" type="bool" value="true"/>
-      <property name="style" type="uint" value="0"/>
-    </property>
   </property>
 </channel>
