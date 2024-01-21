@@ -1,0 +1,8 @@
+(undo-tree-save-format-version . 1)
+"f5dd70430eeafb5078a7ed2a5569e64bd587becc"
+[nil nil nil nil (25590 34666 479397 836000) 0 nil]
+([nil nil ((#("kitty bicon." 0 12 (fontified t face font-lock-string-face)) . 1519) (undo-tree-id6 . -11) (undo-tree-id7 . -11) (undo-tree-id8 . -11) (undo-tree-id9 . -12) (undo-tree-id10 . -11) (undo-tree-id11 . -4) (undo-tree-id12 . -4) (undo-tree-id13 . -10) (undo-tree-id14 . -10) (undo-tree-id15 . -11) (undo-tree-id16 . -11) (undo-tree-id17 . -11) (undo-tree-id18 . -12) (undo-tree-id19 . -12) (undo-tree-id20 . -11) 1530 (t 25590 34668 582980 559000)) nil (25592 56895 463189 845000) 0 nil] [nil nil ((2478 . 2479) (#("-" 0 1 (face font-lock-string-face fontified t)) . 2478) (undo-tree-id1 . -1) (t 25127 30348 532119 836000)) ((2478 . 2479) (#("_" 0 1 (face font-lock-string-face fontified t)) . 2478) (t 25590 18522 456067 4000)) (25590 18522 448906 746000) 0 nil])
+([nil nil ((1519 . 1526) (#("bin" 0 3 (fontified t face font-lock-string-face)) . 1519) (undo-tree-id0 . 3) (undo-tree-id1 . -2) (undo-tree-id2 . 3) (undo-tree-id3 . 3) (undo-tree-id4 . -3) (undo-tree-id5 . -3)) nil (25592 56895 463177 876000) 0 nil])
+nil
+([nil current ((1527 . 1530) (t 25592 56895 468741 221000)) nil (25592 56907 733484 178000) 0 nil])
+nil

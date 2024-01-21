@@ -224,14 +224,19 @@ class NMInfo():
         output = '%{A:NM_MENU:}'
         for dev_name, dev_type, dev_state, dev_con in zip(
                 devs['DEVICE'], devs['TYPE'], devs['STATE'], devs['CONNECTION']):
-            if dev_name == 'lo' or dev_name in self.exclude:
+            if dev_name == 'lo' or dev_name in self.exclude or dev_name.startswith('veth'):
                 continue
             output += '%{A3:NMIFINFO_'+dev_name+':}'
             if dev_type == 'wifi' and dev_state == 'connected':
-                # wifi_nets = self.get_wifi_networks(dev_name)
+                wifi_nets = self.get_wifi_networks(dev_name)
+                try:
+                    wifi_signal = float(wifi_nets['SIGNAL'][wifi_nets['SSID'].index(dev_con)])
+                except ValueError:
+                    wifi_signal = 100
+                wifi_icon = '󰤟' if wifi_signal < 25 else '󰤢' if wifi_signal < 50 else '󰤥' if wifi_signal < 75 else '󰤨'
                 # bars = wifi_nets['BARS'][wifi_nets['SSID'].index(dev_con)]
                 output += '%{A2:WIFIQR_'+dev_name+':}'
-                output += ficon('\uf1eb', cdict['green'])
+                output += ficon(wifi_icon, cdict['green'])
                 output += '%{A2}'
                 # output += bars
             elif dev_type == 'wifi' and dev_state == 'disconnected':
@@ -450,9 +455,28 @@ class CPUTemp():
         avg_temp = sum(temps)/len(temps)
         icon = [v for k, v in self.icons_dict.items() if k >= avg_temp or k == 90][0]
         if avg_temp > 80:
-            return '%{F'+cdict['red']+'}'+ficon('\uf769')+str(round(avg_temp))+'%{F-}'
+            return '%{F'+cdict['red']+'}'+ficon(icon)+str(round(avg_temp))+'%{F-}'
         else:
-            return ficon('\uf76b')+str(round(avg_temp))
+            return ficon(icon)+str(round(avg_temp))
+
+    def command(self, event):
+        pass
+
+
+class GPUTemp():
+    def __init__(self):
+        self.wait_time = 30
+        self.updater = None
+        self.icons_dict = {50: '\uf2cb', 60: '\uf2ca', 70: '\uf2c9',
+                           80: '\uf2c8', 90: '\uf2c7'}
+
+    def output(self):
+        gpu_temp = int(cmd_output('nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader'))
+        icon = [v for k, v in self.icons_dict.items() if k >= gpu_temp or k == 90][0]
+        if gpu_temp > 80:
+            return '%{F'+cdict['red']+'}'+ficon(icon)+str(round(gpu_temp))+'G%{F-}'
+        else:
+            return ficon(icon)+str(round(gpu_temp))+'G'
 
     def command(self, event):
         pass
@@ -914,12 +938,13 @@ class XAutoLocker():
     def __init__(self):
         self.wait_time = 6000
         self.updater = None
+        self.coffee_on = '\uf7b6'
         self.coffee = '\uf0f4'
         self.lock = '\uf023'
         self.enabled = False
 
     def output(self):
-        coffee = ficon(self.coffee, cdict['green'] if self.enabled else cdict['dimmed'])
+        coffee = ficon(self.coffee_on if self.enabled else self.coffee, cdict['green'] if self.enabled else cdict['dimmed'])
         lock = ficon(self.lock, cdict['l_yellow'])
         return '%{A:XAUTOLOCK:}'+coffee+'%{A}%{A:XAUTOLOCKNOW:}'+lock+'%{A}'
 

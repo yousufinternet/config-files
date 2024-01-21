@@ -7,7 +7,7 @@ from colors import modus_vivendi as cdict
 from lemonbar_script import MainLoop
 from bar_modules import HerbstluftwmWorkspacesDots, CoronaVirus, ServerStatus,\
     PingTimeOut, PacmanUpdates, NetworkTraffic, DiskUsage, SARCPUUsage,\
-    CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
+    GPUTemp, CPUTemp, RamUsage, Volume, Battery, RandomNum, KeyboardLayout, TimeDate,\
     HerbstluftwmWorkspaces, MPC, OpenWeather, UdiskieMenu, SyncthingIndicator,\
     NMInfo, ficon, PodsBuddy, XAutoLocker, DarkLightSwitcher
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
             HerbstluftwmWorkspaces(tags_icns),
             OpenWeather(apikey),
             PacmanUpdates(),
-            NetworkTraffic(['lo', 'vboxne']), '%{c}', UdiskieMenu(),
+            NetworkTraffic(['lo', 'vboxne', 'tailscale0', 'ipv6']), '%{c}', UdiskieMenu(),
             SyncthingIndicator(), NMInfo(['vnet4', 'vnet5']), PodsBuddy(), XAutoLocker(),
             '%{r}',
             SARCPUUsage(),
@@ -47,13 +47,13 @@ if __name__ == '__main__':
     else:
         modules = [
             HerbstluftwmWorkspaces(tags_icns),
-            OpenWeather(apikey), PacmanUpdates(),
+            OpenWeather(apikey),
             ServerStatus('homeserver', 'HS', 22, 'mediacenter'),
-            PingTimeOut(), NetworkTraffic(['lo', 'vboxne']), '%{c}',
-            UdiskieMenu(), SyncthingIndicator(), NMInfo(),
-            PodsBuddy(), XAutoLocker(), MPC(),
+            PingTimeOut(), NetworkTraffic(['lo', 'vboxne', 'tailscale0', 'ipv6']), SyncthingIndicator(), '%{c}',
+            UdiskieMenu(), NMInfo(),
+            PodsBuddy(), XAutoLocker(),
             '%{r}',
-            SARCPUUsage(), CPUTemp(), RamUsage(percent=True),
+            SARCPUUsage(), GPUTemp(), CPUTemp(), RamUsage(percent=True),
             Volume(), Battery(), DarkLightSwitcher(), KeyboardLayout(),
             TimeDate()
         ]

@@ -3,11 +3,11 @@
 import time
 import subprocess as sp
 
-P = sp.Popen('ssh root@openwrt adb tcpip 5555'.split())
+P = sp.Popen('ssh root@192.168.1.1 adb tcpip 5555'.split())
 P.wait()
 
 time.sleep(2)
-gateway = sp.check_output('ssh root@openwrt ip r', text=True, shell=True)
+gateway = sp.check_output('ssh root@192.168.1.1 ip r', text=True, shell=True)
 print(gateway)
 gateway = gateway.splitlines()[0].split()[2]
 

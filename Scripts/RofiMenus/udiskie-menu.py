@@ -43,7 +43,7 @@ def perform_action(action):
     elif action == 'Mount':
         cmdrun(f'udiskie-mount {drive_info["dev_path"]}')
     elif action == 'Browse':
-        cmdrun(f'kitty bicon.bin ranger "{drive_info["mount_path"]}"')
+        cmdrun(f'konsole -e ranger "{drive_info["mount_path"]}"')
     elif action == 'Unpower':
         cmdrun(f'udiskie-umount -d {drive_info["dev_path"]}')
     elif action == 'Info':

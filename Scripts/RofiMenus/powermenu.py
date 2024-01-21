@@ -9,7 +9,7 @@ cmdrun = partial(sp.Popen, shell=True, text=True,
 actions_dict = {
     'Logout': ('system-log-out-symbolic', 'herbstclient quit'),
     'Suspend': ('system-suspend-symbolic', 'systemctl suspend'),
-    'Reboot': ('system-reboot-symbolic', 'systemctl reboot'),
+    'Reboot': ('system-reboot-symbolic', 'sudo systemctl reboot --force'),
     'Power off': ('system-shutdown-symbolic', 'sudo systemctl poweroff --force'),
 }
 
