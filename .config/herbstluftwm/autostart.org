@@ -1,4 +1,13 @@
-#!/usr/bin/env python
+#+PROPERTY: header-args :tangle autostart :shebang "#!/usr/bin/env python" :tangle-mode (identity #o755)
+* About Herbstluftwm
+
+After discovering the world of tiling window managers, I lived for a while in i3 window manager, it was a gentle introduction to that world, and gave me the time to configure and learn the other needed tools for a complete desktop experience, but soon I started to find certain aspects of i3 less than satisfactory to my needs and likings, for example it is lacking on the configurability side, and the tiling concepts it uses were not what I really needed and wanted, long story short, I landed on herbstluftwm after passing through bspwm, qtile, sway, hyperland and xmonad among others I can't remember. Herbstluftwm concept of frames, the ability to have multiple windows living in the same frame, and having control over the number and locations of these frames, plus the ability to write a configuration file in any programming language I like was exactly the flexibility I needed for my window manager.
+
+* Autostart in python
+
+Python is my language of choice, 
+
+#+begin_src python
 import os
 import subprocess
 
@@ -11,20 +20,38 @@ def hc(*args):
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = not bool(P.stderr.read())
     return P.stdout.read(), err
+#+end_src
 
+* Clear everything on reload
+let it be known that we are reloading our config
+
+#+begin_src python
 hc('emit_hook', 'reload')
 hc('keyunbind', '--all')
 hc('mouseunbind --all')
+#+end_src
 
+* Settings
+** Use the super key as a Mod key
+#+begin_src python
 MOD = 'Mod4'
+#+end_src
 
+** Start with the max frame layout
+According to [[https://www.reddit.com/r/herbstluftwm/comments/iwewnn/settings_default_frame_layout_is_not_working/][r/herbstluftwm]] this has to be set before defining tags, I shifted the entire settings heading above the keybindings one, lets see if it works
+
+#+begin_src python
 hc("set default_frame_layout 2")
 hc("set_layout max")
-
+#+end_src
+** <<tags>> Define tags
+#+begin_src python
 tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'DOCS': '4', 'GIMP': '5',
         'READ': '6', 'AGENDA': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
 tags_lst = list(tags.keys())
-
+#+end_src
+** Theming
+#+begin_src python
 theme_settings = {
     "frame_border_active_color": "'#fe6060'",
     "frame_border_normal_color": "'#93959b'",
@@ -59,12 +86,21 @@ for attr, vlu in theme_attributes.items():
 
 for stng, vlu in theme_settings.items():
     hc(f"set {stng} {vlu}")
-
+#+end_src
+** Detect monitors
+Not sure if this is useless or not
+#+begin_src python
 hc("detect_monitors")
-
+#+end_src
+* Keybindings
+** Leave or reload herbstluftwm
+#+begin_src python
 hc(f'keybind {MOD}-Control-Shift-q quit')
 hc(f'keybind {MOD}-Control-Shift-r reload')
+#+end_src
 
+** Close, focus, resize or move clients
+#+begin_src python
 hc(f'keybind {MOD}-q close_or_remove')
 
 RESIZE_STEP = 0.05
@@ -82,7 +118,10 @@ for dire, key in DIR.items():
     # Resize frames
     hc(f'keybind {MOD}-Shift-Control-{dire.title()} resize {dire} +{RESIZE_STEP}')
     hc(f'keybind {MOD}-Shift-Control-{key} resize {dire} +{RESIZE_STEP}')
+#+end_src
 
+** Create, remove and explode frames 
+#+begin_src python
 # create an empty frame at the specified direction
 hc(f"keybind {MOD}-z split bottom 0.5")
 hc(f"keybind {MOD}-x split right 0.5")
@@ -92,7 +131,11 @@ hc(f"keybind {MOD}-Shift-x split right 0.3")
 hc(f'keybind {MOD}-r remove')
 # let the current frame explode into subframes
 hc(f"keybind {MOD}-Control-space split explode")
+#+end_src
 
+** Switching and moving frames between tags
+See [[tags]] for a list of the defined tags
+#+begin_src python
 hc(f'rename default {list(tags.keys())[0]}')
 for tag, key in tags.items():
     hc(f'add {tag}')
@@ -104,30 +147,51 @@ for tag, key in tags.items():
 # cycle through tags
 hc(f'keybind {MOD}-period use_index +1 --skip-visible')
 hc(f'keybind {MOD}-comma  use_index -1 --skip-visible')
+#+end_src
 
+** Minimized windows
+#+begin_src python
 # window states
 hc(f'keybind {MOD}-m set_attr clients.focus.minimized on')
 hc(f'keybind {MOD}-Ctrl-m jumpto longest-minimized')
 hc(f'keybind {MOD}-Shift-m jumpto last-minimized')
+#+end_src
 
+** Fullscreen and floating windows
+#+begin_src python
 hc(f'keybind {MOD}-f fullscreen toggle')
 hc(f'keybind {MOD}-Shift-f set_attr clients.focus.floating toggle')
 hc(f'keybind {MOD}-Shift-s chain .-. new_attr bool clients.focus.my_sticky'
    ' .-. set_attr clients.focus.my_sticky toggle ')
+#+end_src
 
+** Mouse
+#+begin_src python
 hc(f'mousebind {MOD}-Button1 move')
 hc(f'mousebind {MOD}-Button2 zoom')
 hc(f'mousebind {MOD}-Button3 resize')
+#+end_src
 
+** Switch between monitors, cycle windows
+#+begin_src python
 hc(f'keybind {MOD}-BackSpace   cycle_monitor')
 hc(f'keybind {MOD}-Shift-Tab   cycle_all +1')
 hc(f'keybind {MOD}-c cycle')
 hc(f'keybind {MOD}-Shift-c cycle -1')
+#+end_src
 
+** Jump to urgent windows
+#+begin_src python
 hc(f'keybind {MOD}-grave jumpto urgent')
+#+end_src
 
+** Herbstluftwm manual
+#+begin_src python
 hc(f"keybind {MOD}-Shift-F1 spawn sh -c 'man -Tpdf herbstluftwm | zathura -'")
+#+end_src
 
+* Rules
+#+begin_src python
 hc('unrule -F')
 hc('rule focus=on floatplacement=smart')
 hc("rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on")
@@ -151,7 +215,12 @@ hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=of
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
 hc('rule class="winword.exe" floatplacement=none')
+#+end_src
+* Startup apps
+** Startup commands
+This will define all of our startup programs
 
+#+begin_src python
 startup_cmds = [
     "localectl --no-convert set-x11-keymap us,ara pc104 qwerty"
     " 'grp:alt_shift_toggle,caps:swapescape'",
@@ -179,6 +248,10 @@ startup_cmds = [
     '~/Scripts/LemonBar/start_bar_herbst.py'
 ]
 
+#+end_src
+
+** Start startup apps and host specific apps
+#+begin_src python
 if hc('new_attr bool my_not_first_autostart')[1]:
     for cmd in startup_cmds:
         subprocess.Popen(cmd, text=True, shell=True)
@@ -192,5 +265,9 @@ if hc('new_attr bool my_not_first_autostart')[1]:
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
         subprocess.Popen('autorandr --cycle'.split())
+#+end_src
 
+* Unlock herbstluftwm
+#+begin_src python
 hc("unlock")
+#+end_src
