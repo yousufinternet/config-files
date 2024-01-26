@@ -12,5 +12,6 @@ filepath = sp.check_output(f"qdbus org.pwmt.zathura.PID-{PID} /org/pwmt/zathura 
 filepath = filepath.strip()
 pagenumber = int(pagenumber.strip()) + 1
 fn = os.path.basename(filepath)
+fn = '.'.join(fn.split('.')[:-1])[:10]+('...' if len(fn) > 10 else '.')+fn.split('.')[-1]
 pyperclip.copy(f'[[file:{filepath}::{pagenumber}][{fn}:{pagenumber}]]')
 sp.Popen(f'notify-send -a "Link copied!" "{fn}:{pagenumber}"', shell=True)
