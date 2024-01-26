@@ -84,12 +84,6 @@ config.bind(',hm', 'open --window http://homeserver:8765')
 config.bind(',hi', 'open --window http://homeserver')
 config.bind(',fj', 'spawn prime-run firefox --new-window http://beelinkserver:8096')
 
-# dark style sheets
-path = os.path.expanduser('~/.config/qutebrowser/Dark-stylesheets/')
-stylesheets = ' '.join([os.path.join(path, fn) for fn in os.listdir(path)])
-config.bind(',n', 'config-cycle -t content.user_stylesheets %s;; set colors.webpage.bg ""' % stylesheets)
-config.bind(',N', 'set content.user_stylesheets " ";; set colors.webpage.bg "white"')
-# config.bind(',r', 'spawn --userscript ~/.config/qutebrowser/userscripts/readability-margin')
 config.bind(',r', 'spawn --userscript readability-js')
 config.bind('cc', 'download-clear')
 template_keys = ['ia', 'ir', 'im', 'd']
