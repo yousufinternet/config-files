@@ -233,10 +233,12 @@ class NMInfo():
                     wifi_signal = float(wifi_nets['SIGNAL'][wifi_nets['SSID'].index(dev_con)])
                 except ValueError:
                     wifi_signal = 100
-                wifi_icon = '󰤟' if wifi_signal < 25 else '󰤢' if wifi_signal < 50 else '󰤥' if wifi_signal < 75 else '󰤨'
+                signal_icn = list(' ▁▂▃▄▅▆▇█')
+                wifi_icon = signal_icn[int(80*(len(signal_icn)-1)/100)]
+                # wifi_icon = '󰤟' if wifi_signal < 25 else '󰤢' if wifi_signal < 50 else '󰤥' if wifi_signal < 75 else '󰤨'
                 # bars = wifi_nets['BARS'][wifi_nets['SSID'].index(dev_con)]
                 output += '%{A2:WIFIQR_'+dev_name+':}'
-                output += ficon(wifi_icon, cdict['green'])
+                output += wifi_icon
                 output += '%{A2}'
                 # output += bars
             elif dev_type == 'wifi' and dev_state == 'disconnected':
@@ -962,7 +964,7 @@ class XAutoLocker():
         
 
 class PodsBuddy():
-    def __init__(self, pods_mac='88:D0:39:ED:EA:64'):
+    def __init__(self, pods_mac='C0:D1:93:F0:78:0E'):
         self.wait_time = 30
         self.updater = None
         self.bt_icon = '\uf294'

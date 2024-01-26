@@ -32,17 +32,15 @@ if __name__ == '__main__':
         modules = [
             '%{Sl}' if len(sys.argv) < 2 else '%{S'+sys.argv[1]+'}',
             HerbstluftwmWorkspaces(tags_icns),
-            OpenWeather(apikey),
-            PacmanUpdates(),
-            NetworkTraffic(['lo', 'vboxne', 'tailscale0', 'ipv6']), '%{c}', UdiskieMenu(),
-            SyncthingIndicator(), NMInfo(['vnet4', 'vnet5']), PodsBuddy(), XAutoLocker(),
+            OpenWeather(apikey), PingTimeOut(),
+            ServerStatus('beelinkserver', 'HS', 22, 'yusuf'),
+            NetworkTraffic(['lo', 'vboxne', 'tailscale0', 'ipv6']),
+            '%{c}',
+            UdiskieMenu(), SyncthingIndicator(), NMInfo(['vnet4', 'vnet5']),
+            PodsBuddy(), XAutoLocker(),
             '%{r}',
-            SARCPUUsage(),
-            Volume(),
-            Battery(),
-            DarkLightSwitcher(),
-            KeyboardLayout(),
-            TimeDate()
+            SARCPUUsage(), CPUTemp(), RamUsage(percent=True), Volume(),
+            Battery(), DarkLightSwitcher(), KeyboardLayout(), TimeDate()
         ]
     else:
         modules = [
