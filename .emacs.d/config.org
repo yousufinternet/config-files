@@ -489,6 +489,7 @@ News and tech
 	   "ad" (lambda () (interactive) (dired "~"))
 	   "af" 'elfeed
            "am" 'mu4e
+           "at" 'sdcv-search-pointer
            "ac" (lambda () (interactive) (shell-command "kcolorchooser -print") (insert-buffer "*Shell Command Output*"))
 	   "b" '(:ignore t :which-key "Buffers")
 	   "bb" 'ivy-switch-buffer
@@ -518,7 +519,6 @@ News and tech
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
 	   "fo" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/capture.org"))
 	   "fb" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/BooksProgress.org"))
-	   "fl" (lambda () (interactive) (find-file "~/Public/Syncthing Global/private/home.journal"))
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 	   "o" '(:ignore t :which-key "Global org-mode")
 	   "oa" 'org-agenda
@@ -554,11 +554,13 @@ News and tech
 	    "d" '(:ignore t :which-key "Dates")
 	    "dd" 'org-deadline
 	    "ds" 'org-schedule
+	    "dt" 'org-time-stamp-inactive
 	    "e" '(:ignore t :which-key "Export")
 	    "ee" 'org-export-dispatch
 	    "ep" 'org-latex-export-to-pdf
 	    "eb" 'org-beamer-export-to-pdf
 	    "eh" 'org-mime-htmlize
+            "fa" 'org-attach
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
