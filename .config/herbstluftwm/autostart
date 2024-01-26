@@ -23,6 +23,7 @@ startup_cmds = [
     "perWindowLayoutD",
     "sxhkd -c ~/.config/sxhkd/apps_keys",
     "picom",
+    "/usr/lib/geoclue-2.0/demos/agent", # A bug in redshift require this https://wiki.archlinux.org/title/Redshift
     "redshift",
     "nm-applet", # for notifications
     "udiskie -T",
@@ -33,11 +34,12 @@ startup_cmds = [
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing serve --no-browser",
-    "seadrive -c ~/.config/seadrive/seadrive.conf -d ~/.config/seadrive/data-directory ~/mnt/seadrive",
+    #"seadrive -c ~/.config/seadrive/seadrive.conf -d ~/.config/seadrive/data-directory ~/mnt/seadrive",
     'telegram-desktop',
     # 'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
     # 'davmail ~/.config/davmail/davmail.properties',
-    'xautolock -locker \'dunstctl set-paused true;i3lock -e -c 000000;dunstctl set-paused false\' -notify 30 -notifier "notify-send xautolocker \'locking desktop in 30 secs\'" -detectsleep'
+    'xautolock -locker \'dunstctl set-paused true;~/Scripts/blurredlock.sh;dunstctl set-paused false\' -notify 30 -notifier "notify-send -a xautolocker \'locking in 30 secs\' -i /usr/share/icons/Papirus-Dark/24x24/actions/lock.svg" -detectsleep',
+    '~/Scripts/LemonBar/start_bar_herbst.py'
 ]
 
 # this is a simple config for herbstluftwm
@@ -215,8 +217,7 @@ if hc('new_attr bool my_not_first_autostart')[1]:
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
         subprocess.Popen('autorandr --cycle'.split())
-    elif HOSTNAME == 'yusufs-dell':
-        subprocess.Popen('autorandr --cycle'.split())
-        subprocess.Popen('touchegg')
+    # if HOSTNAME == 'yusufs-dell':
+    #     subprocess.Popen('xinput set-prop "VEN_0488:00 0488:104B Touchpad" "libinput Tapping Enabled" 1', shell=True)
 
 hc("unlock")
