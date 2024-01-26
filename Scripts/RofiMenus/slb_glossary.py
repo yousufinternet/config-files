@@ -13,4 +13,6 @@ rofi_process.stdin.write(str.encode('\n'.join(glossary.keys())))
 rofi_process.wait()
 choice = rofi_process.stdout.read()
 choice = choice.decode('utf-8')
-sp.Popen(f'konsole --hold -e "echo \'{glossary[choice.strip()]}\'"', shell=True)
+answer = glossary[choice.strip()].strip().replace("'", r"\'").replace('"', r'\"')
+cmd = f'konsole --hold -e "echo {answer}"'
+sp.Popen(cmd, shell=True)

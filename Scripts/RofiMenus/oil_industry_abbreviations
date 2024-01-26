@@ -4854,6 +4854,7 @@ DPBT : Dual Profile Build-up Test
 DPC : Dew Point Control
 DPC : Dubai Petroleum Company
 DPC : Datum Plane of Computation
+DPC : Development Petroleum Contract
 DPC SCE : Perforating-Ceramic
 DPD : Dynamic Pressure Drilling
 DPDB : double pole double base(switch)
@@ -7358,6 +7359,7 @@ gg : grains per gallon
 GGD : Gamma Gamma Density
 GGD : gas lift gas distribution
 ggf : Gegebenenfalls
+GGIP : Gas Growth Integrated Project
 GGL : Gamma Gamma Log
 GGP : Pound Sterling
 GGR : Greater Green River
