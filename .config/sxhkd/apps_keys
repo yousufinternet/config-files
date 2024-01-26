@@ -15,6 +15,13 @@ super + ctrl + Return
 super + w
      rofi -show window -terminal $TERMINAL -modi window,windowcd
 
+# search home files
+super + ctrl + shift + f
+     xdg-open "`find ~ | rofi -dmenu -i -p Files search`"
+
+super + ctrl + t
+     ~/Scripts/RofiMenus/timer.py
+
 # oil abbreviations
 super + a
      ~/Scripts/RofiMenus/oil_abbrevs.sh
@@ -86,7 +93,7 @@ super + ctrl + z
 
 # terminal apps
 super + i ; {m,h,n,r,f,p,s}
-	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,btop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
+	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
 super + g ; {c,d,e,f,g,t,q,r,z}
