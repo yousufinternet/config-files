@@ -22,7 +22,7 @@
 
 (defwidget _diskusage [] (box :space-evenly false :spacing 5 (label :class "blue-icon" :text "\\uf0a0") "(/) ${round((EWW_DISK["/"].used / EWW_DISK["/"].total)*100, 0)}%") )
 
-(defwidget _weatherwdgt [] (eventbox :onhover `eww update weather_revealed=true` :halign "start" :onhoverlost `eww update weather_revealed=false` (box :space-evenly false :spacing 5 (label :class "blue-icon" :text {_weather["icon"]}) {_weather["temp"]} "℃" (revealer :reveal weather_revealed :transition "slideleft" (label :class "dimmed" :text {_weather["last_updated"]})))))
+(defwidget _weatherwdgt [] (box :space-evenly false :spacing 5 :tooltip "${_weather["last_updated"]}" (label :class "blue-icon" :text {_weather["icon"]}) {_weather["temp"]} "℃" ))
 
 (defwidget _keyboard [] (eventbox :style "min-width: 40px" :onclick `xkb-switch -n` (box :space-evenly false :spacing 5 (label :class "icon" :text "\\uf11c") {captures(klayout, "(\\w+)")[0][0]})))
 
@@ -52,11 +52,9 @@
 			     (button :onclick `playerctl next` :class "icon" "\\uf051")
 			     (button :onclick `playerctl stop` :class "red-icon" "\\uf04d")
 			     (eventbox :onhover `${EWW_CMD} update playerrevealer=true` :onhoverlost `${EWW_CMD} update playerrevealer=false`
-				       (box :space-evenly false :spacing 5
+				       (box :space-evenly false :spacing 5 :tooltip "${_playerctlartist} - ${_playerctltitle}"
 					    (label :class "green-icon" :text {_playerctlstatus == "Playing" ? "\\uf001" : ""})
-					    (revealer :reveal playerrevealer :transition "slideleft" _playername)
-					    (label :class "dimmed" :text "${_playerctlartist} - ${_playerctltitle}")))
-			     ))
+					    (revealer :reveal playerrevealer :transition "slideleft" _playername)))))
 
 
 
@@ -64,7 +62,7 @@
 
 (defwidget nmliteralstate [] (literal :content _nmliteral))
 
-(defvar disks_reveal true)
+(defvar disks_reveal false)
 
 (defwidget left []
  (box :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
