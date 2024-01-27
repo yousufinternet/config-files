@@ -45,14 +45,12 @@ promptinit
 prompt clint
 
 # Environment
-export EDITOR='emacsclient -c -a ""'
 export PAGER='less'  # used to use more for colors, but the bindings are messed up in more
 export TERMINAL="konsole"
 export RTV_EDITOR='emacsclient -c -a ""'
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$HOME/.config/bspwm/scripts/:$PATH
 export NODE_PATH=$NODE_PATH:$(npm root -g)
-export JDK_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dsun.java2d.opengl=true' 
 
 # Colors for less
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -62,6 +60,26 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# from https://dt.iki.fi/unclutter-home-dir to declutter the home directory
+# XDG directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+
+# jetbrains.com/help/go/configuring-goroot-and-gopath.html
+export GOPATH="$XDG_CACHE_HOME/go"
+
+# doc.rust-lang.org/cargo/reference/environment-variables.html
+export CARGO_HOME="$XDG_CACHE_HOME/cargo"
+
+export NPM_CONFIG_USERCONFIG='$XDG_CONFIG_HOME/npm/rc'
+
+export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dsun.java2d.opengl=true -Duser.home=$XDG_DATA_HOME/java"
+
+export WINEPREFIX="$XDG_DATA_HOME/wine"
 
 # Aliases
 alias radiogolha='cvlc mms://www.radiogolha.net/RadioGolha'
