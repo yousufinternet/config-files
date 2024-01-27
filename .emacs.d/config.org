@@ -513,7 +513,7 @@ News and tech
 	   "fl" 'counsel-locate
 	   "fe" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
 	   "fcc" (lambda () (interactive) (find-file "~/.emacs.d/config.org"))
-	   "fch" (lambda () (interactive) (find-file "~/.config/herbstluftwm/autostart"))
+	   "fch" (lambda () (interactive) (find-file "~/.config/herbstluftwm/autostart.org"))
 	   "fcd" (lambda () (interactive) (find-file "~/.config/dunst/dunstrc"))
 	   "fcx" (lambda () (interactive) (find-file "~/.config/sxhkd/apps_keys"))
 	   "ft" (lambda () (interactive) (find-file "~/Public/Syncthing Global/Notes/TODO.org"))
@@ -560,6 +560,7 @@ News and tech
 	    "ep" 'org-latex-export-to-pdf
 	    "eb" 'org-beamer-export-to-pdf
 	    "eh" 'org-mime-htmlize
+	    "et" 'org-babel-tangle
             "fa" 'org-attach
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
@@ -939,6 +940,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       org-agenda-span 7
       org-agenda-start-on-weekday 1
       org-agenda-skip-scheduled-if-done t
+      org-agenda-todo-ignore-scheduled "future"
       org-agenda-skip-deadline-if-done t
       org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "^[A-Za-z_]\\w*\\.org$"))
 
