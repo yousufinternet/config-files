@@ -188,7 +188,8 @@ config.set("fileselect.single_file.command",
 config.set("fileselect.multiple_files.command",
            ['konsole', '-e', 'ranger', '--choosefiles', '{}'])
 
-c.aliases |= {'paywall': "open https://www.google.com/search?q=cache:{url}"}
+c.aliases |= {'paywall-google': "open https://www.google.com/search?q=cache:{url}"}
+c.aliases |= {'paywall': "open open https://12ft.io/proxy?q={url}"}
 
 c.hints.selectors |= {'paragraph': ['p', 'blockquote', 'code', 'quote']}
 
