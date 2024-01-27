@@ -17,7 +17,7 @@ super + w
 
 # search home files
 super + ctrl + shift + f
-     xdg-open "`find ~ | rofi -dmenu -i -p Files search`"
+     ~/Scripts/fuzzy_file_finder.py
 
 super + ctrl + t
      ~/Scripts/RofiMenus/timer.py
@@ -93,7 +93,7 @@ super + ctrl + z
 
 # terminal apps
 super + i ; {m,h,n,r,f,p,s}
-	$TERMINAL --profile "Black-BigFont" -e {ncmpcpp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
+	$TERMINAL --profile "Black-BigFont" -e {stmp,htop,newsboat,tuir --enable-media,lf,podboat -C ~/.config/podboat/config,pulsemixer}
 
 # GUI apps
 super + g ; {c,d,e,f,g,t,q,r,z}
