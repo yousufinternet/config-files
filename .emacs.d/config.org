@@ -561,7 +561,9 @@ News and tech
 	    "eb" 'org-beamer-export-to-pdf
 	    "eh" 'org-mime-htmlize
 	    "et" 'org-babel-tangle
+	    "f" '(:ignore t :which-key "Files")
             "fa" 'org-attach
+            "fr" 'org-archive-default-command
 	    "n" '(:ignore t :which-key "Create stuff")
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
@@ -580,6 +582,7 @@ News and tech
 	    "ti" 'org-toggle-inline-images
 	    "tl" 'org-toggle-link-display
 	    "tc" 'org-toggle-checkbox
+	    "g" '(:ignore t :which-key "Go and ...")
 	    "ge" 'org-edit-src-code
 	    "ga" 'org-archive-subtree
 	    "gc" '(:ignore t :which-key "Clock Commands")
