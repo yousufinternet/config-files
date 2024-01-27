@@ -1,10 +1,11 @@
 #!/bin/bash
 
-light_par=$(if [ $@ -gt 0 ]; then echo 'A'; else echo 'U'; fi)
+light_par=$(if [ $@ -gt 0 ]; then echo 'inc'; else echo 'dec'; fi)
 amount=$(echo $@ | grep -o -E '[[:digit:]]+')
-light -$light_par $amount
+xbacklight -$light_par $amount
 
-cur_bright=$(light | grep -o -E '[[:digit:]]+' | head -n 1)
+# cur_bright=$(xbacklight -get | grep -o -E '[[:digit:]]+' | head -n 1)
+cur_bright=$(xbacklight -get)
 
 icon='notification-display-brightness-off'
 if [ $cur_bright -gt 70 ]; then
