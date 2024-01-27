@@ -125,8 +125,8 @@ for dire, key in DIR.items():
 # create an empty frame at the specified direction
 hc(f"keybind {MOD}-z split bottom 0.5")
 hc(f"keybind {MOD}-x split right 0.5")
-hc(f"keybind {MOD}-Shift-z split bottom 0.3")
-hc(f"keybind {MOD}-Shift-x split right 0.3")
+hc(f"keybind {MOD}-Shift-z split bottom 0.7")
+hc(f"keybind {MOD}-Shift-x split right 0.7")
 # Merge frames
 hc(f'keybind {MOD}-r remove')
 # let the current frame explode into subframes
@@ -215,6 +215,7 @@ hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=of
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
 hc('rule class="winword.exe" floatplacement=none')
+hc('rule title~sdcv floating=on floatplacement=none')
 #+end_src
 * Startup apps
 ** Startup commands
