@@ -32,7 +32,7 @@
     width = (150, 350)
     height = 300
     origin = top-right
-    offset = 0x20
+    offset = 0x24
     notification_limit = 5
 
     # Show how many messages are currently hidden (because of geometry).
@@ -161,6 +161,7 @@
     ### Icons ###
 
     # Align icons left/right/off
+    icon_theme = "Papirus-Dark"
     icon_position = right
 
     # Scale larger icons down to this size, set to 0 to disable
@@ -184,10 +185,10 @@
 
     # dmenu path.
     #dmenu = /usr/bin/dmenu -p dunst:
-    dmenu = rofi -dmenu -dpi 0 
+    dmenu = /usr/bin/rofi -dmenu -p dunst -dpi 0 
 
     # Browser for opening urls in context menu.
-    browser = qutebrowser -new-tab
+    browser = /usr/bin/xdg-open
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
