@@ -3,6 +3,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export QT_QPA_PLATFORMTHEME=qt5ct
 export EDITOR='emacsclient -c -a ""'
 export RTV_EDITOR='emacsclient -c -a ""'
+export TERMINAL="konsole"
 
 # my scripts and flutter executables
 export PATH=$PATH:$HOME/.local/bin
