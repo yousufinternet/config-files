@@ -6,8 +6,15 @@ download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
 save-path "~/.config/.newsboat/saved_articles/"
-color listfocus white color21
-color listfocus_unread white color196 bold underline
+color background color250 color233
+color listnormal color250 color233
+color listnormal_unread color178 color233 bold
+color listfocus white color19
+color listfocus_unread color253 color124 bold underline
+color title white color232
+color info color250 color232
+color hint-key white color232 bold
+color article white color233
 # color info white color18 bold
 refresh-on-startup yes
 auto-reload yes
@@ -18,18 +25,33 @@ bind-key "o" open-in-browser-and-mark-read
 bind-key "O" open-in-browser
 bind-key "n" toggle-article-read
 bind-key "N" next-unread
+bind-key "j" next
+bind-key "k" prev
+bind-key "l" open
+bind-key "h" quit articlelist
+bind-key "h" quit article
+bind-key "t" toggle-article-read articlelist
+
 toggleitemread-jumps-to-next-unread yes
 
+urls-source "miniflux"
+miniflux-url "http://beelinkserver:8001"
+miniflux-login "admin"
+miniflux-passwordeval "pass beelinkserver:8001/admin"
+miniflux-tokeneval "pass miniflux-newsboat/token"
+
+swap-title-and-hints yes
+
 # some highlights copied and pasted from Luke Smith's dot files
-highlight all "---.*---" yellow
-highlight feedlist ".*(0/0))" black
-highlight article "(^Feed:.*|^Title:.*|^Author:.*)" cyan default bold
-highlight article "(^Link:.*|^Date:.*)" default default
-highlight article "https?://[^ ]+" green default
-highlight article "^(Title):.*$" blue default
-highlight article "\\[[0-9][0-9]*\\]" magenta default bold
-highlight article "\\[image\\ [0-9]+\\]" green default bold
-highlight article "\\[embedded flash: [0-9][0-9]*\\]" green default bold
-highlight article ":.*\\(link\\)$" cyan default
-highlight article ":.*\\(image\\)$" blue default
-highlight article ":.*\\(embedded flash\\)$" magenta default
+# highlight all "---.*---" yellow
+# highlight feedlist ".*(0/0))" black
+# highlight article "(^Feed:.*|^Title:.*|^Author:.*)" cyan default bold
+# highlight article "(^Link:.*|^Date:.*)" default default
+# highlight article "https?://[^ ]+" green default
+# highlight article "^(Title):.*$" blue default
+# highlight article "\\[[0-9][0-9]*\\]" magenta default bold
+# highlight article "\\[image\\ [0-9]+\\]" green default bold
+# highlight article "\\[embedded flash: [0-9][0-9]*\\]" green default bold
+# highlight article ":.*\\(link\\)$" cyan default
+# highlight article ":.*\\(image\\)$" blue default
+# highlight article ":.*\\(embedded flash\\)$" magenta default
