@@ -86,8 +86,8 @@ for dire, key in DIR.items():
 # create an empty frame at the specified direction
 hc(f"keybind {MOD}-z split bottom 0.5")
 hc(f"keybind {MOD}-x split right 0.5")
-hc(f"keybind {MOD}-Shift-z split bottom 0.3")
-hc(f"keybind {MOD}-Shift-x split right 0.3")
+hc(f"keybind {MOD}-Shift-z split bottom 0.7")
+hc(f"keybind {MOD}-Shift-x split right 0.7")
 # Merge frames
 hc(f'keybind {MOD}-r remove')
 # let the current frame explode into subframes
@@ -96,9 +96,11 @@ hc(f"keybind {MOD}-Control-space split explode")
 hc(f'rename default {list(tags.keys())[0]}')
 for tag, key in tags.items():
     hc(f'add {tag}')
+    
     # use previous focused tag if the selected tag is currently focused
     hc(f'keybind {MOD}-{key} or , and . chain .-. compare '
        f'tags.focus.name != {tag} . use {tag} , use_previous')
+    
     hc('keybind', f'{MOD}-Shift-{key}', 'move', tag)
 
 # cycle through tags
@@ -151,6 +153,7 @@ hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=of
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
 hc('rule class="winword.exe" floatplacement=none')
+hc('rule title~sdcv floating=on floatplacement=none')
 
 startup_cmds = [
     "localectl --no-convert set-x11-keymap us,ara pc104 qwerty"
@@ -176,7 +179,7 @@ startup_cmds = [
     # 'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
     # 'davmail ~/.config/davmail/davmail.properties',
     'xautolock -locker \'dunstctl set-paused true;~/Scripts/blurredlock.sh;dunstctl set-paused false\' -notify 30 -notifier "notify-send -a xautolocker \'locking in 30 secs\' -i /usr/share/icons/Papirus-Dark/24x24/actions/lock.svg" -detectsleep',
-    '~/Scripts/LemonBar/start_bar_herbst.py'
+    'mopidy',
 ]
 
 if hc('new_attr bool my_not_first_autostart')[1]:
