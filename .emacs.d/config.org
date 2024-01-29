@@ -765,6 +765,8 @@ Funny thing happened here, I had the pretty-mode package installed all this time
    
    ينبغي أن يظهر النص العربي بنفس الارتفاع وبخط آي بي أم بليكس
    هذه تجربة لمظهر النص العربي باستعمال =خط أميري-ثابت العرض= والذي يمكن استعماله ضمن =النصوص البرمجية والجداول النصيّة= دون مشاكل
+
+   🧛
    
 #+BEGIN_SRC emacs-lisp
   (setq text-scale-mode-step 1.05)
@@ -796,7 +798,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 
 ;; display colored emojis in emacs
 (set-fontset-font t 'emoji
-		    '("Noto Emoji" . "iso10646-1") nil 'prepend)
+		    '("Noto Color Emoji" . "iso10646-1") nil 'prepend)
 ;; (set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
 
 ;; make org source blocks always monospaced

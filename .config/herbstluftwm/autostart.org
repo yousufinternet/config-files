@@ -1,4 +1,6 @@
 #+PROPERTY: header-args :tangle autostart :shebang "#!/usr/bin/env python" :tangle-mode (identity #o755)
+#+STARTUP: overview
+
 * About Herbstluftwm
 
 After discovering the world of tiling window managers, I lived for a while in i3 window manager, it was a gentle introduction to that world, and gave me the time to configure and learn the other needed tools for a complete desktop experience, but soon I started to find certain aspects of i3 less than satisfactory to my needs and likings, for example it is lacking on the configurability side, and the tiling concepts it uses were not what I really needed and wanted, long story short, I landed on herbstluftwm after passing through bspwm, qtile, sway, hyperland and xmonad among others I can't remember. Herbstluftwm concept of frames, the ability to have multiple windows living in the same frame, and having control over the number and locations of these frames, plus the ability to write a configuration file in any programming language I like was exactly the flexibility I needed for my window manager.
@@ -139,9 +141,11 @@ See [[tags]] for a list of the defined tags
 hc(f'rename default {list(tags.keys())[0]}')
 for tag, key in tags.items():
     hc(f'add {tag}')
+    
     # use previous focused tag if the selected tag is currently focused
     hc(f'keybind {MOD}-{key} or , and . chain .-. compare '
        f'tags.focus.name != {tag} . use {tag} , use_previous')
+    
     hc('keybind', f'{MOD}-Shift-{key}', 'move', tag)
 
 # cycle through tags
@@ -246,7 +250,7 @@ startup_cmds = [
     # 'emacs --eval \'(org-agenda nil "a")\' --name AgendaEmacs',
     # 'davmail ~/.config/davmail/davmail.properties',
     'xautolock -locker \'dunstctl set-paused true;~/Scripts/blurredlock.sh;dunstctl set-paused false\' -notify 30 -notifier "notify-send -a xautolocker \'locking in 30 secs\' -i /usr/share/icons/Papirus-Dark/24x24/actions/lock.svg" -detectsleep',
-    '~/Scripts/LemonBar/start_bar_herbst.py'
+    'mopidy',
 ]
 
 #+end_src
