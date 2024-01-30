@@ -14,5 +14,5 @@ rofi_process.wait()
 choice = rofi_process.stdout.read()
 choice = choice.decode('utf-8')
 answer = glossary[choice.strip()].strip().replace("'", r"\'").replace('"', r'\"')
-cmd = f'konsole --hold -e "echo {answer}"'
+cmd = f'konsole --profile "Black-BigFont" --hold -e echo \'{answer}\';read -n 1 Enter'
 sp.Popen(cmd, shell=True)

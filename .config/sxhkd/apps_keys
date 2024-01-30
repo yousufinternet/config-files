@@ -17,7 +17,7 @@ super + w
 
 # search home files
 super + ctrl + shift + f
-     ~/Scripts/fuzzy_file_finder.py
+     ~/Scripts/RofiMenus/fuzzy_file_finder.py
 
 super + ctrl + t
      ~/Scripts/RofiMenus/timer.py
