@@ -7,6 +7,10 @@ time.sleep(1)
 xfce_ids = sp.check_output(
     'xdo id -a xfce4-panel', text=True, shell=True).strip().splitlines()
 try:
+    eww_ids = sp.check_output('xdo id -N "Eww"', text=True, shell=True).splitlines()
+except sp.CalledProcessError:
+    pass
+try:
     eww_ids = sp.check_output('xdo id -N "eww-top_bar"', text=True, shell=True).splitlines()
 except sp.CalledProcessError:
     pass
