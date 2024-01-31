@@ -4,10 +4,12 @@
 (defvar sysstats_exp false)
 
 (defwidget _datetime []
-  (eventbox :onhover `eww update daterevealed=true` :onhoverlost `eww update daterevealed=false` (box :orientation "h" :space-evenly false :spacing 5 
+  (eventbox :onhover `eww update daterevealed=true` :onhoverlost `eww update daterevealed=false` :onclick `~/.config/eww/scripts/toggle_calendar.py` (box :orientation "h" :space-evenly false :spacing 5 
        (label :class "orange-icon" :text "") (revealer :reveal daterevealed :transition "slideright" _date) (label :style "min-width: 45px" :text _time) (label :class "icon" :vexpand false :hexpand false :text ""))))
 
-(defwindow top_bar :monitor 1 :geometry (geometry :width "90%" :height "20px" :y "3px" :anchor "top center") :stacking "bg" :reserve (struts :distance "30px" :side "top") :wmignore false :hexpand false :vexpand true (bar_content))
+(defwindow top_bar :monitor 1 :geometry (geometry :width "90%" :height "24px" :y "0px" :anchor "top center") :stacking "bg" :reserve (struts :distance "24px" :side "top") :wmignore false :hexpand false :vexpand true (bar_content))
+
+(defwindow calendar_pop :monitor 1 :geometry (geometry :width "100px" :height "100px" :x "-30px" :y "40px" :anchor "top right") :stacking "fg" :windowtype "dialog" :wmignore true (calendar :class "subwidget" :day calendar_day :month calendar_month :year calendar_year :show-heading true :show-day-names true))
 
 (defwidget bar_content [] (centerbox :orientation "horizontal" :hexpand false (left) (center) (right)))
 

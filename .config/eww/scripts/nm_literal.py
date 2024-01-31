@@ -46,7 +46,7 @@ def output_wrapper():
     if list(devs.keys())[0] == 'Error:':
         print('(label :class "dimmed" :text "loading...")')
         return
-    output = '(eventbox :onclick "rofi -show nmmenu -modi nmmenu:~/Scripts/RofiMenus/nmcli-menu.py &" (box :space-evenly false :spacing 5 {}))'
+    output = '(eventbox :vexpand true :valign "center" :onclick "rofi -show nmmenu -modi nmmenu:~/Scripts/RofiMenus/nmcli-menu.py &" (box :space-evenly false :spacing 5 {}))'
     common_device = '(label :tooltip {dev_info} :class "{color}-icon" :text "{icon}")'
     eww_devs = []
     for dev_name, dev_type, dev_state, dev_con in zip(

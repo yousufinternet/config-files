@@ -23,3 +23,7 @@
 (deflisten _nmliteral :initial "(label :class \"dimmed\" :text \"loading..\")" "./scripts/nm_literal.py")
 
 (deflisten klayout :initial "us" `xkb-switch -W`)
+
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_month :interval "10h" "scripts/calendar")
+(defpoll calendar_year :interval "10h" "date '+%Y'")

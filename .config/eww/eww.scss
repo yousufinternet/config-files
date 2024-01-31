@@ -70,4 +70,25 @@ color: #4c4c4c
     font-style: italic;
 }
 
+calendar.button {
+    color: orange;
+}
+
+calendar.header {
+    color: orange;
+    font-weight: bold;
+}
+
+calendar:selected {
+    color: orange;
+    font-weight: bold;
+}
+
+calendar.highlight {
+    font-weight: bold;
+}
+
+calendar:indeterminate {
+    color: #aaaaaa;
+}
 

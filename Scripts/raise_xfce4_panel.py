@@ -6,7 +6,14 @@ import subprocess as sp
 time.sleep(1)
 xfce_ids = sp.check_output(
     'xdo id -a xfce4-panel', text=True, shell=True).strip().splitlines()
-eww_ids = sp.check_output('xdo -i -N Eww', text=True, shell=True).splitlines()
+try:
+    eww_ids = sp.check_output('xdo id -N "eww-top_bar"', text=True, shell=True).splitlines()
+except sp.CalledProcessError:
+    pass
+try:
+    eww_ids = sp.check_output('xdo id -N "eww-top_bar_2"', text=True, shell=True).splitlines()
+except sp.CalledProcessError:
+    pass
 for i in xfce_ids:
     for e in eww_ids:
         sp.Popen(
