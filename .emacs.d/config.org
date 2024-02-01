@@ -565,6 +565,7 @@ News and tech
             "fa" 'org-attach
             "fr" 'org-archive-default-command
 	    "n" '(:ignore t :which-key "Create stuff")
+            "nl" 'org-insert-link
 	    "nt" 'org-table-create-with-table.el
 	    "n|" 'org-table-create-or-convert-from-region
 	    "na" (lambda () (interactive) (insert (string-join '("#+HTML: <span dir=\"rtl\">" "#+HTML:<center>" "...مع التقدير" "#+HTML:</center>" "#+HTML: </span>") "\n")))

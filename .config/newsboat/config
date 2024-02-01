@@ -6,6 +6,8 @@ download-full-page yes
 keep-articles-days 15
 notify-program "notify-send"
 save-path "~/.config/.newsboat/saved_articles/"
+
+# Colors
 color background color250 color233
 color listnormal color250 color233
 color listnormal_unread color178 color233 bold
@@ -39,6 +41,9 @@ miniflux-url "http://beelinkserver:8001"
 miniflux-login "admin"
 miniflux-passwordeval "pass beelinkserver:8001/admin"
 miniflux-tokeneval "pass miniflux-newsboat/token"
+
+bookmark-cmd "~/Scripts/newsboat_bookmark_ia.py"
+bookmark-autopilot yes
 
 swap-title-and-hints yes
 
