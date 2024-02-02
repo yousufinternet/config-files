@@ -18,12 +18,15 @@ color info color250 color232
 color hint-key white color232 bold
 color article white color233
 # color info white color18 bold
+
 refresh-on-startup yes
 auto-reload yes
 reload-threads 10
 reload-only-visible-feeds yes
 notify-always yes
 bind-key "o" open-in-browser-and-mark-read
+confirm-mark-feed-read no
+
 bind-key "O" open-in-browser
 bind-key "n" toggle-article-read
 bind-key "N" next-unread
