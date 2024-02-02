@@ -712,6 +712,8 @@ evil-mode-line-tag
 
 ** Emojis and ligatures
 Funny thing happened here, I had the pretty-mode package installed all this time but I was calling ~global-pretty-mode~ with a =t= argument, it turns out it needs to be called with a ~nil~ argument for it to be enabled, I now have pretty symbols in my code
+
+😵
    #+BEGIN_SRC emacs-lisp
 (use-package company-emoji
 	:ensure t
@@ -770,58 +772,62 @@ Funny thing happened here, I had the pretty-mode package installed all this time
    🧛
    
 #+BEGIN_SRC emacs-lisp
-  (setq text-scale-mode-step 1.05)
-;; reapply font settings on every new frame. see after-make-frame-functions hook
-(defun reapply-font (&optional frame)
-(interactive)
-(setq default-font-height 120)
-    (set-face-attribute 'default nil
-			:family "Fira Code"
-			:height default-font-height
-			:weight 'regular)
+    (setq text-scale-mode-step 1.05)
+  ;; reapply font settings on every new frame. see after-make-frame-functions hook
+  (defun reapply-font (&optional frame)
+  (interactive)
+  (setq default-font-height 120)
+      (set-face-attribute 'default nil
+			  :family "Fira Code"
+			  :height default-font-height
+			  :weight 'regular)
 
 
-;; Monospaced font with arabic support
-;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
-(set-fontset-font t 'arabic (font-spec :family "Amiri Typewriter"))
-;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
-(set-face-attribute 'fixed-pitch nil :family "Fira Code" :height default-font-height :weight 'regular :fontset "fontset-default")
+  ;; Monospaced font with arabic support
+  ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Dejavu Sans Mono"))
+  (set-fontset-font t 'arabic (font-spec :family "Amiri Typewriter"))
+  ;; (set-fontset-font "fontset-default" 'arabic (font-spec :family "Kawkab Mono" :size 10.5))
+  (set-face-attribute 'fixed-pitch nil :family "Fira Code" :height default-font-height :weight 'regular :fontset "fontset-default")
 
-;; Arabic fallback font (search if non existant)
-;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
-(set-fontset-font t 'arabic (font-spec :script 'arabic) nil 'append)
+  ;; Arabic fallback font (search if non existant)
+  ;; (set-fontset-font t 'arabic "Dejavu Sans Mono")
+  (set-fontset-font t 'arabic (font-spec :script 'arabic) nil 'append)
+  (set-fontset-font t 'emoji '("JoyPixels" . "iso10646-1") nil 'prepend)
 
-;; proportional font
-(create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
-(set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height default-font-height))
-(set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
-(set-face-attribute 'variable-pitch nil :font "Roboto" :fontset "fontset-proportional")
+  ;; proportional font
+  (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
+  (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height default-font-height))
+  (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
+  ;; (set-fontset-font "fontset-proportional" 'emoji (font-spec :family "JoyPixels"))
+  (set-face-attribute 'variable-pitch nil :fontset "fontset-proportional")
 
-;; display colored emojis in emacs
-(set-fontset-font t 'emoji
-		    '("Noto Color Emoji" . "iso10646-1") nil 'prepend)
-;; (set-fontset-font "fontset-default" 'symbol (font-spec :family "JoyPixels"))
+  ;; display colored emojis in emacs
+  ;; (set-fontset-font t 'emoji
+  ;; 		    '("Noto Color Emoji" . "iso10646-1") nil 'prepend)
+  ;; (set-fontset-font "fontset-default" 'symbol (font-spec :family "Noto Color Emoji"))
+  ;; (setq use-default-font-for-symbols nil)
 
-;; make org source blocks always monospaced
-(set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
-(set-face-attribute 'org-level-2 nil :height 145)
-(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
+  ;; make org source blocks always monospaced
+  ;; (set-face-attribute 'emoji nil :family "Noto Color Emoji")
+  (set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
+  (set-face-attribute 'org-level-2 nil :height 145)
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
 
-(global-prettify-symbols-mode)
-)
+  (global-prettify-symbols-mode)
+  )
 
-;; removed after updating to emacs 28.1
-;; (use-package unicode-fonts
-;;    :ensure t
-;;    :config
-;;       (unicode-fonts-setup))
+  ;; removed after updating to emacs 28.1
+  ;; (use-package unicode-fonts
+  ;;    :ensure t
+  ;;    :config
+  ;;       (unicode-fonts-setup))
 
-    (add-hook 'after-make-frame-functions 'reapply-font)
+      (add-hook 'after-make-frame-functions 'reapply-font)
 #+END_SRC
 
 ** Themes 
@@ -948,6 +954,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       org-agenda-skip-scheduled-if-done t
       org-agenda-todo-ignore-scheduled "future"
       org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-deadline-is-shown t
       org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "^[A-Za-z_]\\w*\\.org$"))
 
 ;;Setup agenda icons
@@ -1798,7 +1805,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 (setq initial-scratch-message
  (concat "Welcome to Yusuf's Emacs\n\n"
  (mapconcat  (lambda (x) (format "[[%s][%s]]" x (url-file-nondirectory x))) recentf-list "\n")
- "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src")) ; print a default message in the empty scratch buffer opened at startup
+ "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src\n😀😀")) ; print a default message in the empty scratch buffer opened at startup
 (reapply-font)
 (alert "daemon loaded successfully")
   #+end_src
