@@ -24,6 +24,10 @@
 
 (deflisten klayout :initial "us" `xkb-switch -W`)
 
+(defpoll _syncthing :interval '60s' :initial `./scripts/syncthing.py` `./scripts/syncthing.py`)
+
+(deflisten _dunst :initial "(eventbox :onclick `~/.config/eww/scripts/dunsttoggle.sh` :onrightclick `dunstctl history-pop` (label :class \"blue-icon\" :text \"\"))" "~/.config/eww/scripts/dunst_ctl.py")
+
 (defpoll calendar_day :interval "10h" "date '+%d'")
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")

@@ -1,14 +1,11 @@
 (include "polls_listeners.yuck")
 
-(defvar daterevealed false)
-(defvar sysstats_exp false)
-
 (defwindow top_bar
 	   :monitor 1
 	   :geometry (geometry :width "90%" :height "24px" :y "2px" :anchor "top center")
-	   :stacking "bg"
+	   :stacking "bt"
 	   :reserve (struts :distance "28px" :side "top")
-	   :wmignore false
+	   :wmignore true
 	   :hexpand false
 	   :vexpand false
 	   (bar_content))
@@ -16,9 +13,9 @@
 (defwindow top_bar_2
 	   :monitor 0
 	   :geometry (geometry :width "90%" :height "24px" :y "2px" :anchor "top center")
-	   :stacking "bg"
+	   :stacking "bt"
 	   :reserve (struts :distance "28px" :side "top")
-	   :wmignore false
+	   :wmignore true
 	   :hexpand false
 	   :vexpand false
 	   (bar_content))
@@ -40,16 +37,48 @@
 	   ;; :wmignore true
 	   (calendar :class "subwidget" :day calendar_day :month calendar_month :year calendar_year :show-heading true :show-day-names true))
 
-(defwidget _datetime []
-  (eventbox :onhover `eww update daterevealed=true` :onhoverlost `eww update daterevealed=false` :onclick `~/.config/eww/scripts/toggle_calendar.py` (box :orientation "h" :space-evenly false :spacing 5 
-       (label :class "orange-icon" :text "") (revealer :reveal daterevealed :transition "slideright" _date) (label :style "min-width: 45px" :text _time) (label :class "icon" :vexpand false :hexpand false :text ""))))
 
-(defwidget bar_content [] (centerbox :orientation "horizontal" :hexpand false (left) (center) (right)))
+(defvar daterevealed false)
+(defvar sysstats_exp false)
+
+(defwidget _datetime []
+	   (eventbox
+	    :onhover `eww update daterevealed=true`
+	    :onhoverlost `eww update daterevealed=false`
+	    :onclick `~/.config/eww/scripts/toggle_calendar.py`
+	    (box
+	     :orientation "h"
+	     :space-evenly false
+	     :spacing 5
+	     (label :class "orange-icon" :text "")
+	     (revealer :reveal daterevealed :transition "slideright" _date)
+	     (label :style "min-width: 45px" :text _time)
+	     (label :class "icon" :vexpand false :hexpand false :text ""))))
+
+(defwidget bar_content []
+	   (centerbox :orientation "horizontal"
+		      :hexpand false
+		      :vexpand false (left) (center) (right)))
 
 (defwidget _workspace []
-  (box :class "icon" (for entry in workspaces_json (button :onclick `herbstclient use_index "${entry.ws_no}"` :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
+	   (box
+	    :class "icon"
+	    (for entry in workspaces_json
+		 (button :onclick `herbstclient use_index "${entry.ws_no}"`
+			 :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
 
-(defwidget _sysstats [] (eventbox :onclick {sysstats_exp ? `eww update sysstats_exp=false` : `eww update sysstats_exp=true`} (box :space-evenly false :spacing 5 (literal :content _cpuusage) (revealer :transition "slideleft" :vexpand true :hexpand true :halign "end" :reveal sysstats_exp (box :class "subwidget" :vexpand true :space-evenly false :spacing 5 (literal :content _cputemp) (literal :content _gputemp))))))
+(defwidget _sysstats []
+	   (eventbox :onclick {sysstats_exp ? `eww update sysstats_exp=false` : `eww update sysstats_exp=true`}
+		     (box :space-evenly false
+			  :spacing 5
+			  (literal :content _cpuusage)
+			  (revealer :transition "slideleft"
+				    :vexpand true :hexpand true
+				    :halign "end" :reveal sysstats_exp
+				    (box :class "subwidget" :vexpand true
+					 :space-evenly false :spacing 5
+					 (literal :content _cputemp)
+					 (literal :content _gputemp))))))
 
 (defvar weather_revealed false)
 
@@ -100,11 +129,11 @@
 (defvar disks_reveal false)
 
 (defwidget left []
- (box :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
+ (box :vexpand false :style "border 2px solid white" :class "main_container" :orientation "h" :space-evenly false :halign "start" :spacing 10 (_workspace) (_weatherwdgt) (playerctl)))
 
-(defwidget center [] (box :space-evenly false :class "main_container" :spacing 10 (bluetooth_devices) (literal :content _udiskie) (coffee_widget) (nmliteralstate)))
+(defwidget center [] (box :vexpand false :space-evenly false :class "main_container" :spacing 10 (bluetooth_devices) (literal :content _udiskie) (coffee_widget) (literal :content _dunst) (literal :content _syncthing) (nmliteralstate)))
 
-(defwidget right [] (box :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10
+(defwidget right [] (box :vexpand false :style "border 2px solid white" :orientation "h" :class "main_container" :halign "end" :space-evenly false :spacing 10
 			 (literal :content _volume)
 			 (_keyboard)
 			 (_ramusage)
