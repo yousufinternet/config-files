@@ -909,6 +909,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 	      ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
 	      ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
 	    org-log-done 'note
+            org-link-elisp-skip-confirm-regexp "(find-file"
 	    org-imenu-depth 3)
 
     (append org-modules '(habits))
@@ -1803,9 +1804,9 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
   #+begin_src emacs-lisp
 (setq initial-scratch-message
- (concat "Welcome to Yusuf's Emacs\n\n"
- (mapconcat  (lambda (x) (format "[[%s][%s]]" x (url-file-nondirectory x))) recentf-list "\n")
- "\n\nELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n#+end_src\n😀😀")) ; print a default message in the empty scratch buffer opened at startup
+ (concat "* Welcome 😀 to Yusuf's 🏠 Emacs ☕\n** Recent files (<SPC o o> to open)\n"
+ (mapconcat  (lambda (x) (format " + [[elisp:(find-file \"%s\")][%s]]" x (url-file-nondirectory x))) recentf-list "\n")
+ "\n\n** ELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n(auto-package-update-now)\n#+end_src\n")) ; print a default message in the empty scratch buffer opened at startup
 (reapply-font)
 (alert "daemon loaded successfully")
   #+end_src
