@@ -1,0 +1,28 @@
+(include "polls.yuck")
+(defvar volume_reveal false)
+
+(defwindow vertical_bar
+	   :monitor 0
+	   :geometry (geometry :width "24px" :height "100%" :y "2px" :anchor "top left")
+	   :stacking "bt"
+	   :reserve (struts :distance "28px" :side "left")
+	   :wmignore true
+	   :hexpand false
+	   :vexpand false
+	   (vertical_bar_content))
+
+(defwidget vertical_bar_content []
+	   (centerbox :orientation "vertical"
+		      :hexpand false
+		      :vexpand false (top) (vcenter) (down)))
+
+
+(defwidget top [] (box :vexpand false :orientation "v" :class "main_container" :valign "start" :space-evenly false :spacing 10 "cc"))
+
+(defwidget vcenter [] (box :vexpand false :orientation "v" :class "main_container" :valign "center" :space-evenly false :spacing 10 "cc"))
+
+(defwidget down [] (box :vexpand false :orientation "v" :class "main_container" :valign "end" :space-evenly false :spacing 10
+			 (literal :content _volume)
+			 ))
+
+

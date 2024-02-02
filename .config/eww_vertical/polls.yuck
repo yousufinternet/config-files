@@ -1,0 +1,1 @@
+(defpoll _volume :interval '1s' :initial `./scripts/volume_control.py` `./scripts/volume_control.py`)

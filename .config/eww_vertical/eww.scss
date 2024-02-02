@@ -1,0 +1,93 @@
+$surface-darkgrey: #20252b;
+$surface-fg: #949494;
+$surface-lightgrey: #3d464e;
+$surface-grey: #2b3238;
+$surface-red: #f87070;
+* { all: unset; font-size: 13px}
+
+.main_container {
+    background-color: black;
+    border-radius: 5px;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Fira Sans Compressed';
+}
+
+scale trough {all: unset; background-color: grey; min-height: 5px; min-width: 80px; border-radius: 5px}
+
+scale trough highlight {all: unset; background-color: #2eafff; border-radius: 5px}
+
+.icon {
+font-family: 'Font Awesome 6 Free'; 
+}
+
+.yellow-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: yellow;
+}
+
+.orange-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: orange;
+}
+
+.red-icon {
+font-family: 'Font Awesome 6 Free'; 
+color:#b84028;
+}
+
+.blue-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: #2eafff;
+}
+
+.nerd-green-icon {
+font-family: 'Iosevka Nerd Font Mono'; 
+font-size: 18pt;
+color: #55ff85;
+}
+
+.green-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: #55ff85;
+}
+
+.grey-icon {
+font-family: 'Font Awesome 6 Free'; 
+color: #4c4c4c;
+}
+
+.subwidget {
+    border-radius: 5px; background-color: #222222;
+    padding-left: 5px; padding-right: 5px;
+    margin-top: 1px; margin-bottom: 1px; font-size: 10pt
+}
+
+.dimmed {
+    color: #aaaaaa;
+    font-style: italic;
+}
+
+calendar.button {
+    color: orange;
+}
+
+calendar.header {
+    color: orange;
+    font-weight: bold;
+}
+
+calendar:selected {
+    color: orange;
+    font-weight: bold;
+}
+
+calendar.highlight {
+    font-weight: bold;
+}
+
+calendar:indeterminate {
+    color: #aaaaaa;
+}
+
