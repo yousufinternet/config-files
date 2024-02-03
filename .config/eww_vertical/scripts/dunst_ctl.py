@@ -18,7 +18,7 @@ def output_wrapper():
     icon = f'(label :class "{icon_color}" :text "{paused if is_paused else notify}")'
 
     if waiting:
-        icon = f'(box :spacing 2 {icon} "{waiting}")'
+        icon = f'(box :orientation "v" :spacing 2 {icon} "{waiting}")'
     print(f'(eventbox :onclick `~/.config/eww/scripts/dunsttoggle.sh` :onrightclick `dunstctl history-pop` {icon})')
 
 while True:

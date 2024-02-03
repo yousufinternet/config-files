@@ -17,7 +17,7 @@ numbers = False
 
 def output():
     tags_status = sp.getoutput('herbstclient tag_status').strip()
-    format_dict = {':': 'color: white', '-': 'background-color: orange; color:black', '.': 'border-bottom: 2px solid cyan',
+    format_dict = {':': 'color: white', '-': 'background-color: orange; color:black', '.': 'color:grey',
                     '!': 'color: red', '#': 'background-color: white; color: black'}
 
     formatted_ws = []

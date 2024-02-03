@@ -1,1 +1,15 @@
-(defpoll _volume :interval '1s' :initial `./scripts/volume_control.py` `./scripts/volume_control.py`)
+(deflisten _volume "./scripts/volume_control.py")
+
+(defpoll _hour :interval "1m" `date +'%H'`)
+(defpoll _min :interval "1m" `date +'%M'`)
+(defpoll _day :interval "5m" `date +'%a'`)
+(defpoll _month :interval "5m" `date +'%b'`)
+(defpoll _monthnum :interval "5m" `date +'%m'`)
+(defpoll _daynum :interval "5m" `date +'%d'`)
+
+(deflisten workspaces_json :initial '[{"ws_no": 0, "ws_icn": "x", "ws_style": ""}]'
+  "./scripts/herbstluftwm_workspaces.py")
+
+(deflisten nmliteralstate "./scripts/nm_literal.py")
+(deflisten dunstctl "./scripts/dunst_ctl.py")
+(defpoll _udiskie :interval "10s" `./scripts/udiskie.py`)

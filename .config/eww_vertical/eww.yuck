@@ -1,28 +1,72 @@
 (include "polls.yuck")
 (defvar volume_reveal false)
+(defvar disks_reveal false)
+(defvar datesize "16px")
 
 (defwindow vertical_bar
 	   :monitor 0
-	   :geometry (geometry :width "24px" :height "100%" :y "2px" :anchor "top left")
+	   :geometry (geometry :width "24px" :height "100%" :x "0px" :y "0px" :anchor "top left")
+	   :stacking "bt"
+	   :reserve (struts :distance "40px" :side "left")
+	   ;; :wmignore true
+	   :hexpand false
+	   :vexpand false
+	   (vertical_bar_content))
+
+(defwindow v_bar_2
+	   :monitor 1
+	   :geometry (geometry :width "24px" :height "100%" :x "2px" :y "0px" :anchor "top left")
 	   :stacking "bt"
 	   :reserve (struts :distance "28px" :side "left")
-	   :wmignore true
+	   ;; :wmignore true
 	   :hexpand false
 	   :vexpand false
 	   (vertical_bar_content))
 
 (defwidget vertical_bar_content []
 	   (centerbox :orientation "vertical"
+		      :class "main_container" 
 		      :hexpand false
 		      :vexpand false (top) (vcenter) (down)))
 
+(defwidget _workspace []
+	   (box
+	    :class "icon"
+	    :orientation "v"
+	    (for entry in workspaces_json
+		 (button :onclick `herbstclient use_index "${entry.ws_no}"`
+			 :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
 
-(defwidget top [] (box :vexpand false :orientation "v" :class "main_container" :valign "start" :space-evenly false :spacing 10 "cc"))
+(defwidget _datetime []
+	   (eventbox
+	    :hexpand false
+	    :onclick `~/.config/eww/scripts/toggle_calendar.py`
+	    (box
+	     :hexpand false
+	     :orientation "v"
+	     :space-evenly false
+	     :spacing 5
+	     (label :class "orange-icon" :hexpand false :text "")
+	     (box :spacing 0 :orientation "v" _day (label :style "font-size: ${datesize}" :text _daynum) _month)
+	     ;; (box :spacing 0 :orientation "v" (label :style "font-size: ${datesize}" :text _monthnum) )
+	     (label :class "blue-icon" :hexpand false :text "")
+	     (box :spacing 0 :orientation "v" (label :style "font-size: ${datesize}" :text _hour) (label :style "font-size: ${datesize}" :text _min))
+	     )))
 
-(defwidget vcenter [] (box :vexpand false :orientation "v" :class "main_container" :valign "center" :space-evenly false :spacing 10 "cc"))
+(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing 10 (_workspace)))
 
-(defwidget down [] (box :vexpand false :orientation "v" :class "main_container" :valign "end" :space-evenly false :spacing 10
-			 (literal :content _volume)
+(defwidget vcenter [] (box
+		       :vexpand false :orientation "v"
+		       :valign "center" :space-evenly false
+		       :spacing 10
+		       (literal :content nmliteralstate)
+		       (literal :content dunstctl)
+		       (literal :content _udiskie)
+		       (literal :content _volume)
+		       ))
+
+(defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing 10
+			 (_datetime)
 			 ))
 
 
