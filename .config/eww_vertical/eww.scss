@@ -1,83 +1,107 @@
-$surface-darkgrey: #20252b;
-$surface-fg: #949494;
-$surface-lightgrey: #3d464e;
-$surface-grey: #2b3238;
-$surface-red: #f87070;
+$main-bg: #000e17;
+$main-fg: #ceeeff;
+$alt-bg: #242e39;
+$alt-fg: #b0a0a0;
+$dim-fg: #70819f;
+$dim-bg: #1a202b;
+$red: #ef656a;
+$green: #1fa526;
+$yellow: #c48502;
+$orange: #e6832f;
+$blue: #379cf6;
+$cyan: #4fb0cf;
+
+
 * { all: unset; font-size: 13px}
 
 .main_container {
-    background-color:#160f23;
+    background-color:$main-bg;
+    color: $main-fg;
+    border: solid 1px $main-fg;
     border-radius: 5px;
     padding: 2px;
     font-family: 'Fira Sans Compressed';
 }
 
-scale trough {all: unset; background-color: grey; min-height: 5px; min-width: 80px; border-radius: 5px}
+scale trough {all: unset; background-color: grey; min-height: 80px; min-width: 5px; border-radius: 5px}
 
 scale trough highlight {all: unset; background-color: #2eafff; border-radius: 5px}
 
 .icon {
 font-family: 'Font Awesome 6 Free'; 
+color: $main-fg;
+}
+
+.highlight-icon {
+font-family: 'Font Awesome 6 Free'; 
+background-color: $main-fg;
+color: $main-bg;
+}
+
+.alt-highlight-icon {
+font-family: 'Font Awesome 6 Free'; 
+background-color: $blue;
+color: $main-bg;
 }
 
 .yellow-icon {
 font-family: 'Font Awesome 6 Free'; 
-color: yellow;
+color: $yellow;
 }
 
 .orange-icon {
 font-family: 'Font Awesome 6 Free'; 
-color: orange;
+color: $orange;
 }
 
 .red-icon {
 font-family: 'Font Awesome 6 Free'; 
-color:#b84028;
+color: $red;
 }
 
 .blue-icon {
 font-family: 'Font Awesome 6 Free'; 
-color: #2eafff;
+color: $blue;
 }
 
 .nerd-green-icon {
 font-family: 'Iosevka Nerd Font Mono'; 
 font-size: 18pt;
-color: #55ff85;
+color: $green;
 }
 
 .green-icon {
 font-family: 'Font Awesome 6 Free'; 
-color: #55ff85;
+color: $green;
 }
 
 .grey-icon {
 font-family: 'Font Awesome 6 Free'; 
-color: #4c4c4c;
+color: $dim-fg;
 }
 
 .subwidget {
-    border-radius: 5px; background-color: #222222;
-    padding-left: 5px; padding-right: 5px;
-    margin-top: 1px; margin-bottom: 1px; font-size: 10pt
+    border-radius: 5px; background-color: $alt-bg;
+    padding-bottom: 5px; padding-top: 5px;
+    margin-left: 1px; margin-right: 1px; font-size: 10pt
 }
 
 .dimmed {
-    color: #aaaaaa;
+    color: $alt-fg;
     font-style: italic;
 }
 
 calendar.button {
-    color: orange;
+    color: $orange;
 }
 
 calendar.header {
-    color: orange;
+    color: $orange;
     font-weight: bold;
 }
 
 calendar:selected {
-    color: orange;
+    color: $orange;
     font-weight: bold;
 }
 
@@ -86,6 +110,6 @@ calendar.highlight {
 }
 
 calendar:indeterminate {
-    color: #aaaaaa;
+    color: $alt-fg;
 }
 

@@ -5,9 +5,9 @@
 
 (defwindow vertical_bar
 	   :monitor 0
-	   :geometry (geometry :width "24px" :height "100%" :x "0px" :y "0px" :anchor "top left")
+	   :geometry (geometry :width "24px" :height "100%" :x "2px" :y "0px" :anchor "top left")
 	   :stacking "bt"
-	   :reserve (struts :distance "40px" :side "left")
+	   :reserve (struts :distance "30px" :side "left")
 	   ;; :wmignore true
 	   :hexpand false
 	   :vexpand false
@@ -31,11 +31,10 @@
 
 (defwidget _workspace []
 	   (box
-	    :class "icon"
 	    :orientation "v"
 	    (for entry in workspaces_json
 		 (button :onclick `herbstclient use_index "${entry.ws_no}"`
-			 :style "padding: 2px; border-radius: 2px; font-family: 'Font Awesome 6 Free'; ${entry.ws_style}" "${entry.ws_icn}"))))
+			 :class "${entry.ws_style}" :style "padding: 2px" "${entry.ws_icn}"))))
 
 (defwidget _datetime []
 	   (eventbox
@@ -53,7 +52,27 @@
 	     (box :spacing 0 :orientation "v" (label :style "font-size: ${datesize}" :text _hour) (label :style "font-size: ${datesize}" :text _min))
 	     )))
 
-(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing 10 (_workspace)))
+(defvar xautolocker_enabled true)
+
+;; defvar doesn't support variable evaluation in string, so ${EWW_CMD} doesn't work
+(defwidget coffee_widget []
+	   (box
+	    :space-evenly false :spacing 5
+	    :orientation "v"
+	    (button :halign "center"
+		    :onclick {xautolocker_enabled ? "xautolock -disable;xset -dpms;${EWW_CMD} update xautolocker_enabled=false" : "xautolock -enable;xset +dpms;${EWW_CMD} update xautolocker_enabled=true"}
+		    :class "${xautolocker_enabled ? 'grey' : 'green'}-icon"
+		    {xautolocker_enabled ? "\\uf0f4" : "\\uf7b6"})
+	    (button :halign "center" :onclick `xautolock -locknow` :class "yellow-icon" "\\uf023")))
+
+
+(defwidget weather [] (box
+		       :space-evenly false :spacing 2
+		       :orientation "v" :tooltip "${_weather["last_updated"]}"
+		       (label :class "blue-icon" :text {_weather["icon"]})
+		       {_weather["temp"]}))
+
+(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing 10 (_workspace) (weather)))
 
 (defwidget vcenter [] (box
 		       :vexpand false :orientation "v"
@@ -63,9 +82,11 @@
 		       (literal :content dunstctl)
 		       (literal :content _udiskie)
 		       (literal :content _volume)
+		       (coffee_widget)
 		       ))
 
 (defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing 10
+			 (literal :content _battery)
 			 (_datetime)
 			 ))
 

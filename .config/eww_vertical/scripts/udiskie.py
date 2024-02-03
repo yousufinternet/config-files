@@ -19,8 +19,8 @@ def get_devices():
     return info_dict
 
 devices = get_devices()
-devices_str = ' '.join((f'(label :class "icon" :tooltip "{v["ui_device_label"]}" :text '+(r'"\\uf8e9"' if v['is_detachable'] else r'"\\uf0a0"')+')') for v in devices.values())
+devices_str = ' '.join((f'(label :halign "center" :class "icon" :tooltip "{v["ui_device_label"]}" :text '+(r'"\\uf8e9"' if v['is_detachable'] else r'"\\uf0a0"')+')') for v in devices.values())
 devices_str = devices_str if devices_str else '"No"'
-final_str = f'(box :valign "center" :space-evenly false :spacing 5 :orientation "v" (label :valign "center" :class "icon" :text "\uf052") (revealer :valign "center" :reveal disks_reveal :transition "slidedown" (box :space-evenly false :spacing 5 :class "subwidget" {devices_str})))'
+final_str = f'(box :halign "center" :space-evenly false :spacing 5 :orientation "v" (label :halign "center" :class "icon" :text "\uf052") (revealer :halign "center" :reveal disks_reveal :transition "slidedown" (box :space-evenly false :spacing 5 :class "subwidget" {devices_str})))'
 state = sp.getoutput('${EWW_CMD} get disks_reveal')
 print(f'(eventbox :valign "center" :onclick {{disks_reveal ? `${{EWW_CMD}} update disks_reveal=false` : `${{EWW_CMD}} update disks_reveal=true`}} :onrightclick "rofi -show udiskie -modi udiskie:~/Scripts/RofiMenus/udiskie-menu.py &" {final_str})')

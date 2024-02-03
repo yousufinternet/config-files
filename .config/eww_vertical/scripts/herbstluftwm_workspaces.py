@@ -17,8 +17,10 @@ numbers = False
 
 def output():
     tags_status = sp.getoutput('herbstclient tag_status').strip()
-    format_dict = {':': 'color: white', '-': 'background-color: orange; color:black', '.': 'color:grey',
-                    '!': 'color: red', '#': 'background-color: white; color: black'}
+    # format_dict = {':': 'color: white', '-': 'background-color: orange; color:black', '.': 'color:grey',
+    #                 '!': 'color: red', '#': 'background-color: white; color: black'}
+    format_dict = {':': 'icon', '-': 'alt-highlight-icon', '.': 'grey-icon',
+                    '!': 'red-icon', '#': 'highlight-icon'}
 
     formatted_ws = []
     for i, w in enumerate(tags_status.split('\t')):
@@ -29,7 +31,7 @@ def output():
             wor = tags_icns.get(w[1:], '')
         elif numbers:
             wor = f' {i} ' 
-        clr = format_dict.get(w[0], 'color: white')
+        clr = format_dict.get(w[0], 'icon')
         formatted_ws.append({'ws_no': i, 'ws_icn': wor, 'ws_style': clr})
 
     json_obj = json.dumps(formatted_ws)

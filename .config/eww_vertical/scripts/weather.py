@@ -6,6 +6,7 @@ import json
 import time
 import requests
 import datetime
+import subprocess as sp
 
 lat, lon=30.5349, 47.7888
 
@@ -19,6 +20,9 @@ icons = {
 path = os.path.expanduser('~/Scripts/LemonBar/OPENWEATHER_APIKEY') if len(sys.argv) < 2 else sys.argv[1]
 with open(path, 'r') as f:
     apikey = f.read().strip()
+
+# not used until we figure out a way to automatically unlock the gnome keyring
+# apikey = sp.check_output('pass openweather_api_key', shell=True, text=True) 
 
 obj = {'last_updated': 'Loading..'}
 try:

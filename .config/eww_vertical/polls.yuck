@@ -13,3 +13,8 @@
 (deflisten nmliteralstate "./scripts/nm_literal.py")
 (deflisten dunstctl "./scripts/dunst_ctl.py")
 (defpoll _udiskie :interval "10s" `./scripts/udiskie.py`)
+
+(defpoll _weather :interval "30m" `./scripts/weather.py`)
+
+
+(defpoll _battery :interval "1m" `./scripts/battery_state.py`)
