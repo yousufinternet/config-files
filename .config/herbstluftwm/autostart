@@ -29,7 +29,7 @@ red_color = "#ef656a"
 fg_color = "#afbcbf"
 fg_dim = "#70819f"
 bg_color = "#000e17"
-bg_dim = "#1a202b"
+bg_dim = "#444e59"
 yellow_color = "#c48502"
 orange_color = "#e6832f"
 
@@ -50,16 +50,16 @@ theme_settings = {
 
 theme_attributes = {
     "tiling.reset": 1, "floating.reset": 1,
-    "active.color": f"'{bg_color}'", "normal.color": f"'{fg_color}'",
-    "title_color": f"'{fg_color}'", "urgent.color": f"''",
+    "active.color": f"'{bg_color}'", "normal.color": f"'{bg_dim}'",
+    "title_color": f"'{fg_color}'", "urgent.color": f"'{red_color}'",
     "inner_width": "0", "inner_color": "black", "border_width": f"{1*GDK_SCALE}",
     "floating.border_width": f"{1*GDK_SCALE}",
     "floating.outer_width": "1", "floating.outer_color": f"'{yellow_color}'",
     "active.inner_color": f"'{bg_color}'", "active.outer_color": f"'{bg_color}'",
     "background_color": f"'{bg_color}'", "title_height": f"{15*GDK_SCALE}",
-    "title_font": f"Roboto:pixelsize={GDK_SCALE*12}",
+    "title_font": f"FiraSans:pixelsize={GDK_SCALE*12}", "padding_top": 2, "padding_bottom": 2,
     "title_depth": f"{5*GDK_SCALE}", "title_align": "center",
-    "title_when": "multiple_tabs", "tab_color": f"'{bg_color}'", "tab_outer_color": f"'{bg_dim}'",
+    "title_when": "multiple_tabs", "tab_color": f"'{bg_dim}'", "tab_outer_color": f"'{bg_dim}'",
     "tab_title_color": f"'{fg_color}'"
 }
 

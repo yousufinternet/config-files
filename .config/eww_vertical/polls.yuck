@@ -1,5 +1,3 @@
-(deflisten _volume "./scripts/volume_control.py")
-
 (defpoll _hour :interval "1m" `date +'%H'`)
 (defpoll _min :interval "1m" `date +'%M'`)
 (defpoll _day :interval "5m" `date +'%a'`)
@@ -7,14 +5,18 @@
 (defpoll _monthnum :interval "5m" `date +'%m'`)
 (defpoll _daynum :interval "5m" `date +'%d'`)
 
+(defpoll _udiskie :interval "10s" `./scripts/udiskie.py`)
+(defpoll _weather :interval "30m" `./scripts/weather.py`)
+(defpoll _battery :interval "1m" `./scripts/battery_state.py`)
+
+(defpoll _cputemp :interval "30s" :run-while sysstats_exp `./scripts/cpu_temp.py`)
+(defpoll _gputemp :interval "30s" :run-while sysstats_exp `./scripts/gpu_temp.py`)
+(defpoll _cpuusage :interval "30s" `./scripts/cpu_usage.py`)
+(defpoll _syncthing :interval '60s' :initial `./scripts/syncthing.py` `./scripts/syncthing.py`)
+
 (deflisten workspaces_json :initial '[{"ws_no": 0, "ws_icn": "x", "ws_style": ""}]'
   "./scripts/herbstluftwm_workspaces.py")
-
 (deflisten nmliteralstate "./scripts/nm_literal.py")
 (deflisten dunstctl "./scripts/dunst_ctl.py")
-(defpoll _udiskie :interval "10s" `./scripts/udiskie.py`)
-
-(defpoll _weather :interval "30m" `./scripts/weather.py`)
-
-
-(defpoll _battery :interval "1m" `./scripts/battery_state.py`)
+(deflisten klayout :initial "us" `xkb-switch -W`)
+(deflisten _volume "./scripts/volume_control.py")
