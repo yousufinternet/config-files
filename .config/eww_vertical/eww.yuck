@@ -93,6 +93,9 @@
 					 (literal :content _cputemp)
 					 (literal :content _gputemp))))))
 
+
+(defwidget _ramusage [] (box :orientation "v" :space-evenly false :spacing {minor_spacing} (label :class "green-icon" :text "\\uf538") "${round((EWW_RAM.free_mem / EWW_RAM.total_mem)*100, 0)}%"))
+
 (defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (_workspace) (weather)))
 
 (defwidget vcenter [] (box
@@ -110,6 +113,7 @@
 (defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing {major_spacing}
 			 (literal :content _battery)
 			 (literal :content _syncthing)
+			 (_ramusage)
 			 (_sysstats)
 			 (_datetime)
 			 ))
