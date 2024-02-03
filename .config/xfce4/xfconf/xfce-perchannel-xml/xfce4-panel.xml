@@ -5,11 +5,11 @@
   <property name="panels" type="array">
     <value type="int" value="2"/>
     <property name="panel-2" type="empty">
-      <property name="position" type="string" value="p=11;x=1190;y=10"/>
+      <property name="position" type="string" value="p=11;x=1258;y=10"/>
       <property name="size" type="uint" value="20"/>
       <property name="length-adjust" type="bool" value="true"/>
-      <property name="length" type="uint" value="1"/>
-      <property name="autohide-behavior" type="uint" value="0"/>
+      <property name="length" type="double" value="1"/>
+      <property name="autohide-behavior" type="uint" value="2"/>
       <property name="position-locked" type="bool" value="false"/>
       <property name="enter-opacity" type="uint" value="100"/>
       <property name="leave-opacity" type="uint" value="100"/>
@@ -19,9 +19,9 @@
       <property name="mode" type="uint" value="0"/>
       <property name="background-style" type="uint" value="1"/>
       <property name="background-rgba" type="array">
-        <value type="double" value="0"/>
-        <value type="double" value="0"/>
-        <value type="double" value="0"/>
+        <value type="double" value="0.38039215686274508"/>
+        <value type="double" value="0.20784313725490197"/>
+        <value type="double" value="0.51372549019607838"/>
         <value type="double" value="1"/>
       </property>
       <property name="enable-struts" type="bool" value="false"/>
@@ -58,6 +58,29 @@
       <property name="show-frame" type="bool" value="false"/>
       <property name="size-max" type="uint" value="22"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (72%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (76%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (71%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (79%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (74%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (80%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (78%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (77%)"/>
+        <value type="string" value="wi-fi network connection “d” active: d (39%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (73%)"/>
+        <value type="string" value="wi-fi network connection “total office ” active: total office  (45%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz” active: nethawk_xr500_2ghz (85%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (83%)"/>
+        <value type="string" value="wi-fi network connection “total office ” active: total office  (79%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (73%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (74%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (76%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (77%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (72%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (78%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (79%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (81%)"/>
+        <value type="string" value="wi-fi network connection “nethawk_xr500_2ghz 1” active: nethawk_xr500_2ghz (80%)"/>
         <value type="string" value="requesting an ethernet network address for “auto ethernet”…"/>
         <value type="string" value="wi-fi network connection “xiaomi_e034_5g” active: xiaomi_e034_5g (74%)"/>
         <value type="string" value="ethernet network connection “auto ethernet” active"/>
@@ -149,6 +172,8 @@
         <value type="string" value="network"/>
       </property>
       <property name="known-items" type="array">
+        <value type="string" value="qstardict"/>
+        <value type="string" value="redshift"/>
         <value type="string" value="proton-vpn-app"/>
         <value type="string" value="qpwgraph"/>
         <value type="string" value="OpenFreebuds"/>
