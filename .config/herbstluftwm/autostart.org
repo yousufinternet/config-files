@@ -52,13 +52,24 @@ tags = {'WEB': '1', 'DEV': '2', 'TERM': '3', 'DOCS': '4', 'GIMP': '5',
         'READ': '6', 'AGENDA': '7', 'DOWN': '8', 'CHAT': '9', 'GAME': '0'}
 tags_lst = list(tags.keys())
 #+end_src
+** <<colors>> Colors definition
+#+begin_src python
+red_color = "#ef656a"
+fg_color = "#afbcbf"
+fg_dim = "#70819f"
+bg_color = "#000e17"
+bg_dim = "#1a202b"
+yellow_color = "#c48502"
+orange_color = "#e6832f"
+#+end_src
 ** Theming
+Using colors defined in the [[colors]] section
 #+begin_src python
 theme_settings = {
-    "frame_border_active_color": "'#fe6060'",
-    "frame_border_normal_color": "'#93959b'",
-    "frame_bg_normal_color": "'#100f10'",
-    "frame_bg_active_color": "'#000000'",
+    "frame_border_active_color": f"'{red_color}'",
+    "frame_border_normal_color": f"'{fg_color}'",
+    "frame_bg_normal_color": f"'{bg_color}'",
+    "frame_bg_active_color": f"'{bg_dim}'",
     "frame_border_width": f"{1*GDK_SCALE}",
     "window_border_width": "0", "always_show_frame": "off",
     "frame_bg_transparent": "on", "frame_transparent_width": "0",
@@ -71,16 +82,17 @@ theme_settings = {
 
 theme_attributes = {
     "tiling.reset": 1, "floating.reset": 1,
-    "active.color": "'#0e0e0e'", "normal.color": "'#424242'",
-    "title_color": "'#ffffff'", "urgent.color": "'#a4202a'",
+    "active.color": f"'{bg_color}'", "normal.color": f"'{fg_color}'",
+    "title_color": f"'{fg_color}'", "urgent.color": f"''",
     "inner_width": "0", "inner_color": "black", "border_width": f"{1*GDK_SCALE}",
     "floating.border_width": f"{1*GDK_SCALE}",
-    "floating.outer_width": "1", "floating.outer_color": "'#dbbe5f'",
-    "active.inner_color": "'#000000'", "active.outer_color": "'#000000'",
-    "background_color": "'#141414'", "title_height": f"{15*GDK_SCALE}",
-    "title_font": f"Roboto:pixelsize={GDK_SCALE*12}",
+    "floating.outer_width": "1", "floating.outer_color": f"'{yellow_color}'",
+    "active.inner_color": f"'{bg_color}'", "active.outer_color": f"'{bg_color}'",
+    "background_color": f"'{bg_color}'", "title_height": f"{15*GDK_SCALE}",
+    "title_font": f"Fira Sans:pixelsize={GDK_SCALE*12}", "padding_top": 2, "padding_bottom": 2,
     "title_depth": f"{5*GDK_SCALE}", "title_align": "center",
-    "title_when": "multiple_tabs",
+    "title_when": "multiple_tabs", "tab_color": f"'{bg_color}'", "tab_outer_color": f"'{bg_dim}'",
+    "tab_title_color": f"'{fg_color}'"
 }
 
 for attr, vlu in theme_attributes.items():
