@@ -2,6 +2,9 @@
 (defvar volume_reveal false)
 (defvar disks_reveal false)
 (defvar datesize "16px")
+(defvar major_spacing 12)
+(defvar minor_spacing 2)
+(defvar sysstats_exp false)
 
 (defwindow vertical_bar
 	   :monitor 0
@@ -15,9 +18,9 @@
 
 (defwindow v_bar_2
 	   :monitor 1
-	   :geometry (geometry :width "24px" :height "100%" :x "2px" :y "0px" :anchor "top left")
+	   :geometry (geometry :width "24px" :height "99%" :x "2px" :y "0px" :anchor "center left")
 	   :stacking "bt"
-	   :reserve (struts :distance "28px" :side "left")
+	   :reserve (struts :distance "32px" :side "left")
 	   ;; :wmignore true
 	   :hexpand false
 	   :vexpand false
@@ -67,26 +70,47 @@
 
 
 (defwidget weather [] (box
-		       :space-evenly false :spacing 2
+		       :space-evenly false :spacing {minor_spacing}
 		       :orientation "v" :tooltip "${_weather["last_updated"]}"
 		       (label :class "blue-icon" :text {_weather["icon"]})
 		       {_weather["temp"]}))
 
-(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing 10 (_workspace) (weather)))
+(defwidget keyboard [] (eventbox :onclick `xkb-switch -n`
+				  (box :space-evenly false :spacing 0 :orientation "v"
+				       (label :class "icon" :text "\\uf11c") {captures(klayout, "(\\w+)")[0][0]})))
+
+(defwidget _sysstats []
+	   (eventbox :onclick {sysstats_exp ? `${EWW_CMD} update sysstats_exp=false` : `${EWW_CMD} update sysstats_exp=true`}
+		     (box :space-evenly false
+			  :orientation "v"
+			  :spacing {minor_spacing}
+			  (literal :content _cpuusage)
+			  (revealer :transition "slidedown"
+				    :vexpand true 
+				    :valign "center" :reveal sysstats_exp
+				    (box :class "subwidget" :vexpand true
+					 :space-evenly false :spacing 5 :orientation "v"
+					 (literal :content _cputemp)
+					 (literal :content _gputemp))))))
+
+(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (_workspace) (weather)))
 
 (defwidget vcenter [] (box
 		       :vexpand false :orientation "v"
 		       :valign "center" :space-evenly false
-		       :spacing 10
+		       :spacing {major_spacing}
 		       (literal :content nmliteralstate)
 		       (literal :content dunstctl)
 		       (literal :content _udiskie)
 		       (literal :content _volume)
 		       (coffee_widget)
+		       (keyboard)
 		       ))
 
-(defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing 10
+(defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing {major_spacing}
 			 (literal :content _battery)
+			 (literal :content _syncthing)
+			 (_sysstats)
 			 (_datetime)
 			 ))
 
