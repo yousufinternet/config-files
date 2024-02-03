@@ -12,6 +12,10 @@ temps = [int(line.split()[2].split('.')[0]) for line in
 avg_temp = sum(temps)/len(temps)
 icon = [v for k, v in icons_dict.items() if k >= avg_temp or k == 90][0]
 if avg_temp > 80:
-    print(f'(box :vexpand true :orientation "h" :space-evenly false :spacing 5 (label :class "red-icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')
+    print(f'(box :vexpand true :orientation "v" :space-evenly false :spacing 2 (label :class "red-icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')
+elif avg_temp > 70:
+    print(f'(box :vexpand true :orientation "v" :space-evenly false :spacing 2 (label :class "orange-icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')
+elif avg_temp > 60:
+    print(f'(box :vexpand true :orientation "v" :space-evenly false :spacing 2 (label :class "yellow-icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')
 else:
-    print(f'(box :vexpand true :orientation "h" :space-evenly false :spacing 5 (label :class "icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')
+    print(f'(box :vexpand true :orientation "v" :space-evenly false :spacing 2 (label :class "icon" :text "{icon}") "{avg_temp:.0f}" "CPU")')

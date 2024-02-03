@@ -26,4 +26,4 @@ if syncthing_json:
     icon_class = "green-icon" if connected > 0 else "grey-icon"
     icon = f'(label :class "{icon_class}" :text "{icon}")'
 address = get_guiaddress()
-print(f'(eventbox :valign "end" :vexpand false :onclick `xdg-open http://{address}` (box :valign "center" :vexpand false :orientation "h" :space-evenly false :spacing 5 {icon} "{text}"))')
+print(f'(eventbox :valign "center" :onclick `xdg-open http://{address}` (box :valign "center" :orientation "v" :space-evenly false :spacing 2 {icon} "{text}"))')
