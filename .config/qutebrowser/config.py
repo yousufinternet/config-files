@@ -130,7 +130,7 @@ config.set('downloads.remove_finished', 90)
 # dracula.draw.blood(c)
 
 # tabs positioning
-config.set('tabs.position', 'left')
+config.set('tabs.position', 'right')
 config.set('tabs.padding', {'top':4, 'bottom':4, 'left':3, 'right':3})
 config.set('tabs.indicator.width', 1)
 config.set('tabs.title.format', '{index}')
