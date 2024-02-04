@@ -96,6 +96,15 @@
 
 (defwidget _ramusage [] (box :orientation "v" :space-evenly false :spacing {minor_spacing} (label :class "green-icon" :text "\\uf538") "${round((EWW_RAM.free_mem / EWW_RAM.total_mem)*100, 0)}%"))
 
+(defwidget _bluetooth []
+  (box :spacing 5 :space-evenly false :orientation "v"
+       (button :onclick "bluetoothctl power ${_bluestatus == 'yes' ? 'off' : 'on'}"
+	       :class {_bluestatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf294")
+       (button :onclick {_podsstatus == 'yes' ? "bluetoothctl disconnect" : "bluetoothctl connect 88:D0:39:ED:EA:64"}
+	       :class {_podsstatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf025")
+       ))
+
+
 (defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (_workspace) (weather)))
 
 (defwidget vcenter [] (box
@@ -107,6 +116,7 @@
 		       (literal :content _udiskie)
 		       (literal :content _volume)
 		       (coffee_widget)
+		       (_bluetooth)
 		       (keyboard)
 		       ))
 

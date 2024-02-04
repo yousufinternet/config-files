@@ -204,5 +204,8 @@ if hc('new_attr bool my_not_first_autostart')[1]:
         subprocess.Popen('xinput disable "AT Translated Set 2 keyboard"', shell=True, text=True)
         subprocess.Popen('xinput disable "SynPS/2 Synaptics TouchPad"', shell=True, text=True)
         subprocess.Popen('autorandr --cycle'.split())
+    elif HOSTNAME == 'yusufs-dell':
+        subprocess.Popen('eww -c ~/.config/eww_vertical open vertical_bar', shell=True)
+        subprocess.Popen('autorandr --cycle'.split())
 
 hc("unlock")
