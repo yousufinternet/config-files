@@ -814,7 +814,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :box t :foreground "#b5bd68")
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :height (+ 30 default-font-height))
 
   (global-prettify-symbols-mode)
   )
@@ -897,6 +897,12 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
       (add-hook 'org-mode-hook 'flyspell-mode)
       (add-hook 'org-mode-hook 'variable-pitch-mode)
+	(add-hook 'org-mode-hook (lambda ()
+	"Beautify Org Checkbox Symbol"
+	(push '("[ ]" .  "☐") prettify-symbols-alist)
+	(push '("[X]" . "☑" ) prettify-symbols-alist)
+	(push '("[-]" . "❍" ) prettify-symbols-alist)
+	(prettify-symbols-mode)))
       ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
       ;; Default todo states
@@ -967,13 +973,19 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 (setq line-spacing 10)
-(setq org-agenda-starts-on-weekday 0)
+(setq org-agenda-start-on-weekday 0)
 ;; (svg-tag-mode)
 )
 
 (add-hook 'org-agenda-mode-hook 'format-sort-agenda)
    #+end_src
-
+** Pretty tables
+#+begin_src elisp
+(use-package org-pretty-table
+  :load-path "~/.emacs.d/org-pretty-table.el"
+  :hook (org-mode . org-pretty-table-mode)
+)
+#+end_src
 ** bidi support in org
    #+BEGIN_SRC emacs-lisp
   (defun set-bidi-env ()
