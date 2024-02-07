@@ -82,11 +82,11 @@ Please do check the following /configs/ as this one was heavily inspired by them
 ;; "adding this line to use-package is not working, had to create a hook"
 ;; (general-define-key :states '(normal insert visual emacs) :keymaps 'pdf-view-mode-map "SPC" nil)
 ;; )
-;;        (use-package pdf-tools 
-;; 	:ensure t
-;; :commands 'pdf-view-mode
-;; :config (pdf-tools-install-noverify)
-;; 	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
+       (use-package pdf-tools 
+	:ensure t
+:commands 'pdf-view-mode
+:config (pdf-tools-install-noverify)
+	:defer 10 :hook (pdf-view-mode . pdf-view-themed-minor-mode) (pdf-view-mode . unbind-spc-in-pdf-view-mode))
 #+END_SRC
 
 *** elfeed
@@ -897,12 +897,13 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
       (add-hook 'org-mode-hook 'flyspell-mode)
       (add-hook 'org-mode-hook 'variable-pitch-mode)
+      (add-hook 'org-mode-hook 'org-indent-mode)
 	(add-hook 'org-mode-hook (lambda ()
 	"Beautify Org Checkbox Symbol"
 	(push '("[ ]" .  "☐") prettify-symbols-alist)
 	(push '("[X]" . "☑" ) prettify-symbols-alist)
 	(push '("[-]" . "❍" ) prettify-symbols-alist)
-	(prettify-symbols-mode)))
+	))
       ;; (add-hook 'org-mode-hook 'svg-tag-mode)
 
       ;; Default todo states
@@ -955,7 +956,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
    #+begin_src emacs-lisp
 (setq org-agenda-window-setup "only-window"
       org-agenda-span 7
-      org-agenda-start-on-weekday 1
+      org-agenda-start-on-weekday 7
       org-agenda-skip-scheduled-if-done t
       org-agenda-todo-ignore-scheduled "future"
       org-agenda-skip-deadline-if-done t
@@ -973,19 +974,11 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (setcar org-agenda-prefix-format '(agenda . "  %-2i  %?-2 t%s"))
 (setcar org-agenda-sorting-strategy '(agenda habit-down priority-down time-up))
 (setq line-spacing 10)
-(setq org-agenda-start-on-weekday 0)
 ;; (svg-tag-mode)
 )
 
 (add-hook 'org-agenda-mode-hook 'format-sort-agenda)
    #+end_src
-** Pretty tables
-#+begin_src elisp
-(use-package org-pretty-table
-  :load-path "~/.emacs.d/org-pretty-table.el"
-  :hook (org-mode . org-pretty-table-mode)
-)
-#+end_src
 ** bidi support in org
    #+BEGIN_SRC emacs-lisp
   (defun set-bidi-env ()
