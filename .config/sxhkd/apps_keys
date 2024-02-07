@@ -38,6 +38,9 @@ super + p
 super + e
      rofi -terminal $TERMINAL -show run -modi run,drun,ssh
 
+super + ctrl + shift + e
+     rofi -show emoji -modi emoji
+
 # Raise/Lower Brightness/Volume
 XF86Audio{Raise,Lower}Volume
    volume_ctl.sh {+5,-10}
@@ -121,7 +124,7 @@ super + F1
 
 # rofi calculator
 super + ctrl + c
-  rofi -show calc -modi calc -no-show-match -no-sort
+  ~/Scripts/RofiMenus/calc_copy.sh
 
 # nerd-dictation
 super + s 
