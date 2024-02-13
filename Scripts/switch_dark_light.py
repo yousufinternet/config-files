@@ -74,7 +74,19 @@ modify_conf(os.path.join(configs_path, 'gtk-3.0/settings.ini', ),
             icon_themes, 'gtk-icon-theme-name=')
 
 # change theme in emacs
-sp.Popen(f'emacsclient -e "(my-load-theme \'{emacs_themes[switch_theme]})"', shell=True)
+sp.Popen(f'emacsclient -e "(setq default-theme default-{switch_theme}-theme)" -e "(my-load-theme default-{switch_theme}-theme)"', shell=True)
 
 # update wallpaper
 sp.Popen(['feh', '--bg-fill', shlex.quote(wallpapers[switch_theme])])
+
+# Switch konsole terminals profiles
+konsole_terminals = sp.getoutput('qdbus | grep konsole').strip().splitlines()
+for konsole in konsole_terminals:
+    cmd = f'qdbus {konsole} /Sessions/1 org.kde.konsole.Session.setProfile "{".".join(konsole_profiles[switch_theme].split(".")[:-1])}"'
+    sp.Popen(cmd, shell=True)
+
+# recolor zathura
+zathura_wins = sp.getoutput('qdbus | grep zathura').strip().splitlines()
+for zwin in zathura_wins:
+    cmd = f'qdbus {zwin} /org/pwmt/zathura org.pwmt.zathura.ExecuteCommand "set recolor {"true" if switch_theme == "dark" else "false"}"'
+    sp.Popen(cmd, shell=True)
