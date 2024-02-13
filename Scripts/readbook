@@ -14,7 +14,7 @@ def read_zathura_history():
     with open(ZATHURA_HIST, 'r') as f:
         zathura_hist = f.read().split('\n\n')
     return {entry.splitlines()[0][1:-1]:{
-        l.split('=')[0]:l.split('=')[1]
+        l.split('=')[0]:'' if len(l.split('=')) == 1 else l.split('=')[1]
         for l in entry.splitlines()[1:]} for entry in zathura_hist}
 
 
