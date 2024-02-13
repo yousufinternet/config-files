@@ -228,12 +228,12 @@ hc(f"rule class='firefox' tag='{tags_lst[0]}'")
 hc("rule class='dropdown_.*' floating=on floatplacement=none")
 hc("rule class='gcr-prompter' floating=on floatplacement=none")
 hc("rule instance='dropdown_.*' floating=on floatplacement=none")
-hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky' float_geometry=640x360-5-5")
+hc("rule title='Picture-in-Picture' floating=on floatplacement=none focus=off hook='make_sticky' floating_geometry=640x360-5-5")
 hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=off hook='make_sticky'")
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
 hc('rule class="winword.exe" floatplacement=none')
-hc('rule title~sdcv floating=on floatplacement=none')
+hc('rule title~\'^sdcv.*Konsole$\' floating=on floatplacement=smart floating_geometry=500x500+5+5')
 #+end_src
 * Startup apps
 ** Startup commands
@@ -242,9 +242,8 @@ This will define all of our startup programs
 #+begin_src python
 startup_cmds = [
     "localectl --no-convert set-x11-keymap us,ara pc104 qwerty"
-    " 'grp:alt_shift_toggle,caps:swapescape'",
-    "setxkbmap -option 'caps:escape' -option 'altwin:menu_win'"
-    " -option 'terminate:ctrl_alt_bksp'",
+    " 'grp:alt_shift_toggle'",
+    "setxkbmap -option 'altwin:menu_win' -option 'terminate:ctrl_alt_bksp'",
     "perWindowLayoutD",
     "sxhkd -c ~/.config/sxhkd/apps_keys",
     "picom",
