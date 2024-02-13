@@ -1,7 +1,7 @@
 # set font "monospace normal 14"
 set recolor-keephue
 set selection-clipboard clipboard
-# set recolor-darkcolor "#bfbfbf"
+# set recolor-darkcolor "#e2e2e2"
 set recolor-reverse-video
 set recolor
 set statusbar-home-tilde true
@@ -51,3 +51,6 @@ set adjust-open width
 # set recolor-darkcolor           "#f8f8f2" # Foreground
 
 
+
+set notification-bg             "#bf9032" # Background
+set notification-fg             "#d0d0d0" # Foreground
