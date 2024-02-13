@@ -22,3 +22,4 @@
 (deflisten dunstctl "./scripts/dunst_ctl.py")
 (deflisten klayout :initial "us" `xkb-switch -W`)
 (deflisten _volume "./scripts/volume_control.py")
+(deflisten _lightmode "./scripts/light_dark.py")
