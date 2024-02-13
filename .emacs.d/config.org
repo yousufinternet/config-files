@@ -589,6 +589,7 @@ News and tech
 	    "gc" '(:ignore t :which-key "Clock Commands")
 	    "gci" 'org-clock-in
 	    "gco" 'org-clock-out
+	    "y" 'org-copy-visible
       )
 	   (general-define-key :states '(normal motion visual) :prefix "SPC o b" :non-normal-prefix "C-SPC o b" :keymaps 'org-mode-map :prefix-map 'org-babel-map)
 	   (general-define-key
@@ -843,7 +844,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (dolist (theme themes-list)
 (unless (package-installed-p theme)
 (package-install theme)))
-(setq default-dark-theme 'ef-night)
+(setq default-dark-theme 'ef-dark)
 (setq default-light-theme 'ef-light)
 (setq ef-themes-mixed-fonts t)
 
@@ -914,11 +915,12 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 	      ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
 	      ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
 	    org-log-done 'note
-            org-link-elisp-skip-confirm-regexp "(find-file"
+            org-link-elisp-skip-confirm-regexp "(find-file\\|(read-book-and-track"
 	    org-imenu-depth 3)
 
     (append org-modules '(habits))
 
+(setq org-image-actual-width (list 550))
 
   (use-package ox-latex
   :after org
@@ -1167,7 +1169,8 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 
 ** Book reading tracking
 #+begin_src elisp
-(defun read-book-and-track (path page)
+(defun read-book-and-track (path &optional page)
+(or page (setq page " 1"))
 (async-shell-command (concat "~/Scripts/readbook \"" (expand-file-name path) "\"" page))
 )
 
@@ -1181,7 +1184,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
  ("\\.mm\\'" . default)
  ("\\.x?html?\\'" . default)
  ("\\.pdf::\\([0-9]+\\)?\\'" . "~/Scripts/zathura-open.py %s %1")
- ("\\.pdf\\'" . "zathura --synctext-forward :: %s"))
+ ("\\.pdf\\'" . "zathura --synctex-forward :: %s"))
 )
 #+end_src
 
