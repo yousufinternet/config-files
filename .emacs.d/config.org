@@ -887,6 +887,8 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 #+BEGIN_SRC emacs-lisp
       (require 'org-tempo)
       (require 'org-protocol)
+(with-eval-after-load 'org 
+  (require 'org-attach))
 
     (org-babel-do-load-languages 'org-babel-load-languages
       '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
@@ -1172,6 +1174,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (defun read-book-and-track (path &optional page)
 (or page (setq page " 1"))
 (async-shell-command (concat "~/Scripts/readbook \"" (expand-file-name path) "\"" page))
+(delete-other-windows)
 )
 
 #+end_src
