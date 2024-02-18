@@ -233,7 +233,6 @@ hc("rule instance='qutebrowser-youtube' floating=on floatplacement=none focus=of
 hc('rule title=AgendaEmacs tag=AGENDA')
 hc('rule fixedsize floating=on')
 hc('rule class="winword.exe" floatplacement=none')
-hc('rule title~\'^sdcv.*Konsole$\' floating=on floatplacement=smart floating_geometry=500x500+5+5')
 #+end_src
 * Startup apps
 ** Startup commands
