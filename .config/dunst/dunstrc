@@ -31,7 +31,7 @@
     # screen width minus the width defined in within the geometry option.
     width = (150, 350)
     height = 300
-    origin = bottom-left
+    origin = bottom-right
     offset = 40x10
     notification_limit = 5
 
@@ -60,7 +60,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 1
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
     frame_color = "#70819f"
@@ -84,7 +84,7 @@
 
     ### Text ###
 
-    font = Fira Sans 10
+    font = IBM Plex Sans Arabic Light 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -131,7 +131,7 @@
     alignment = left
 
     # Corner radius
-    corner_radius = 10
+    corner_radius = 5
 
     # Show age of message if message is older than show_age_threshold
     # seconds.
@@ -150,7 +150,7 @@
     ignore_newline = no
 
     # Merge multiple notifications with the same content
-    stack_duplicates = true
+    stack_duplacates = true
 
     # Hide the count of merged notifications with the same content
     hide_duplicate_count = false
@@ -163,6 +163,7 @@
     # Align icons left/right/off
     icon_theme = "Papirus-Dark"
     icon_position = right
+    enable_recursive_icon_lookup = true
 
     # Scale larger icons down to this size, set to 0 to disable
     min_icon_size = 32
@@ -303,6 +304,20 @@
 #    urgency = normal
 #
 # vim: ft=cfg
+
+[telegram]
+    desktop_entry = "org.telegram.desktop"
+    background = "#30a3e6"
+    foreground = "#071a24"
+    frame_color = "#071a24"
+
+[volume_indicator]
+    appname = Volume
+    history_ignore = yes
+
+[brightness_indicator]
+    appname = Brightness
+    history_ignore = yes
 
 [calendar-popup]
     desktop_entry="calendar_popup"
