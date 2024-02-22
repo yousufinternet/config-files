@@ -89,7 +89,7 @@ def win_geometry(wid):
         sp.check_output(f'xwininfo -metric -shape -id {wid}',
                         text=True, shell=True).strip().split('\n')[2:8])
     regex_obj = re.search(
-        r'Abs.*X.*?(-?\d+).*Abs.*Y.*?(-?\d+).*Width:\s+(\d+).*Height:\s+(\d+)',
+        r'Abs.*?X.*?(-?\d+).*?Abs.*?Y.*?(-?\d+).*?Width:\s+(\d+).*?Height:\s+(\d+)',
         window_geometry)
     window_geometry = {
         'x_pos': int(regex_obj.group(1)),
