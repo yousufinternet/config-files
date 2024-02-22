@@ -912,10 +912,10 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       ;; Default todo states
       (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)"))
 	    org-todo-keyword-faces
-	    '(("TODO"  :foreground "#fe5" :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
-	      ("NEXT"  :background "#059" :foreground "#fff" :weight regular :slant italic :family "Dejavu Sans Mono")
-	      ("DONE"  :foreground "#272" :weight light :slant italic :family "Dejavu Sans Mono")
-	      ("CANCELLED"  :background "#955" :weight light :slant italic :family "Dejavu Sans Mono"))
+	    '(("TODO"  :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
+	      ("NEXT"  :weight regular :slant italic :family "Dejavu Sans Mono")
+	      ("DONE"  :weight light :slant italic :family "Dejavu Sans Mono")
+	      ("CANCELLED" :weight light :slant italic :family "Dejavu Sans Mono"))
 	    org-log-done 'note
             org-link-elisp-skip-confirm-regexp "(find-file\\|(read-book-and-track"
 	    org-imenu-depth 3)
@@ -965,7 +965,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
       org-agenda-todo-ignore-scheduled "future"
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-deadline-is-shown t
-      org-agenda-files (directory-files-recursively "~/Public/Syncthing Global/Notes/" "^[A-Za-z_]\\w*\\.org$"))
+      org-agenda-files (directory-files "~/Public/Syncthing Global/Notes/" t "^[^~.#].*\\.org$"))
 
 ;;Setup agenda icons
 (setq org-agenda-category-icon-alist nil)
@@ -1093,7 +1093,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
  :ensure t
  :after alert
  :config
-    (setq org-alert-interval (* 1800 5)) (org-alert-enable)
+    (setq org-alert-interval (* 1800 3)) (org-alert-enable)
  )
 #+END_SRC
 
