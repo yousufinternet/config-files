@@ -186,7 +186,7 @@ def main(rofi_arg=None):
                           '\0icon\x1fnetwork-wireless-acquiring-symbolic')
                     print(f'[{devices["DEVICE"][i]}] Turn off WIFI'
                           '\0icon\x1fnetwork-wireless-disconnected-symbolic')
-                elif devices['TYPE'][i] == 'wifi' and status['WIFI'] == 'disabled':
+                elif devices['TYPE'][i] == 'wifi' and status['WIFI'] in ('disabled', 'unavailable'):
                     print(f'[{devices["DEVICE"][i]}] Turn on WIFI'
                           '\0icon\x1fnetwork-wireless')
                 # if devices['TYPE'][i] == 'wifi' and status['WIFI'] == 'enabled':
