@@ -14,7 +14,7 @@ if battery != '':
     common_settings = ':halign "center" :vexpand true'
     if bat_vlu <= 5:
         print(f'(label {common_settings} :tooltip "{bat_vlu:0.0f}%" :class "red-icon" :text "{icon}")')
-    if bat_vlu <= 20:
+    elif bat_vlu <= 20:
         print(f'(label {common_settings} :class "yellow-icon" :tooltip "{bat_vlu:0.0f}%" :text "{icon}")')
     elif bat_vlu >= 90:
         print(f'(label {common_settings} :tooltip "{bat_vlu:0.0f}%" :class "green-icon" :text "{icon}")')
