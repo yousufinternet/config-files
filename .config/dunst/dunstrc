@@ -32,7 +32,7 @@
     width = (150, 350)
     height = 300
     origin = bottom-right
-    offset = 40x10
+    offset = 10x10
     notification_limit = 5
 
     # Show how many messages are currently hidden (because of geometry).
