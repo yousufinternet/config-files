@@ -1,0 +1,2 @@
+mpd_connection_timeout = 10
+ignore_leading_the = yes
