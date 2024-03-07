@@ -31,7 +31,7 @@
     # screen width minus the width defined in within the geometry option.
     width = (150, 350)
     height = 300
-    origin = bottom-right
+    origin = top-right
     offset = 10x10
     notification_limit = 5
 
