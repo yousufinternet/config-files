@@ -1,4 +1,4 @@
-#+TITLE: Emacs org init
+#+TITLE: Emacs configuration file
 #+AUTHOR: Yusuf Mohammad
 #+STARTUP: overview
 
@@ -397,6 +397,7 @@ News and tech
     (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
     (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
     (setq evil-auto-balance-windows nil)
+    (evil-set-command-property 'org-open-at-point :jump t) ;;https://emacs.stackexchange.com/questions/64265/how-do-i-make-evils-c-o-work-with-orgs-c-c-c-o
     )
 #+END_SRC
 *** Escape key acts like C-g
@@ -775,10 +776,10 @@ Funny thing happened here, I had the pretty-mode package installed all this time
   ;; reapply font settings on every new frame. see after-make-frame-functions hook
   (defun reapply-font (&optional frame)
   (interactive)
-  (setq default-font-height 120)
+  (setq default-font-height 1.1)
       (set-face-attribute 'default nil
 			  :family "Fira Code"
-			  :height default-font-height
+			  :height 120
 			  :weight 'regular)
 
 
@@ -796,7 +797,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
   ;; proportional font
   (create-fontset-from-fontset-spec "-*-*-*-*-*-*-*-*-*-*-*-*-fontset-proportional")
   (set-fontset-font "fontset-proportional" 'latin (font-spec :family "Fira Sans" :height default-font-height))
-  (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic"))
+  (set-fontset-font "fontset-proportional" 'arabic (font-spec :family "IBM Plex Sans Arabic" :height default-font-height))
   ;; (set-fontset-font "fontset-proportional" 'emoji (font-spec :family "JoyPixels"))
   (set-face-attribute 'variable-pitch nil :fontset "fontset-proportional")
 
@@ -808,14 +809,16 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 
   ;; make org source blocks always monospaced
   ;; (set-face-attribute 'emoji nil :family "Noto Color Emoji")
-  (set-face-attribute 'org-level-1 nil :height 160 :weight 'bold)
-  (set-face-attribute 'org-level-2 nil :height 145)
+  (set-face-attribute 'org-document-title nil :height 1.6 :weight 'bold)
+  (set-face-attribute 'org-level-1 nil :height 1.6 :weight 'bold)
+  (set-face-attribute 'org-level-2 nil :height 1.45)
+  (set-face-attribute 'org-headline-done nil :weight 'light :slant 'italic)
   (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :height (+ 30 default-font-height))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch :height 1.3)
 
   (global-prettify-symbols-mode)
   )
@@ -844,9 +847,28 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 (dolist (theme themes-list)
 (unless (package-installed-p theme)
 (package-install theme)))
-(setq default-dark-theme 'ef-dark)
+
+(use-package ef-themes :ensure t
+  :commands ef-themes-with-colors 
+  :config
+  (setq ef-themes-mixed-fonts t
+	ef-themes-variable-pitch-ui t)
+  )
+
+(defun my-ef-themes-org-todo-faces (&rest _)
+  (ef-themes-with-colors
+    (setq org-todo-keyword-faces
+	  `(("TODO" :weight bold :foreground ,yellow :underline ,red-cooler)
+        ("NEXT" :weight black :background ,bg-blue-intense :foreground ,blue-cooler)
+	    ("DONE" :weight light :foreground ,green :slant italic)
+        ("CANCELLED" :weight light :foreground ,red-faint :background ,bg-red-subtle :slant italic :strike-through t)
+))))
+
+(add-hook 'ef-themes-post-load-hook #'reapply-font)
+(add-hook 'ef-themes-post-load-hook #'my-ef-themes-org-todo-faces)
+
+(setq default-dark-theme 'ef-winter)
 (setq default-light-theme 'ef-light)
-(setq ef-themes-mixed-fonts t)
 
 (defun is-it-day-or-night (&optional frame)
 "should we use a dark or light theme"
@@ -861,8 +883,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 "reapply font configuration no matter the theme"
 (interactive)
 (load-theme theme t)
-(if (and (daemonp) (equal "initial_terminal" (terminal-name))) (message "") (reapply-font))
-)
+(if (and (daemonp) (equal "initial_terminal" (terminal-name))) (message "") (reapply-font) (my-ef-themes-org-todo-faces)))
 
 (if (daemonp)
 (add-hook 'after-make-frame-functions 'is-it-day-or-night -100)
@@ -884,6 +905,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 
 * ORG mode
 ** General customization
+*** Necessary modules and latex chapters
 #+BEGIN_SRC emacs-lisp
       (require 'org-tempo)
       (require 'org-protocol)
@@ -893,32 +915,6 @@ Funny thing happened here, I had the pretty-mode package installed all this time
     (org-babel-do-load-languages 'org-babel-load-languages
       '((shell . t) (python . t) (emacs-lisp . t) (latex . t)))
 
-      (use-package org-bullets
-      :ensure t
-      :after org-mode)
-
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-      (add-hook 'org-mode-hook 'flyspell-mode)
-      (add-hook 'org-mode-hook 'variable-pitch-mode)
-      (add-hook 'org-mode-hook 'org-indent-mode)
-	(add-hook 'org-mode-hook (lambda ()
-	"Beautify Org Checkbox Symbol"
-	(push '("[ ]" .  "☐") prettify-symbols-alist)
-	(push '("[X]" . "☑" ) prettify-symbols-alist)
-	(push '("[-]" . "❍" ) prettify-symbols-alist)
-	))
-      ;; (add-hook 'org-mode-hook 'svg-tag-mode)
-
-      ;; Default todo states
-      (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)"))
-	    org-todo-keyword-faces
-	    '(("TODO"  :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
-	      ("NEXT"  :weight regular :slant italic :family "Dejavu Sans Mono")
-	      ("DONE"  :weight light :slant italic :family "Dejavu Sans Mono")
-	      ("CANCELLED" :weight light :slant italic :family "Dejavu Sans Mono"))
-	    org-log-done 'note
-            org-link-elisp-skip-confirm-regexp "(find-file\\|(read-book-and-track"
-	    org-imenu-depth 3)
 
     (append org-modules '(habits))
 
@@ -956,15 +952,56 @@ Funny thing happened here, I had the pretty-mode package installed all this time
   ;;   ))
   ;;   )
 #+END_SRC
+*** Sticky header
+#+begin_src emacs-lisp
+(use-package org-sticky-header :ensure t :after org :config (add-hook 'org-mode-hook 'org-sticky-header-mode))
+#+end_src
+*** Default TODO states and bullets
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :after org-mode)
+
+      ;; Default todo states
+(setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)"))
+      ;; org-todo-keyword-faces
+      ;; '(("TODO"  :weight black :slant italic :family "Dejavu Sans Mono" :underline t)
+      ;; 	("NEXT"  :weight regular :slant italic :family "Dejavu Sans Mono")
+      ;; 	("DONE"  :weight light :slant italic :family "Dejavu Sans Mono")
+      ;; 	("CANCELLED" :weight light :slant italic :family "Dejavu Sans Mono"))
+      org-log-done 'note
+      org-link-elisp-skip-confirm-regexp "(find-file\\|(read-book-and-track"
+      org-imenu-depth 3)
+#+end_src
+*** Org bullets
+#+begin_src 
+
+#+end_src
+*** Hooks
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook 'flyspell-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'org-indent-mode)
+(add-hook 'org-mode-hook (lambda ()
+	"Beautify Org Checkbox Symbol"
+	(push '("[ ]" .  "☐") prettify-symbols-alist)
+	(push '("[X]" . "☑" ) prettify-symbols-alist)
+	(push '("[-]" . "❍" ) prettify-symbols-alist)
+))
+      ;; (add-hook 'org-mode-hook 'svg-tag-mode)
+
+
+#+end_src
 ** Agenda
    #+begin_src emacs-lisp
 (setq org-agenda-window-setup "only-window"
       org-agenda-span 7
       org-agenda-start-on-weekday 7
-      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-scheduled-if-done nil
       org-agenda-todo-ignore-scheduled "future"
       org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-deadline-is-shown t
+      org-agenda-skip-scheduled-if-deadline-is-shown nil
       org-agenda-files (directory-files "~/Public/Syncthing Global/Notes/" t "^[^~.#].*\\.org$"))
 
 ;;Setup agenda icons
@@ -1098,7 +1135,6 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 #+END_SRC
 
 ** babel setup
-
 *** python session in org-mode
     #+begin_src emacs-lisp
 (add-to-list 'org-structure-template-alist '("p" . "src python :session (concat \"*Python: \" (file-name-nondirectory (buffer-file-name)) \"*\") :results output :exports both :tangle yes"))
@@ -1111,7 +1147,7 @@ Funny thing happened here, I had the pretty-mode package installed all this time
    (setq org-edit-src-content-indentation 0)
     #+end_src
 
-** org static blog
+** Org static blog
    #+begin_src emacs-lisp
 (use-package org-static-blog
   :ensure t
@@ -1169,6 +1205,10 @@ Funny thing happened here, I had the pretty-mode package installed all this time
 
 #+end_src
 
+** Org-ql
+#+begin_src emacs-lisp
+(use-package org-ql :ensure t :commands org-ql-search org-ql-view)
+#+end_src
 ** Book reading tracking
 #+begin_src elisp
 (defun read-book-and-track (path &optional page)
@@ -1604,8 +1644,16 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 				 ;;; mylsl-mode.el ends here
    #+end_src
 ** eglot
+For the =eglot-booster= package to work you need first to:
+1. =package-vc-install= => https://github.com/jdtsmith/eglot-booster?tab=readme-ov-file
+
+2. Install the AUR package =emacs-lsp-booster-git= or any other equivalent installation method
    #+begin_src emacs-lisp
-   (use-package eglot :ensure t :hook (python-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server"))))
+(use-package eglot :ensure t :hook (python-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server"))))
+
+(use-package eglot-booster
+	:after eglot
+	:config	(eglot-booster-mode))
    #+end_src
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
@@ -1791,7 +1839,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.qss\\'" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
+;; (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
 #+end_src
 ** Tweaks
     
@@ -1810,10 +1858,11 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 #+END_SRC
 
 * Alert on startup finish
-
+[[elisp:(org-ql-search (org-agenda-files) '(and (not (habit)) (not (done)) (tags "personal") (not (category "HOME"))) :sort '(date) :title "Today's personal items")][👤 Me work]] [[elisp:(org-ql-search (org-agenda-files) '(and (not (habit)) (not (done)) (category \"HOME\")) :sort '(date) :title \"Today's home items\")][🏠 Home's work]]  
+[[org-ql-search:%21done%3A%20%21habit%3A%20todo%3A%20tags%3Apersonal?buffers-files=%22org-agenda-files%22&super-groups=%28%28%3Aauto-category%29%29&sort=%28priority%20date%29][👤 Me work]]
   #+begin_src emacs-lisp
 (setq initial-scratch-message
- (concat "* Welcome 😀 to Yusuf's 🏠 Emacs ☕\n** Recent files (<SPC o o> to open)\n"
+ (concat "* Welcome 😀 to Yusuf's 🏠 Emacs ☕\n** =org-ql= searches\n  [[org-ql-search:%21done%3A%20%21habit%3A%20todo%3A%20tags%3Apersonal?buffers-files=%22org-agenda-files%22&super-groups=%28%28%3Aauto-category%29%29&sort=%28priority%20date%29][👤 Me work]] \n** Recent files (<SPC o o> to open)\n"
  (mapconcat  (lambda (x) (format " + [[elisp:(find-file \"%s\")][%s]]" x (url-file-nondirectory x))) recentf-list "\n")
  "\n\n** ELISP Evaluation area:\n#+begin_src emacs-lisp\n(message \"Hello World\")\n(auto-package-update-now)\n#+end_src\n")) ; print a default message in the empty scratch buffer opened at startup
 (reapply-font)
