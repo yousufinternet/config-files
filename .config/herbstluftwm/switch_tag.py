@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Automatically executed when switching tags to move all sticky windows,
 # keeping their minimized state
+import traceback
 import subprocess as sp
 
 
@@ -19,6 +20,7 @@ hc('lock')
 try:
     clients = [wid.rstrip('.') for wid in
             hc('attr clients')[0].split() if wid.startswith('0x')]
+    current_tag_clients = [w.strip() for w in hc('list_clients')[0].splitlines() if w]
 
     focused_client = hc('attr clients.focus.winid')
     focused_client = None if not focused_client[1] else focused_client[0].strip()
@@ -37,9 +39,10 @@ try:
         if was_min:
             hc(f'set_attr clients.{wid}.minimized on')
     # switch to the originally focused window unless the sticky window is tiling or fullscreen
-    if focused_client is not None and not tiling_or_fullscreen:
+    if focused_client is not None and not tiling_or_fullscreen and focused_client in current_tag_clients:
         hc(f'jumpto {focused_client}')
-except Exception:
-    pass
+except Exception as e:
+    print(traceback.format_exc())
+    print(e)
 
 hc('unlock')
