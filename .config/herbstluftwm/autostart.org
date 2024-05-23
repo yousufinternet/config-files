@@ -254,7 +254,7 @@ startup_cmds = [
     f'dunst -scale {GDK_SCALE}',
     "emacs --daemon",
     "~/.config/bspwm/scripts/set_wallpaper.py",
-    "xfce4-panel -d --sm-client-disable",
+    # "xfce4-panel -d --sm-client-disable",
     "~/.config/herbstluftwm/auto_move_sticky.py",
     "~/.config/herbstluftwm/monitor_sticky_rules.py",
     "syncthing serve --no-browser",
