@@ -39,6 +39,10 @@ config.bind('pu', 'spawn --userscript qute-port-pass -e')
 config.bind('pp', 'spawn --userscript qute-port-pass -w')
 config.bind('j', 'scroll-px 0 20')
 config.bind('k', 'scroll-px 0 -20')
+config.bind('u', 'scroll-page 0 -0.5')
+config.bind('d', 'scroll-page 0 0.5')
+config.bind('<Ctrl-u>', 'undo')
+config.bind('<Ctrl-d>', 'tab-close')
 
 # Firefox as a user_agent
 # Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0
@@ -54,7 +58,7 @@ mpv_command = (
     '--ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best"'
     ' --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched='
     ',cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,'
-    'write-sub=,write-auto-sub=')
+    'write-sub=,write-auto-sub=,netrc-cmd="pass show netrc"')
 mpv_720 = mpv_command.format(
     f'{int(screen_dims["width"]*0.25)}x{int(screen_dims["height"]*0.25)}-0-0',
     '720')
@@ -78,7 +82,7 @@ config.bind(',m7', f'spawn tsp {mpv_720} {{url}};; back')
 config.bind(',y', 'spawn konsole -e yt-dlp --cookies=cookies.txt --all-subs --embed-subs {url};; tab-close')
 config.bind(',p', 'open --private https://mail.westqurna2.com')
 config.bind(',hj', 'open --window http://beelinkserver:8096')
-config.bind(',hh', 'open --window http://beelinkserver:8123')
+config.bind(',hh', 'open --window https://beelinkserver.taila9ed9.ts.net:8123')
 config.bind(',hs', 'open --window http://beelinkserver:8081')
 config.bind(',hm', 'open --window http://homeserver:8765')
 config.bind(',hi', 'open --window http://homeserver')
@@ -95,27 +99,28 @@ config.bind(',or', 'spawn --userscript qute-capture read -H "Interesting Resourc
 # config.set('content.user_stylesheets', os.path.join(path, 'gruvbox-all-sites.css'), '*://github.com/*|*://*.stackexchange.com/*|*://stackoverflow.com/*')
 
 # prevent gmail from sending protocol handler confirmation dialogs
-config.set('content.register_protocol_handler', True, '*://gmail.com/*')
-config.set('content.register_protocol_handler', True, '*://mail.google.com/*')
+config.set('content.register_protocol_handler', True, 'gmail.com')
+config.set('content.register_protocol_handler', True, 'mail.google.com')
 
 config.set('content.tls.certificate_errors', 'block')
-config.set('content.tls.certificate_errors', 'ask', '*://homeserver')
-config.set('content.tls.certificate_errors', 'load-insecurely', '*://mail.westqurna2.com')
+config.set('content.tls.certificate_errors', 'ask', 'beelinkserver')
+config.set('content.tls.certificate_errors', 'load-insecurely', 'mail.westqurna2.com')
 config.set('content.notifications.enabled', False)
-for url in ['gmail.com', 'mail.google.com', 'mail.westqurna2.com', '*.reddit.com', 'mail.zoho.com']:
+for url in ['gmail.com', 'mail.google.com', 'mail.westqurna2.com', 'reddit.com', 'mail.zoho.com']:
     config.set('content.notifications.enabled', True, url)
 
 # Default zoom level
 # config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 config.set('zoom.default', '125%')
 
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
-                       'i': 'https://imdb.com/find?q={}',
+c.url.searchengines = {'DEFAULT': 'https://www.startpage.com/search?q={}',
+                       'ddg': 'https://duckduckgo.com/?q={}',
+                       'imdb': 'https://imdb.com/find?q={}',
                        'r': 'https://reddit.com/r/{}',
                        'g': 'https://google.com/search?q={}',
                        'gh': 'https://github.com/search?q={}',
                        'y': 'https://youtube.com/results?search_query={}',
-                       'w': 'https://wiki.archlinux.org/index.php?search={}',
+                       'awk': 'https://wiki.archlinux.org/index.php?search={}',
                        'man': 'https://man.archlinux.org/search?q={}',
                        'tv': 'http://tv.shabakaty.com/?ch=channel{}',
                        'l': 'http://libgen.is/search.php?req={}'}
