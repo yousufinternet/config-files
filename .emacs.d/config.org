@@ -258,6 +258,7 @@ News and tech
 (setq icomplete-compute-delay 1)
 (setq gc-cons-threshold 200000000)
 (setq read-process-output-max (* 3072 3072))
+(setq warning-minimum-level ":error")
 #+END_SRC
 ** Display Startup time
    #+begin_src emacs-lisp
@@ -523,6 +524,7 @@ News and tech
 	   "fcr" (lambda () (interactive) (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 	   "o" '(:ignore t :which-key "Global org-mode")
 	   "oa" 'org-agenda
+       "oq" 'org-ql-view
 	   "oc" 'org-capture
 	   "ol" 'org-store-link
            "ogcc" (lambda () (interactive) (org-clock-jump-to-current-clock))
