@@ -19,7 +19,7 @@ def output_wrapper():
 
     if waiting:
         icon = f'(box :orientation "v" :spacing 2 {icon} "{waiting}")'
-    print(f'(eventbox :onclick `~/.config/eww/scripts/dunsttoggle.sh` :onrightclick `dunstctl history-pop` {icon})')
+    print(f'(eventbox :onclick `~/.config/eww/scripts/dunsttoggle.sh` :onrightclick `dunstctl close-all` {icon})')
 
 while True:
     output_wrapper()

@@ -5,7 +5,7 @@ import subprocess as sp
 icons = {0: '\uf026', 35: '\uf027', 100: '\uf028'}
 actions = {
         'max': 'pactl set-sink-volume @DEFAULT_SINK@ 100%',
-        'mute': 'pactl set-sink-volume @DEFAULT_SINK@ 0',
+        'mute': 'pamixer --toggle-mute',
         'change': '~/.config/eww/scripts/volume_script.py {}',
     }
 
@@ -14,9 +14,11 @@ vol_monitor = sp.Popen('pactl subscribe | grep --line-buffered "sink"', shell=Tr
 def output():
     vol = sp.getoutput('pamixer --get-volume')
     vol = vol if vol != '' else '0'
+    mute = eval(sp.getoutput('pamixer --get-mute').strip().title())
     icon = [v for k, v in icons.items()
             if k >= int(vol) or k == 100][0]
-    icon_class = "icon" if int(vol) < 80 else "yellow-icon" if int(vol) < 90 else "orange-icon"
+    icon = '\uf6a9' if mute else icon
+    icon_class = "icon" if int(vol) < 80 or mute else "yellow-icon" if int(vol) < 90 else "orange-icon"
     print(
           '(eventbox :onhover `${EWW_CMD} update volume_reveal=true` :onhoverlost `${EWW_CMD} update volume_reveal=false`'
           f':onclick `{actions["max"]}` :onrightclick `{actions["mute"]}` :onscroll `{actions["change"]}` '
