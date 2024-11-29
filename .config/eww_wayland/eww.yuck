@@ -1,0 +1,124 @@
+(include "polls.yuck")
+(defvar volume_reveal false)
+(defvar disks_reveal false)
+(defvar datesize "16px")
+(defvar major_spacing 12)
+(defvar minor_spacing 2)
+(defvar sysstats_exp false)
+
+(defwindow vertical_bar
+	   :monitor '["<primary>", "HDMI-A-1", 1, 0]'
+	   :geometry (geometry :width "24px" :height "100%" :x "2px" :y "0px" :anchor "top left")
+	   :stacking "fg"
+	   :exclusive true
+	   :focusable false
+	   :hexpand false
+	   :vexpand false
+	   (vertical_bar_content))
+
+
+(defwidget vertical_bar_content []
+	   (centerbox :orientation "vertical"
+		      :class "main_container" 
+		      :hexpand false
+		      :vexpand false (top) (vcenter) (down)))
+
+(defwidget _workspace []
+	   (box
+	    :orientation "v"
+	    (for entry in workspaces_json
+		 (button :onclick `herbstclient use_index "${entry.ws_no}"`
+			 :class "${entry.ws_style}" :style "padding: 2px" "${entry.ws_icn}"))))
+
+(defwidget _datetime []
+	   (eventbox
+	    :hexpand false
+	    :onclick `~/.config/eww/scripts/toggle_calendar.py`
+	    (box
+	     :hexpand false
+	     :orientation "v"
+	     :space-evenly false
+	     :spacing 5
+	     (label :class "orange-icon" :hexpand false :text "")
+	     (box :spacing 0 :orientation "v" _day (label :style "font-size: ${datesize}" :text _daynum) _month)
+	     ;; (box :spacing 0 :orientation "v" (label :style "font-size: ${datesize}" :text _monthnum) )
+	     (label :class "blue-icon" :hexpand false :text "")
+	     (box :spacing 0 :orientation "v" (label :style "font-size: ${datesize}" :text _hour) (label :style "font-size: ${datesize}" :text _min))
+	     )))
+
+(defvar xautolocker_enabled true)
+
+;; defvar doesn't support variable evaluation in string, so ${EWW_CMD} doesn't work
+(defwidget coffee_widget []
+	   (box
+	    :space-evenly false :spacing 5
+	    :orientation "v"
+	    (button :halign "center"
+		    :onclick {xautolocker_enabled ? "xautolock -disable;xset -dpms;${EWW_CMD} update xautolocker_enabled=false" : "xautolock -enable;xset +dpms;${EWW_CMD} update xautolocker_enabled=true"}
+		    :class "${xautolocker_enabled ? 'grey' : 'green'}-icon"
+		    {xautolocker_enabled ? "\\uf0f4" : "\\uf7b6"})
+	    (button :halign "center" :onclick `xautolock -locknow` :class "yellow-icon" "\\uf023")))
+
+
+(defwidget weather [] (box
+		       :space-evenly false :spacing {minor_spacing}
+		       :orientation "v" :tooltip "${_weather["last_updated"]}"
+		       (label :class "blue-icon" :text {_weather["icon"]})
+		       {_weather["temp"]}))
+
+(defwidget keyboard [] (eventbox :onclick `xkb-switch -n`
+				  (box :space-evenly false :spacing 0 :orientation "v"
+				       (label :class "icon" :text "\\uf11c") {captures(klayout, "(\\w+)")[0][0]})))
+
+(defwidget _sysstats []
+	   (eventbox :onclick {sysstats_exp ? `${EWW_CMD} update sysstats_exp=false` : `${EWW_CMD} update sysstats_exp=true`}
+		     (box :space-evenly false
+			  :orientation "v"
+			  :spacing {minor_spacing}
+			  (literal :content _cpuusage)
+			  (revealer :transition "slidedown"
+				    :vexpand true 
+				    :valign "center" :reveal sysstats_exp
+				    (box :class "subwidget" :vexpand true
+					 :space-evenly false :spacing 5 :orientation "v"
+					 (literal :content _cputemp)
+					 ;; (literal :content _gputemp)
+					 )))))
+
+
+(defwidget _ramusage [] (box :orientation "v" :space-evenly false :spacing {minor_spacing} (label :class "green-icon" :text "\\uf538") "${round((EWW_RAM.free_mem / EWW_RAM.total_mem)*100, 0)}%"))
+
+(defwidget _bluetooth []
+  (box :spacing {minor_spacing} :space-evenly false :orientation "v"
+       (button :onclick "bluetoothctl power ${_bluestatus == 'yes' ? 'off' : 'on'}"
+	       :class {_bluestatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf294")
+       (button :onclick {_podsstatus == 'yes' ? "bluetoothctl disconnect" : "bluetoothctl connect 88:D0:39:ED:EA:64"}
+	       :class {_podsstatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf025")
+       ))
+
+(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (_workspace) (weather)
+		       (literal :content _syncthing)
+		       (literal :content _lightmode)
+		       ))
+
+(defwidget vcenter [] (box
+		       :vexpand false :orientation "v"
+		       :valign "center" :space-evenly false
+		       :spacing {major_spacing}
+		       (literal :content nmliteralstate)
+		       (literal :content dunstctl)
+		       (literal :content _udiskie)
+		       (literal :content _volume)
+		       (coffee_widget)
+		       (_bluetooth)
+		       (keyboard)
+		       ))
+
+(defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing {major_spacing}
+			 (literal :content _battery)
+			 (_ramusage)
+			 (_sysstats)
+			 (_datetime)
+			 ))
+
+
