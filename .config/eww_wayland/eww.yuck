@@ -23,13 +23,6 @@
 		      :hexpand false
 		      :vexpand false (top) (vcenter) (down)))
 
-(defwidget _workspace []
-	   (box
-	    :orientation "v"
-	    (for entry in workspaces_json
-		 (button :onclick `herbstclient use_index "${entry.ws_no}"`
-			 :class "${entry.ws_style}" :style "padding: 2px" "${entry.ws_icn}"))))
-
 (defwidget _datetime []
 	   (eventbox
 	    :hexpand false
@@ -96,7 +89,7 @@
 	       :class {_podsstatus == 'yes' ? "green-icon" : "grey-icon"} "\\uf025")
        ))
 
-(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (_workspace) (weather)
+(defwidget top [] (box :vexpand false :orientation "v" :valign "start" :space-evenly false :spacing {major_spacing} (weather)
 		       (literal :content _syncthing)
 		       (literal :content _lightmode)
 		       ))
