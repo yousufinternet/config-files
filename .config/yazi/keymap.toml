@@ -1,0 +1,14 @@
+[[manager.prepend_keymap]]
+on   = [ ")" ]
+run  = "plugin --sync first-non-directory"
+desc = "Jumps to the first file"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+[[manager.prepend_keymap]]
+on   = "!"
+run  = 'shell "$SHELL" --block --confirm'
+desc = "Open shell here"

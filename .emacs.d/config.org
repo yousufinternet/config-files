@@ -1657,6 +1657,11 @@ For the =eglot-booster= package to work you need first to:
 	:after eglot
 	:config	(eglot-booster-mode))
    #+end_src
+** Corfu
+Small completion popup
+#+begin_src emacs-lisp
+(use-package corfu :ensure t :hook (prog-mode . corfu-mode) :config (setq corfu-auto t))
+#+end_src
 ** Fly stuff
 #+BEGIN_SRC emacs-lisp
      (use-package flycheck 
