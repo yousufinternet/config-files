@@ -8,9 +8,9 @@
 
 (defwindow vertical_bar
 	   :monitor '["<primary>", "HDMI-A-1", 1, 0]'
-	   :geometry (geometry :width "24px" :height "100%" :x "2px" :y "0px" :anchor "top left")
-	   :stacking "fg"
-	   :exclusive true
+	   :geometry (geometry :width "24px" :height "95%" :x "2px" :y "0px" :anchor "left center")
+	   :stacking "bt"
+	   :exclusive "true"
 	   :focusable false
 	   :hexpand false
 	   :vexpand false
@@ -102,13 +102,11 @@
 		       (literal :content dunstctl)
 		       (literal :content _udiskie)
 		       (literal :content _volume)
-		       (coffee_widget)
+		       (literal :content klayout)
 		       (_bluetooth)
-		       (keyboard)
 		       ))
 
 (defwidget down [] (box :hexpand false :orientation "v" :valign "end" :space-evenly false :spacing {major_spacing}
-			 (literal :content _battery)
 			 (_ramusage)
 			 (_sysstats)
 			 (_datetime)

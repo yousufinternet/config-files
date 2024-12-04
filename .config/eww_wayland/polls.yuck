@@ -18,6 +18,6 @@
 
 (deflisten nmliteralstate "./scripts/nm_literal.py")
 (deflisten dunstctl "./scripts/dunst_ctl.py")
-(deflisten klayout :initial "us" `xkb-switch -W`)
+(deflisten klayout `./scripts/watch_keyboard.py`)
 (deflisten _volume "./scripts/volume_control.py")
 (deflisten _lightmode "./scripts/light_dark.py")
