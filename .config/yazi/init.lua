@@ -1,0 +1,1 @@
+require("fuse-archive"):setup()

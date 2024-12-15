@@ -1,5 +1,5 @@
 [plugin]
-deps = [{ use = "lpanebr/yazi-plugins:first-non-directory", rev = "4e0fc1b" }, { use = "KKV9/compress", rev = "60b24af" }]
+deps = [{ use = "lpanebr/yazi-plugins:first-non-directory", rev = "4e0fc1b" }, { use = "KKV9/compress", rev = "60b24af" }, { use = "dawsers/fuse-archive", rev = "21363ce" }]
 
 [flavor]
 deps = [{ use = "yazi-rs/flavors:catppuccin-frappe", rev = "c686812" }]
