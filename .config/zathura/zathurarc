@@ -6,6 +6,9 @@ set recolor-reverse-video
 set recolor
 set statusbar-home-tilde true
 map y exec 'bash -c ~/Scripts/zathura-link.py'
+map d scroll half-down
+map u scroll half-up
+map <C-d> toggle_page_mode
 set adjust-open width
 
 ### DRACULA THEME ###
