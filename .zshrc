@@ -143,7 +143,9 @@ zle -N down-line-or-beginning-search
 
 # startx
  if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-   exec startx
+	 # river
+	 hyprland
+   # exec startx
 fi
 
 

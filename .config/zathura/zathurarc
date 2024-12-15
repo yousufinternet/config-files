@@ -10,6 +10,9 @@ map d scroll half-down
 map u scroll half-up
 map <C-d> toggle_page_mode
 set adjust-open width
+map d scroll half-down
+map u scroll half-up
+map <C-d> toggle_page_mode
 
 ### DRACULA THEME ###
 # set notification-error-bg       "#ff5555" # Red
