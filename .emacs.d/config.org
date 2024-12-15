@@ -1652,14 +1652,12 @@ For the =eglot-booster= package to work you need first to:
 2. Install the AUR package =emacs-lsp-booster-git= or any other equivalent installation method
    #+begin_src emacs-lisp
 (use-package eglot :ensure t :hook (python-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server"))))
+     (use-package eglot :ensure t :hook (python-mode . eglot-ensure) :config (add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server"))))
 
-(use-package eglot-booster
-	:after eglot
-	:config	(eglot-booster-mode))
-   #+end_src
-** Corfu
-Small completion popup
-#+begin_src emacs-lisp
+     (use-package eglot-booster
+	     :after eglot
+	     :config	(eglot-booster-mode))
+
 ;; (use-package corfu :ensure t :hook (prog-mode . corfu-mode) :config (setq corfu-auto t))
 #+end_src
 ** Fly stuff
