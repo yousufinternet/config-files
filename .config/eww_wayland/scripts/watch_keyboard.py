@@ -12,7 +12,7 @@ def output(layout='Eng'):
     print(
         '(eventbox :onclick `hyprctl switchxkblayout all next` '
         '(box :space-evenly false :spacing 0 :orientation "v" '
-        f'(label :class "icon" :text "\\uf11c") "{layout}"))')
+        f'(label :class "icon" :text "\uf11c") "{layout}"))')
     sys.stdout.flush()
 
 output()
