@@ -22,3 +22,8 @@ desc = "Enter or Mount selected archive"
 on   = "h"
 run = "plugin fuse-archive --args=unmount"
 desc = "Leave or Unmount selected archive"
+
+[[manager.prepend_keymap]]
+on = ["g", 'i']
+run = "cd /run/media/yusuf"
+desc = "Removable media"
