@@ -309,7 +309,7 @@
 
 [telegram]
     desktop_entry = "org.telegram.desktop"
-    background = "#30a3e6"
+    background = "#30a3e6cc"
     foreground = "#071a24"
     frame_color = "#071a24"
 
