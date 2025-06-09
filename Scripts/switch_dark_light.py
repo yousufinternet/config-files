@@ -90,3 +90,9 @@ zathura_wins = sp.getoutput('qdbus | grep zathura').strip().splitlines()
 for zwin in zathura_wins:
     cmd = f'qdbus {zwin} /org/pwmt/zathura org.pwmt.zathura.ExecuteCommand "set recolor {"true" if switch_theme == "dark" else "false"}"'
     sp.Popen(cmd, shell=True)
+
+
+# qutebrowser darkmode
+sp.Popen(f'qutebrowser ":set colors.webpage.darkmode.enabled {"true" if switch_theme == "dark" else "false"}"', shell=True)
+sp.Popen(f'qutebrowser ":set colors.webpage.preferred_color_scheme {switch_theme}"', shell=True)
+sp.Popen(f'qutebrowser ":set colors.webpage.bg {"black" if switch_theme == "dark" else "white"}"', shell=True)

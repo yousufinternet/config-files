@@ -1,0 +1,2877 @@
+[
+  [
+    "1",
+    "Foreword: Document Purpose",
+    "17"
+  ],
+  [
+    "1.1",
+    "Background And Context",
+    "17"
+  ],
+  [
+    "1.2",
+    "Objectives",
+    "18"
+  ],
+  [
+    "2",
+    "Executive Summary",
+    "20"
+  ],
+  [
+    "2.1",
+    "Field Overview",
+    "20"
+  ],
+  [
+    "2.2",
+    "Agup Project Description",
+    "20"
+  ],
+  [
+    "2.3",
+    "Optimization Programs",
+    "22"
+  ],
+  [
+    "2.4",
+    "Reservoir Development",
+    "22"
+  ],
+  [
+    "2.5",
+    "Production Forecasts",
+    "23"
+  ],
+  [
+    "2.6",
+    "Wells",
+    "24"
+  ],
+  [
+    "2.7",
+    "Facilities",
+    "25"
+  ],
+  [
+    "2.7.1",
+    "Agup Phase 1",
+    "25"
+  ],
+  [
+    "2.7.2",
+    "Agup Phase 2",
+    "27"
+  ],
+  [
+    "2.7.3",
+    "Operating Philosophy",
+    "29"
+  ],
+  [
+    "2.8",
+    "Project Execution Plan",
+    "30"
+  ],
+  [
+    "2.8.1",
+    "Agup Phase 1",
+    "30"
+  ],
+  [
+    "2.8.2",
+    "Agup Phase 2",
+    "31"
+  ],
+  [
+    "2.9",
+    "Costs",
+    "32"
+  ],
+  [
+    "2.9.1",
+    "Agup Phase 1",
+    "32"
+  ],
+  [
+    "2.9.2",
+    "Agup Phase 2",
+    "32"
+  ],
+  [
+    "3",
+    "Subsurface",
+    "34"
+  ],
+  [
+    "3.1",
+    "Available Data",
+    "34"
+  ],
+  [
+    "3.2",
+    "Regional Geological Settings",
+    "35"
+  ],
+  [
+    "3.3",
+    "Geophysical Evaluation",
+    "39"
+  ],
+  [
+    "3.3.1",
+    "Seismic Data And Interpretation",
+    "39"
+  ],
+  [
+    "3.3.2",
+    "Fault Synthesis",
+    "41"
+  ],
+  [
+    "3.4",
+    "Reservoir Characterization And Modelling",
+    "43"
+  ],
+  [
+    "3.4.1",
+    "Yamama",
+    "43"
+  ],
+  [
+    "3.4.2",
+    "Nahr Umr",
+    "73"
+  ],
+  [
+    "3.4.3",
+    "Mauddud",
+    "98"
+  ],
+  [
+    "3.4.4",
+    "Mishrif",
+    "125"
+  ],
+  [
+    "3.4.5",
+    "Umm Er Radhuma",
+    "129"
+  ],
+  [
+    "3.4.6",
+    "Dammam",
+    "135"
+  ],
+  [
+    "3.4.7",
+    "Zubair",
+    "140"
+  ],
+  [
+    "4",
+    "Reservoir Management Strategy",
+    "153"
+  ],
+  [
+    "4.1",
+    "Optimization Strategy And Scopes",
+    "153"
+  ],
+  [
+    "4.1.1",
+    "3D Seismic",
+    "153"
+  ],
+  [
+    "4.1.2",
+    "Well Data Acquisition",
+    "154"
+  ],
+  [
+    "4.1.3",
+    "Waterflood Pilots",
+    "161"
+  ],
+  [
+    "4.2",
+    "Development Principles",
+    "165"
+  ],
+  [
+    "4.2.1",
+    "Phasing Development",
+    "165"
+  ],
+  [
+    "4.2.2",
+    "Optimal Recovery",
+    "166"
+  ],
+  [
+    "4.2.3",
+    "Water Flooding",
+    "167"
+  ],
+  [
+    "4.2.4",
+    "Produced Water",
+    "167"
+  ],
+  [
+    "4.2.5",
+    "Source Of Water",
+    "167"
+  ],
+  [
+    "4.2.6",
+    "Hp Gas Flaring Elimination",
+    "167"
+  ],
+  [
+    "4.3",
+    "Yamama Reservoir Development Strategy",
+    "168"
+  ],
+  [
+    "4.3.1",
+    "Recovery Mechanisms",
+    "168"
+  ],
+  [
+    "4.3.2",
+    "Phase 1 Development",
+    "168"
+  ],
+  [
+    "4.3.3",
+    "Phase 2 Development",
+    "169"
+  ],
+  [
+    "4.4",
+    "Nahr Umr Reservoir Development Strategy",
+    "170"
+  ],
+  [
+    "4.4.1",
+    "Recovery Mechanisms",
+    "170"
+  ],
+  [
+    "4.4.2",
+    "Phase 1 Development",
+    "171"
+  ],
+  [
+    "4.4.3",
+    "Phase 2 Development – Nahr Umr E",
+    "171"
+  ],
+  [
+    "4.5",
+    "Mauddud Reservoir Development Strategy",
+    "172"
+  ],
+  [
+    "4.5.1",
+    "Recovery Mechanisms",
+    "172"
+  ],
+  [
+    "4.5.2",
+    "Phase 1 Development",
+    "173"
+  ],
+  [
+    "4.5.3",
+    "Phase 2 Development",
+    "174"
+  ],
+  [
+    "4.6",
+    "Mishrif Reservoir Development Strategy",
+    "174"
+  ],
+  [
+    "4.6.1",
+    "Recovery Mechanisms",
+    "174"
+  ],
+  [
+    "4.6.2",
+    "Phase 1 Development",
+    "175"
+  ],
+  [
+    "4.6.3",
+    "Phase 2 Development",
+    "175"
+  ],
+  [
+    "4.7",
+    "Aquifer Development Strategy",
+    "175"
+  ],
+  [
+    "4.7.1",
+    "Dammam Development",
+    "175"
+  ],
+  [
+    "4.7.2",
+    "Umm Er Radhuma Development",
+    "176"
+  ],
+  [
+    "4.8",
+    "Zubair Acid Gas And Associated Gas Disposal",
+    "177"
+  ],
+  [
+    "4.8.1",
+    "Gas Disposal Concept",
+    "177"
+  ],
+  [
+    "4.8.2",
+    "Cap-Rock Integrity Preservation",
+    "179"
+  ],
+  [
+    "4.8.3",
+    "Monitoring Program",
+    "180"
+  ],
+  [
+    "5",
+    "Production Profiles",
+    "183"
+  ],
+  [
+    "5.1",
+    "Production Strategy",
+    "183"
+  ],
+  [
+    "5.2",
+    "Production Constraints",
+    "183"
+  ],
+  [
+    "5.2.1",
+    "Surface Facility Constraints",
+    "183"
+  ],
+  [
+    "5.2.2",
+    "Well Production Constraints",
+    "184"
+  ],
+  [
+    "5.3",
+    "Integrated Asset Model (Iam)",
+    "185"
+  ],
+  [
+    "5.4",
+    "Production Profiles",
+    "185"
+  ],
+  [
+    "5.4.1",
+    "Phase 1 - Base Case Production Profiles",
+    "185"
+  ],
+  [
+    "5.4.2",
+    "Phase 2 - Base Case Production Profiles",
+    "187"
+  ],
+  [
+    "6",
+    "Drilling And Completion",
+    "189"
+  ],
+  [
+    "6.1",
+    "Legacy Wells",
+    "189"
+  ],
+  [
+    "6.2",
+    "Well Architecture",
+    "191"
+  ],
+  [
+    "6.2.1",
+    "Casing Depths",
+    "191"
+  ],
+  [
+    "6.2.2",
+    "Casing Design",
+    "192"
+  ],
+  [
+    "6.2.3",
+    "Well Schematic",
+    "193"
+  ],
+  [
+    "6.3",
+    "Well Trajectory Design",
+    "201"
+  ],
+  [
+    "6.4",
+    "Well Completion",
+    "203"
+  ],
+  [
+    "6.4.1",
+    "Generality",
+    "204"
+  ],
+  [
+    "6.4.2",
+    "Wellhead And X-Mas Tree",
+    "204"
+  ],
+  [
+    "6.4.3",
+    "Sand Control",
+    "207"
+  ],
+  [
+    "6.4.4",
+    "Summary Of Completion Design",
+    "208"
+  ],
+  [
+    "6.5",
+    "Wells Performance",
+    "220"
+  ],
+  [
+    "6.5.1",
+    "Activation Concept Selection",
+    "220"
+  ],
+  [
+    "6.5.2",
+    "Esp Design",
+    "222"
+  ],
+  [
+    "6.6",
+    "Durations And Drillex",
+    "223"
+  ],
+  [
+    "6.6.1",
+    "Drilling Sequence",
+    "223"
+  ],
+  [
+    "6.6.2",
+    "Drillling Duration",
+    "225"
+  ],
+  [
+    "6.6.3",
+    "Drillex",
+    "228"
+  ],
+  [
+    "7",
+    "Surface Facilities",
+    "230"
+  ],
+  [
+    "7.1",
+    "Processing Capacity Upgrade Concept Selection",
+    "230"
+  ],
+  [
+    "7.1.1",
+    "Concept 1 – New Early Production Facility",
+    "230"
+  ],
+  [
+    "7.1.2",
+    "Concept 2 – Debottleneck Of Existing Processing Plant",
+    "230"
+  ],
+  [
+    "7.1.3",
+    "Evaluation",
+    "230"
+  ],
+  [
+    "7.1.4",
+    "Conclusion",
+    "231"
+  ],
+  [
+    "7.2",
+    "Overview Of Surface Development",
+    "231"
+  ],
+  [
+    "7.3",
+    "Basis Of Design",
+    "233"
+  ],
+  [
+    "7.3.1",
+    "Metocean Data",
+    "233"
+  ],
+  [
+    "7.3.2",
+    "Facilities Design Life",
+    "236"
+  ],
+  [
+    "7.3.3",
+    "Reservoir Condition And Fluid Composition",
+    "237"
+  ],
+  [
+    "7.3.4",
+    "Export Oil Specifications",
+    "238"
+  ],
+  [
+    "7.3.5",
+    "Water Injection",
+    "239"
+  ],
+  [
+    "7.3.6",
+    "Water For Crude Desalting",
+    "239"
+  ],
+  [
+    "7.3.7",
+    "Water Disposal",
+    "239"
+  ],
+  [
+    "7.3.8",
+    "Gmp Fuel Gas Characterization",
+    "240"
+  ],
+  [
+    "7.3.9",
+    "Assumption Of Boc Connection To Agup Facilities",
+    "240"
+  ],
+  [
+    "7.4",
+    "Agup Phase 1",
+    "240"
+  ],
+  [
+    "7.4.1",
+    "Well Pad",
+    "240"
+  ],
+  [
+    "7.4.2",
+    "Gathering Network",
+    "250"
+  ],
+  [
+    "7.4.3",
+    "Cpf1 Modification",
+    "253"
+  ],
+  [
+    "7.4.4",
+    "Cpf1 Layout",
+    "261"
+  ],
+  [
+    "7.4.5",
+    "Oil Export Pipelines",
+    "262"
+  ],
+  [
+    "7.4.6",
+    "Associated Gas Injection Pipeline",
+    "264"
+  ],
+  [
+    "7.4.7",
+    "Uer Water Treatment Facilities And Water Distribution Network",
+    "265"
+  ],
+  [
+    "7.5",
+    "Agup Phase 2",
+    "268"
+  ],
+  [
+    "7.5.1",
+    "Well Pad",
+    "268"
+  ],
+  [
+    "7.5.2",
+    "Gathering Networks",
+    "273"
+  ],
+  [
+    "7.5.3",
+    "Central Processing Facilities (Cpf2)",
+    "276"
+  ],
+  [
+    "7.5.4",
+    "Plant Layout",
+    "288"
+  ],
+  [
+    "7.6",
+    "Field Balances",
+    "289"
+  ],
+  [
+    "7.6.1",
+    "Water Balance",
+    "289"
+  ],
+  [
+    "7.6.2",
+    "Power Balance",
+    "296"
+  ],
+  [
+    "7.6.3",
+    "Ghg Emissions",
+    "297"
+  ],
+  [
+    "7.7",
+    "Agup Interface With Boc And External Facilities",
+    "302"
+  ],
+  [
+    "7.8",
+    "Interfaces, Synergies And Common Facilities With Gmp",
+    "304"
+  ],
+  [
+    "7.8.1",
+    "Interfaces Between Cpf2 And Gpp1",
+    "304"
+  ],
+  [
+    "7.8.2",
+    "Common Facilities Synergy",
+    "305"
+  ],
+  [
+    "7.8.3",
+    "Other Potential Synergies",
+    "307"
+  ],
+  [
+    "8",
+    "Operating Philosophy",
+    "309"
+  ],
+  [
+    "8.1",
+    "Introduction",
+    "309"
+  ],
+  [
+    "8.2",
+    "Operating Principles",
+    "309"
+  ],
+  [
+    "8.3",
+    "Work Organization",
+    "309"
+  ],
+  [
+    "8.4",
+    "Phase 1 Operations",
+    "311"
+  ],
+  [
+    "8.4.1",
+    "Control System",
+    "311"
+  ],
+  [
+    "8.4.2",
+    "Shutdown, Start-Up And Restart",
+    "312"
+  ],
+  [
+    "8.4.3",
+    "Hydrocarbon Extraction",
+    "312"
+  ],
+  [
+    "8.4.4",
+    "Oil Processing",
+    "314"
+  ],
+  [
+    "8.4.5",
+    "Produced Water",
+    "315"
+  ],
+  [
+    "8.4.6",
+    "Gas Injection",
+    "315"
+  ],
+  [
+    "8.4.7",
+    "Pipelines Operation And Corrosion Management",
+    "315"
+  ],
+  [
+    "8.4.8",
+    "Flow Assurance Management",
+    "316"
+  ],
+  [
+    "8.4.9",
+    "Chemicals",
+    "317"
+  ],
+  [
+    "8.4.10",
+    "Utilities",
+    "318"
+  ],
+  [
+    "8.4.11",
+    "Flare System",
+    "318"
+  ],
+  [
+    "8.4.12",
+    "Metering",
+    "319"
+  ],
+  [
+    "8.4.13",
+    "Reporting And Operating Monitoring",
+    "319"
+  ],
+  [
+    "8.4.14",
+    "Telecommunication And Technical Information System",
+    "319"
+  ],
+  [
+    "8.4.15",
+    "Accomodation, Support Area And Buildings",
+    "319"
+  ],
+  [
+    "8.4.16",
+    "Logistics And Site Handling",
+    "319"
+  ],
+  [
+    "8.5",
+    "Phase 2 Operations",
+    "320"
+  ],
+  [
+    "8.5.1",
+    "Control System Principles",
+    "320"
+  ],
+  [
+    "8.5.2",
+    "Shutdown And Restart Priciple",
+    "321"
+  ],
+  [
+    "8.5.3",
+    "Hydrocarbon Extraction",
+    "321"
+  ],
+  [
+    "8.5.4",
+    "Condensate Management",
+    "323"
+  ],
+  [
+    "8.5.5",
+    "Produced Water Management And Water Injection",
+    "324"
+  ],
+  [
+    "8.5.6",
+    "Metering Philosophy",
+    "324"
+  ],
+  [
+    "8.6",
+    "Maintenance And Inspection Philosophy",
+    "325"
+  ],
+  [
+    "8.6.1",
+    "Maintenance Principles",
+    "325"
+  ],
+  [
+    "8.6.2",
+    "Inspection Philosophy",
+    "326"
+  ],
+  [
+    "8.7",
+    "Digitalization Philosophy",
+    "327"
+  ],
+  [
+    "8.7.1",
+    "Challenges",
+    "327"
+  ],
+  [
+    "8.7.2",
+    "Ratawix: Teeprh’S Path To An Interconnected Affiliate",
+    "327"
+  ],
+  [
+    "8.7.3",
+    "Strategic Objectives",
+    "327"
+  ],
+  [
+    "8.7.4",
+    "Strategic Initiatives",
+    "327"
+  ],
+  [
+    "9",
+    "Project Execution And Planning",
+    "329"
+  ],
+  [
+    "9.1",
+    "General",
+    "329"
+  ],
+  [
+    "9.2",
+    "Agup Phase 1",
+    "329"
+  ],
+  [
+    "9.2.1",
+    "Project Planning",
+    "329"
+  ],
+  [
+    "9.2.2",
+    "Project Execution",
+    "330"
+  ],
+  [
+    "9.2.3",
+    "Project Contracting Strategy",
+    "331"
+  ],
+  [
+    "9.3",
+    "Agup Phase 2",
+    "335"
+  ],
+  [
+    "9.3.1",
+    "Project Planning",
+    "335"
+  ],
+  [
+    "9.3.2",
+    "Project Execution",
+    "335"
+  ],
+  [
+    "9.3.3",
+    "Project Contracting Strategy",
+    "336"
+  ],
+  [
+    "9.4",
+    "Local Content",
+    "338"
+  ],
+  [
+    "339",
+    "10",
+    "1"
+  ],
+  [
+    "339",
+    "10",
+    "2"
+  ],
+  [
+    "339",
+    "10",
+    "2"
+  ],
+  [
+    "1",
+    "Agup Phase 1",
+    "339"
+  ],
+  [
+    "10.2.2",
+    "Agup Phase 2",
+    "340"
+  ],
+  [
+    "10.3",
+    "Operational Expenditure (Opex)",
+    "340"
+  ],
+  [
+    "10.3.1",
+    "Agup Phase 1",
+    "340"
+  ],
+  [
+    "10.3.2",
+    "Agup Phase 2",
+    "341"
+  ],
+  [
+    "10.4",
+    "Abandonment Expenditure (Abex)",
+    "341"
+  ],
+  [
+    "10.4.1",
+    "Agup Phase 1",
+    "341"
+  ],
+  [
+    "10.4.2",
+    "Agup Phase 2",
+    "342"
+  ],
+  [
+    "343",
+    "11",
+    "1"
+  ],
+  [
+    "343",
+    "11",
+    "1"
+  ],
+  [
+    "1",
+    "Hse Principles",
+    "343"
+  ],
+  [
+    "11.1.2",
+    "Working Time",
+    "343"
+  ],
+  [
+    "11.1.3",
+    "Emergency Response Plan",
+    "343"
+  ],
+  [
+    "11.1.4",
+    "H2S Management",
+    "343"
+  ],
+  [
+    "11.1.5",
+    "Technical Integrity Management",
+    "343"
+  ],
+  [
+    "11.1.6",
+    "Ghg Emissions And Flaring Policy",
+    "343"
+  ],
+  [
+    "11.2",
+    "Security",
+    "344"
+  ],
+  [
+    "11.3",
+    "Sustainable Development",
+    "345"
+  ],
+  [
+    "Appendix 1.",
+    "Glossary",
+    "347"
+  ],
+  [
+    "APPENDIX 2.",
+    "Detailed Production Profiles",
+    "354"
+  ],
+  [
+    "APPENDIX 3.",
+    "Surface Production Network",
+    "355"
+  ],
+  [
+    "APPENDIX 4.",
+    "Agup Phase 1 Cpf1 Plant Layout",
+    "360"
+  ],
+  [
+    "APPENDIX 5.",
+    "Agup Phase 2 Cpf2 Plant Layout",
+    "361"
+  ],
+  [
+    "APPENDIX 6.",
+    "Agup Phase 2 Cpf2 Plant Layout Including Gpp",
+    "362"
+  ],
+  [
+    "Figure 1-1",
+    "Gas Growth Integrated Project Map",
+    "17"
+  ],
+  [
+    "Figure 1-2",
+    "Ggip Projects Interface",
+    "19"
+  ],
+  [
+    "Figure 2-1",
+    "Phase 1 Oil Production Forecast Including Availability",
+    "23"
+  ],
+  [
+    "Figure 2-2",
+    "Phase 1 & Phase 2 Oil Production Forecast Excluding Availability",
+    "24"
+  ],
+  [
+    "Figure 2-3",
+    "Agup Phase 1 Cpf1 Facilities Work Scope",
+    "27"
+  ],
+  [
+    "Figure 2-4",
+    "Cpf 2 Process Description – Block Flow Diagram",
+    "29"
+  ],
+  [
+    "Figure 2-5",
+    "Agup Phase 1 Preliminary Project Schedule",
+    "31"
+  ],
+  [
+    "Figure 2-6",
+    "Agup Phase 2 Preliminary Project Schedule",
+    "31"
+  ],
+  [
+    "Figure 3-1",
+    "Structure Map Of The Mesopotamia Foredeep",
+    "36"
+  ],
+  [
+    "Figure 3-2",
+    "Techtono-Stratigraphic Chart And Bouguer Anomalies Map",
+    "37"
+  ],
+  [
+    "Figure 3-3",
+    "Sw-Ne Regional Section Illustrating Upper Jurassic To Lower Cretaceous Stratigraphy",
+    "38"
+  ],
+  [
+    "Figure 3-4",
+    "Sw-Ne Regional Section Illustrating The Lower To Upper Cretaceous Stratigraphy",
+    "39"
+  ],
+  [
+    "Figure 3-5",
+    "Sedimentary Settings Of The 3 Main Ratawi Oil Reservoirs With Paleo-Environment Maps",
+    "39"
+  ],
+  [
+    "Figure 3-6",
+    "Example Of Well Calibration For Rt-06",
+    "40"
+  ],
+  [
+    "Figure 3-7",
+    "Interpreted Seismic Line Across Ratawi And Rumaila Fields",
+    "40"
+  ],
+  [
+    "Figure 3-8",
+    "Specific Workflow Applied For Time Interpretation And Gridding",
+    "41"
+  ],
+  [
+    "Figure 3-9",
+    "Gravity Map Of South-East Iraq",
+    "41"
+  ],
+  [
+    "Figure 3-10",
+    "North-South Cross Section Of Ratawi Field Showing Oil Accumulations",
+    "42"
+  ],
+  [
+    "Figure 3-11",
+    "Synthesis Of All Static And Dynamic Data Used To Infer Possible Compartmentalization",
+    "43"
+  ],
+  [
+    "Figure 3-12",
+    "Depth Map Of The Yamama Reservoir With Available Seismic And Well Data",
+    "44"
+  ],
+  [
+    "Figure 3-13",
+    "Cross-Section Of Yamama, Showing Parasequences & Interpreted Depositional Environments.",
+    "45"
+  ],
+  [
+    "Figure 3-14",
+    "Yamama Cores Taken From 4 Wells",
+    "46"
+  ],
+  [
+    "Figure 3-15",
+    "Geostatistics On Porosity Logs:",
+    "47"
+  ],
+  [
+    "Figure 3-16",
+    "Geostatics On Plug Porosity-Permeability Data",
+    "48"
+  ],
+  [
+    "Figure 3-17",
+    "Saturation In Function Of Height Above Contact, For The Different Available Data",
+    "49"
+  ],
+  [
+    "Figure 3-18",
+    "Yamama Dead Oil Samples Composition From March 2022 Campaign",
+    "50"
+  ],
+  [
+    "Figure 3-19",
+    "Yamama Imbibition Curves Per Wettability, And Associated Relative Permeability Curves",
+    "51"
+  ],
+  [
+    "Figure 3-20",
+    "Yamama Location Of Dst With Associated Interpreted Investigation Radius & Limits.",
+    "52"
+  ],
+  [
+    "21-",
+    "Yamama Static Pressure @3800 Mtvdss",
+    "53"
+  ],
+  [
+    "Figure 3-22",
+    "Yamama Lateral Compartments Introduced To Consider The High Variability In Gor",
+    "54"
+  ],
+  [
+    "Figure 3-23",
+    "Yamama Static Workflow",
+    "55"
+  ],
+  [
+    "Figure 3-24",
+    "N-S Cross-Section Along The Main Wells, Displaying The Modelled Ps And The Well Tops",
+    "55"
+  ],
+  [
+    "Figure 3-25",
+    "Yamama Modelling: Structure And Layering",
+    "56"
+  ],
+  [
+    "Figure 3-26",
+    "Yamama Porosity Modelling",
+    "57"
+  ],
+  [
+    "Figure 3-27",
+    "K Facies On Plugs From Phi-K Plot.",
+    "57"
+  ],
+  [
+    "Figure 3-28",
+    "Permeability Modelling Workflow",
+    "58"
+  ],
+  [
+    "Figure 3-29",
+    "Bitumen Results Shown On Ns And We Cross-Sections, And Maps On Layer 90 In Ps3",
+    "59"
+  ],
+  [
+    "Figure 3-30",
+    "Base Case Contacts For Each Parasequences, On Depth Maps Of The Sequence Tops.",
+    "59"
+  ],
+  [
+    "Figure 3-31",
+    "Saturation Results Shown On Ns And We Cross-Sections, And Maps On Layer 90 In Ps3.",
+    "60"
+  ],
+  [
+    "Figure 3-32",
+    "Distribution Of In-Place Volumes Per Ps Showing The Partition Between Light Oil And Bitumen",
+    "61"
+  ],
+  [
+    "Figure 3-33",
+    "Oil In Place (Net Thickness*Porosity*Oil Saturation) And Kh Maps (Perm*Thickness) Split Per Ps.",
+    "61"
+  ],
+  [
+    "Figure 3-34",
+    "Pressure Initialization – J=117",
+    "62"
+  ],
+  [
+    "Figure 3-35",
+    "Initial Oil Saturation – J=117",
+    "63"
+  ],
+  [
+    "Figure 3-36",
+    "Historical Production Rate Per Reservoir",
+    "63"
+  ],
+  [
+    "Figure 3-37",
+    "Rt-06 Allocation And Inconsistencies",
+    "64"
+  ],
+  [
+    "Figure 3-38",
+    "Updated Well Production Allocation Based On Prosper Models",
+    "64"
+  ],
+  [
+    "Figure 3-39",
+    "Reservoir Pressure Matching (Wbpc_3)",
+    "65"
+  ],
+  [
+    "Figure 3-40",
+    "Water Cut Match On Rt-5",
+    "65"
+  ],
+  [
+    "Figure 3-41",
+    "Yamama Development Wells Pattern",
+    "66"
+  ],
+  [
+    "Figure 3-42",
+    "Fcp At Base Caprock",
+    "67"
+  ],
+  [
+    "Figure 3-43",
+    "Yamama Uncertainty Workflow For Static And Dynamic Uncertainties",
+    "68"
+  ],
+  [
+    "Figure 3-44",
+    "Uncertainties Evaluation Workflow Of Main Static Perimeters",
+    "68"
+  ],
+  [
+    "Figure 3-45",
+    "Ranking Of Yamama Static Uncertainties",
+    "70"
+  ],
+  [
+    "Figure 3-46",
+    "Cumulated Produced Oil (Fopt) Versus In Place Volumes Of Mobile Oil (Foip Mobile)",
+    "71"
+  ],
+  [
+    "Figure 3-47",
+    "Experimental Design Results On Each Static Case (Low, Base, High: Fopt Vs Year On Left Side)",
+    "72"
+  ],
+  [
+    "Figure 3-48",
+    "Selection Of Dynamic Cases (Fopt Vs Year)",
+    "72"
+  ],
+  [
+    "Figure 3-49",
+    "Characterization Of Sedimentary Environment Of Nahr Umr In Ratawi",
+    "73"
+  ],
+  [
+    "Figure 3-50",
+    "Regional Stratigraphic Correlations Of The Nahr Umr Formation",
+    "74"
+  ],
+  [
+    "Figure 3-51",
+    "North-South Cross-Section Of The Nahr Umr, Describing The Interpreted Parasequences",
+    "75"
+  ],
+  [
+    "Figure 3-52",
+    "Dataset For Nahr Umr E",
+    "75"
+  ],
+  [
+    "Figure 3-53",
+    ": Nu E Bitumen On Core Description",
+    "76"
+  ],
+  [
+    "Figure 3-54",
+    "Building Of Ef Calibrated From Core Descriptions And Cut Offs.",
+    "78"
+  ],
+  [
+    "Figure 3-55",
+    "Nahr Umr Dead Oil Compositions",
+    "79"
+  ],
+  [
+    "Figure 3-56",
+    "Nahr Umr Reservoir Pressure Plot",
+    "80"
+  ],
+  [
+    "Figure 3-57",
+    "Nahr Umr Static Model Workflow",
+    "81"
+  ],
+  [
+    "Figure 3-58",
+    "W-E Cross Section Along 70° Azimuth, Showing Successive Nahr Umr Sub Reservoir Units",
+    "82"
+  ],
+  [
+    "Figure 3-59",
+    "Truncated Gaussian With Trend Workflow",
+    "83"
+  ],
+  [
+    "Figure 3-60",
+    "Example Of Some Wells Without Siderite Occurrence After 1D Blocking",
+    "83"
+  ],
+  [
+    "Figure 3-61",
+    "Permeability Data Available Nu And Analogues",
+    "85"
+  ],
+  [
+    "Figure 3-62",
+    "Permeability Modelling From Subba Analogue.",
+    "86"
+  ],
+  [
+    "Figure 3-63",
+    "Updated Permeability Laws",
+    "86"
+  ],
+  [
+    "Figure 3-64",
+    "Nahr Umr Bitumen Modelling Workflow",
+    "87"
+  ],
+  [
+    "Figure 3-65",
+    "Water Saturation Curves Characterizing The Three Electrofacies With Their Phie Means",
+    "88"
+  ],
+  [
+    "Figure 3-66",
+    "Huphiso Map Of Nu E And Stooip Repartition Per Facies",
+    "89"
+  ],
+  [
+    "Figure 3-67",
+    "Huphiso Map In Meter For The Nu D Upper (Left Side) And Lower (Right Side)",
+    "89"
+  ],
+  [
+    "Figure 3-68",
+    "Kr Input For Nahr Umr Dynamic Model",
+    "90"
+  ],
+  [
+    "Figure 3-69",
+    "Nahr Umr Initial Oil Saturation J=175",
+    "91"
+  ],
+  [
+    "Figure 3-70",
+    "Nahr Umr Pvt Table",
+    "91"
+  ],
+  [
+    "Figure 3-71",
+    "Regional View Of Nahr Umr Aquifer Extension",
+    "93"
+  ],
+  [
+    "Figure 3-72",
+    "Minimal Extension Of Nahr Umr Aquifer Based On Neighbouring Fields",
+    "94"
+  ],
+  [
+    "Figure 3-73",
+    "Nahr Um E Well Pattern And Production Constraints Summary",
+    "95"
+  ],
+  [
+    "Figure 3-74",
+    "Nahr Umr Uncertainty Evaluation Workflow",
+    "96"
+  ],
+  [
+    "Figure 3-75",
+    "Tornado Chart For Nu E And Nu D, Showing Most Impacting Parameters On Volume In Place",
+    "96"
+  ],
+  [
+    "Figure 3-76",
+    "Nahr Umr Dynamic Uncertainty Parameters Screening",
+    "97"
+  ],
+  [
+    "Figure 3-77",
+    "Nahr Umr Experimental Design Results",
+    "97"
+  ],
+  [
+    "Figure 3-78",
+    "Mauddud Stratigraphic Synthesis",
+    "98"
+  ],
+  [
+    "Figure 3-79",
+    "Top Mauddud Structural Map (Gpi 2022) And Available Data.",
+    "99"
+  ],
+  [
+    "Figure 3-80",
+    "Mauddud Sequence-Stratigraphic Layering And Correlation.",
+    "100"
+  ],
+  [
+    "Figure 3-81",
+    "North-South Well Correlation Across Ratawi Field, Showing Mauddud 4Th And 5Th Parasequences",
+    "100"
+  ],
+  [
+    "Figure 3-82",
+    "South-North Well Sections Across Ratawi Field, Showing Mauddud Depositional Environments",
+    "101"
+  ],
+  [
+    "Figure 3-83",
+    ": Mauddud Core Description And Depositional Environments",
+    "101"
+  ],
+  [
+    "Figure 3-84",
+    "Geostatistics On Mauddud Porosity Logs",
+    "102"
+  ],
+  [
+    "Figure 3-85",
+    "Mauddud A, B And C Parasequence Thickness Maps With Mean Porosity Value Per Well",
+    "103"
+  ],
+  [
+    "Figure 3-86",
+    "Analysis Of Communications Between Mauddud Parasequences",
+    "103"
+  ],
+  [
+    "Figure 3-87",
+    "Mauddud Permeability Analysis",
+    "104"
+  ],
+  [
+    "Figure 3-88",
+    "Mauddud Saturation Curves Analysis",
+    "105"
+  ],
+  [
+    "Figure 3-89",
+    "Mauddud Oil Water Contact Hypothesis",
+    "106"
+  ],
+  [
+    "Figure 3-90",
+    "Eos Match Quality Vs Rt-21 Recombined Surface Sample",
+    "106"
+  ],
+  [
+    "Figure 3-91",
+    "Rt-18 And Rt-19 Dst’S Interpretations And Results",
+    "107"
+  ],
+  [
+    "Figure 3-92",
+    "Mauddud Initial Pressure Plot",
+    "108"
+  ],
+  [
+    "Figure 3-93",
+    "Mauddud Development Target Illustrating Core Area",
+    "108"
+  ],
+  [
+    "Figure 3-94",
+    "Mauddud Static Modelling Workflow And Initial Case Main Results",
+    "109"
+  ],
+  [
+    "Figure 3-95",
+    "Mauddud Grid Layering, Orientation And Volume Of Interest (Voi)",
+    "110"
+  ],
+  [
+    "Figure 3-96",
+    "Mauddud 3D Porosity Trend Combined From Porosity Depth Trend And 2D Trend Per Ps",
+    "111"
+  ],
+  [
+    "Figure 3-97",
+    "K Facies On Plugs From Phi-K Plot",
+    "112"
+  ],
+  [
+    "Figure 3-98",
+    "Mauddud Facies Proportion Analysis",
+    "113"
+  ],
+  [
+    "Figure 3-99",
+    "Vertical Proportion Curve",
+    "113"
+  ],
+  [
+    "Figure 3-100",
+    "Saturation Height Functions Used To Model The Water Saturation In Mauddud Above Owc",
+    "114"
+  ],
+  [
+    "Figure 3-101",
+    "Mauddud Initial Case Static Volumes Repartition Per Parasequence And Zone And Per K Facies",
+    "115"
+  ],
+  [
+    "Figure 3-102",
+    "Huphiso Map Of Mauddud A , B And C",
+    "115"
+  ],
+  [
+    "Figure 3-103",
+    "Mauddud O-W Kr And Oil Recovery Cases (Pessimistic, Base Case, Optimistic)",
+    "116"
+  ],
+  [
+    "Figure 3-104",
+    "Mauddud Development Well Count",
+    "117"
+  ],
+  [
+    "Figure 3-105",
+    "Mauddud Uncertainty Workflow",
+    "118"
+  ],
+  [
+    "Figure 3-106",
+    "Mauddud Static Uncertainty Parameters With Uncertainty Ranges",
+    "119"
+  ],
+  [
+    "Figure 3-107",
+    "Mauddud Stooip Distributions And Dispersion In The Core Area And Full Field",
+    "120"
+  ],
+  [
+    "Figure 3-108",
+    "Tornado Chart Showing The Impact Of Static Uncertain Parameters On Mauddud Stooip",
+    "121"
+  ],
+  [
+    "Figure 3-109",
+    "Mauddud Static Case Selection",
+    "122"
+  ],
+  [
+    "Figure 3-110",
+    "Summary Of Mauddud Dynamic Uncertainties",
+    "123"
+  ],
+  [
+    "Figure 3-111",
+    "The Tornado Chart Showing The Most Impacting Dynamic Parameters To Mauddud Oil Recovery",
+    "123"
+  ],
+  [
+    "Figure 3-112",
+    "Mauddud Fopt For Low, Mid& High Cases",
+    "124"
+  ],
+  [
+    "Figure 3-113",
+    "Mauddud Huphiso Base Case",
+    "125"
+  ],
+  [
+    "Figure 3-114",
+    "Facies Description & Sequence Definition Of The Mishrif Formation In The Well Rt-2",
+    "126"
+  ],
+  [
+    "Figure 3-115",
+    "Mishrif Petrophysical Properties Cross Plots: Porosity, Permeability, Saturation",
+    "126"
+  ],
+  [
+    "Figure 3-116",
+    "Mishrif Reservoir Pressure Evolution (Plt Data)",
+    "127"
+  ],
+  [
+    "Figure 3-117",
+    "Huphiso Map For Mishrif Areservoirs (2021 Model).",
+    "129"
+  ],
+  [
+    "Figure 3-118",
+    "Top Umm Er Radhuma Structural Map And Available Data.",
+    "130"
+  ],
+  [
+    "Figure 3-119",
+    "Umm Er Radhuma Well Correlation With Quantitative Log Interpretation",
+    "131"
+  ],
+  [
+    "Figure 3-120",
+    "Umm Er Radhuma Water Properties.",
+    "132"
+  ],
+  [
+    "Figure 3-121",
+    "Uer Initial Reservoir Pressure (Wft) Per Ps And Reservoir Temperature (Well Test, Plt).",
+    "133"
+  ],
+  [
+    "Figure 3-122",
+    "Umm Er Radhuma Well Test And Plt Data Synthesis.",
+    "134"
+  ],
+  [
+    "Figure 3-123",
+    "Huphi Map Of The Umm Er Radhuma Reservoir For The Static Base Case.",
+    "135"
+  ],
+  [
+    "Figure 3-124",
+    "Top Dammam Structural Map And Available Data.",
+    "136"
+  ],
+  [
+    "Figure 3-125",
+    "Dammam Well Correlation Through Wells With Quantitative Log Interpretation.",
+    "137"
+  ],
+  [
+    "Figure 3-126",
+    "Mud Losses In Dammam Formation During Drilling Operations Of Ratawi Field Wells.",
+    "137"
+  ],
+  [
+    "Figure 3-127",
+    "Wft Pressure Data In Dammam Reservoir.",
+    "138"
+  ],
+  [
+    "Figure 3-128",
+    "Dammam Huphi Map Issued From The Static Model.",
+    "139"
+  ],
+  [
+    "Figure 3-129",
+    "Regional Stratigraphic Correlation And Depositional Environment Of Zubair",
+    "140"
+  ],
+  [
+    "Figure 3-130",
+    "Data Available For Zubair Reservoir Synthesis",
+    "141"
+  ],
+  [
+    "Figure 3-131",
+    "Zubair Well Section View",
+    "141"
+  ],
+  [
+    "Figure 3-132",
+    "Zubair Petrophyhsical Properties Summary",
+    "142"
+  ],
+  [
+    "Figure 3-133",
+    "Zubair Bodies & Facies Example",
+    "143"
+  ],
+  [
+    "Figure 3-134",
+    "Zubair Phie And Ntg Maps And Sections",
+    "144"
+  ],
+  [
+    "Figure 3-135",
+    ": Pressure Plot Of Zubair In The Well Rt-02",
+    "146"
+  ],
+  [
+    "Figure 3-136",
+    "Zubair Formation In South-East Iraq",
+    "146"
+  ],
+  [
+    "Figure 3-137",
+    ": Ratawi Field – Pore Pressure And Obg Profile (Psi And Sg) – Source Wai – Pp Cell",
+    "146"
+  ],
+  [
+    "Figure 3-138",
+    ": Temperature Gradient Profile",
+    "147"
+  ],
+  [
+    "Figure 3-139",
+    ": Simulation Grid With Main Units : Upper Shale Members, Intermediate Seal And Main Pay",
+    "148"
+  ],
+  [
+    "Figure 3-140",
+    "Dynamic Rock Types In Top Main Payer Layer (Left) And Intramain Pay (Right)",
+    "149"
+  ],
+  [
+    "Figure 3-141",
+    ": Gas Injectors And Observer Well Structural Positions",
+    "150"
+  ],
+  [
+    "Figure 3-142",
+    "Analytical Aquifers Modelling",
+    "151"
+  ],
+  [
+    "Figure 3-143",
+    ": Simulated Gas Saturation At 2053 (Left) And In 2100.",
+    "151"
+  ],
+  [
+    "Figure 3-144",
+    "Illustration Of Gas Plume Extension Vs Structural Closure Of Ratawi",
+    "152"
+  ],
+  [
+    "Figure 4-1",
+    "Ratawi Acquisition Program Planning Summary",
+    "153"
+  ],
+  [
+    "Figure 4-2",
+    "Yamama Waterflood Pilot And Location Of Water Injection Well",
+    "162"
+  ],
+  [
+    "Figure 4-3",
+    "Mauddud Waterflood Pilot And Location Of Water Injection Well",
+    "164"
+  ],
+  [
+    "Figure 4-4",
+    "Agup Phase Development",
+    "166"
+  ],
+  [
+    "Figure 4-5",
+    "Yamama Development Wells During Phase 1",
+    "169"
+  ],
+  [
+    "Figure 4-6",
+    "Yamama Development Wells Pattern",
+    "169"
+  ],
+  [
+    "Figure 4-7",
+    "Yamama Development During Phase 2",
+    "170"
+  ],
+  [
+    "Figure 4-8",
+    "Summary Of Interventions On Legacy Wells Of Nahr Umr During Early Phase 1",
+    "171"
+  ],
+  [
+    "Figure 4-9",
+    "Nahr Umr Development",
+    "172"
+  ],
+  [
+    "Figure 4-10",
+    "Mauddud Legacy And Phase 1 Wells",
+    "173"
+  ],
+  [
+    "Figure 4-11",
+    "Mauddud Core Area And Development Wells",
+    "174"
+  ],
+  [
+    "Figure 4-12",
+    "Mishrif Legacy Wells",
+    "175"
+  ],
+  [
+    "Figure 4-13",
+    "Proposed Location Of Water Wells (Dammam In Purple/Uer In Pink)",
+    "176"
+  ],
+  [
+    "Figure 4-14",
+    "Acid Gas And Associated Gas Reinjection Layout",
+    "178"
+  ],
+  [
+    "Figure 4-15",
+    "Gas Re-Injection Concept",
+    "179"
+  ],
+  [
+    "Figure 4-16",
+    "Acid Gas Treatment Process And Option For Re-Injection",
+    "179"
+  ],
+  [
+    "Figure 5-1",
+    "Gap Surface Flow Network Model",
+    "185"
+  ],
+  [
+    "Figure 5-2",
+    "Phase 1 Base Case Oil & Gas Production Profile (Kbopd) From 2H 2023 - 2028 Excl. Availability",
+    "186"
+  ],
+  [
+    "Figure 5-3",
+    "Phase 1 Base Case Average Water Production Profile (Kbwpd) From 2H 2023 – 2029 Excl. Availability 187  Figure 5-4: Phase 2 Oil And Gas Production Profiles Excl. Availability",
+    "187"
+  ],
+  [
+    "Figure 5-5",
+    "Phase 2 Water Production Profiles (Kbwpd) Excl. Availability",
+    "188"
+  ],
+  [
+    "Figure 6-1",
+    "Well Architecture Of The Legacy Wells",
+    "190"
+  ],
+  [
+    "Figure 6-2",
+    "Wells Categorized According To Completion And The Corresponding 19 Wells",
+    "191"
+  ],
+  [
+    "Figure 6-3",
+    "Mauddud Well Schematic",
+    "194"
+  ],
+  [
+    "Figure 6-4",
+    "Nahr Umr Vertical Well Schematic",
+    "195"
+  ],
+  [
+    "Figure 6-5",
+    "Nahr Umr Horizontal Well Schematic",
+    "196"
+  ],
+  [
+    "Figure 6-6",
+    "Yamama Well Schematic",
+    "197"
+  ],
+  [
+    "Figure 6-7",
+    "Dammam Well Schematic",
+    "198"
+  ],
+  [
+    "Figure 6-8",
+    "Zubair Injection Well Schematic",
+    "199"
+  ],
+  [
+    "Figure 6-9",
+    "Zubair Gas Observation Well Schematic",
+    "200"
+  ],
+  [
+    "Figure 6-10",
+    "Typical Nahr Umr Horizontal Well",
+    "202"
+  ],
+  [
+    "Figure 6-11",
+    "Typical Yamam Deviated Well",
+    "203"
+  ],
+  [
+    "Figure 6-12",
+    "Typical Onshore Xmt Configuration On Eruptive Well",
+    "205"
+  ],
+  [
+    "Figure 6-13",
+    "Yamama Op Well Completion",
+    "210"
+  ],
+  [
+    "Figure 6-14",
+    "Yamama Op Re-Entry Completion",
+    "211"
+  ],
+  [
+    "Figure 6-15",
+    "Yamama Wi Well Completion",
+    "212"
+  ],
+  [
+    "Figure 6-16",
+    "Zubair Gi Well Completion",
+    "213"
+  ],
+  [
+    "Figure 6-17",
+    "Nahr Umr Op (Vertical Well) Completion",
+    "214"
+  ],
+  [
+    "Figure 6-18",
+    "Nahr Umr Op (Vertical Well) Completion Design With Esp",
+    "215"
+  ],
+  [
+    "Figure 6-19",
+    "Nahr Umr Op (Horizontal Well) Completion",
+    "216"
+  ],
+  [
+    "Figure 6-20",
+    "Nahr Umr Op (Horizontal Well) Completion Design With Esp",
+    "216"
+  ],
+  [
+    "Figure 6-21",
+    "Mauddud Op Well Completion",
+    "217"
+  ],
+  [
+    "Figure 6-22",
+    "Mauddud Wi Well Completion",
+    "218"
+  ],
+  [
+    "Figure 6-23",
+    "Dammam Water Source Well Completion",
+    "219"
+  ],
+  [
+    "Figure 6-24",
+    "Dammam Water Disposal Well Completion",
+    "220"
+  ],
+  [
+    "Figure 6-25",
+    "Mauddud Production Results From Different Artificial Lift Methods And Tubing Sizes",
+    "221"
+  ],
+  [
+    "Figure 6-26",
+    "Nahr Umr Production Results From Different Artificial Lift Methods And Tubing Sizes",
+    "222"
+  ],
+  [
+    "Figure 6-27",
+    "Mauddud Esp Design Summary",
+    "223"
+  ],
+  [
+    "Figure 6-28",
+    "Agup Ph1 Drilling Sequence",
+    "224"
+  ],
+  [
+    "Figure 6-29",
+    "Preliminary Phase 1+ 2 Drilling Sequence Per Well Pad",
+    "225"
+  ],
+  [
+    "Figure 6-30",
+    "Summary Of Reference Duration Per Type Of Well",
+    "226"
+  ],
+  [
+    "Figure 6-31",
+    "Benchmark Of Reference Duration Vs Neighbouring Offset Wells",
+    "227"
+  ],
+  [
+    "Figure 6-32",
+    "Learning Curve And Debugging Factor",
+    "227"
+  ],
+  [
+    "Figure 7-1",
+    "Location Of Cpf2 And Existing Cpf1",
+    "232"
+  ],
+  [
+    "Figure 7-2",
+    "Annual 10Min, 10M Wind Statistics At Ratawi",
+    "233"
+  ],
+  [
+    "Figure 7-3",
+    "Monthly Statistics Of Air Temperature At 2M At Ratawi",
+    "234"
+  ],
+  [
+    "Figure 7-4",
+    "Monthly Statistics Of Relative Humidity At 2M At Ratawi",
+    "234"
+  ],
+  [
+    "Figure 7-5",
+    "Monthly Statistics Of Soil Temperature At Layer 4 At Ratawi",
+    "235"
+  ],
+  [
+    "Figure 7-6",
+    "Typical Single Wellhead Pad Layout",
+    "242"
+  ],
+  [
+    "Figure 7-7",
+    "3-Slot Well Pad Layout",
+    "243"
+  ],
+  [
+    "Figure 7-8",
+    "8-Slot Well Pad Layout",
+    "244"
+  ],
+  [
+    "Figure 7-9",
+    "Gas Reinjection Well Pad Layout",
+    "245"
+  ],
+  [
+    "Figure 7-10",
+    "Water Well Pad Locations",
+    "246"
+  ],
+  [
+    "Figure 7-11",
+    "Typical Pid Of Legacy Well",
+    "247"
+  ],
+  [
+    "Figure 7-12",
+    "Typical Pid Of New Non-Energized Well",
+    "248"
+  ],
+  [
+    "Figure 7-13",
+    "Typical Pid Of New Energized Well",
+    "249"
+  ],
+  [
+    "Figure 7-14",
+    "New Flowlines/Trunklines Routes",
+    "252"
+  ],
+  [
+    "Figure 7-15",
+    "Existing Hp Inlet Manifold",
+    "254"
+  ],
+  [
+    "Figure 7-16",
+    "Slots Identification On Existing Hp Inlet Manifold",
+    "254"
+  ],
+  [
+    "Figure 7-17",
+    "Existing Lp Inlet Manifold",
+    "255"
+  ],
+  [
+    "Figure 7-18",
+    "Proposed Process Scheme For Agup Phase 1 Development",
+    "257"
+  ],
+  [
+    "Figure 7-19",
+    "Electrostatic  Desalter (Cross-Section)",
+    "258"
+  ],
+  [
+    "Figure 7-20",
+    "Proposed Location Of New Flare Stack",
+    "259"
+  ],
+  [
+    "Figure 7-21",
+    "Cpf1 New Single-Line Diagram",
+    "261"
+  ],
+  [
+    "Figure 7-22",
+    "Cpf1 Layout Under Agup Phase 1 Development",
+    "262"
+  ],
+  [
+    "Figure 7-23",
+    "Agup Oil Export Pipeline Route To Ps-1 Tank Farm",
+    "263"
+  ],
+  [
+    "Figure 7-24",
+    "Proposed Pipeline Route Of Associated Gas Re-Injection",
+    "265"
+  ],
+  [
+    "Figure 7-25",
+    "Block Flow Diagram – Cpf1 Water Treatment Facility",
+    "266"
+  ],
+  [
+    "Figure 7-26",
+    "Treated Water Distribution Network Concept",
+    "267"
+  ],
+  [
+    "Figure 7-27",
+    "Typical Agup Phase 2 Well Pad Flow Diagram",
+    "268"
+  ],
+  [
+    "Figure 7-28",
+    "Typical Agup Phase 2A Well Pad Layout (4 X 5 Slots) 340M X 243M",
+    "270"
+  ],
+  [
+    "Figure 7-29",
+    "Typical Agup Phase 2B Well Pad Layout (2 X 8 Slots) 259M X 225M",
+    "271"
+  ],
+  [
+    "Figure 7-30",
+    "Production In Phase 1",
+    "272"
+  ],
+  [
+    "Figure 7-31",
+    "Transfer To Phase 2 At Cpf2 Start-Up",
+    "272"
+  ],
+  [
+    "Figure 7-32",
+    "Connections To Phase 2 Wellpads",
+    "273"
+  ],
+  [
+    "Figure 7-33",
+    "Agup Phase 2 Field Layout",
+    "274"
+  ],
+  [
+    "Figure 7-34",
+    "Cpf2 Block Flow Diagram",
+    "276"
+  ],
+  [
+    "Figure 7-35",
+    "Cpf2 – Oil Treatment Process Flow Diagram – Hp Treatment Train",
+    "277"
+  ],
+  [
+    "Figure 7-36",
+    "Cpf2 – Oil Treatment Process Flow Diagram – Lp Separation",
+    "278"
+  ],
+  [
+    "Figure 7-37",
+    "Cpf2 – Oil Storage And Export Process Flow Diagram",
+    "279"
+  ],
+  [
+    "Figure 7-38",
+    "Cpf2 - Gas Compression Process Flow Diagram",
+    "280"
+  ],
+  [
+    "Figure 7-39",
+    "Cpf2 - Teg Unit",
+    "281"
+  ],
+  [
+    "Figure 7-40",
+    "Cpf2 – Teg Regeneration Package",
+    "282"
+  ],
+  [
+    "Figure 7-41",
+    "Cpf2 – Produced Water Treatment Process Flow Diagram",
+    "283"
+  ],
+  [
+    "Figure 7-42",
+    "Produced Water Treatment Filtering And Storage",
+    "284"
+  ],
+  [
+    "Figure 7-43",
+    "Cpf2 – Seawater Treatment Utility Diagram",
+    "285"
+  ],
+  [
+    "Figure 7-44",
+    "Cpf2 - Hp Flare System Utility Flow Diagram",
+    "286"
+  ],
+  [
+    "Figure 7-45",
+    "Cpf2 Heating Medium System Process Utility Diagram",
+    "287"
+  ],
+  [
+    "Figure 7-46",
+    "Cpf2 Plant Layout",
+    "288"
+  ],
+  [
+    "Figure 7-47",
+    "Ggip Water Requirement Over The Field Life",
+    "290"
+  ],
+  [
+    "Figure 7-48",
+    "Existing Raw Water Pipeline To Ratawi Cpf1",
+    "291"
+  ],
+  [
+    "Figure 7-49",
+    "Stf Location And Cssp Pipeline Network",
+    "292"
+  ],
+  [
+    "Figure 7-50",
+    "Generic Lithological Column Of Shallow Aquifers In Ratawi Area",
+    "293"
+  ],
+  [
+    "Figure 7-51",
+    "Ggip Schematic Water Sourcing Plan",
+    "294"
+  ],
+  [
+    "Figure 7-52",
+    "Agup Phase 2 Power Demand Profile",
+    "297"
+  ],
+  [
+    "Figure 7-53",
+    "Agup Ph1 Flaring (2023 – 2027)",
+    "299"
+  ],
+  [
+    "Figure 7-54",
+    "Agup Ph1 Ghg Emission (2023 – 2027)",
+    "300"
+  ],
+  [
+    "Figure 7-55",
+    "Agup Ph2 Fuel Gas Consumption",
+    "301"
+  ],
+  [
+    "Figure 7-56",
+    "Agup Ph2 - Ghg Emission By Source",
+    "302"
+  ],
+  [
+    "Figure 7-57",
+    "Block Diagram Showing Interfaces Between Cpf2 And Gpp",
+    "304"
+  ],
+  [
+    "Figure 7-58",
+    "Agup Cpf2 And Gmp Under Single Global Restricted Area (Gra) And Security System",
+    "306"
+  ],
+  [
+    "Figure 8-1",
+    "Current Boc Site Organization",
+    "309"
+  ],
+  [
+    "Figure 8-2",
+    "Tte Site Organization",
+    "310"
+  ],
+  [
+    "Figure 8-3",
+    "Example Of Maintenance Team",
+    "311"
+  ],
+  [
+    "Figure 9-1",
+    "A High Level Planning Of Agup Phase 1",
+    "330"
+  ],
+  [
+    "Figure 9-2",
+    "Agup Phase 1 Preliminary Project Organisation",
+    "331"
+  ],
+  [
+    "Figure 9-3",
+    "A High Level Planning Of Agup Phase 2",
+    "335"
+  ],
+  [
+    "Figure 9-4",
+    "Agup Phase 2 Preliminary Organisation For Feed Phase",
+    "336"
+  ],
+  [
+    "Table 2-1",
+    "Agup Phase 2 Well Count",
+    "25"
+  ],
+  [
+    "Table 2-2",
+    "Agup Phase 1 Capex",
+    "32"
+  ],
+  [
+    "Table 2-3",
+    "Agup Phase 2 Capex",
+    "32"
+  ],
+  [
+    "Table 3-1",
+    "Ratawi Key Data Used For Subsurface Evaluation Of Oil Reservoirs",
+    "34"
+  ],
+  [
+    "Table 3-2",
+    "Ratawi Key Data Used For Subsurface Evaluation Of Water Reservoirs",
+    "35"
+  ],
+  [
+    "Table 3-3",
+    "Main Petrophysical Properties Of Yamama In Ratawi",
+    "47"
+  ],
+  [
+    "Table 3-4",
+    "Summary Of Observed Odt Per Well, Split Per Parasequence.",
+    "48"
+  ],
+  [
+    "Table 3-5",
+    "Yamama Saturation Experiments Summary",
+    "49"
+  ],
+  [
+    "Table 3-6",
+    "Yamama Pvt Summary",
+    "50"
+  ],
+  [
+    "Table 3-7",
+    "Yamama Dst Summary",
+    "52"
+  ],
+  [
+    "Table 3-8",
+    "Yamama Variability In Gor On Sampled Wells",
+    "53"
+  ],
+  [
+    "Table 3-9",
+    "Base Case Yamama Initial Volumes And Main Reservoir Properties",
+    "60"
+  ],
+  [
+    "Table 3-10",
+    "Yamama Uncertainty On Relative Permeability And Sor",
+    "62"
+  ],
+  [
+    "Table 3-11",
+    "Yamama Well’S Pi Used For New Allocation",
+    "64"
+  ],
+  [
+    "Table 3-12",
+    "Productivity Index – History Vs Model",
+    "65"
+  ],
+  [
+    "Table 3-13",
+    "Summary Of Uncertainty Static Parameters",
+    "68"
+  ],
+  [
+    "Table 3-14",
+    "Summary Of Uncertain Dynamic Parameters",
+    "71"
+  ],
+  [
+    "Table 3-15",
+    "Yamama Selected Base Case",
+    "73"
+  ],
+  [
+    "Table 3-16",
+    "Petrophysical Definition Of Rock Types",
+    "79"
+  ],
+  [
+    "Table 3-17",
+    "Results Of Updated Dst Interpretation For Rt-16 And Rt-17 In Nahr Umr",
+    "80"
+  ],
+  [
+    "Table 3-18",
+    "Stoiip (Mmstb) For The Q50 Static Model (*B0 Of 1",
+    "1"
+  ],
+  [
+    "88",
+    "Table 3-19: Nahr Umr Oil Producer – Key Production Data Summary",
+    "92"
+  ],
+  [
+    "Table 3-20",
+    "Nahr Umr Base Case Results",
+    "98"
+  ],
+  [
+    "Table 3-21",
+    "Mauddud A/B And C – Proposed Let Parameters",
+    "116"
+  ],
+  [
+    "Table 3-22",
+    "Summary Of Mauddud Static Uncertainty Parameter",
+    "119"
+  ],
+  [
+    "Table 3-23",
+    "Mauddud Dynamic Uncertainty Parameters",
+    "122"
+  ],
+  [
+    "Table 3-24",
+    "Mauddud Base Case Results",
+    "124"
+  ],
+  [
+    "Table 3-25",
+    "Main Petrophysical Properties Of Mishrif Reservoir In Ratawi With Porosity Cut-Off 12%.",
+    "126"
+  ],
+  [
+    "Table 3-26",
+    "Mishrif Initial Reservoir Pressure And Temperature",
+    "127"
+  ],
+  [
+    "Table 3-27",
+    "Mishrif Base Case Volumes In-Place",
+    "129"
+  ],
+  [
+    "Table 3-28",
+    "Main Petrophysical Properties Of Umm Er Radhuma Within Da (Base Case)",
+    "131"
+  ],
+  [
+    "Table 3-29",
+    "Umm Er Radhuma Well Tests In Rt-10 (Open Hole)",
+    "133"
+  ],
+  [
+    "Table 3-30",
+    "Umm Er Radhuma Volumes In-Place (Base Case Model).",
+    "134"
+  ],
+  [
+    "Table 3-31",
+    "Main Petrophysical Properties Of Dammam (Well Quantitative Interpretation And Analogues)",
+    "137"
+  ],
+  [
+    "Table 3-32",
+    "Dammam Initial Reservoir Pressure And Temperature.",
+    "138"
+  ],
+  [
+    "Table 3-33",
+    "Dammam Gross Rock Volume (Grv) And Net Porous Volume (Npv) Within The Da.",
+    "139"
+  ],
+  [
+    "Table 3-34",
+    "Phie, Ntg And Phienet Input To The Model",
+    "143"
+  ],
+  [
+    "Table 3-35",
+    "Summary Dst, Water Samples On Rt-2",
+    "144"
+  ],
+  [
+    "Table 3-36",
+    ": Relative Permeability Parameters Used In Initial Case Simulation",
+    "149"
+  ],
+  [
+    "Table 3-37",
+    "Gas Volumes To Be Reinjected To Zubair",
+    "150"
+  ],
+  [
+    "Table 4-1",
+    "Yamama Early Acquisition And Intervention Program",
+    "155"
+  ],
+  [
+    "Table 4-2",
+    "Nahr Umr Early Acquisition And Intervention Program",
+    "156"
+  ],
+  [
+    "Table 4-3",
+    "Mauddud Early Acquisition And Intervention Program",
+    "157"
+  ],
+  [
+    "Table 4-4",
+    "Mishrif And Ahmadi Early Acquisition And Intervention Program",
+    "158"
+  ],
+  [
+    "Table 4-5",
+    "Aquifer Reservoir Early Acquisition And Intervention Program",
+    "159"
+  ],
+  [
+    "Table 4-6",
+    "Phase 1 Wells Acquisition Overview",
+    "161"
+  ],
+  [
+    "Table 4-7",
+    "Objectives And Corresponding Acquisition Program For Yamama Waterflood Pilot",
+    "163"
+  ],
+  [
+    "Table 4-8",
+    "Objectives And Corresponding Acquisition Program For Mauddud Waterflood Pilot",
+    "165"
+  ],
+  [
+    "Table 4-9",
+    "Status And Operations On Legacy Wells Of Nahr Umr During Early Phase 1",
+    "171"
+  ],
+  [
+    "Table 4-10",
+    "Maximum Bottom Hole Injection Pressure In Different Reservoirs",
+    "179"
+  ],
+  [
+    "Table 5-1",
+    "Agup Phase 1 Surface Constraints",
+    "183"
+  ],
+  [
+    "Table 5-2",
+    "Cpf2 Design Parameters",
+    "184"
+  ],
+  [
+    "Table 5-3",
+    "Agup Phase 2 Well Constraints",
+    "185"
+  ],
+  [
+    "Table 6-1",
+    "Legacy Wells And Reservoirs Targeted",
+    "189"
+  ],
+  [
+    "Table 6-2",
+    "Proposed Casing Design",
+    "193"
+  ],
+  [
+    "Table 6-3",
+    "Summary Of Agup Well Completion Design",
+    "209"
+  ],
+  [
+    "Table 6-4",
+    "Summary Of Esp Wellhead Shut-In Pressures",
+    "223"
+  ],
+  [
+    "Table 6-5",
+    "Rop Per Section",
+    "225"
+  ],
+  [
+    "Table 6-6",
+    "Tripping Speed",
+    "226"
+  ],
+  [
+    "Table 6-7",
+    "Agup Phase 1 Drillex",
+    "228"
+  ],
+  [
+    "Table 6-8",
+    "Agup Phase 2 Drillex",
+    "228"
+  ],
+  [
+    "Table 7-1",
+    "Facilities Design Life",
+    "236"
+  ],
+  [
+    "Table 7-2",
+    "Reservoir Fluid Composition",
+    "237"
+  ],
+  [
+    "Table 7-3",
+    "Reservoir Condition",
+    "238"
+  ],
+  [
+    "Table 7-4",
+    "Agup Phase 1 Oil Export Quality Targets",
+    "238"
+  ],
+  [
+    "Table 7-5",
+    "Agup Phase 2 Oil Export Specification",
+    "239"
+  ],
+  [
+    "Table 7-6",
+    "Specification Of Seawater Provided By Cssp",
+    "239"
+  ],
+  [
+    "Table 7-7",
+    "Specification Of Wash Water For Crude Desalting",
+    "239"
+  ],
+  [
+    "Table 7-8",
+    "Gmp Fuel Gas Composition",
+    "240"
+  ],
+  [
+    "Table 7-9",
+    "Agup Phase 1 Well Pad Type",
+    "241"
+  ],
+  [
+    "Table 7-10",
+    "Agup Phase 1 New Flowlines And Trunklines",
+    "251"
+  ],
+  [
+    "Table 7-11",
+    "Mauddud Electrical Cable Design",
+    "253"
+  ],
+  [
+    "Table 7-12",
+    "New Connections To Hp Manifold",
+    "255"
+  ],
+  [
+    "Table 7-13",
+    "New Connections To Lp Manifold",
+    "256"
+  ],
+  [
+    "Table 7-14",
+    "Hp Associated Gas Compression Design",
+    "260"
+  ],
+  [
+    "Table 7-15",
+    "Oil Export Pipeline Design",
+    "263"
+  ],
+  [
+    "Table 7-16",
+    "Gas Reinjection Pipeline Design",
+    "264"
+  ],
+  [
+    "Table 7-17",
+    "Pipeline Sizing: Lengths And Diameters",
+    "275"
+  ],
+  [
+    "Table 7-18",
+    "Cpf2 Heat Requirement And Heating Medium Flow Rates",
+    "287"
+  ],
+  [
+    "Table 7-19",
+    "Fuel Gas Flow Rate",
+    "287"
+  ],
+  [
+    "Table 7-20",
+    "Freshwater (Net Treated Water) Requirements For Gmp And Agup At Ratawi Development Area",
+    "289"
+  ],
+  [
+    "Table 7-21",
+    "Expected Water Quality From Al-Nukhaila Station",
+    "291"
+  ],
+  [
+    "Table 7-22",
+    "Agup Phase 1 Power Demand",
+    "296"
+  ],
+  [
+    "Table 7-23",
+    "Agup Phase 2 Power Demand",
+    "296"
+  ],
+  [
+    "Table 7-24",
+    "Agup Phase 1 Interfaces With Boc And External Facilities",
+    "303"
+  ],
+  [
+    "Table 7-25",
+    "Agup Phase 2 Interfaces With External Facilities",
+    "304"
+  ],
+  [
+    "Table 7-26",
+    "Expected Operational Personnel",
+    "306"
+  ],
+  [
+    "Table 8-1",
+    "Well Monitoring Program",
+    "314"
+  ],
+  [
+    "Table 8-2",
+    "List Of Chemical Injection Points",
+    "317"
+  ],
+  [
+    "Table 8-3",
+    "Types Of Inspection",
+    "326"
+  ],
+  [
+    "Table 9-1",
+    "Agup Ph1 Contract Matrix",
+    "331"
+  ],
+  [
+    "Table 9-2",
+    "Agup Ph2 Contract Matrix",
+    "337"
+  ],
+  [
+    "Table 10-1",
+    "Agup Phase 1 Capex",
+    "339"
+  ],
+  [
+    "Table 10-2",
+    "Agup Phase 2 Capex",
+    "340"
+  ],
+  [
+    "Table 10-3",
+    "Agup Phase 1 Opex (2023-2027)",
+    "340"
+  ],
+  [
+    "Table 10-4",
+    "Agup Phase 2 Opex",
+    "341"
+  ]
+]

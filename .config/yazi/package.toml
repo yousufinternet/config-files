@@ -1,5 +1,19 @@
-[plugin]
-deps = [{ use = "lpanebr/yazi-plugins:first-non-directory", rev = "7af4fed" }, { use = "KKV9/compress", rev = "60b24af" }, { use = "dawsers/fuse-archive", rev = "62d30df" }]
+[[plugin.deps]]
+use = "lpanebr/yazi-plugins:first-non-directory"
+rev = "ca18a2c"
+hash = "5c20ffa5171dab34042e03d273dddc5b"
 
-[flavor]
-deps = [{ use = "yazi-rs/flavors:catppuccin-frappe", rev = "8458d25" }]
+[[plugin.deps]]
+use = "KKV9/compress"
+rev = "60b24af"
+hash = "ee025be766240cc98e671754ac836da3"
+
+[[plugin.deps]]
+use = "dawsers/fuse-archive"
+rev = "a58327c"
+hash = "6a6d24880ce7666048fb81ad758c48d3"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-frappe"
+rev = "df95930"
+hash = "e88895e8f8b7926f20946f273ecc7348"

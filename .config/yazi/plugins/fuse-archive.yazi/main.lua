@@ -70,7 +70,7 @@ local function run_command(cmd, args)
     :cwd(cwd)
     :stdin(Command.INHERIT)
     :stdout(Command.PIPED)
-    :stderr(Command.INHERIT)
+    :stderr(Command.PIPED)
     :spawn()
 
   if not child then
@@ -113,14 +113,19 @@ local valid_extension = ya.sync(function()
   end
 end)
 
-local function fuse_dir()
-  local state_dir = os.getenv("XDG_STATE_HOME")
-  if not state_dir then
-    local home = os.getenv("HOME")
-    if not home then
-      state_dir = "/tmp"
-    else
-      state_dir = home .. "/" .. ".local/state"
+local function fuse_dir(opts)
+  local state_dir
+  if opts and opts.mount_dir then
+    state_dir = opts.mount_dir
+  else
+    state_dir = os.getenv("XDG_STATE_HOME")
+    if not state_dir then
+      local home = os.getenv("HOME")
+      if not home then
+        state_dir = "/tmp"
+      else
+        state_dir = home .. "/" .. ".local/state"
+      end
     end
   end
   return state_dir .. "/yazi/fuse-archive"
@@ -144,7 +149,7 @@ local function create_mount_path(file)
 end
 
 local function setup(_, opts)
-  local fuse = fuse_dir()
+  local fuse = fuse_dir(opts)
   set_state("global", "fuse_dir", fuse)
   if opts and opts.smart_enter then
     set_state("global", "smart_enter", true)
@@ -154,7 +159,8 @@ local function setup(_, opts)
 end
 
 return {
-  entry = function(_, args)
+  entry = function(_, job)
+    local args = job.args or job
     local action = args[1]
     if not action then
       return

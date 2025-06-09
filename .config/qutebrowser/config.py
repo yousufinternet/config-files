@@ -34,6 +34,8 @@ c.fonts.default_family = ["DejaVu Sans Mono"]
 # c.fonts.monospace = '"DejaVu Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
 
 # rofi-pass
+config.bind('gw', 'cmd-set-text :open --window ')
+config.bind('gp', 'cmd-set-text :open --private ')
 config.bind('pi', 'spawn --userscript qute-port-pass')
 config.bind('pu', 'spawn --userscript qute-port-pass -e')
 config.bind('pp', 'spawn --userscript qute-port-pass -w')
@@ -56,7 +58,7 @@ mpv_command = (
     'mpv --slang=en --force-window=immediate --no-terminal'
     ' --geometry={} --autofit=1280x720 '
     '--ytdl-format="bestvideo[height<=?{}][fps<=?30]+bestaudio/best"'
-    ' --x11-name=qutebrowser-youtube --ytdl-raw-options=mark-watched='
+    ' --x11-name=qutebrowser-youtube --wayland-app-id=qutebrowser-youtube --ytdl-raw-options=mark-watched='
     ',cookies="~/Downloads/cookies.txt",embed-subs=,sub-lang=en,'
     'write-sub=,write-auto-sub=,netrc-cmd="pass show netrc"')
 mpv_720 = mpv_command.format(
@@ -81,12 +83,12 @@ config.bind(',m4', f'spawn tsp {mpv_480} {{url}};; back')
 config.bind(',m7', f'spawn tsp {mpv_720} {{url}};; back')
 config.bind(',y', 'spawn konsole -e yt-dlp --cookies=cookies.txt --all-subs --embed-subs {url};; tab-close')
 config.bind(',p', 'open --private https://mail.westqurna2.com')
-config.bind(',hj', 'open --window http://beelinkserver:8096')
-config.bind(',hh', 'open --window https://beelinkserver.taila9ed9.ts.net:8123')
-config.bind(',hs', 'open --window http://beelinkserver:8081')
-config.bind(',hm', 'open --window http://homeserver:8765')
-config.bind(',hi', 'open --window http://homeserver')
-config.bind(',fj', 'spawn prime-run firefox --new-window http://beelinkserver:8096')
+config.bind(',hj', 'open --window http://homecenter:8096')
+config.bind(',hh', 'open --window https://homecenter.taila9ed9.ts.net:8124')
+config.bind(',hn', 'open --window https://homecenter.taila9ed9.ts.net:8002')
+config.bind(',hm', 'open --window http://homecenter:5055')
+config.bind(',hi', 'open --window http://homecenter')
+config.bind(',fj', 'spawn firefox --new-window http://homecenter:8096')
 
 config.bind(',r', 'spawn --userscript readability-js')
 config.bind('cc', 'download-clear')
@@ -113,8 +115,8 @@ for url in ['gmail.com', 'mail.google.com', 'mail.westqurna2.com', 'reddit.com',
 # config.set('zoom.default', '125%' if scale_factor==2 else '100%')
 config.set('zoom.default', '125%')
 
-c.url.searchengines = {'DEFAULT': 'https://www.startpage.com/search?q={}',
-                       'ddg': 'https://duckduckgo.com/?q={}',
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
+                       'startpage': 'https://www.startpage.com/search?q={}',
                        'imdb': 'https://imdb.com/find?q={}',
                        'r': 'https://reddit.com/r/{}',
                        'g': 'https://google.com/search?q={}',
@@ -172,7 +174,7 @@ config.set('content.blocking.method', 'both')
 # Autosave session
 config.set('auto_save.session', True)
 
-config.set('content.javascript.clipboard', 'none')
+config.set('content.javascript.clipboard', 'ask')
 config.set('content.javascript.clipboard', 'access-paste', 'http://beelinkserver')
 
 # settings for better performance
@@ -189,9 +191,9 @@ config.set('hints.leave_on_load', True)
 # Use ranger as file picker
 config.set("fileselect.handler", "external")
 config.set("fileselect.single_file.command",
-           ['konsole', '-e', 'ranger', '--choosefile', '{}'])
+           ['konsole', '-e', 'yazi', '--chooser-file', '{}'])
 config.set("fileselect.multiple_files.command",
-           ['konsole', '-e', 'ranger', '--choosefiles', '{}'])
+           ['konsole', '-e', 'yazi', '--chooser-file', '{}'])
 
 c.aliases |= {'paywall-google': "open https://www.google.com/search?q=cache:{url}"}
 c.aliases |= {'paywall': "open https://archive.is/{url}"}

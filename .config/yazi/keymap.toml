@@ -1,29 +1,29 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = [ ")" ]
 run  = "plugin --sync first-non-directory"
 desc = "Jumps to the first file"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = [ "c", "a" ]
 run  = "plugin compress"
 desc = "Archive selected files"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "!"
 run  = 'shell "$SHELL" --block --confirm'
 desc = "Open shell here"
 
-[[manager.prepend_keymap]]
-on   =  "l" 
-run = "plugin fuse-archive --args=mount"
-desc = "Enter or Mount selected archive"
+# [[manager.prepend_keymap]]
+# on   =  "l" 
+# run = "plugin fuse-archive mount"
+# desc = "Enter or Mount selected archive"
 
-[[manager.prepend_keymap]]
-on   = "h"
-run = "plugin fuse-archive --args=unmount"
-desc = "Leave or Unmount selected archive"
+# [[manager.prepend_keymap]]
+# on   = "h"
+# run = "plugin fuse-archive unmount"
+# desc = "Leave or Unmount selected archive"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["g", 'i']
 run = "cd /run/media/yusuf"
 desc = "Removable media"

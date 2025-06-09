@@ -22,3 +22,4 @@
 (deflisten _volume "./scripts/volume_control.py")
 (deflisten _lightmode "./scripts/light_dark.py")
 (deflisten hyprland_wsps "./scripts/hyprland_workspaces.py")
+;; (deflisten qtile_groups "./scripts/qtile_groups.py")

@@ -4,7 +4,10 @@ import os
 import pyperclip
 import subprocess as sp
 
-PID = sp.check_output("xprop -id `xdotool getwindowfocus` | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$'", shell=True, text=True)
+if os.getenv('XDG_SESSION_TYPE') == 'wayland':
+    PID = sp.check_output("hyprctl activewindow | grep 'pid' | grep -oE '[[:digit:]]*$'", shell=True, text=True)
+else:
+    PID = sp.check_output("xprop -id `xdotool getwindowfocus` | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$'", shell=True, text=True)
 PID = PID.strip()
 pagenumber = sp.check_output(f"qdbus org.pwmt.zathura.PID-{PID} /org/pwmt/zathura org.pwmt.zathura.pagenumber", shell=True, text=True)
 filepath = sp.check_output(f"qdbus org.pwmt.zathura.PID-{PID} /org/pwmt/zathura org.pwmt.zathura.filename", shell=True, text=True)

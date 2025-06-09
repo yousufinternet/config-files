@@ -46,9 +46,16 @@ The plugin supports the following options, which can be assigned during setup:
 1. `smart_enter`: If `true`, when *entering* a file it will be *opened*, while
 directories will always be *entered*. The default value is `false`.
 
+2. `mount_dir`: An absolute path. If set, archives will be mounted to that
+directory instead of the default one. If not set, the default directory is
+chosen by testing, in this order: `$XDG_STATE_HOME`, `$HOME/.local/state`
+and `/tmp`. `fuse-archive.yazi` will append `yazi/fuse-archive` to the chosen
+directory.
+
 ``` lua
 require("fuse-archive"):setup({
   smart_enter = true,
+  mount_dir = "/tmp",
 })
 ```
 
@@ -107,3 +114,4 @@ following three in order of preference:
 2. `$HOME/.local/state/yazi/fuse-archive/...`
 3. `/tmp/yazi/fuse-archive/...`
 
+or the directory you set in `mount_dir`, if any.

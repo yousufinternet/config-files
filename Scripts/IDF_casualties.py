@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 driver = webdriver.Firefox() # used selenium package as it works better with pages that require login or pages protected with captcha
 pages = [] # store every page content in a list
-for i in range(1, 70): # each page has 10 exterminated rats, total no. of rats is 450 so 45 pages, also confirmed manualy
+for i in range(1, 100): # each page has 10 exterminated rats, total no. of rats is 450 so 45 pages, also confirmed manualy
     print(i)
     driver.get(f'https://www.idf.il/%D7%A0%D7%95%D7%A4%D7%9C%D7%99%D7%9D/%D7%97%D7%9C%D7%9C%D7%99-%D7%94%D7%9E%D7%9C%D7%97%D7%9E%D7%94/?page={i}&firstName=&lastName=&unit=&city=&startDate=&endDate=')
     pages.append(driver.page_source)
@@ -21,7 +21,7 @@ for page in pages:
         casualties.append(re.search(r'.*? \((.*)\)', date.text).group(1)) # the regex extracts the text between parenthesis
 
 # we convert the Hebrew months to English ones
-casualties = [c.replace('בדצמבר', 'Dec').replace('בנובמבר', 'Nov').replace('באוקטובר', 'Oct').replace('בפברואר', 'Feb').replace('באפריל', 'Apr').replace('במרץ', 'Mar').replace('במאי', 'May').replace('בינואר', 'Jan') for c in casualties]
+casualties = [c.replace('בדצמבר', 'Dec').replace('בנובמבר', 'Nov').replace('באוקטובר', 'Oct').replace('בפברואר', 'Feb').replace('באפריל', 'Apr').replace('במרץ', 'Mar').replace('במאי', 'May').replace('בינואר', 'Jan').replace('ביולי', 'Jul').replace('באוגוסט', 'Aug').replace('בספטמבר', 'Sep').replace('ביוני', 'Jun') for c in casualties]
 
 # we convert the results to a dataframe
 casualties_df = pd.DataFrame({d: len([c for c in casualties if c == d]) for d in set(casualties)}, index=[0]).T.reset_index()
@@ -29,6 +29,7 @@ print(casualties_df.to_string())
 casualties_df.columns = ['Date', 'Count']
 print(casualties_df)
 casualties_df.sort_values('Date', inplace=True)
+casualties_df.to_excel('results.xlsx')
 
 # plot the results
 plt.plot(casualties_df.iloc[1:].Date, casualties_df.iloc[1:].Count.cumsum())

@@ -2,11 +2,11 @@
 
 Jump to the first file ignoring directories.
 
-https://github.com/user-attachments/assets/f759d0be-c3c3-4708-adeb-7d85d0048099
+<https://github.com/user-attachments/assets/f759d0be-c3c3-4708-adeb-7d85d0048099>
 
-## Disclamers and requirements
+## Requirements
 
-Tested only on Yazi 0.3.2 (3a2dd30 2024-09-01).
+- yazi version 0.4
 
 ## Installation
 
@@ -21,6 +21,10 @@ Add this to your `keymap.toml` to set the keymap for the plugin:
 ```toml
 [[manager.prepend_keymap]]
 on   = [ "f", "j" ]
-run  = "plugin --sync first-non-directory"
+run  = "plugin first-non-directory"
 desc = "Jumps to the first file"
 ```
+
+## Disclaimers
+
+- Tested only with yazi version 0.4.3

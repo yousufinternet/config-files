@@ -8,6 +8,7 @@ cmdrun = partial(sp.Popen, shell=True, text=True,
                  stdout=sp.DEVNULL, stderr=sp.DEVNULL)
 actions_dict = {
     'Logout': ('system-log-out-symbolic', 'hyprctl dispatch exit'),
+    # 'Logout': ('system-log-out-symbolic', 'qtile cmd-obj -o root -f shutdown'),
     'Suspend': ('system-suspend-symbolic', 'systemctl suspend'),
     'Reboot': ('system-reboot-symbolic', 'sudo systemctl reboot --force'),
     'Power off': ('system-shutdown-symbolic', 'sudo systemctl poweroff --force'),

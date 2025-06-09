@@ -1,0 +1,19 @@
+(deflisten _definition "/home/yusuf/.config/eww_wayland/scripts/sdcv_server.py")
+
+
+
+(defwindow text_popup
+	   :monitor '["<primary>", "HDMI-A-1", 1, 0]'
+	   :geometry (geometry :x "2%" :y "60px" :width "200px" :height "200px" :anochor "top left")
+	   :stacking "fg"
+	   :exclusive false
+	   :focusable true
+	   :hexpand false
+	   :vexpand false
+	   (sdcv_popup))
+
+
+(defwidget sdcv_popup []
+	   (eventbox :onhoverlost "${EWW_CMD} close text_popup" (box :hexpand true :vexpand true :class "main_container" :style "padding: 10px" :orientation "vertical" :spacing 10 :space-evenly false
+		(input :onchange "${EWW_CONFIG_DIR}/scripts/sdcv_client.py {}" :onaccept "${EWW_CONFIG_DIR}/scripts/sdcv_client.py {}") (scroll :vexpand true (literal :content _definition))
+			     )))
